@@ -14,8 +14,6 @@
 
 ## 运行方式
 
-这是纯前端静态页面，直接用浏览器打开以下文件即可：
-
-`/home/runner/work/elemental-earth/elemental-earth/imlinhanchao/elemental-earth/index.html`
+这是纯前端静态页面，直接用浏览器打开仓库根目录下的 `index.html` 即可。
 
 页面中点击“重新生成”可刷新随机种子并得到新地图。

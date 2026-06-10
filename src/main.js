@@ -2,6 +2,25 @@ const WORLD_SIZE = 100000;
 const VIEW_WIDTH = 1000;
 const VIEW_HEIGHT = 1000;
 const DISPLAY_SIZE = 920;
+const RIVER_COUNT = 3;
+const RIVER_MIN_AMPLITUDE = 0.08;
+const RIVER_AMPLITUDE_RANGE = 0.09;
+const RIVER_BASE_FREQUENCY = 2.2;
+const RIVER_FREQUENCY_RANGE = 1.3;
+const RIVER_CENTER_BASE = 0.45;
+const RIVER_CENTER_OFFSET = 0.15;
+
+const BIOME_RULES = {
+  riverThreshold: 0.018,
+  volcanicEdgeThreshold: 0.07,
+  volcanicNoiseThreshold: 0.55,
+  aridRiverDistance: 0.12,
+  aridElevationThreshold: 0.42,
+  crystalElevationThreshold: 0.76,
+  midElevationThreshold: 0.48,
+  limestoneNoiseThreshold: 0.5,
+  lowlandAridDistance: 0.09,
+};
 
 const BIOMES = {
   RIVER_PLAIN: { key: "河滩平原", color: [210, 186, 133] },
@@ -72,12 +91,15 @@ function fbm(x, y, seed, octaves = 4) {
 
 function getRiverDistance(nx, ny, seed) {
   let minDistance = 1;
-  for (let i = 0; i < 3; i += 1) {
+  for (let i = 0; i < RIVER_COUNT; i += 1) {
     const p = i + 1;
-    const amplitude = 0.08 + hash2D(p, seed, seed + p) * 0.09;
-    const frequency = 2.2 + hash2D(seed, p, seed) * 1.3;
+    const amplitude = RIVER_MIN_AMPLITUDE + hash2D(p, seed, seed + p) * RIVER_AMPLITUDE_RANGE;
+    const frequency = RIVER_BASE_FREQUENCY + hash2D(seed, p, seed) * RIVER_FREQUENCY_RANGE;
     const phase = hash2D(seed + p, p * 7, seed + 39) * Math.PI * 2;
-    const centerX = 0.45 + (p - 2) * 0.15 + amplitude * Math.sin((ny * frequency + phase) * Math.PI);
+    const centerX =
+      RIVER_CENTER_BASE +
+      (p - 2) * RIVER_CENTER_OFFSET +
+      amplitude * Math.sin((ny * frequency + phase) * Math.PI);
     const distance = Math.abs(nx - centerX);
     if (distance < minDistance) minDistance = distance;
   }
@@ -88,13 +110,22 @@ function selectBiome(nx, ny, elevation, riverDistance, edgeDistance, seed) {
   const volcanicNoise = fbm(nx * 5, ny * 5, seed + 501, 3);
   const adjacencyNoise = fbm(nx * 8, ny * 8, seed + 777, 2);
 
-  if (riverDistance < 0.018) return BIOMES.RIVER_PLAIN;
-  if (edgeDistance < 0.07 && volcanicNoise > 0.55) return BIOMES.VOLCANIC;
-  if (riverDistance > 0.12 && elevation < 0.42) return BIOMES.ARID_BASIN;
-  if (elevation > 0.76) return BIOMES.CRYSTAL_BELT;
-  if (elevation > 0.48) return adjacencyNoise > 0.5 ? BIOMES.LIMESTONE : BIOMES.OXIDIZED;
+  if (riverDistance < BIOME_RULES.riverThreshold) return BIOMES.RIVER_PLAIN;
+  if (
+    edgeDistance < BIOME_RULES.volcanicEdgeThreshold &&
+    volcanicNoise > BIOME_RULES.volcanicNoiseThreshold
+  ) {
+    return BIOMES.VOLCANIC;
+  }
+  if (riverDistance > BIOME_RULES.aridRiverDistance && elevation < BIOME_RULES.aridElevationThreshold) {
+    return BIOMES.ARID_BASIN;
+  }
+  if (elevation > BIOME_RULES.crystalElevationThreshold) return BIOMES.CRYSTAL_BELT;
+  if (elevation > BIOME_RULES.midElevationThreshold) {
+    return adjacencyNoise > BIOME_RULES.limestoneNoiseThreshold ? BIOMES.LIMESTONE : BIOMES.OXIDIZED;
+  }
 
-  return riverDistance > 0.09 ? BIOMES.ARID_BASIN : BIOMES.OXIDIZED;
+  return riverDistance > BIOME_RULES.lowlandAridDistance ? BIOMES.ARID_BASIN : BIOMES.OXIDIZED;
 }
 
 function shadeColor([r, g, b], elevation) {
