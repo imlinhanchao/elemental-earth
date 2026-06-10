@@ -54,7 +54,7 @@ const seedLabel = document.getElementById("seedLabel");
 const { PIXI } = window;
 
 if (!PIXI) {
-  seedLabel.textContent = "PixiJS 加载失败，请刷新页面后重试。";
+  seedLabel.textContent = "PixiJS 加载失败，请检查 vendor/pixi.min.js 是否存在。";
   throw new Error("PixiJS failed to load.");
 }
 
@@ -225,7 +225,7 @@ function generate(seed) {
   ctx.putImageData(image, 0, 0);
   const texture = PIXI.Texture.from(canvas);
   // Destroy previous texture and its base texture to avoid memory growth when regenerating.
-  if (mapSprite.texture) mapSprite.texture.destroy(true);
+  if (mapSprite.texture && mapSprite.texture !== PIXI.Texture.EMPTY) mapSprite.texture.destroy(true);
   mapSprite.texture = texture;
 }
 
