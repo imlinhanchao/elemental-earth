@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elemental Earth - 地质群系平面地图</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #101319;
+        color: #e8eef8;
+      }
+      #app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+      }
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .legend {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 6px 12px;
+        width: min(100%, 920px);
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+      }
+      .swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      #stage {
+        width: min(94vw, 920px);
+        border: 1px solid #2f3c52;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+      }
+      button {
+        padding: 6px 10px;
+        border: 1px solid #35507c;
+        background: #1d2f4d;
+        color: #e8eef8;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #25406a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="toolbar">
+        <button id="regen">重新生成</button>
+        <span id="seedLabel"></span>
+      </div>
+      <div id="stage"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js"></script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
