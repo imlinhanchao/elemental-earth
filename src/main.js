@@ -14,6 +14,9 @@ const HASH_Y_FACTOR = 311.7;
 const HASH_SEED_FACTOR = 74.7;
 const HASH_SINE_SCALE = 0.0174533;
 const HASH_SCALE = 43758.5453;
+const OCTAVE_SEED_OFFSET = 101;
+const SEED_SPACE = 1_000_000;
+const UINT32_RANGE = 0x1_0000_0000;
 
 const ELEVATION_LOW_SCALE = 52000;
 const ELEVATION_HIGH_SCALE = 9000;
@@ -64,6 +67,7 @@ mapSprite.height = DISPLAY_SIZE;
 app.stage.addChild(mapSprite);
 
 function hash2D(x, y, seed) {
+  // Deterministic 2D pseudo-random hash for terrain sampling.
   const n =
     Math.sin((x * HASH_X_FACTOR + y * HASH_Y_FACTOR + seed * HASH_SEED_FACTOR) * HASH_SINE_SCALE) * HASH_SCALE;
   return n - Math.floor(n);
@@ -97,7 +101,7 @@ function fbm(x, y, seed, octaves = 4) {
   let frequency = 1;
   let normalization = 0;
   for (let i = 0; i < octaves; i += 1) {
-    value += valueNoise(x * frequency, y * frequency, seed + i * 101) * amplitude;
+    value += valueNoise(x * frequency, y * frequency, seed + i * OCTAVE_SEED_OFFSET) * amplitude;
     normalization += amplitude;
     amplitude *= 0.5;
     frequency *= 2;
@@ -214,17 +218,19 @@ function generate(seed) {
 
   ctx.putImageData(image, 0, 0);
   const texture = PIXI.Texture.from(canvas);
+  // Destroy previous texture and its base texture to avoid memory growth when regenerating.
   if (mapSprite.texture) mapSprite.texture.destroy(true);
   mapSprite.texture = texture;
 }
 
 function nextSeed() {
-  const limit = Math.floor(0x1_0000_0000 / 1_000_000) * 1_000_000;
+  // Rejection sampling keeps seed distribution uniform in [0, SEED_SPACE).
+  const limit = Math.floor(UINT32_RANGE / SEED_SPACE) * SEED_SPACE;
   const random = new Uint32Array(1);
   do {
     crypto.getRandomValues(random);
   } while (random[0] >= limit);
-  return random[0] % 1_000_000;
+  return random[0] % SEED_SPACE;
 }
 
 function regenerate() {
