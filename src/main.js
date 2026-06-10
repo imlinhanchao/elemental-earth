@@ -12,7 +12,7 @@ const RIVER_CENTER_OFFSET = 0.15;
 const HASH_X_FACTOR = 127.1;
 const HASH_Y_FACTOR = 311.7;
 const HASH_SEED_FACTOR = 74.7;
-const HASH_ANGLE = 0.0174533;
+const HASH_SINE_SCALE = 0.0174533;
 const HASH_SCALE = 43758.5453;
 
 const ELEVATION_LOW_SCALE = 52000;
@@ -64,7 +64,8 @@ mapSprite.height = DISPLAY_SIZE;
 app.stage.addChild(mapSprite);
 
 function hash2D(x, y, seed) {
-  const n = Math.sin((x * HASH_X_FACTOR + y * HASH_Y_FACTOR + seed * HASH_SEED_FACTOR) * HASH_ANGLE) * HASH_SCALE;
+  const n =
+    Math.sin((x * HASH_X_FACTOR + y * HASH_Y_FACTOR + seed * HASH_SEED_FACTOR) * HASH_SINE_SCALE) * HASH_SCALE;
   return n - Math.floor(n);
 }
 
@@ -92,16 +93,16 @@ function valueNoise(x, y, seed) {
 
 function fbm(x, y, seed, octaves = 4) {
   let value = 0;
-  let amp = 0.5;
-  let freq = 1;
-  let norm = 0;
+  let amplitude = 0.5;
+  let frequency = 1;
+  let normalization = 0;
   for (let i = 0; i < octaves; i += 1) {
-    value += valueNoise(x * freq, y * freq, seed + i * 101) * amp;
-    norm += amp;
-    amp *= 0.5;
-    freq *= 2;
+    value += valueNoise(x * frequency, y * frequency, seed + i * 101) * amplitude;
+    normalization += amplitude;
+    amplitude *= 0.5;
+    frequency *= 2;
   }
-  return value / norm;
+  return value / normalization;
 }
 
 function getRiverDistance(nx, ny, seed) {
@@ -218,8 +219,11 @@ function generate(seed) {
 }
 
 function nextSeed() {
+  const limit = Math.floor(0x1_0000_0000 / 1_000_000) * 1_000_000;
   const random = new Uint32Array(1);
-  crypto.getRandomValues(random);
+  do {
+    crypto.getRandomValues(random);
+  } while (random[0] >= limit);
   return random[0] % 1_000_000;
 }
 
