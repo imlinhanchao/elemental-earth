@@ -9,6 +9,21 @@ const RIVER_BASE_FREQUENCY = 2.2;
 const RIVER_FREQUENCY_RANGE = 1.3;
 const RIVER_CENTER_BASE = 0.45;
 const RIVER_CENTER_OFFSET = 0.15;
+const HASH_X_FACTOR = 127.1;
+const HASH_Y_FACTOR = 311.7;
+const HASH_SEED_FACTOR = 74.7;
+const HASH_ANGLE = 0.0174533;
+const HASH_SCALE = 43758.5453;
+
+const ELEVATION_LOW_SCALE = 52000;
+const ELEVATION_HIGH_SCALE = 9000;
+const ELEVATION_RIDGE_SCALE = 17000;
+const ELEVATION_LOW_SEED = 11;
+const ELEVATION_HIGH_SEED = 23;
+const ELEVATION_RIDGE_SEED = 37;
+const ELEVATION_LOW_WEIGHT = 0.52;
+const ELEVATION_HIGH_WEIGHT = 0.32;
+const ELEVATION_RIDGE_WEIGHT = 0.16;
 
 const BIOME_RULES = {
   riverThreshold: 0.018,
@@ -49,7 +64,7 @@ mapSprite.height = DISPLAY_SIZE;
 app.stage.addChild(mapSprite);
 
 function hash2D(x, y, seed) {
-  const n = Math.sin((x * 127.1 + y * 311.7 + seed * 74.7) * 0.0174533) * 43758.5453;
+  const n = Math.sin((x * HASH_X_FACTOR + y * HASH_Y_FACTOR + seed * HASH_SEED_FACTOR) * HASH_ANGLE) * HASH_SCALE;
   return n - Math.floor(n);
 }
 
@@ -167,10 +182,21 @@ function generate(seed) {
       const worldX = nx * WORLD_SIZE;
       const worldY = ny * WORLD_SIZE;
 
-      const low = fbm(worldX / 52000, worldY / 52000, seed + 11, 5);
-      const high = fbm(worldX / 9000, worldY / 9000, seed + 23, 4);
-      const ridge = Math.abs(fbm(worldX / 17000, worldY / 17000, seed + 37, 4) * 2 - 1);
-      const elevation = Math.min(1, low * 0.52 + high * 0.32 + ridge * 0.16);
+      const low = fbm(worldX / ELEVATION_LOW_SCALE, worldY / ELEVATION_LOW_SCALE, seed + ELEVATION_LOW_SEED, 5);
+      const high = fbm(
+        worldX / ELEVATION_HIGH_SCALE,
+        worldY / ELEVATION_HIGH_SCALE,
+        seed + ELEVATION_HIGH_SEED,
+        4
+      );
+      const ridge = Math.abs(
+        fbm(worldX / ELEVATION_RIDGE_SCALE, worldY / ELEVATION_RIDGE_SCALE, seed + ELEVATION_RIDGE_SEED, 4) * 2 -
+          1
+      );
+      const elevation = Math.min(
+        1,
+        low * ELEVATION_LOW_WEIGHT + high * ELEVATION_HIGH_WEIGHT + ridge * ELEVATION_RIDGE_WEIGHT
+      );
 
       const riverDistance = getRiverDistance(nx, ny, seed);
       const edgeDistance = Math.min(nx, ny, 1 - nx, 1 - ny);
@@ -192,7 +218,9 @@ function generate(seed) {
 }
 
 function nextSeed() {
-  return Math.floor(Math.random() * 1_000_000);
+  const random = new Uint32Array(1);
+  crypto.getRandomValues(random);
+  return random[0] % 1_000_000;
 }
 
 function regenerate() {
