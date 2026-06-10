@@ -54,7 +54,7 @@ const seedLabel = document.getElementById("seedLabel");
 const { PIXI } = window;
 
 if (!PIXI) {
-  seedLabel.textContent = "PixiJS 加载失败，请检查 vendor/pixi.min.js 是否存在。";
+  seedLabel.textContent = "PixiJS 加载失败，请检查 ./vendor/pixi.min.js 是否存在。";
   throw new Error("PixiJS failed to load.");
 }
 
