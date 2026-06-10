@@ -51,6 +51,12 @@ const BIOMES = {
 
 const legendElement = document.getElementById("legend");
 const seedLabel = document.getElementById("seedLabel");
+const { PIXI } = window;
+
+if (!PIXI) {
+  seedLabel.textContent = "PixiJS 加载失败，请刷新页面后重试。";
+  throw new Error("PixiJS failed to load.");
+}
 
 const app = new PIXI.Application();
 await app.init({
