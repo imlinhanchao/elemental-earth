@@ -24,25 +24,31 @@ const ELEVATION_RIDGE_SCALE = 17000;
 const ELEVATION_LOW_SEED = 11;
 const ELEVATION_HIGH_SEED = 23;
 const ELEVATION_RIDGE_SEED = 37;
-const ELEVATION_LOW_WEIGHT = 0.52;
-const ELEVATION_HIGH_WEIGHT = 0.32;
-const ELEVATION_RIDGE_WEIGHT = 0.16;
+const ELEVATION_LOW_WEIGHT = 0.44;
+const ELEVATION_HIGH_WEIGHT = 0.28;
+const ELEVATION_RIDGE_WEIGHT = 0.28;
 
 const BIOME_RULES = {
+  riverChannelThreshold: 0.007,
   riverThreshold: 0.018,
   volcanicEdgeThreshold: 0.07,
   volcanicNoiseThreshold: 0.55,
   aridRiverDistance: 0.12,
   aridElevationThreshold: 0.42,
-  crystalElevationThreshold: 0.76,
+  crystalElevationThreshold: 0.70,
   midElevationThreshold: 0.48,
   limestoneNoiseThreshold: 0.5,
   lowlandAridDistance: 0.09,
+  lakeElevationMax: 0.30,
+  lakeRiverDistanceMin: 0.06,
+  lakeNoiseThreshold: 0.66,
 };
 
 const BIOMES = {
-  RIVER_PLAIN: { key: "河滩平原", color: [210, 186, 133] },
-  LIMESTONE: { key: "石灰岩山地", color: [186, 193, 198] },
+  RIVER: { key: "河流", color: [60, 120, 200], noShade: true },
+  LAKE: { key: "湖泊", color: [75, 145, 215], noShade: true },
+  RIVER_PLAIN: { key: "河滩平原", color: [150, 195, 100] },
+  LIMESTONE: { key: "石灰岩山地", color: [205, 208, 200] },
   OXIDIZED: { key: "氧化山地", color: [183, 96, 70] },
   VOLCANIC: { key: "火山地热", color: [59, 47, 51] },
   ARID_BASIN: { key: "干旱盆地", color: [220, 202, 154] },
@@ -133,16 +139,24 @@ function getRiverDistance(nx, ny, seed) {
 }
 
 function selectBiome(nx, ny, elevation, riverDistance, edgeDistance, seed) {
+  if (riverDistance < BIOME_RULES.riverChannelThreshold) return BIOMES.RIVER;
+  if (riverDistance < BIOME_RULES.riverThreshold) return BIOMES.RIVER_PLAIN;
+
   const volcanicNoise = fbm(nx * 5, ny * 5, seed + 501, 3);
   const adjacencyNoise = fbm(nx * 8, ny * 8, seed + 777, 2);
 
-  if (riverDistance < BIOME_RULES.riverThreshold) return BIOMES.RIVER_PLAIN;
   if (
     edgeDistance < BIOME_RULES.volcanicEdgeThreshold &&
     volcanicNoise > BIOME_RULES.volcanicNoiseThreshold
   ) {
     return BIOMES.VOLCANIC;
   }
+
+  if (elevation < BIOME_RULES.lakeElevationMax && riverDistance > BIOME_RULES.lakeRiverDistanceMin) {
+    const lakeNoise = fbm(nx * 15, ny * 15, seed + 333, 3);
+    if (lakeNoise > BIOME_RULES.lakeNoiseThreshold) return BIOMES.LAKE;
+  }
+
   if (riverDistance > BIOME_RULES.aridRiverDistance && elevation < BIOME_RULES.aridElevationThreshold) {
     return BIOMES.ARID_BASIN;
   }
@@ -155,7 +169,7 @@ function selectBiome(nx, ny, elevation, riverDistance, edgeDistance, seed) {
 }
 
 function shadeColor([r, g, b], elevation) {
-  const shade = 0.72 + elevation * 0.58;
+  const shade = 0.5 + elevation * 0.85;
   return [
     Math.min(255, Math.floor(r * shade)),
     Math.min(255, Math.floor(g * shade)),
@@ -200,7 +214,7 @@ function generate(seed) {
         seed + ELEVATION_HIGH_SEED,
         4
       );
-      const ridge = Math.abs(
+      const ridge = 1 - Math.abs(
         fbm(worldX / ELEVATION_RIDGE_SCALE, worldY / ELEVATION_RIDGE_SCALE, seed + ELEVATION_RIDGE_SEED, 4) * 2 -
           1
       );
@@ -212,7 +226,7 @@ function generate(seed) {
       const riverDistance = getRiverDistance(nx, ny, seed);
       const edgeDistance = Math.min(nx, ny, 1 - nx, 1 - ny);
       const biome = selectBiome(nx, ny, elevation, riverDistance, edgeDistance, seed);
-      const [r, g, b] = shadeColor(biome.color, elevation);
+      const [r, g, b] = biome.noShade ? biome.color : shadeColor(biome.color, elevation);
 
       const i = (y * VIEW_WIDTH + x) * 4;
       image.data[i] = r;
