@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: DefaultLayout,

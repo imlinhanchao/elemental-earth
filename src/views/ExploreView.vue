@@ -39,12 +39,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const search = ref('')
+interface Element {
+  id: number
+  symbol: string
+  name: string
+  category: string
+  badgeClass: string
+}
 
-const items = [
+const search = ref<string>('')
+
+const items: Element[] = [
   { id: 1, symbol: 'H', name: '氢', category: '非金属', badgeClass: 'badge-info' },
   { id: 2, symbol: 'He', name: '氦', category: '稀有气体', badgeClass: 'badge-ghost' },
   { id: 3, symbol: 'Li', name: '锂', category: '碱金属', badgeClass: 'badge-primary' },
@@ -55,7 +63,7 @@ const items = [
   { id: 79, symbol: 'Au', name: '金', category: '过渡金属', badgeClass: 'badge-warning' },
 ]
 
-const filteredItems = computed(() =>
+const filteredItems = computed<Element[]>(() =>
   items.filter(
     (i) =>
       i.name.includes(search.value) ||

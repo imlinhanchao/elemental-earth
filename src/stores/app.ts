@@ -1,20 +1,22 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useAppStore = defineStore('app', () => {
-  const theme = ref('light')
-  const leftSidebarOpen = ref(true)
-  const rightSidebarOpen = ref(true)
+type Theme = 'light' | 'dark'
 
-  function toggleTheme() {
+export const useAppStore = defineStore('app', () => {
+  const theme = ref<Theme>('light')
+  const leftSidebarOpen = ref<boolean>(true)
+  const rightSidebarOpen = ref<boolean>(true)
+
+  function toggleTheme(): void {
     theme.value = theme.value === 'light' ? 'dark' : 'light'
   }
 
-  function toggleLeftSidebar() {
+  function toggleLeftSidebar(): void {
     leftSidebarOpen.value = !leftSidebarOpen.value
   }
 
-  function toggleRightSidebar() {
+  function toggleRightSidebar(): void {
     rightSidebarOpen.value = !rightSidebarOpen.value
   }
 

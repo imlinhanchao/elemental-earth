@@ -139,12 +139,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useAppStore } from '../stores/app'
 
 const appStore = useAppStore()
 
-const tabs = [
+interface Tab {
+  name: string
+  path: string
+  label: string
+  icon: string
+}
+
+const tabs: Tab[] = [
   { name: 'Home', path: '/home', label: '首页', icon: '🏠' },
   { name: 'Explore', path: '/explore', label: '发现', icon: '🔍' },
   { name: 'Settings', path: '/settings', label: '设置', icon: '⚙️' },
