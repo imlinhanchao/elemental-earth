@@ -6,6 +6,7 @@ import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
+import { useLogStore } from './log';
 
 export interface ITask extends IAction {
   id: number;
@@ -17,6 +18,7 @@ export const useTaskStore = defineStore('task', () => {
   const tasks = reactive<ITask[]>([]);
   const stateStore = useStateStore();
   const packStore = usePackStore();
+  const logStore = useLogStore();
 
   // 按照奖励概率计算最终奖励
   function getReward(rewards: IReward[]): IReward | null {
@@ -44,15 +46,15 @@ export const useTaskStore = defineStore('task', () => {
         if (task.type === 'action') {
           const reward = getReward(task.rewards);
           if (reward) {
-            console.log(`任务 ${task.name} 完成，获得奖励:`, reward);
+            logStore.addLog(`任务 ${task.name} 完成，获得奖励:` + reward, 'reward');
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
             packStore.addItem(reward.key, quantity);
           } else {
-            console.log(`任务 ${task.name} 完成，但未获得奖励`);
+            logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
           }
         } else {
           packStore.addTech(task.key);
-          console.log(`科技 ${task.name} 研究完成`);
+          logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
         }
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length > 0) {
@@ -66,7 +68,7 @@ export const useTaskStore = defineStore('task', () => {
     if (task.required_items.length) {
       for (const req of task.required_items) {
         if (!packStore.hasItem(req.key, req.quantity)) {
-          console.warn(`无法执行任务 ${task.name}，缺少物品: ${req.key} x${req.quantity}`);
+          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${req.key} x${req.quantity}`, 'warning');
           return;
         }
       }

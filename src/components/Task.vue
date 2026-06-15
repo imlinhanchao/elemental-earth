@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { ITask } from '@/stores/modules/task';
+  import { useTaskStore, type ITask } from '@/stores/modules/task';
   import { shortTime } from '@/utils/date';
   import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
@@ -8,6 +8,7 @@
     preTasks: ITask[];
   }>();
 
+  const taskStore = useTaskStore();
   const now = ref(Date.now());
   onMounted(() => {
     const timer = setInterval(() => {
@@ -26,7 +27,14 @@
       return total + preTask.time_required;
     }, 0) + (props.task.time_required * 1000 + props.task.begin_time - (props.task.begin_time > 0 ? now.value : 0)) / 1000;
   });
+
+  function remove() {
+    taskStore.removeTask(props.task.id);
+  }
 </script>
 <template>
-  <span class="inline-flex p-1">{{ task.name }}[{{ shortTime(cost) }}]</span>
+  <span class="badge inline-flex p-1 group items-center">
+    {{ task.name }}[{{ shortTime(cost) }}]
+    <Icon icon="tabler:x" class="text-sm hidden group-hover:inline" @click="remove" />
+  </span>
 </template>

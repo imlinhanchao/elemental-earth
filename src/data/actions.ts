@@ -68,7 +68,7 @@ export const Actions: IAction[] =
       { key: "bone", quantity: 1, probability: 20, map: ["mountain"] }, // 骨头
       { key: "gold_sand", quantity: 1, probability: 5, map: ["river_side"] }, // 沙金
     ],
-    time_required: 1
+    time_required: 0
   },
   {
     name: "捡树枝",
@@ -80,7 +80,34 @@ export const Actions: IAction[] =
       { key: "bark", quantity: 1, probability: 500 }, // 树皮
       { key: "resin", quantity: 1, probability: 100, map: ["forest"] }, // 树脂
     ],
-    time_required: 1
+    time_required: 0
+  },
+  {
+    name: "挖掘",
+    key: "dig",
+    description: "使用工具挖掘地面，可以获得各种资源。",
+    required_items: [
+      { key: "stone_pickaxe", quantity: 1, use: 0.01 } // 石镐
+    ],
+    rewards: [
+      { key: "mud", quantity: 1, probability: 100 }, // 泥土
+      { key: "flint", quantity: 1, probability: 50, map: ["volcano"] }, // 燧石
+      { key: "clay", quantity: 1, probability: 50, map: ["river_side"] }, // 粘土
+    ],
+    time_required: 5
+  },
+  {
+    name: "打水",
+    key: "fetch_water",
+    description: "使用工具从水源打水，可以获得水资源。",
+    required_items: [
+      { key: "wooden_bucket", quantity: 1, use: 0.01 } // 木桶
+    ],
+    rewards: [
+      { key: "water", quantity: 1, probability: 1000 }, // 水
+    ],
+    time_required: 5,
+    map: ["river_side"]
   },
   {
     name: "打造石斧",
@@ -93,6 +120,20 @@ export const Actions: IAction[] =
     required_techs: ["stone_tool_crafting"],
     rewards: [
       { key: "stone_axe", quantity: 1, probability: 1000 } // 石斧
+    ],
+    time_required: 10
+  },
+  {
+    name: "打造石镐",
+    key: "craft_stone_pickaxe",
+    description: "使用石头和木材制作石镐，可以用来挖掘和采矿。",
+    required_items: [
+      { key: "stone", quantity: 5 }, // 石头
+      { key: "wood", quantity: 2 } // 木材
+    ],
+    required_techs: ["stone_tool_crafting"],
+    rewards: [
+      { key: "stone_pickaxe", quantity: 1, probability: 1000 } // 石镐
     ],
     time_required: 10
   },

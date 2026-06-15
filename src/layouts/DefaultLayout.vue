@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen" :data-theme="appStore.theme">
+  <div class="flex flex-col h-screen" v-if="!loading" :data-theme="appStore.theme">
     <!-- Header Toolbar -->
     <Header />
 
@@ -18,13 +18,21 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useAppStore } from '../stores/modules/app.ts'
+import { initAutoSave } from '@/utils/archive.ts'
 import Content from './components/Content.vue'
 import Header from './components/Header.vue'
 import Left from './components/Left.vue'
 import Right from './components/Right.vue'
 
 const appStore = useAppStore()
+const loading = ref(true);
+
+onMounted(() => {
+  initAutoSave()
+  loading.value = false
+})
 
 interface Tab {
   name: string

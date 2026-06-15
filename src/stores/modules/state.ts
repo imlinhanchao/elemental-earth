@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Maps } from '@/data/maps';
@@ -37,10 +37,12 @@ export const useStateStore = defineStore('state', () => {
 
   // ---- 地图切换过程状态 ----
   const isSwitching = computed(() => state.switchingTarget !== null)
+  const now = ref(Date.now())
+  setInterval(() => now.value = Date.now(), 100) // 定时更新当前时间，触发切换进度计算
 
   const switchProgress = computed(() => {
     if (state.switchingTarget === null || state.switchDuration === 0) return 0
-    const elapsed = Date.now() - state.switchStartTime
+    const elapsed = now.value - state.switchStartTime
     return Math.min(1, elapsed / state.switchDuration)
   })
 
@@ -94,7 +96,7 @@ export const useStateStore = defineStore('state', () => {
   }
 
   return {
-    state, getState, getMap, setMap,
+    state, getState, getMap, setMap, now,
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch,
   }
