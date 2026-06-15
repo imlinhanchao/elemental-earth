@@ -3,13 +3,24 @@ import { computed, reactive } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Maps } from '@/data/maps';
+import { useLogStore } from '@/stores/modules/log';
+
 export interface IGameState {
   map: string;
+  switchingTarget: string | null;
+  switchStartTime: number;
+  switchDuration: number;
 }
+
+/** 曼哈顿距离 -> 耗时毫秒的倍率 */
+const TIME_PER_DISTANCE = 100;
 
 export const useStateStore = defineStore('state', () => {
   const state = reactive<IGameState>({
     map: Maps[Math.floor(Math.random() * Maps.length)].key,
+    switchingTarget: null,
+    switchStartTime: 0,
+    switchDuration: 0,
   });
 
   const getState = computed(() => state);
@@ -24,7 +35,69 @@ export const useStateStore = defineStore('state', () => {
     }
   }
 
-  return { state, getState, getMap, setMap }
+  // ---- 地图切换过程状态 ----
+  const isSwitching = computed(() => state.switchingTarget !== null)
+
+  const switchProgress = computed(() => {
+    if (state.switchingTarget === null || state.switchDuration === 0) return 0
+    const elapsed = Date.now() - state.switchStartTime
+    return Math.min(1, elapsed / state.switchDuration)
+  })
+
+  const getSwitchTargetMap = computed(() => {
+    if (!state.switchingTarget) return null
+    return Maps.find(m => m.key === state.switchingTarget) || null
+  })
+
+  /** 计算从当前地图到目标地图所需的切换时间（毫秒） */
+  function calcSwitchDuration(fromKey: string, toKey: string): number {
+    const from = Maps.find(m => m.key === fromKey)
+    const to = Maps.find(m => m.key === toKey)
+    if (!from || !to) return 0
+    const dist = Math.abs(from.position.x - to.position.x) + Math.abs(from.position.y - to.position.y)
+    return dist * TIME_PER_DISTANCE
+  }
+
+  /** 开始切换地图 */
+  function startSwitch(targetKey: string) {
+    if (targetKey === state.map) return
+    const duration = calcSwitchDuration(state.map, targetKey)
+    state.switchingTarget = targetKey
+    state.switchStartTime = Date.now()
+    state.switchDuration = duration
+    const logStore = useLogStore()
+    logStore.addLog(`开始切换地图至 ${Maps.find(m => m.key === targetKey)?.name || targetKey}`, 'process')
+  }
+
+  /** 取消切换地图 */
+  function cancelSwitch() {
+    const targetName = getSwitchTargetMap.value?.name || state.switchingTarget || ''
+    state.switchingTarget = null
+    state.switchStartTime = 0
+    state.switchDuration = 0
+    if (targetName) {
+      const logStore = useLogStore()
+      logStore.addLog(`取消切换地图至 ${targetName}`, 'process')
+    }
+  }
+
+  /** 完成切换地图 */
+  function completeSwitch() {
+    if (!state.switchingTarget) return
+    const targetName = getSwitchTargetMap.value?.name || state.switchingTarget
+    state.map = state.switchingTarget
+    state.switchingTarget = null
+    state.switchStartTime = 0
+    state.switchDuration = 0
+    const logStore = useLogStore()
+    logStore.addLog(`切换地图完成，当前位于 ${getMap.value?.name || state.map}`, 'process')
+  }
+
+  return {
+    state, getState, getMap, setMap,
+    isSwitching, switchProgress, getSwitchTargetMap,
+    calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch,
+  }
 })
 
 export const useStateStoreWithOut = once(() => useStateStore(store));
