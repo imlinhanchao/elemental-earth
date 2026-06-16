@@ -7,6 +7,7 @@ import { useStateStore } from '@/stores/modules/state';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { useLogStore } from './log';
+import { getItem } from '@/data/items';
 
 export interface ITask extends IAction {
   id: number;
@@ -46,8 +47,8 @@ export const useTaskStore = defineStore('task', () => {
         if (task.type === 'action') {
           const reward = getReward(task.rewards);
           if (reward) {
-            logStore.addLog(`任务 ${task.name} 完成，获得奖励:` + reward, 'reward');
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
+            logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${getItem(reward.key)?.name || reward.key} x${quantity}`, 'reward');
             packStore.addItem(reward.key, quantity);
           } else {
             logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
@@ -56,7 +57,7 @@ export const useTaskStore = defineStore('task', () => {
           // lab 类型：给予所有产物
           for (const reward of task.rewards) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
-            logStore.addLog(`实验室产物: ${reward.key} x${quantity}`, 'reward');
+            logStore.addLog(`实验室产物: ${getItem(reward.key)?.name || reward.key} x${quantity}`, 'reward');
             packStore.addItem(reward.key, quantity);
           }
         } else {
@@ -75,7 +76,7 @@ export const useTaskStore = defineStore('task', () => {
     if (task.required_items.length) {
       for (const req of task.required_items) {
         if (!packStore.hasItem(req.key, req.quantity)) {
-          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${req.key} x${req.quantity}`, 'warning');
+          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${getItem(req.key)?.name || req.key} x${req.quantity}`, 'warning');
           return;
         }
       }

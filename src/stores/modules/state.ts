@@ -4,6 +4,7 @@ import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Maps } from '@/data/maps';
 import { useLogStore } from '@/stores/modules/log';
+import { getElementById } from '@/data/elements';
 
 export interface IGameState {
   map: string;
@@ -100,7 +101,7 @@ export const useStateStore = defineStore('state', () => {
     if (!state.elements) state.elements = [];
     if (!state.elements.includes(element)) {
       state.elements.push(element);
-      logStore.addLog(`元素 ${element} 已点亮！`, 'reward');
+      logStore.addLog(`元素 ${getElementById(element)?.name || element} 已点亮！`, 'reward');
     }
   }
 
