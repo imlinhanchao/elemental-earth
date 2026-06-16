@@ -21,6 +21,12 @@ export const routes: RouteRecordRaw[] = [
         meta: { tab: 'tech', label: '科技', icon: 'streamline:ai-technology-spark-remix' },
       },
       {
+        path: 'lab',
+        name: 'Lab',
+        component: () => import('../views/LabView.vue'),
+        meta: { tab: 'lab', label: '实验室', icon: 'fluent:beaker-16-filled' },
+      },
+      {
         path: 'explore',
         name: 'Explore',
         component: () => import('../views/ExploreView.vue'),

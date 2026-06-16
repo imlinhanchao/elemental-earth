@@ -110,6 +110,19 @@ export const Actions: IAction[] =
     map: ["river_side"]
   },
   {
+    name: '伐木',
+    key: 'chop_wood',
+    description: '使用石斧砍伐树木，可以获得更多的木材。',
+    required_items: [
+      { key: "stone_axe", quantity: 1, use: 0.01 } // 石斧
+    ],
+    rewards: [
+      { key: "wood", quantity: [5, 7, 10], probability: 1000 } // 木材
+    ],
+    time_required: 5,
+    map: ["forest"]
+  },
+  {
     name: "打造石斧",
     key: "craft_stone_axe",
     description: "使用石头和木材制作石斧，可以用来砍树和挖掘。",
@@ -165,16 +178,16 @@ export const Actions: IAction[] =
     time_required: 8
   },
   {
-    name: '伐木',
-    key: 'chop_wood',
-    description: '使用石斧砍伐树木，可以获得更多的木材。',
+    name: '制作陶罐',
+    key: 'craft_clay_pot',
+    description: '使用粘土制作陶罐，可以用来装水和其他物品。',
     required_items: [
-      { key: "stone_axe", quantity: 1, use: 0.01 } // 石斧
+      { key: "clay", quantity: 5 } // 粘土
     ],
+    required_techs: ["pottery"],
     rewards: [
-      { key: "wood", quantity: [5, 7, 10], probability: 1000 } // 木材
+      { key: "clay_pot", quantity: 1, probability: 1000 } // 陶罐
     ],
-    time_required: 5,
-    map: ["forest"]
+    time_required: 12
   }
 ]

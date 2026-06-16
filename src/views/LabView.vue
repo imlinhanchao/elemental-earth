@@ -1,0 +1,569 @@
+<script setup lang="ts">
+import { ref, computed, watch } from 'vue'
+import { usePackStore } from '@/stores/modules/pack'
+import { useTaskStore } from '@/stores/modules/task'
+import { getItem } from '@/data/items'
+import { LabActions, type ILabAction } from '@/data/labs'
+import { Formulas, type IFormula } from '@/data/formula'
+
+const packStore = usePackStore()
+const taskStore = useTaskStore()
+
+// ---- 用户选择 ----
+const selectedContainerKey = ref<string | null>(null)
+const selectedMaterials = ref<Map<string, number>>(new Map())
+const selectedOperationKey = ref<string | null>(null)
+const selectedFireSourceKey = ref<string | null>(null)
+const selectedFuels = ref<Map<string, number>>(new Map())
+const cycles = ref(1)
+const materialModalOpen = ref(false)
+
+// 切换操作时重置引火/燃料选择
+watch(selectedOperationKey, () => {
+  selectedFireSourceKey.value = null
+  selectedFuels.value = new Map()
+  cycles.value = 1
+})
+
+// ---- 材料弹窗中的临时选择 ----
+const draftMaterials = ref<Map<string, number>>(new Map())
+
+// ---- 可用容器 ----
+const availableContainers = computed(() => {
+  return packStore.items.filter(pItem => {
+    const def = getItem(pItem.key)
+    return def && def.type.includes('container')
+  })
+})
+
+const availableMaterials = computed(() => {
+  return packStore.items.filter(pItem => pItem.key !== selectedContainerKey.value)
+})
+
+const selectedOperation = computed<ILabAction | null>(() => {
+  if (!selectedOperationKey.value) return null
+  return LabActions.find(a => a.key === selectedOperationKey.value) || null
+})
+
+const selectedContainerPack = computed(() => {
+  if (!selectedContainerKey.value) return null
+  return packStore.items.find(i => i.key === selectedContainerKey.value) || null
+})
+
+// ---- 材料弹窗 ----
+function openMaterialModal() {
+  draftMaterials.value = new Map(selectedMaterials.value)
+  materialModalOpen.value = true
+}
+function confirmMaterials() {
+  selectedMaterials.value = new Map(draftMaterials.value)
+  materialModalOpen.value = false
+}
+function cancelMaterials() {
+  draftMaterials.value = new Map(selectedMaterials.value)
+  materialModalOpen.value = false
+}
+function draftIncrement(itemKey: string) {
+  const m = new Map(draftMaterials.value)
+  m.set(itemKey, (m.get(itemKey) || 0) + 1)
+  draftMaterials.value = m
+}
+function draftDecrement(itemKey: string) {
+  const m = new Map(draftMaterials.value)
+  const cur = m.get(itemKey) || 0
+  if (cur <= 1) m.delete(itemKey)
+  else m.set(itemKey, cur - 1)
+  draftMaterials.value = m
+}
+function getDraftQty(itemKey: string): number {
+  return draftMaterials.value.get(itemKey) || 0
+}
+
+const materialSummary = computed(() => {
+  const entries = [...selectedMaterials.value.entries()]
+  if (entries.length === 0) return '未选择'
+  return entries.map(([k, q]) => {
+    const def = getItem(k)
+    return `${def?.name || k}×${q}`
+  }).join('、')
+})
+const materialCount = computed(() => selectedMaterials.value.size)
+
+// ---- 匹配配方 ----
+const matchedFormula = computed<IFormula | null>(() => {
+  const op = selectedOperation.value
+  if (!op) return null
+  return Formulas.find(f => {
+    if (f.required_actions && f.required_actions !== op.key) return false
+    if (f.required_container && f.required_container !== selectedContainerKey.value) return false
+    if (f.required_items) {
+      for (const req of f.required_items) {
+        if ((selectedMaterials.value.get(req.key) || 0) < req.quantity) return false
+      }
+    }
+    if (f.required_techs && !f.required_techs.every(t => packStore.hasTech(t))) return false
+    return true
+  }) || null
+})
+
+const formulaProven = computed(() => {
+  if (!matchedFormula.value) return false
+  return packStore.hasProvenFormula(matchedFormula.value.key)
+})
+
+const formulaProducts = computed(() => {
+  const f = matchedFormula.value
+  if (!f) return []
+  return f.products
+    .filter(p => {
+      const itemDef = getItem(p.key)
+      return itemDef && !itemDef.type.includes('gas')
+    })
+    .map(p => ({
+      key: p.key,
+      name: getItem(p.key)?.name || p.key,
+      quantity: p.multiple * cycles.value,
+    }))
+})
+
+// ---- 燃烧系统 ----
+const burningNeeded = computed(() => selectedOperation.value?.requires_burning ?? false)
+
+const containerCanHeat = computed(() => {
+  if (!selectedContainerKey.value) return false
+  const def = getItem(selectedContainerKey.value)
+  return def?.attrs?.can_heat === true
+})
+
+const fuelItems = computed(() => {
+  return packStore.items.filter(pItem => {
+    const def = getItem(pItem.key)
+    return def && def.type.includes('fuel') && def.attrs?.burn_time
+  })
+})
+
+const fireSourceItems = computed(() => {
+  return packStore.items.filter(pItem => {
+    const def = getItem(pItem.key)
+    return def && def.type.includes('fire_source')
+  })
+})
+
+// 选中的引火物数据
+const selectedFireSourcePack = computed(() => {
+  if (!selectedFireSourceKey.value) return null
+  return packStore.items.find(i => i.key === selectedFireSourceKey.value) || null
+})
+
+// 最大周期：引火物耐久限制
+const maxCyclesByFire = computed(() => {
+  if (!burningNeeded.value || !selectedFireSourcePack.value) return 0
+  return Math.floor(selectedFireSourcePack.value.durable / 0.01)
+})
+
+// 最大周期：燃料总燃烧时间限制
+const maxCyclesByFuel = computed(() => {
+  if (!burningNeeded.value || !selectedOperation.value) return Infinity
+  let totalBurn = 0
+  for (const [key, qty] of selectedFuels.value.entries()) {
+    const def = getItem(key)
+    totalBurn += ((def?.attrs?.burn_time as number) || 0) * qty
+  }
+  return Math.floor(totalBurn / selectedOperation.value.time_required)
+})
+
+// 可用周期选项（受资源限制）
+const cycleOptionsAll = [1, 2, 3, 5, 10]
+const cycleOptions = computed(() => {
+  if (!burningNeeded.value) return cycleOptionsAll
+  const maxByF = maxCyclesByFire.value
+  const maxByFu = maxCyclesByFuel.value
+  const max = Math.min(
+    maxByF,
+    maxByFu === Infinity ? maxByF : maxByFu,
+  )
+  return cycleOptionsAll.filter(n => n <= max)
+})
+
+// 当前周期的燃料消耗明细
+const fuelConsumptionDetail = computed(() => {
+  if (!selectedOperation.value || cycles.value === 0) return []
+  const result: { key: string; name: string; quantity: number }[] = []
+  let remaining = selectedOperation.value.time_required * cycles.value
+  // 按燃烧效率从高到低排序使用
+  const sorted = [...selectedFuels.value.entries()].sort((a, b) => {
+    const btA = (getItem(a[0])?.attrs?.burn_time as number) || 0
+    const btB = (getItem(b[0])?.attrs?.burn_time as number) || 0
+    return btB - btA
+  })
+  for (const [key, qty] of sorted) {
+    if (remaining <= 0) break
+    const burnTime = (getItem(key)?.attrs?.burn_time as number) || 1
+    const maxCanUse = Math.min(qty, Math.ceil(remaining / burnTime))
+    const use = Math.min(maxCanUse, Math.ceil(remaining / burnTime))
+    if (use > 0) {
+      const def = getItem(key)
+      result.push({ key, name: def?.name || key, quantity: use })
+      remaining -= use * burnTime
+    }
+  }
+  return result
+})
+
+const hasEnoughFuel = computed(() => {
+  if (!burningNeeded.value) return true
+  return fuelConsumptionDetail.value.length > 0 &&
+    fuelConsumptionDetail.value.reduce((s, f) => s + f.quantity, 0) > 0
+})
+
+const fireSourceAvailable = computed(() => {
+  if (!burningNeeded.value || !selectedFireSourcePack.value) return false
+  return selectedFireSourcePack.value.durable >= 0.01 * cycles.value
+})
+
+// ---- 总耗时 ----
+const totalTime = computed(() => {
+  if (!selectedOperation.value) return 0
+  return selectedOperation.value.time_required * cycles.value
+})
+
+// ---- 能否开始 ----
+const canStart = computed(() => {
+  if (!selectedContainerKey.value) return false
+  if (selectedMaterials.value.size === 0) return false
+  if (!selectedOperation.value) return false
+  if (!matchedFormula.value) return false
+
+  if (selectedOperation.value.required_techs &&
+      !selectedOperation.value.required_techs.every(t => packStore.hasTech(t))) return false
+
+  if (selectedOperation.value.required_item) {
+    for (const req of selectedOperation.value.required_item) {
+      if (req.key !== selectedContainerKey.value) return false
+      const pack = selectedContainerPack.value
+      if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+    }
+  }
+
+  if (matchedFormula.value?.required_items) {
+    for (const req of matchedFormula.value.required_items) {
+      const have = selectedMaterials.value.get(req.key) || 0
+      if (have < req.quantity * cycles.value) return false
+    }
+  }
+
+  if (burningNeeded.value) {
+    if (!containerCanHeat.value) return false
+    if (!selectedFireSourceKey.value) return false
+    if (!fireSourceAvailable.value) return false
+    if (selectedFuels.value.size === 0) return false
+    if (!hasEnoughFuel.value) return false
+  }
+
+  return true
+})
+
+// ---- 燃料操作 ----
+function fuelIncrement(key: string, max: number) {
+  const m = new Map(selectedFuels.value)
+  m.set(key, Math.min((m.get(key) || 0) + 1, max))
+  selectedFuels.value = m
+}
+function fuelDecrement(key: string) {
+  const m = new Map(selectedFuels.value)
+  const cur = m.get(key) || 0
+  if (cur <= 1) m.delete(key)
+  else m.set(key, cur - 1)
+  selectedFuels.value = m
+}
+function getFuelQty(key: string): number {
+  return selectedFuels.value.get(key) || 0
+}
+
+// ---- 开始实验 ----
+function startExperiment() {
+  if (!canStart.value || !selectedOperation.value || !matchedFormula.value) return
+
+  const consumedItems: { key: string; quantity: number; use?: number }[] = []
+
+  for (const req of selectedOperation.value.required_item || []) {
+    consumedItems.push({ key: req.key, quantity: 0, use: (req.use ?? 1) * cycles.value })
+  }
+
+  for (const req of matchedFormula.value.required_items) {
+    consumedItems.push({ key: req.key, quantity: req.quantity * cycles.value })
+  }
+
+  if (burningNeeded.value) {
+    for (const f of fuelConsumptionDetail.value) {
+      consumedItems.push({ key: f.key, quantity: f.quantity })
+    }
+    if (selectedFireSourcePack.value) {
+      consumedItems.push({ key: selectedFireSourcePack.value.key, quantity: 0, use: 0.01 * cycles.value })
+    }
+  }
+
+  for (const item of consumedItems) {
+    packStore.removeItem(item.key, item.quantity, item.use)
+  }
+
+  packStore.addProvenFormula(matchedFormula.value.key)
+
+  taskStore.pushLabTask({
+    name: `实验室 - ${selectedOperation.value.name}`,
+    key: `lab_${selectedOperation.value.key}_${Date.now()}`,
+    description: selectedOperation.value.description,
+    time_required: totalTime.value,
+    rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1 })),
+    required_items: consumedItems,
+  })
+
+  selectedContainerKey.value = null
+  selectedMaterials.value = new Map()
+  selectedOperationKey.value = null
+  selectedFireSourceKey.value = null
+  selectedFuels.value = new Map()
+  cycles.value = 1
+}
+</script>
+<template>
+  <div class="p-4 max-w-2xl mx-auto space-y-4">
+    <h2 class="text-xl font-bold flex items-center gap-2">
+      <Icon icon="fluent:beaker-16-filled" class="text-2xl" />
+      实验室
+    </h2>
+
+    <!-- 1. 容器选择 -->
+    <div class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">1. 选择容器</h3>
+        <select v-model="selectedContainerKey" class="select select-bordered w-full">
+          <option :value="null" disabled>-- 请选择容器 --</option>
+          <option v-for="c in availableContainers" :key="c.key" :value="c.key">
+            {{ c.name }} (耐久: {{ Math.round(c.durable * 100) / 100 }})
+          </option>
+        </select>
+        <p v-if="availableContainers.length === 0" class="text-xs text-base-content/60">背包中无可用容器</p>
+        <div v-if="selectedContainerKey" class="mt-1 text-xs space-x-2">
+          <span v-if="containerCanHeat" class="text-success">✅ 可加热</span>
+          <span v-else class="text-error">❌ 不可加热</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 材料选择 -->
+    <div class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">2. 选择材料</h3>
+        <button class="btn btn-outline btn-sm w-full justify-start gap-2" @click="openMaterialModal">
+          <Icon icon="tabler:package" class="text-lg" />
+          <span v-if="materialCount === 0" class="text-base-content/50">点击选择材料</span>
+          <span v-else class="font-normal">{{ materialSummary }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. 操作选择 -->
+    <div class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">3. 选择操作</h3>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="op in LabActions"
+            :key="op.key"
+            class="btn btn-outline btn-sm gap-1"
+            :class="selectedOperationKey === op.key ? 'btn-primary' : ''"
+            :disabled="op.required_techs && !op.required_techs.every(t => packStore.hasTech(t))"
+            @click="selectedOperationKey = op.key"
+          >
+            <Icon v-if="op.requires_burning" icon="tabler:flame" class="text-sm" />
+            {{ op.name }}
+            <span class="text-xs opacity-60">{{ op.time_required }}秒</span>
+          </button>
+        </div>
+        <div v-if="selectedOperation" class="mt-2 text-xs text-base-content/70 space-y-0.5">
+          <p>{{ selectedOperation.description }}</p>
+          <p v-if="selectedOperation.requires_burning" class="text-warning">🔥 需要火源</p>
+          <p v-if="selectedOperation.required_item">
+            需要: {{ selectedOperation.required_item.map(r => {
+              const def = getItem(r.key)
+              return `${def?.name || r.key}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
+            }).join(', ') }}
+          </p>
+          <p v-if="selectedOperation.required_techs && !selectedOperation.required_techs.every(t => packStore.hasTech(t))" class="text-error">
+            前置科技未解锁
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 引火与燃料（仅需火源的操作） -->
+    <div v-if="burningNeeded" class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">4. 引火与燃料</h3>
+
+        <!-- 引火物选择 -->
+        <div class="mb-3">
+          <span class="text-xs font-medium mb-1 block">引火物</span>
+          <select v-model="selectedFireSourceKey" class="select select-bordered w-full select-sm">
+            <option :value="null" disabled>-- 请选择引火物 --</option>
+            <option v-for="fs in fireSourceItems" :key="fs.key" :value="fs.key">
+              {{ fs.name }} (耐久: {{ Math.round(fs.durable * 100) / 100 }})
+            </option>
+          </select>
+          <p v-if="fireSourceItems.length === 0" class="text-xs text-error mt-1">背包中无引火物</p>
+          <div v-if="selectedFireSourcePack" class="text-xs text-base-content/50 mt-0.5">
+            可用 {{ maxCyclesByFire }} 次（每次消耗 0.01 耐久）
+          </div>
+        </div>
+
+        <!-- 燃料选择 -->
+        <div>
+          <span class="text-xs font-medium mb-1 block">燃料</span>
+          <div v-if="fuelItems.length === 0" class="text-xs text-error">背包中无燃料</div>
+          <div v-else class="space-y-1">
+            <div
+              v-for="fuel in fuelItems"
+              :key="fuel.key"
+              class="flex items-center justify-between px-3 py-1.5 rounded-lg border text-sm"
+              :class="getFuelQty(fuel.key) > 0 ? 'border-warning bg-warning/5' : 'border-base-300'"
+            >
+              <div class="flex items-center gap-2">
+                <span>{{ fuel.name }}</span>
+                <span class="text-xs text-base-content/50">
+                  背包 {{ fuel.quantity }} | {{ (getItem(fuel.key)?.attrs?.burn_time as number) || '?' }}秒/个
+                </span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button class="btn btn-xs btn-circle btn-ghost" :disabled="getFuelQty(fuel.key) <= 0" @click="fuelDecrement(fuel.key)">−</button>
+                <span class="w-6 text-center font-mono text-sm">{{ getFuelQty(fuel.key) }}</span>
+                <button class="btn btn-xs btn-circle btn-ghost" :disabled="getFuelQty(fuel.key) >= fuel.quantity" @click="fuelIncrement(fuel.key, fuel.quantity)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 燃料燃烧摘要 -->
+          <div v-if="selectedFuels.size > 0" class="mt-2 text-xs space-y-0.5">
+            <div class="text-base-content/70">
+              燃烧时长: {{ selectedFuels.size > 0
+                ? [...selectedFuels.entries()].reduce((s, [k, q]) => s + ((getItem(k)?.attrs?.burn_time as number) || 0) * q, 0)
+                : 0 }}秒
+            </div>
+            <div class="text-base-content/70">
+              每次操作需: {{ selectedOperation?.time_required ?? '?' }}秒
+              <span v-if="maxCyclesByFuel !== Infinity">，最多 {{ maxCyclesByFuel }} 次</span>
+            </div>
+            <div v-if="!hasEnoughFuel && cycles > 0" class="text-error">⚠️ 燃料不足以完成 {{ cycles }} 次操作</div>
+            <div v-if="cycleOptions.length === 0" class="text-error">⚠️ 燃料不足以完成任何操作</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 执行实验 -->
+    <div class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">{{ burningNeeded ? '5' : '4' }}. 执行实验</h3>
+
+        <!-- 周期选择 -->
+        <div class="flex items-center gap-2 mb-3 flex-wrap">
+          <span class="text-sm">执行次数:</span>
+          <div class="join">
+            <button
+              v-for="n in cycleOptionsAll"
+              :key="n"
+              class="join-item btn btn-sm"
+              :class="[
+                cycles === n ? 'btn-primary' : '',
+                !cycleOptions.includes(n) ? 'btn-disabled opacity-30' : ''
+              ]"
+              :disabled="!cycleOptions.includes(n)"
+              @click="cycles = n"
+            >{{ n }}×</button>
+          </div>
+          <span class="text-xs text-base-content/60">
+            总耗时: {{ totalTime > 60 ? Math.floor(totalTime / 60) + '分' + (totalTime % 60) + '秒' : totalTime + '秒' }}
+          </span>
+        </div>
+
+        <!-- 配方提示 -->
+        <div v-if="matchedFormula" class="border rounded-lg p-3 mb-3"
+          :class="formulaProven ? 'border-success/30 bg-success/5' : 'border-warning/30 bg-warning/5'">
+          <template v-if="formulaProven">
+            <div class="flex items-center gap-1 text-sm font-medium text-success">
+              <Icon icon="tabler:flask" class="text-lg" />
+              匹配配方: {{ matchedFormula.name }}
+            </div>
+            <div class="text-xs text-base-content/70 mt-1">{{ matchedFormula.description }}</div>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <span v-for="p in formulaProducts" :key="p.key" class="badge badge-success badge-sm">
+                产出 {{ p.name }} ×{{ p.quantity }}
+              </span>
+            </div>
+          </template>
+          <template v-else>
+            <div class="flex items-center gap-1 text-sm font-medium text-warning">
+              <Icon icon="tabler:question-mark" class="text-lg" />
+              未知结果
+            </div>
+            <div class="text-xs text-base-content/70 mt-1">
+              当前配方的产物尚不清楚，或许会有新发现！
+            </div>
+          </template>
+        </div>
+        <div v-else-if="selectedOperation" class="text-xs text-base-content/50 mb-3">
+          无匹配配方 — 当前组合无法进行有效实验
+        </div>
+
+        <!-- 开始按钮 -->
+        <button class="btn btn-primary w-full gap-2" :disabled="!canStart" @click="startExperiment">
+          <Icon icon="tabler:flask" class="text-lg" />
+          开始实验
+        </button>
+
+        <p v-if="!canStart && selectedOperation && !matchedFormula" class="text-xs text-base-content/40 text-center mt-1">
+          请调整材料或容器以匹配配方
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 材料选择弹窗 -->
+  <dialog :open="materialModalOpen" class="modal">
+    <div class="modal-box max-w-md">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-bold text-lg">选择材料</h3>
+        <button class="btn btn-sm btn-circle btn-ghost" @click="cancelMaterials">
+          <Icon icon="tabler:x" class="text-xl" />
+        </button>
+      </div>
+
+      <div v-if="availableMaterials.length === 0" class="text-sm text-base-content/50 py-4 text-center">
+        背包中无可用材料
+      </div>
+      <div v-else class="space-y-1 max-h-80 overflow-y-auto pr-1">
+        <div
+          v-for="item in availableMaterials"
+          :key="item.key"
+          class="flex items-center justify-between px-3 py-2 rounded-lg border text-sm transition-colors"
+          :class="getDraftQty(item.key) > 0 ? 'border-primary bg-primary/5' : 'border-base-300'"
+        >
+          <div class="flex items-center gap-2">
+            <span>{{ item.name }}</span>
+            <span class="text-xs text-base-content/50">背包: {{ item.quantity }}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) <= 0" @click="draftDecrement(item.key)">−</button>
+            <span class="w-6 text-center font-mono text-sm">{{ getDraftQty(item.key) }}</span>
+            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) >= item.quantity" @click="draftIncrement(item.key)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-action">
+        <button class="btn" @click="cancelMaterials">取消</button>
+        <button class="btn btn-primary" @click="confirmMaterials">确定</button>
+      </div>
+    </div>
+  </dialog>
+</template>

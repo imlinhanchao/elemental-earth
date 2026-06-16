@@ -3,6 +3,7 @@ import { computed, reactive } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Items } from '@/data/items';
+import { useStateStore } from './state';
 export interface IPackItem {
   name: string;
   key: string;
@@ -13,13 +14,18 @@ export interface IPackItem {
 export const usePackStore = defineStore('pack', () => {
   const items = reactive<IPackItem[]>([]);
   const techs = reactive<string[]>([]);
+  const provenFormulas = reactive<string[]>([])
 
   const getItems = computed(() => items);
   const addItem = (itemKey: string, quantity: number, use: number = 0) => {
     const existingItem = items.find(i => i.key === itemKey);
     if (existingItem) {
+      const itemData = Items.find(i => i.key === itemKey);
+      if (itemData?.elemental) {
+        const stateStore = useStateStore();
+        stateStore.addElement(itemData.elemental);
+      }
       if (use) {
-        const itemData = Items.find(i => i.key === itemKey);
         const durable = itemData?.durable ?? 1;
         existingItem.durable += use;
         if (existingItem.durable > durable) {
@@ -33,6 +39,10 @@ export const usePackStore = defineStore('pack', () => {
       const itemData = Items.find(i => i.key === itemKey);
       if (itemData) {
         items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
+        if (itemData.elemental) {
+          const stateStore = useStateStore();
+          stateStore.addElement(itemData.elemental);
+        }
       } else {
         console.warn(`尝试添加未知物品: ${itemKey}`);
       }
@@ -69,7 +79,15 @@ export const usePackStore = defineStore('pack', () => {
   }
   const hasTech = (techKey: string) => techs.includes(techKey);
 
-  return { items, techs, getItems, addItem, removeItem, hasItem, getTechs, addTech, hasTech }
+  const getProvenFormulas = computed(() => provenFormulas);
+  const addProvenFormula = (formulaKey: string) => {
+    if (!provenFormulas.includes(formulaKey)) {
+      provenFormulas.push(formulaKey);
+    }
+  }
+  const hasProvenFormula = (formulaKey: string) => provenFormulas.includes(formulaKey);
+
+  return { items, techs, provenFormulas, getItems, addItem, removeItem, hasItem, getTechs, addTech, hasTech, getProvenFormulas, addProvenFormula, hasProvenFormula }
 })
 
 export const usePackStoreWithOut = once(() => usePackStore(store));

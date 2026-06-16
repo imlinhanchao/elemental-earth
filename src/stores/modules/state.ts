@@ -10,17 +10,20 @@ export interface IGameState {
   switchingTarget: string | null;
   switchStartTime: number;
   switchDuration: number;
+  elements?: number[]; // 已点亮的元素列表，元素编号对应周期表
 }
 
 /** 曼哈顿距离 -> 耗时毫秒的倍率 */
 const TIME_PER_DISTANCE = 100;
 
 export const useStateStore = defineStore('state', () => {
+  const logStore = useLogStore()
   const state = reactive<IGameState>({
     map: Maps[Math.floor(Math.random() * Maps.length)].key,
     switchingTarget: null,
     switchStartTime: 0,
     switchDuration: 0,
+    elements: [], // 已点亮的元素列表，元素编号对应周期表
   });
 
   const getState = computed(() => state);
@@ -67,7 +70,6 @@ export const useStateStore = defineStore('state', () => {
     state.switchingTarget = targetKey
     state.switchStartTime = Date.now()
     state.switchDuration = duration
-    const logStore = useLogStore()
     logStore.addLog(`开始切换地图至 ${Maps.find(m => m.key === targetKey)?.name || targetKey}`, 'process')
   }
 
@@ -78,7 +80,6 @@ export const useStateStore = defineStore('state', () => {
     state.switchStartTime = 0
     state.switchDuration = 0
     if (targetName) {
-      const logStore = useLogStore()
       logStore.addLog(`取消切换地图至 ${targetName}`, 'process')
     }
   }
@@ -91,14 +92,23 @@ export const useStateStore = defineStore('state', () => {
     state.switchingTarget = null
     state.switchStartTime = 0
     state.switchDuration = 0
-    const logStore = useLogStore()
     logStore.addLog(`切换地图完成，当前位于 ${getMap.value?.name || state.map}`, 'process')
+  }
+
+  const getElements = computed(() => state.elements);
+  function addElement(element: number) {
+    if (!state.elements) state.elements = [];
+    if (!state.elements.includes(element)) {
+      state.elements.push(element);
+      logStore.addLog(`元素 ${element} 已点亮！`, 'reward');
+    }
   }
 
   return {
     state, getState, getMap, setMap, now,
     isSwitching, switchProgress, getSwitchTargetMap,
-    calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch,
+    calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
+    getElements, addElement,
   }
 })
 

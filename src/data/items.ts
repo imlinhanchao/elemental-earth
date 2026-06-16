@@ -19,23 +19,33 @@ export interface IItem {
    * 耐久度，0-1之间，表示物品的使用程度
    */
   durable?: number;
+  /**
+   * 类型
+   */
+  type: string[];
+  /**
+   * 其他属性
+   */
+  attrs?: Record<string, any>;
 }
 
 export const Items: IItem[] = [
-  { name: "石头", key: "stone", description: "一种常见的矿物，可以用来建造和制作工具。" },
-  { name: "木材", key: "wood", description: "一种常见的材料，可以用来建造和制作工具。" },
-  { name: "燧石", key: "flint", description: "一种坚硬的矿物，可以用来制作火种和工具。" },
-  { name: "树皮", key: "bark", description: "树木的外层，可以用来制作绳子和其他物品。" },
-  { name: "树脂", key: "resin", description: "树木分泌的粘稠物质，可以用来制作胶水和其他物品。" },
-  { name: "粘土", key: "clay", description: "一种湿润的土壤，可以用来制作陶器和其他物品。" },
-  { name: "泥土", key: "mud", description: "一种湿润的土壤，可以用来制作建筑材料和其他物品。" },
-  { name: "水", key: "water", description: "生命之源，可以用来饮用和灌溉。" },
-  { name: "火种", key: "fire_seed", description: "用燧石和木材制作的火种，可以用来生火。" },
-  { name: "骨头", key: "bone", description: "动物的骨骼，可以用来制作工具和装饰品。" },
-  { name: "沙金", key: "gold_sand", description: "一种稀有的矿物，可以用来制作贵重物品。", elemental: 79 },
-  { name: "石斧", key: "stone_axe", description: "用石头制作的斧头，可以用来砍树和挖掘。", durable: 1 },
-  { name: "石镐", key: "stone_pickaxe", description: "用石头制作的镐，可以用来挖掘和采矿。", durable: 1 },
-  { name: "木桶", key: "wooden_bucket", description: "用木材制作的桶，可以用来装水和其他物品。", durable: 1 },
+  { name: "石头", key: "stone", description: "一种常见的矿物，可以用来建造和制作工具。", type: ["material"] },
+  { name: "木材", key: "wood", description: "一种常见的材料，可以用来建造和制作工具。", type: ["material", "fuel"], attrs: { burn_time: 30 } },
+  { name: "燧石", key: "flint", description: "一种坚硬的矿物，可以用来制作火种和工具。", type: ["material"] },
+  { name: "树皮", key: "bark", description: "树木的外层，可以用来制作绳子和其他物品。", type: ["material"] },
+  { name: "树脂", key: "resin", description: "树木分泌的粘稠物质，可以用来制作胶水和其他物品。", type: ["material"] },
+  { name: "粘土", key: "clay", description: "一种湿润的土壤，可以用来制作陶器和其他物品。", type: ["material"] },
+  { name: "泥土", key: "mud", description: "一种湿润的土壤，可以用来制作建筑材料和其他物品。", type: ["material"] },
+  { name: "水", key: "water", description: "生命之源，可以用来饮用和灌溉。", type: ["material"] },
+  { name: "木炭", key: "charcoal", description: "木材燃烧后的产物，可以用来制作火种和其他物品。", type: ["material", "fuel"], elemental: 6, attrs: { burn_time: 60 } },
+  { name: "火种", key: "fire_seed", description: "用燧石和木材制作的火种，可以用来生火。", durable: 1, type: ["fire_source"] },
+  { name: "沙金", key: "gold_sand", description: "一种稀有的矿物，可以用来制作贵重物品。", elemental: 79, type: ["material"] },
+  { name: "石斧", key: "stone_axe", description: "用石头制作的斧头，可以用来砍树和挖掘。", durable: 1, type: ["tool"] },
+  { name: "石镐", key: "stone_pickaxe", description: "用石头制作的镐，可以用来挖掘和采矿。", durable: 1, type: ["tool"] },
+  { name: "木桶", key: "wooden_bucket", description: "用木材制作的桶，可以用来装水和其他物品。", durable: 1, type: ["container"] },
+  { name: "陶罐", key: "clay_pot", description: "用粘土制作的罐子，可以用来装水和其他物品。", durable: 1, type: ["container"], attrs: { can_heat: true }   },
+  { name: "一氧化碳", key: "carbon_monoxide", description: "一种有毒的气体，可以通过干馏产生。", type: ["material", "gas"] },
 ]
 
 export function getItem(key: string): IItem | undefined {

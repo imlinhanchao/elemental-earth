@@ -56,5 +56,14 @@ export const Techs: ITech[] = [
       { key: "wood", quantity: 50 } // 木材
     ],
     time_required: 15
+  },
+  {
+    name: "陶器制作",
+    key: "pottery",
+    description: "使用粘土制作陶器，可以用来装水和其他物品。",
+    required_items: [
+      { key: "clay", quantity: 20 } // 粘土
+    ],
+    time_required: 12
   }
 ]

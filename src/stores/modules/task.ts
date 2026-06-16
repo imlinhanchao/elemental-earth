@@ -11,7 +11,7 @@ import { useLogStore } from './log';
 export interface ITask extends IAction {
   id: number;
   begin_time: number; // timestamp
-  type: 'action' | 'tech';
+  type: 'action' | 'tech' | 'lab';
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -52,6 +52,13 @@ export const useTaskStore = defineStore('task', () => {
           } else {
             logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
           }
+        } else if (task.type === 'lab') {
+          // lab 类型：给予所有产物
+          for (const reward of task.rewards) {
+            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
+            logStore.addLog(`实验室产物: ${reward.key} x${quantity}`, 'reward');
+            packStore.addItem(reward.key, quantity);
+          }
         } else {
           packStore.addTech(task.key);
           logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
@@ -91,10 +98,26 @@ export const useTaskStore = defineStore('task', () => {
       }
     }
   }
+  /** 实验室专用：直接推入任务（物品已在 UI 层扣除，存入 required_items 用于取消时退还） */
+  function pushLabTask(labTask: {
+    name: string;
+    key: string;
+    description: string;
+    time_required: number;
+    rewards: IReward[];
+    required_items: { key: string; quantity: number; use?: number }[];
+  }) {
+    tasks.push({
+      ...labTask,
+      begin_time: tasks.length > 0 ? 0 : Date.now(),
+      id: Date.now(),
+      type: 'lab',
+    } as ITask);
+  }
 
   taskLoop();
 
-  return { tasks, getTasks, pushTask, removeTask }
+  return { tasks, getTasks, pushTask, removeTask, pushLabTask }
 })
 
 export const useTaskStoreWithOut = once(() => useTaskStore(store));

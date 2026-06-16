@@ -23,6 +23,7 @@ export interface SaveData {
   techs: string[];
   tasks: ITask[];
   logs: ILog[];
+  formulas: string[];
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -46,8 +47,8 @@ export function saveGame(): boolean {
       techs: JSON.parse(JSON.stringify(packStore.techs)),
       tasks: JSON.parse(JSON.stringify(taskStore.tasks)),
       logs: JSON.parse(JSON.stringify(logStore.logs)),
+      formulas: JSON.parse(JSON.stringify(packStore.provenFormulas)),
     };
-
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
     return true;
@@ -84,6 +85,7 @@ export function loadGame(): boolean {
       stateStore.state.switchStartTime = data.state.switchStartTime;
       stateStore.state.switchDuration = data.state.switchDuration;
     }
+    stateStore.state.elements = data.state.elements || [];
 
     // 恢复背包物品
     packStore.items.splice(0, packStore.items.length, ...data.items);
@@ -96,6 +98,11 @@ export function loadGame(): boolean {
 
     // 恢复日志
     logStore.logs.splice(0, logStore.logs.length, ...data.logs);
+
+    // 恢复已验证配方（旧存档可能没有此字段）
+    if (Array.isArray(data.formulas)) {
+      packStore.provenFormulas.splice(0, packStore.provenFormulas.length, ...data.formulas);
+    }
 
     lastSavedTime.value = data.timestamp;
     return true;
