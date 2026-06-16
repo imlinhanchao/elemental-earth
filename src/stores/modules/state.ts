@@ -71,7 +71,6 @@ export const useStateStore = defineStore('state', () => {
     state.switchingTarget = targetKey
     state.switchStartTime = Date.now()
     state.switchDuration = duration
-    logStore.addLog(`开始切换地图至 ${Maps.find(m => m.key === targetKey)?.name || targetKey}`, 'process')
   }
 
   /** 取消切换地图 */
@@ -93,7 +92,6 @@ export const useStateStore = defineStore('state', () => {
     state.switchingTarget = null
     state.switchStartTime = 0
     state.switchDuration = 0
-    logStore.addLog(`切换地图完成，当前位于 ${getMap.value?.name || state.map}`, 'process')
   }
 
   const getElements = computed(() => state.elements);

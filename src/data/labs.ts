@@ -44,5 +44,20 @@ export const LabActions: ILabAction[] = [
         description: "将物体混合在一起，以促进化学反应或物理变化。",
         time_required: 10,
         requires_burning: false
+    },
+    {
+        name: "焙烧",
+        key: "roasting",
+        description: "将物体在有氧条件下加热，促进化学反应或物理变化。",
+        time_required: 20,
+        required_item: [{ key: "kiln", quantity: 1, use: 0.1 }],
+        requires_burning: true
+    },
+    {
+        name: "加热",
+        key: "heating",
+        description: "对物体进行加热，以促进化学反应或物理变化。",
+        time_required: 20,
+        requires_burning: true
     }
 ];

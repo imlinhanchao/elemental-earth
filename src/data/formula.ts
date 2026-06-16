@@ -20,9 +20,13 @@ export interface IFormula {
      */
     required_container?: string;
     /**
-     * 所需操作
+     * 所需操作 (key: 操作标识, min: 最少次数(默认1), max: 最多次数(不设置则不限制))
      */
-    required_actions?: string;
+    required_actions?: {
+      key: string;
+      min?: number;
+      max?: number;
+    };
     /**
      * 前置科技
      */
@@ -46,7 +50,7 @@ export const Formulas: IFormula[] = [
             { key: "wood", quantity: 1 }
         ],
         required_container: "clay_pot",
-        required_actions: "dry_distillation",
+        required_actions: { key: "dry_distillation" },
         required_techs: ["pottery"],
         time_required: 30,
         products: [
@@ -62,10 +66,26 @@ export const Formulas: IFormula[] = [
             { key: "mud", quantity: 1 },
             { key: "water", quantity: 1 }
         ],
-        required_actions: "stirring",
+        required_actions: { key: "stirring" },
         time_required: 10,
         products: [
             { key: "clay", multiple: 1 }
+        ]
+    },
+    {
+        name: "炼铜",
+        key: "copper_smelting",
+        description: "将孔雀石放入窑炉中进行焙烧，得到铜和二氧化碳。",
+        required_items: [
+            { key: "malachite", quantity: 1 },
+        ],
+        required_container: "kiln",
+        required_actions: { key: "roasting", min: 2, },
+        required_techs: ["pottery"],
+        time_required: 60,
+        products: [
+            { key: "copper", multiple: 1 },
+            { key: "carbon_dioxide", multiple: 1 }
         ]
     }
 ];

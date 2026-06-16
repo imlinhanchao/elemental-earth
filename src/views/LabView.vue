@@ -94,7 +94,7 @@ const matchedFormula = computed<IFormula | null>(() => {
   const op = selectedOperation.value
   if (!op) return null
   return Formulas.find(f => {
-    if (f.required_actions && f.required_actions !== op.key) return false
+    if (f.required_actions && f.required_actions.key !== op.key) return false
     if (f.required_container && f.required_container !== selectedContainerKey.value) return false
     if (f.required_items) {
       for (const req of f.required_items) {
@@ -102,6 +102,11 @@ const matchedFormula = computed<IFormula | null>(() => {
       }
     }
     if (f.required_techs && !f.required_techs.every(t => packStore.hasTech(t))) return false
+    // min/max 次数检查
+    const actMin = f.required_actions?.min ?? 1
+    const actMax = f.required_actions?.max
+    if (cycles.value < actMin) return false
+    if (actMax !== undefined && cycles.value > actMax) return false
     return true
   }) || null
 })
@@ -122,8 +127,19 @@ const formulaProducts = computed(() => {
     .map(p => ({
       key: p.key,
       name: getItem(p.key)?.name || p.key,
-      quantity: p.multiple * cycles.value,
+      quantity: p.multiple * batches.value,
     }))
+})
+
+// ---- 批次数（每个配方的操作最小次数为一组） ----
+const batchSize = computed(() => {
+  if (!matchedFormula.value?.required_actions) return 1
+  return matchedFormula.value.required_actions.min ?? 1
+})
+
+const batches = computed(() => {
+  if (!matchedFormula.value || batchSize.value === 0) return 0
+  return Math.floor(cycles.value / batchSize.value)
 })
 
 // ---- 燃烧系统 ----
@@ -172,18 +188,71 @@ const maxCyclesByFuel = computed(() => {
   return Math.floor(totalBurn / selectedOperation.value.time_required)
 })
 
-// 可用周期选项（受资源限制）
+// ---- 周期限制 ----
 const cycleOptionsAll = [1, 2, 3, 5, 10]
-const cycleOptions = computed(() => {
-  if (!burningNeeded.value) return cycleOptionsAll
-  const maxByF = maxCyclesByFire.value
-  const maxByFu = maxCyclesByFuel.value
-  const max = Math.min(
-    maxByF,
-    maxByFu === Infinity ? maxByF : maxByFu,
-  )
-  return cycleOptionsAll.filter(n => n <= max)
+
+// 各维度最大可用次数
+const maxByContainer = computed(() => {
+  if (!selectedOperation.value?.required_item) return null
+  const pack = selectedContainerPack.value
+  if (!pack) return null
+  let max = Infinity
+  for (const req of selectedOperation.value.required_item) {
+    if (req.use) {
+      max = Math.min(max, Math.floor(pack.durable / req.use))
+    }
+  }
+  return max === Infinity ? null : max
 })
+
+const maxByFormula = computed(() => {
+  if (!matchedFormula.value?.required_actions?.max) return null
+  return matchedFormula.value.required_actions.max
+})
+
+// 全局最大可用次数
+const globalMaxCycles = computed(() => {
+  const limits: (number | null)[] = []
+  if (burningNeeded.value) {
+    limits.push(maxCyclesByFire.value > 0 ? maxCyclesByFire.value : null)
+    if (maxCyclesByFuel.value !== Infinity) limits.push(maxCyclesByFuel.value)
+  }
+  limits.push(maxByContainer.value, maxByFormula.value)
+  const nums = limits.filter((l): l is number => l !== null)
+  if (nums.length === 0) return null
+  return Math.min(...nums)
+})
+
+// 当前次数是否超出限制
+const cyclesExceedsLimit = computed(() => {
+  if (globalMaxCycles.value !== null && cycles.value > globalMaxCycles.value) return true
+  if (matchedFormula.value?.required_actions?.min && cycles.value < matchedFormula.value.required_actions.min) return true
+  return false
+})
+
+// 最大限制标签文字
+const limitLabel = computed(() => {
+  const parts: string[] = []
+  if (burningNeeded.value) {
+    if (maxCyclesByFire.value > 0) parts.push(`引火物 ${maxCyclesByFire.value}次`)
+    if (maxCyclesByFuel.value !== Infinity) parts.push(`燃料 ${maxCyclesByFuel.value}次`)
+  }
+  if (maxByContainer.value !== null) parts.push(`容器 ${maxByContainer.value}次`)
+  if (maxByFormula.value !== null) parts.push(`配方上限 ${maxByFormula.value}次`)
+  return parts.join('、')
+})
+
+// 可用周期选项（受资源限制，用于预设按钮）
+const cycleOptions = computed(() => {
+  if (globalMaxCycles.value === null) return cycleOptionsAll
+  return cycleOptionsAll.filter(n => n <= globalMaxCycles.value!)
+})
+
+// 输入框解析
+function onCyclesInput(e: Event) {
+  const val = parseInt((e.target as HTMLInputElement).value) || 1
+  cycles.value = Math.max(1, val)
+}
 
 // 当前周期的燃料消耗明细
 const fuelConsumptionDetail = computed(() => {
@@ -248,7 +317,7 @@ const canStart = computed(() => {
   if (matchedFormula.value?.required_items) {
     for (const req of matchedFormula.value.required_items) {
       const have = selectedMaterials.value.get(req.key) || 0
-      if (have < req.quantity * cycles.value) return false
+      if (have < req.quantity * batches.value) return false
     }
   }
 
@@ -259,6 +328,9 @@ const canStart = computed(() => {
     if (selectedFuels.value.size === 0) return false
     if (!hasEnoughFuel.value) return false
   }
+
+  // 批次数必须至少为 1
+  if (matchedFormula.value && batches.value < 1) return false
 
   return true
 })
@@ -291,7 +363,7 @@ function startExperiment() {
   }
 
   for (const req of matchedFormula.value.required_items) {
-    consumedItems.push({ key: req.key, quantity: req.quantity * cycles.value })
+    consumedItems.push({ key: req.key, quantity: req.quantity * batches.value })
   }
 
   if (burningNeeded.value) {
@@ -466,8 +538,18 @@ function startExperiment() {
         <h3 class="card-title text-sm">{{ burningNeeded ? '5' : '4' }}. 执行实验</h3>
 
         <!-- 周期选择 -->
-        <div class="flex items-center gap-2 mb-3 flex-wrap">
+        <div class="flex flex-wrap items-center gap-2 mb-3">
           <span class="text-sm">执行次数:</span>
+          <input
+            type="number"
+            min="1"
+            :max="globalMaxCycles ?? ''"
+            :value="cycles"
+            @input="onCyclesInput"
+            class="input input-bordered input-sm w-16 text-center font-mono"
+            :class="cyclesExceedsLimit ? 'input-error text-error' : ''"
+          />
+          <span class="text-xs">次</span>
           <div class="join">
             <button
               v-for="n in cycleOptionsAll"
@@ -483,6 +565,13 @@ function startExperiment() {
           </div>
           <span class="text-xs text-base-content/60">
             总耗时: {{ totalTime > 60 ? Math.floor(totalTime / 60) + '分' + (totalTime % 60) + '秒' : totalTime + '秒' }}
+          </span>
+          <!-- 超出限制警告 -->
+          <span v-if="cyclesExceedsLimit && limitLabel" class="text-xs text-error w-full">
+            ⚠️ 超出限制：{{ limitLabel }}
+          </span>
+          <span v-else-if="cyclesExceedsLimit" class="text-xs text-error w-full">
+            ⚠️ 当前次数超出可用范围
           </span>
         </div>
 

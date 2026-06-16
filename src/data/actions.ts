@@ -66,7 +66,6 @@ export const Actions: IAction[] =
       { key: "flint", quantity: 1, probability: 50 }, // 燧石
       { key: "clay", quantity: 1, probability: 100, map: ["river_side"] }, // 粘土
       { key: "bone", quantity: 1, probability: 20, map: ["mountain"] }, // 骨头
-      { key: "gold_sand", quantity: 1, probability: 5, map: ["river_side"] }, // 沙金
     ],
     time_required: 0
   },
@@ -83,16 +82,18 @@ export const Actions: IAction[] =
     time_required: 0
   },
   {
-    name: "挖掘",
+    name: "石稿挖掘",
     key: "dig",
     description: "使用工具挖掘地面，可以获得各种资源。",
     required_items: [
       { key: "stone_pickaxe", quantity: 1, use: 0.01 } // 石镐
     ],
     rewards: [
-      { key: "mud", quantity: 1, probability: 100 }, // 泥土
-      { key: "flint", quantity: 1, probability: 50, map: ["volcano"] }, // 燧石
-      { key: "clay", quantity: 1, probability: 50, map: ["river_side"] }, // 粘土
+      { key: "mud", quantity: 1, probability: 1000 }, // 泥土
+      { key: "flint", quantity: 1, probability: 500, map: ["volcano"] }, // 燧石
+      { key: "clay", quantity: 1, probability: 500, map: ["river_side"] }, // 粘土
+      { key: "gold_sand", quantity: 1, probability: 1, map: ["river_side"] }, // 沙金
+      { key: "malachite", quantity: 1, probability: 100, map: ["mountain"] }, // 孔雀石
     ],
     time_required: 5
   },
@@ -117,7 +118,7 @@ export const Actions: IAction[] =
       { key: "stone_axe", quantity: 1, use: 0.01 } // 石斧
     ],
     rewards: [
-      { key: "wood", quantity: [5, 7, 10], probability: 1000 } // 木材
+      { key: "wood", quantity: [5, 7, 8, 9, 10], probability: 1000 } // 木材
     ],
     time_required: 5,
     map: ["forest"]
@@ -182,12 +183,29 @@ export const Actions: IAction[] =
     key: 'craft_clay_pot',
     description: '使用粘土制作陶罐，可以用来装水和其他物品。',
     required_items: [
-      { key: "clay", quantity: 5 } // 粘土
+      { key: "clay", quantity: 5 }, // 粘土
+      { key: "kiln", quantity: 1, use: 0.01 } // 窑炉
     ],
     required_techs: ["pottery"],
     rewards: [
       { key: "clay_pot", quantity: 1, probability: 1000 } // 陶罐
     ],
     time_required: 12
+  },
+  {
+    name: '制作窑炉',
+    key: 'craft_kiln',
+    description: '使用粘土制作窑炉，可以用来烧制陶器和其他物品。',
+    required_items: [
+      { key: "clay", quantity: 20 }, // 粘土
+      { key: "wood", quantity: 10 }, // 木材
+      { key: "stone", quantity: 10 }, // 石头
+      { key: "fire_seed", quantity: 1, use: 0.01 } // 火种
+    ],
+    required_techs: ["pottery"],
+    rewards: [
+      { key: "kiln", quantity: 1, probability: 1000 } // 窑炉
+    ],
+    time_required: 30
   }
 ]

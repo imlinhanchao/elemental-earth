@@ -71,6 +71,11 @@ export const usePackStore = defineStore('pack', () => {
     return existingItem && existingItem.quantity >= quantity;
   }
 
+  const getItemQuantity = (key: string) => {
+    const existingItem = items.find(i => i.key === key);
+    return existingItem ? existingItem.quantity : 0;
+  }
+
   const getTechs = computed(() => techs);
   const addTech = (techKey: string) => {
     if (!techs.includes(techKey)) {
@@ -87,7 +92,12 @@ export const usePackStore = defineStore('pack', () => {
   }
   const hasProvenFormula = (formulaKey: string) => provenFormulas.includes(formulaKey);
 
-  return { items, techs, provenFormulas, getItems, addItem, removeItem, hasItem, getTechs, addTech, hasTech, getProvenFormulas, addProvenFormula, hasProvenFormula }
+  return { 
+    items, techs, provenFormulas, 
+    getItems, addItem, removeItem, hasItem, getItemQuantity,
+    getTechs, addTech, hasTech, 
+    getProvenFormulas, addProvenFormula, hasProvenFormula 
+  }
 })
 
 export const usePackStoreWithOut = once(() => usePackStore(store));
