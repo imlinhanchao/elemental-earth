@@ -85,7 +85,7 @@ export const useTaskStore = defineStore('task', () => {
         packStore.removeItem(req.key, req.quantity, req.use);
       }
     }
-    tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech' });
+    tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '' });
   }
   const removeTask = (id: number) => {
     const index = tasks.findIndex(task => task.id === id);

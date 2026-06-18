@@ -58,7 +58,7 @@ enabled = true   # language server tools; servers launch lazily when used
 # Rules are "Tool" or "Tool(specifier)"; e.g. Bash(go test:*), Edit(src/**).
 mode  = "ask"
 # deny = ["Bash(rm -rf*)", "Bash(git push*)"]   # hard-blocked in every mode
-allow = ["explore", "Edit", "Bash(cd /home/hancel/project/ashes-atoms && npx vue-tsc --noEmit 2>&1)", "Bash(cd /home/hancel/project/ashes-atoms && npx vite build 2>&1)"]
+allow = ["explore", "Edit", "Bash(cd /home/hancel/project/ashes-atoms && npx vue-tsc --noEmit 2>&1)", "Bash(cd /home/hancel/project/ashes-atoms && npx vite build 2>&1)", "Bash(cd /home/hancel/project/ashes-atoms && cat package.json | grep -E \"daisyui|tailwind\")", "Bash(cd /home/hancel/project/ashes-atoms && npm run type-check 2>&1)", "Bash(cd /home/hancel/project/ashes-atoms && npm run build 2>&1)"]
 # ask = ["Edit(src/**)"]   # force a prompt even if otherwise allowed
 
 [sandbox]

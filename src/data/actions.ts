@@ -28,6 +28,10 @@ export interface IAction {
    */
   key: string;
   /**
+   * 行动分类（采集、制作等）
+   */
+  category: string;
+  /**
    * 行动描述
    */
   description: string;
@@ -59,6 +63,7 @@ export const Actions: IAction[] =
   {
     name: "捡石头",
     key: "pick_stone",
+    category: "采集",
     description: "在地上捡起石头，可以用来建造和制作工具。",
     required_items: [],
     rewards: [
@@ -72,6 +77,7 @@ export const Actions: IAction[] =
   {
     name: "捡树枝",
     key: "pick_branch",
+    category: "采集",
     description: "在地上捡起树枝，可以用来建造和制作工具。",
     required_items: [],
     rewards: [
@@ -84,6 +90,7 @@ export const Actions: IAction[] =
   {
     name: "石稿挖掘",
     key: "dig",
+    category: "采集",
     description: "使用工具挖掘地面，可以获得各种资源。",
     required_items: [
       { key: "stone_pickaxe", quantity: 1, use: 0.01 } // 石镐
@@ -100,6 +107,7 @@ export const Actions: IAction[] =
   {
     name: "打水",
     key: "fetch_water",
+    category: "采集",
     description: "使用工具从水源打水，可以获得水资源。",
     required_items: [
       { key: "wooden_bucket", quantity: 1, use: 0.01 } // 木桶
@@ -113,6 +121,7 @@ export const Actions: IAction[] =
   {
     name: '伐木',
     key: 'chop_wood',
+    category: '采集',
     description: '使用石斧砍伐树木，可以获得更多的木材。',
     required_items: [
       { key: "stone_axe", quantity: 1, use: 0.01 } // 石斧
@@ -126,6 +135,7 @@ export const Actions: IAction[] =
   {
     name: "打造石斧",
     key: "craft_stone_axe",
+    category: "制作",
     description: "使用石头和木材制作石斧，可以用来砍树和挖掘。",
     required_items: [
       { key: "stone", quantity: 5 }, // 石头
@@ -140,6 +150,7 @@ export const Actions: IAction[] =
   {
     name: "打造石镐",
     key: "craft_stone_pickaxe",
+    category: "制作",
     description: "使用石头和木材制作石镐，可以用来挖掘和采矿。",
     required_items: [
       { key: "stone", quantity: 5 }, // 石头
@@ -154,6 +165,7 @@ export const Actions: IAction[] =
   {
     name: '制作木桶',
     key: 'craft_wooden_bucket',
+    category: '制作',
     description: '使用木材制作木桶，可以用来装水和其他物品。',
     required_items: [
       { key: "wood", quantity: 20 } // 木材
@@ -167,6 +179,7 @@ export const Actions: IAction[] =
   {
     name: '制作火种',
     key: 'craft_fire_seed',
+    category: '制作',
     description: '使用燧石和木材制作火种，可以用来生火。',
     required_items: [
       { key: "flint", quantity: 2 }, // 燧石
@@ -181,6 +194,7 @@ export const Actions: IAction[] =
   {
     name: '制作陶罐',
     key: 'craft_clay_pot',
+    category: '制作',
     description: '使用粘土制作陶罐，可以用来装水和其他物品。',
     required_items: [
       { key: "clay", quantity: 5 }, // 粘土
@@ -195,6 +209,7 @@ export const Actions: IAction[] =
   {
     name: '制作窑炉',
     key: 'craft_kiln',
+    category: '制作',
     description: '使用粘土制作窑炉，可以用来烧制陶器和其他物品。',
     required_items: [
       { key: "clay", quantity: 20 }, // 粘土
@@ -211,6 +226,7 @@ export const Actions: IAction[] =
   {
     name: "制作过滤布",
     key: "craft_filter_cloth",
+    category: "制作",
     description: "使用树皮制作过滤布，可以用来过滤液体。",
     required_items: [
       { key: "bark", quantity: 10 } // 树皮
@@ -224,6 +240,7 @@ export const Actions: IAction[] =
   {
     name: "制作鼓风机",
     key: "craft_bellows",
+    category: "制作",
     description: "使用木材和树皮制作鼓风机，可以用来增加火焰的温度。",
     required_items: [
       { key: "wood", quantity: 10 }, // 木材

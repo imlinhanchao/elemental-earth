@@ -20,7 +20,7 @@
 <template>
   <section class="inline-flex relative group">
     <slot></slot>
-    <section class="w-full absolute content p-2 bg-base-300/80 hidden group-hover:block rounded border border-base-300 z-10">
+    <section class="w-full absolute content p-2 bg-base-300/80 hidden group-hover:block rounded border border-base-300 z-100 shadow-xl">
       <div>{{ description }}</div>
       <div v-if="items.length" class="divider"></div>
       <div v-for="item in items" :key="item.name" :class="{
