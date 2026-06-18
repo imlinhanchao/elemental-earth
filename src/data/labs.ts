@@ -1,3 +1,5 @@
+import data from './labs.json'
+
 export interface ILabAction {
     /** 实验操作名称 */
     name: string;
@@ -28,78 +30,4 @@ export interface ILabAction {
     requires_burning?: boolean;
 }
 
-export const LabActions: ILabAction[] = [
-    { 
-        name: "干馏", 
-        key: "dry_distillation", 
-        description: "将物体在缺氧条件下加热，产生可燃气体和炭化物。", 
-        time_required: 30, 
-        required_item: [{ key: "clay_pot", quantity: 1, use: 0.1 }],
-        required_techs: ["pottery"],
-        requires_burning: true
-    },
-    {
-        name: "焙烧",
-        key: "roasting",
-        description: "将物体在有氧条件下加热，促进化学反应或物理变化。",
-        time_required: 20,
-        required_item: [{ key: "kiln", quantity: 1, use: 0.1 }],
-        requires_burning: true
-    },
-    {
-        name: "加热",
-        key: "heating",
-        description: "对物体进行加热，以促进化学反应或物理变化。",
-        time_required: 20,
-        requires_burning: true
-    },
-    {
-        name: "搅拌",
-        key: "stirring",
-        description: "将物体混合在一起，以促进化学反应或物理变化。",
-        time_required: 10,
-        requires_burning: false
-    },
-    {
-        name: "浸泡",
-        key: "soaking",
-        description: "将物体浸泡在液体中，以促进化学反应或物理变化。",
-        time_required: 15,
-        requires_burning: false
-    },
-    {
-        name: "冷凝",
-        key: "condensation",
-        description: "将蒸汽冷却成液体，以促进化学反应或物理变化。",
-        time_required: 10,
-        requires_burning: false
-    },
-    {
-        name: "过滤",
-        key: "filtering",
-        description: "将混合物通过过滤器分离成不同的组分。",
-        time_required: 10,
-        requires_burning: false
-    },
-    {
-        name: "蒸馏",
-        key: "distillation",
-        description: "将混合物加热到沸点，收集蒸汽并冷凝成液体，以分离不同的组分。",
-        time_required: 30,
-        requires_burning: true
-    },
-    {
-        name: "压榨",
-        key: "pressing",
-        description: "对物体施加压力，以促进化学反应或物理变化。",
-        time_required: 15,
-        requires_burning: false
-    },
-    {
-        name: "碾磨",
-        key: "grinding",
-        description: "将物体碾磨成粉末，以促进化学反应或物理变化。",
-        time_required: 20,
-        requires_burning: false
-    },
-];
+export const LabActions: ILabAction[] = data as ILabAction[];

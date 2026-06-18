@@ -1,0 +1,192 @@
+[{
+    "name": "捡石头",
+    "key": "pick_stone",
+    "category": "采集",
+    "description": "在地上捡起石头，可以用来建造和制作工具。",
+    "required_items": [],
+    "rewards": [
+      { "key": "stone", "quantity": 1, "probability": 1000 }, 
+      { "key": "flint", "quantity": 1, "probability": 50 }, 
+      { "key": "clay", "quantity": 1, "probability": 100, "map": ["river_side"] }, 
+      { "key": "bone", "quantity": 1, "probability": 20, "map": ["mountain"] } 
+    ],
+    "time_required": 0
+  },
+  {
+    "name": "捡树枝",
+    "key": "pick_branch",
+    "category": "采集",
+    "description": "在地上捡起树枝，可以用来建造和制作工具。",
+    "required_items": [],
+    "rewards": [
+      { "key": "wood", "quantity": 1, "probability": 990 }, 
+      { "key": "bark", "quantity": 1, "probability": 500 }, 
+      { "key": "resin", "quantity": 1, "probability": 100, "map": ["forest"] } 
+    ],
+    "time_required": 0
+  },
+  {
+    "name": "石稿挖掘",
+    "key": "dig",
+    "category": "采集",
+    "description": "使用工具挖掘地面，可以获得各种资源。",
+    "required_items": [
+      { "key": "stone_pickaxe", "quantity": 1, "use": 0.01 } 
+    ],
+    "rewards": [
+      { "key": "mud", "quantity": 1, "probability": 1000 }, 
+      { "key": "flint", "quantity": 1, "probability": 500, "map": ["volcano"] }, 
+      { "key": "clay", "quantity": 1, "probability": 500, "map": ["river_side"] }, 
+      { "key": "gold_sand", "quantity": 1, "probability": 1, "map": ["river_side"] }, 
+      { "key": "malachite", "quantity": 1, "probability": 100, "map": ["mountain"] } 
+    ],
+    "time_required": 5
+  },
+  {
+    "name": "打水",
+    "key": "fetch_water",
+    "category": "采集",
+    "description": "使用工具从水源打水，可以获得水资源。",
+    "required_items": [
+      { "key": "wooden_bucket", "quantity": 1, "use": 0.01 } 
+    ],
+    "rewards": [
+      { "key": "water", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 5,
+    "map": ["river_side"]
+  },
+  {
+    "name": "伐木",
+    "key": "chop_wood",
+    "category": "采集",
+    "description": "使用石斧砍伐树木，可以获得更多的木材。",
+    "required_items": [
+      { "key": "stone_axe", "quantity": 1, "use": 0.01 } 
+    ],
+    "rewards": [
+      { "key": "wood", "quantity": [5, 7, 8, 9, 10], "probability": 1000 } 
+    ],
+    "time_required": 5,
+    "map": ["forest"]
+  },
+  {
+    "name": "打造石斧",
+    "key": "craft_stone_axe",
+    "category": "制作",
+    "description": "使用石头和木材制作石斧，可以用来砍树和挖掘。",
+    "required_items": [
+      { "key": "stone", "quantity": 5 }, 
+      { "key": "wood", "quantity": 2 } 
+    ],
+    "required_techs": ["stone_tool_crafting"],
+    "rewards": [
+      { "key": "stone_axe", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 10
+  },
+  {
+    "name": "打造石镐",
+    "key": "craft_stone_pickaxe",
+    "category": "制作",
+    "description": "使用石头和木材制作石镐，可以用来挖掘和采矿。",
+    "required_items": [
+      { "key": "stone", "quantity": 5 }, 
+      { "key": "wood", "quantity": 2 } 
+    ],
+    "required_techs": ["stone_tool_crafting"],
+    "rewards": [
+      { "key": "stone_pickaxe", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 10
+  },
+  {
+    "name": "制作木桶",
+    "key": "craft_wooden_bucket",
+    "category": "制作",
+    "description": "使用木材制作木桶，可以用来装水和其他物品。",
+    "required_items": [
+      { "key": "wood", "quantity": 20 } 
+    ],
+    "required_techs": ["wood_processing"],
+    "rewards": [
+      { "key": "wooden_bucket", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 15
+  },
+  {
+    "name": "制作火种",
+    "key": "craft_fire_seed",
+    "category": "制作",
+    "description": "使用燧石和木材制作火种，可以用来生火。",
+    "required_items": [
+      { "key": "flint", "quantity": 2 }, 
+      { "key": "wood", "quantity": 10 } 
+    ],
+    "required_techs": ["fire_starting"],
+    "rewards": [
+      { "key": "fire_seed", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 8
+  },
+  {
+    "name": "制作陶罐",
+    "key": "craft_clay_pot",
+    "category": "制作",
+    "description": "使用粘土制作陶罐，可以用来装水和其他物品。",
+    "required_items": [
+      { "key": "clay", "quantity": 5 }, 
+      { "key": "kiln", "quantity": 1, "use": 0.01 } 
+    ],
+    "required_techs": ["pottery"],
+    "rewards": [
+      { "key": "clay_pot", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 12
+  },
+  {
+    "name": "制作窑炉",
+    "key": "craft_kiln",
+    "category": "制作",
+    "description": "使用粘土制作窑炉，可以用来烧制陶器和其他物品。",
+    "required_items": [
+      { "key": "clay", "quantity": 20 }, 
+      { "key": "wood", "quantity": 10 }, 
+      { "key": "stone", "quantity": 10 }, 
+      { "key": "fire_seed", "quantity": 1, "use": 0.01 } 
+    ],
+    "required_techs": ["pottery"],
+    "rewards": [
+      { "key": "kiln", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 30
+  },
+  {
+    "name": "制作过滤布",
+    "key": "craft_filter_cloth",
+    "category": "制作",
+    "description": "使用树皮制作过滤布，可以用来过滤液体。",
+    "required_items": [
+      { "key": "bark", "quantity": 10 } 
+    ],
+    "required_techs": ["wood_processing"],
+    "rewards": [
+      { "key": "filter_cloth", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 20
+  },
+  {
+    "name": "制作鼓风机",
+    "key": "craft_bellows",
+    "category": "制作",
+    "description": "使用木材和树皮制作鼓风机，可以用来增加火焰的温度。",
+    "required_items": [
+      { "key": "wood", "quantity": 10 }, 
+      { "key": "bark", "quantity": 5 } 
+    ],
+    "required_techs": ["wood_processing"],
+    "rewards": [
+      { "key": "bellows", "quantity": 1, "probability": 1000 } 
+    ],
+    "time_required": 30
+  }]
