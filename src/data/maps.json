@@ -1,68 +1,100 @@
-[{
+[
+  {
     "icon": "hugeicons:mountain",
     "name": "山地",
     "key": "mountain",
     "description": "山地是一个地形复杂的地方，可以找到各种矿物和稀有资源。",
-    "position": { "x": 100, "y": 100 }
+    "position": {
+      "x": 100,
+      "y": 100
+    }
   },
   {
     "icon": "fluent:stream-48-regular",
     "name": "河边",
     "key": "river_side",
     "description": "河边是一个资源丰富的地方，可以找到各种各样的物品。",
-    "position": { "x": 200, "y": 100 }
+    "position": {
+      "x": 200,
+      "y": 100
+    }
   },
   {
     "icon": "temaki:tree-row",
     "name": "森林",
     "key": "forest",
     "description": "森林是一个充满生机的地方，可以找到各种各样的植物和动物。",
-    "position": { "x": 100, "y": 200 }
+    "position": {
+      "x": 100,
+      "y": 200
+    }
   },
   {
     "icon": "roentgen:cave",
     "name": "溶洞",
     "key": "cave",
     "description": "溶洞是一个神秘的地方，可以找到各种各样的矿物和稀有资源。",
-    "position": { "x": 150, "y": 150 }
+    "position": {
+      "x": 150,
+      "y": 150
+    }
   },
   {
     "icon": "fa7-solid:volcano",
     "name": "火山",
     "key": "volcano",
     "description": "火山是一个危险的地方，可以找到各种各样的矿物和稀有资源。",
-    "position": { "x": 300, "y": 100 }
+    "position": {
+      "x": 300,
+      "y": 100
+    }
   },
   {
     "icon": "tabler:beach",
     "name": "海滩",
     "key": "beach",
     "description": "海滩是一个美丽的地方，可以找到各种各样的贝壳和稀有资源。",
-    "position": { "x": 400, "y": 100 }
+    "position": {
+      "x": 400,
+      "y": 100
+    }
   },
   {
     "name": "盆地",
     "key": "basin",
     "description": "盆地是一个低洼的地方，可以找到各种各样的矿物和稀有资源。",
-    "position": { "x": 400, "y": 200 }
+    "position": {
+      "x": 400,
+      "y": 200
+    }
   },
   {
     "icon": "tabler:meteor",
     "name": "陨石坑",
     "key": "meteor_crater",
     "description": "陨石坑是一个神秘的地方，可以找到各种各样的陨石和稀有资源。",
-    "position": { "x": 500, "y": 100 }
+    "position": {
+      "x": 500,
+      "y": 100
+    }
   },
   {
     "name": "盐湖",
     "key": "salt_lake",
     "description": "盐湖是一个特殊的地方，可以找到各种各样的盐和稀有资源。",
-    "position": { "x": 500, "y": 200 }
+    "position": {
+      "x": 500,
+      "y": 200
+    }
   },
   {
     "icon": "mingcute:tree-4-fill",
     "name": "海岛",
     "key": "island",
     "description": "海岛是一个孤立的地方，可以找到各种各样的植物和动物。",
-    "position": { "x": 600, "y": 100 }
-  }]
+    "position": {
+      "x": 600,
+      "y": 100
+    }
+  }
+]
