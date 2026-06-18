@@ -39,13 +39,6 @@ export const LabActions: ILabAction[] = [
         requires_burning: true
     },
     {
-        name: "搅拌",
-        key: "stirring",
-        description: "将物体混合在一起，以促进化学反应或物理变化。",
-        time_required: 10,
-        requires_burning: false
-    },
-    {
         name: "焙烧",
         key: "roasting",
         description: "将物体在有氧条件下加热，促进化学反应或物理变化。",
@@ -59,5 +52,54 @@ export const LabActions: ILabAction[] = [
         description: "对物体进行加热，以促进化学反应或物理变化。",
         time_required: 20,
         requires_burning: true
-    }
+    },
+    {
+        name: "搅拌",
+        key: "stirring",
+        description: "将物体混合在一起，以促进化学反应或物理变化。",
+        time_required: 10,
+        requires_burning: false
+    },
+    {
+        name: "浸泡",
+        key: "soaking",
+        description: "将物体浸泡在液体中，以促进化学反应或物理变化。",
+        time_required: 15,
+        requires_burning: false
+    },
+    {
+        name: "冷凝",
+        key: "condensation",
+        description: "将蒸汽冷却成液体，以促进化学反应或物理变化。",
+        time_required: 10,
+        requires_burning: false
+    },
+    {
+        name: "过滤",
+        key: "filtering",
+        description: "将混合物通过过滤器分离成不同的组分。",
+        time_required: 10,
+        requires_burning: false
+    },
+    {
+        name: "蒸馏",
+        key: "distillation",
+        description: "将混合物加热到沸点，收集蒸汽并冷凝成液体，以分离不同的组分。",
+        time_required: 30,
+        requires_burning: true
+    },
+    {
+        name: "压榨",
+        key: "pressing",
+        description: "对物体施加压力，以促进化学反应或物理变化。",
+        time_required: 15,
+        requires_burning: false
+    },
+    {
+        name: "碾磨",
+        key: "grinding",
+        description: "将物体碾磨成粉末，以促进化学反应或物理变化。",
+        time_required: 20,
+        requires_burning: false
+    },
 ];

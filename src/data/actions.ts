@@ -207,5 +207,32 @@ export const Actions: IAction[] =
       { key: "kiln", quantity: 1, probability: 1000 } // 窑炉
     ],
     time_required: 30
+  },
+  {
+    name: "制作过滤布",
+    key: "craft_filter_cloth",
+    description: "使用树皮制作过滤布，可以用来过滤液体。",
+    required_items: [
+      { key: "bark", quantity: 10 } // 树皮
+    ],
+    required_techs: ["wood_processing"],
+    rewards: [
+      { key: "filter_cloth", quantity: 1, probability: 1000 } // 过滤布
+    ],
+    time_required: 20
+  },
+  {
+    name: "制作鼓风机",
+    key: "craft_bellows",
+    description: "使用木材和树皮制作鼓风机，可以用来增加火焰的温度。",
+    required_items: [
+      { key: "wood", quantity: 10 }, // 木材
+      { key: "bark", quantity: 5 } // 树皮
+    ],
+    required_techs: ["wood_processing"],
+    rewards: [
+      { key: "bellows", quantity: 1, probability: 1000 } // 鼓风机
+    ],
+    time_required: 30
   }
 ]

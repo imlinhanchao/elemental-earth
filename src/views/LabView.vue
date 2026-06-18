@@ -9,6 +9,16 @@ import { Formulas, type IFormula } from '@/data/formula'
 const packStore = usePackStore()
 const taskStore = useTaskStore()
 
+/** 将配方物品 key 统一为数组（单个字符串也视为数组） */
+function reqKeys(key: string | string[]): string[] {
+  return Array.isArray(key) ? key : [key]
+}
+
+/** 在 selectedMaterials 中查找满足某一项配方需求的物品 key */
+function findMatchingMaterial(keys: string[], needQty: number): string | null {
+  return keys.find(k => (selectedMaterials.value.get(k) || 0) >= needQty) || null
+}
+
 // ---- 用户选择 ----
 const selectedContainerKey = ref<string | null>(null)
 const selectedMaterials = ref<Map<string, number>>(new Map())
@@ -98,7 +108,7 @@ const matchedFormula = computed<IFormula | null>(() => {
     if (f.required_container && f.required_container !== selectedContainerKey.value) return false
     if (f.required_items) {
       for (const req of f.required_items) {
-        if ((selectedMaterials.value.get(req.key) || 0) < req.quantity) return false
+        if (!findMatchingMaterial(reqKeys(req.key), req.quantity)) return false
       }
     }
     if (f.required_techs && !f.required_techs.every(t => packStore.hasTech(t))) return false
@@ -316,8 +326,7 @@ const canStart = computed(() => {
 
   if (matchedFormula.value?.required_items) {
     for (const req of matchedFormula.value.required_items) {
-      const have = selectedMaterials.value.get(req.key) || 0
-      if (have < req.quantity * batches.value) return false
+      if (!findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)) return false
     }
   }
 
@@ -363,7 +372,10 @@ function startExperiment() {
   }
 
   for (const req of matchedFormula.value.required_items) {
-    consumedItems.push({ key: req.key, quantity: req.quantity * batches.value })
+    const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)
+    if (matchedKey) {
+      consumedItems.push({ key: matchedKey, quantity: req.quantity * batches.value })
+    }
   }
 
   if (burningNeeded.value) {

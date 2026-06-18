@@ -14,7 +14,7 @@ export interface IFormula {
     /**
      * 所需物品
      */
-    required_items: { key: string; quantity: number, use?: number }[];
+    required_items: { key: string | string[]; quantity: number, use?: number }[];
     /**
      * 要求容器
      */
@@ -55,7 +55,8 @@ export const Formulas: IFormula[] = [
         time_required: 30,
         products: [
             { key: "charcoal", multiple: 1 },
-            { key: "carbon_monoxide", multiple: 1 }
+            { key: "carbon_monoxide", multiple: 1 },
+            { key: "wood_ash", multiple: 1 }
         ]
     },
     {
@@ -86,6 +87,20 @@ export const Formulas: IFormula[] = [
         products: [
             { key: "copper", multiple: 1 },
             { key: "carbon_dioxide", multiple: 1 }
+        ]
+    },
+    {
+        name: "制作碱水",
+        key: "alkaline_solution_production",
+        description: "将草木灰和水混合，得到碱水。",
+        required_items: [
+            { key: "wood_ash", quantity: 1 },
+            { key: "water", quantity: 1 }
+        ],
+        required_actions: { key: "stirring" },
+        time_required: 10,
+        products: [
+            { key: "alkaline_solution", multiple: 1 }
         ]
     }
 ];

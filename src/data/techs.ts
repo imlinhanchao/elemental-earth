@@ -65,5 +65,14 @@ export const Techs: ITech[] = [
       { key: "clay", quantity: 20 } // 粘土
     ],
     time_required: 12
-  }
+  }, {
+    name: "树皮揉制",
+    key: "bark_processing",
+    description: "将树皮揉制成绳子和其他物品。",
+    required_items: [
+      { key: "bark", quantity: 20 }, // 树皮
+      { key: "alkaline_solution", quantity: 10 } // 碱水
+    ],
+    time_required: 20
+  },
 ]
