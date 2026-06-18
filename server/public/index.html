@@ -210,7 +210,7 @@ const FIELD_TAGS = {
   quantity: { label: '数量', type: 'number' },
   multiple: { label: '倍率', type: 'number' },
   durable: { label: '耐久度', type: 'number' },
-  elemental: { label: '元素序数', type: 'number' },
+  elemental: { label: '元素序数' },
   requires_burning: { label: '需要燃烧', type: 'boolean' },
   required_items: { label: '所需物品', type: 'objarray', fields: ['key','quantity','use'] },
   rewards: { label: '奖励', type: 'objarray', fields: ['key','quantity','probability','map'] },
@@ -497,6 +497,7 @@ function getReferenceHint(field) {
     icon: 'Iconify 图标名，如 hugeicons:mountain',
     burns: '燃料燃烧时长（秒）',
     multiple: '产物数量',
+    elemental: '元素在周期表中的序数',
   };
   return hints[field] || '';
 }
@@ -510,6 +511,7 @@ function getRefType(field, subfield) {
   if (field === 'required_techs') return 'techs';
   if (field === 'map') return 'maps';
   if (field === 'required_container') return 'items';
+  if (field === 'elemental') return 'elements';
   return null;
 }
 
@@ -518,7 +520,13 @@ let _refCache = {};
 async function fetchRefOptions(refType) {
   if (!_refCache[refType]) {
     const resp = await fetch(`/api/${refType}`);
-    _refCache[refType] = await resp.json();
+    const raw = await resp.json();
+    // 元素数据用 number 作 key，name 拼接符号
+    if (refType === 'elements') {
+      _refCache[refType] = raw.map(e => ({ key: e.number, name: `${e.symbol} ${e.name}` }));
+    } else {
+      _refCache[refType] = raw;
+    }
   }
   return _refCache[refType];
 }
@@ -652,7 +660,9 @@ async function saveRecord() {
       // key 只读字段
       const input = row.querySelector('input[type="text"]:not([readonly])') || row.querySelector('textarea');
       if (input && !input.readOnly) {
-        data[f] = input.value.trim() || undefined;
+        let v = input.value.trim() || undefined;
+        if (v !== undefined && !isNaN(Number(v)) && v !== '') v = Number(v);
+        data[f] = v;
       } else if (input && input.readOnly) {
         data[f] = input.value.trim();
       }

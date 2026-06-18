@@ -70,5 +70,26 @@
       }
     ],
     "time_required": 20
+  },
+  {
+    "name": "高炉冶炼",
+    "key": "smelting",
+    "description": "使用高炉将矿石冶炼成金属。",
+    "required_items": [
+      {
+        "key": "bellows",
+        "quantity": 5
+      },
+      {
+        "key": "kiln",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "pottery",
+      "fire_starting",
+      "wood_processing"
+    ],
+    "time_required": 45
   }
 ]

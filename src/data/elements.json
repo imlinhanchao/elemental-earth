@@ -1,0 +1,1182 @@
+[
+  {
+    "number": 1,
+    "symbol": "H",
+    "name": "氢",
+    "nameEn": "Hydrogen",
+    "category": "nonmetal",
+    "row": 1,
+    "col": 1,
+    "mass": "1.008"
+  },
+  {
+    "number": 2,
+    "symbol": "He",
+    "name": "氦",
+    "nameEn": "Helium",
+    "category": "noble-gas",
+    "row": 1,
+    "col": 18,
+    "mass": "4.003"
+  },
+  {
+    "number": 3,
+    "symbol": "Li",
+    "name": "锂",
+    "nameEn": "Lithium",
+    "category": "alkali-metal",
+    "row": 2,
+    "col": 1,
+    "mass": "6.941"
+  },
+  {
+    "number": 4,
+    "symbol": "Be",
+    "name": "铍",
+    "nameEn": "Beryllium",
+    "category": "alkaline-earth-metal",
+    "row": 2,
+    "col": 2,
+    "mass": "9.012"
+  },
+  {
+    "number": 5,
+    "symbol": "B",
+    "name": "硼",
+    "nameEn": "Boron",
+    "category": "metalloid",
+    "row": 2,
+    "col": 13,
+    "mass": "10.81"
+  },
+  {
+    "number": 6,
+    "symbol": "C",
+    "name": "碳",
+    "nameEn": "Carbon",
+    "category": "nonmetal",
+    "row": 2,
+    "col": 14,
+    "mass": "12.01"
+  },
+  {
+    "number": 7,
+    "symbol": "N",
+    "name": "氮",
+    "nameEn": "Nitrogen",
+    "category": "nonmetal",
+    "row": 2,
+    "col": 15,
+    "mass": "14.01"
+  },
+  {
+    "number": 8,
+    "symbol": "O",
+    "name": "氧",
+    "nameEn": "Oxygen",
+    "category": "nonmetal",
+    "row": 2,
+    "col": 16,
+    "mass": "16.00"
+  },
+  {
+    "number": 9,
+    "symbol": "F",
+    "name": "氟",
+    "nameEn": "Fluorine",
+    "category": "halogen",
+    "row": 2,
+    "col": 17,
+    "mass": "19.00"
+  },
+  {
+    "number": 10,
+    "symbol": "Ne",
+    "name": "氖",
+    "nameEn": "Neon",
+    "category": "noble-gas",
+    "row": 2,
+    "col": 18,
+    "mass": "20.18"
+  },
+  {
+    "number": 11,
+    "symbol": "Na",
+    "name": "钠",
+    "nameEn": "Sodium",
+    "category": "alkali-metal",
+    "row": 3,
+    "col": 1,
+    "mass": "22.99"
+  },
+  {
+    "number": 12,
+    "symbol": "Mg",
+    "name": "镁",
+    "nameEn": "Magnesium",
+    "category": "alkaline-earth-metal",
+    "row": 3,
+    "col": 2,
+    "mass": "24.31"
+  },
+  {
+    "number": 13,
+    "symbol": "Al",
+    "name": "铝",
+    "nameEn": "Aluminium",
+    "category": "post-transition-metal",
+    "row": 3,
+    "col": 13,
+    "mass": "26.98"
+  },
+  {
+    "number": 14,
+    "symbol": "Si",
+    "name": "硅",
+    "nameEn": "Silicon",
+    "category": "metalloid",
+    "row": 3,
+    "col": 14,
+    "mass": "28.09"
+  },
+  {
+    "number": 15,
+    "symbol": "P",
+    "name": "磷",
+    "nameEn": "Phosphorus",
+    "category": "nonmetal",
+    "row": 3,
+    "col": 15,
+    "mass": "30.97"
+  },
+  {
+    "number": 16,
+    "symbol": "S",
+    "name": "硫",
+    "nameEn": "Sulfur",
+    "category": "nonmetal",
+    "row": 3,
+    "col": 16,
+    "mass": "32.07"
+  },
+  {
+    "number": 17,
+    "symbol": "Cl",
+    "name": "氯",
+    "nameEn": "Chlorine",
+    "category": "halogen",
+    "row": 3,
+    "col": 17,
+    "mass": "35.45"
+  },
+  {
+    "number": 18,
+    "symbol": "Ar",
+    "name": "氩",
+    "nameEn": "Argon",
+    "category": "noble-gas",
+    "row": 3,
+    "col": 18,
+    "mass": "39.95"
+  },
+  {
+    "number": 19,
+    "symbol": "K",
+    "name": "钾",
+    "nameEn": "Potassium",
+    "category": "alkali-metal",
+    "row": 4,
+    "col": 1,
+    "mass": "39.10"
+  },
+  {
+    "number": 20,
+    "symbol": "Ca",
+    "name": "钙",
+    "nameEn": "Calcium",
+    "category": "alkaline-earth-metal",
+    "row": 4,
+    "col": 2,
+    "mass": "40.08"
+  },
+  {
+    "number": 21,
+    "symbol": "Sc",
+    "name": "钪",
+    "nameEn": "Scandium",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 3,
+    "mass": "44.96"
+  },
+  {
+    "number": 22,
+    "symbol": "Ti",
+    "name": "钛",
+    "nameEn": "Titanium",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 4,
+    "mass": "47.87"
+  },
+  {
+    "number": 23,
+    "symbol": "V",
+    "name": "钒",
+    "nameEn": "Vanadium",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 5,
+    "mass": "50.94"
+  },
+  {
+    "number": 24,
+    "symbol": "Cr",
+    "name": "铬",
+    "nameEn": "Chromium",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 6,
+    "mass": "52.00"
+  },
+  {
+    "number": 25,
+    "symbol": "Mn",
+    "name": "锰",
+    "nameEn": "Manganese",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 7,
+    "mass": "54.94"
+  },
+  {
+    "number": 26,
+    "symbol": "Fe",
+    "name": "铁",
+    "nameEn": "Iron",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 8,
+    "mass": "55.85"
+  },
+  {
+    "number": 27,
+    "symbol": "Co",
+    "name": "钴",
+    "nameEn": "Cobalt",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 9,
+    "mass": "58.93"
+  },
+  {
+    "number": 28,
+    "symbol": "Ni",
+    "name": "镍",
+    "nameEn": "Nickel",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 10,
+    "mass": "58.69"
+  },
+  {
+    "number": 29,
+    "symbol": "Cu",
+    "name": "铜",
+    "nameEn": "Copper",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 11,
+    "mass": "63.55"
+  },
+  {
+    "number": 30,
+    "symbol": "Zn",
+    "name": "锌",
+    "nameEn": "Zinc",
+    "category": "transition-metal",
+    "row": 4,
+    "col": 12,
+    "mass": "65.38"
+  },
+  {
+    "number": 31,
+    "symbol": "Ga",
+    "name": "镓",
+    "nameEn": "Gallium",
+    "category": "post-transition-metal",
+    "row": 4,
+    "col": 13,
+    "mass": "69.72"
+  },
+  {
+    "number": 32,
+    "symbol": "Ge",
+    "name": "锗",
+    "nameEn": "Germanium",
+    "category": "metalloid",
+    "row": 4,
+    "col": 14,
+    "mass": "72.63"
+  },
+  {
+    "number": 33,
+    "symbol": "As",
+    "name": "砷",
+    "nameEn": "Arsenic",
+    "category": "metalloid",
+    "row": 4,
+    "col": 15,
+    "mass": "74.92"
+  },
+  {
+    "number": 34,
+    "symbol": "Se",
+    "name": "硒",
+    "nameEn": "Selenium",
+    "category": "nonmetal",
+    "row": 4,
+    "col": 16,
+    "mass": "78.97"
+  },
+  {
+    "number": 35,
+    "symbol": "Br",
+    "name": "溴",
+    "nameEn": "Bromine",
+    "category": "halogen",
+    "row": 4,
+    "col": 17,
+    "mass": "79.90"
+  },
+  {
+    "number": 36,
+    "symbol": "Kr",
+    "name": "氪",
+    "nameEn": "Krypton",
+    "category": "noble-gas",
+    "row": 4,
+    "col": 18,
+    "mass": "83.80"
+  },
+  {
+    "number": 37,
+    "symbol": "Rb",
+    "name": "铷",
+    "nameEn": "Rubidium",
+    "category": "alkali-metal",
+    "row": 5,
+    "col": 1,
+    "mass": "85.47"
+  },
+  {
+    "number": 38,
+    "symbol": "Sr",
+    "name": "锶",
+    "nameEn": "Strontium",
+    "category": "alkaline-earth-metal",
+    "row": 5,
+    "col": 2,
+    "mass": "87.62"
+  },
+  {
+    "number": 39,
+    "symbol": "Y",
+    "name": "钇",
+    "nameEn": "Yttrium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 3,
+    "mass": "88.91"
+  },
+  {
+    "number": 40,
+    "symbol": "Zr",
+    "name": "锆",
+    "nameEn": "Zirconium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 4,
+    "mass": "91.22"
+  },
+  {
+    "number": 41,
+    "symbol": "Nb",
+    "name": "铌",
+    "nameEn": "Niobium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 5,
+    "mass": "92.91"
+  },
+  {
+    "number": 42,
+    "symbol": "Mo",
+    "name": "钼",
+    "nameEn": "Molybdenum",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 6,
+    "mass": "95.95"
+  },
+  {
+    "number": 43,
+    "symbol": "Tc",
+    "name": "锝",
+    "nameEn": "Technetium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 7,
+    "mass": "98"
+  },
+  {
+    "number": 44,
+    "symbol": "Ru",
+    "name": "钌",
+    "nameEn": "Ruthenium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 8,
+    "mass": "101.1"
+  },
+  {
+    "number": 45,
+    "symbol": "Rh",
+    "name": "铑",
+    "nameEn": "Rhodium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 9,
+    "mass": "102.9"
+  },
+  {
+    "number": 46,
+    "symbol": "Pd",
+    "name": "钯",
+    "nameEn": "Palladium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 10,
+    "mass": "106.4"
+  },
+  {
+    "number": 47,
+    "symbol": "Ag",
+    "name": "银",
+    "nameEn": "Silver",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 11,
+    "mass": "107.9"
+  },
+  {
+    "number": 48,
+    "symbol": "Cd",
+    "name": "镉",
+    "nameEn": "Cadmium",
+    "category": "transition-metal",
+    "row": 5,
+    "col": 12,
+    "mass": "112.4"
+  },
+  {
+    "number": 49,
+    "symbol": "In",
+    "name": "铟",
+    "nameEn": "Indium",
+    "category": "post-transition-metal",
+    "row": 5,
+    "col": 13,
+    "mass": "114.8"
+  },
+  {
+    "number": 50,
+    "symbol": "Sn",
+    "name": "锡",
+    "nameEn": "Tin",
+    "category": "post-transition-metal",
+    "row": 5,
+    "col": 14,
+    "mass": "118.7"
+  },
+  {
+    "number": 51,
+    "symbol": "Sb",
+    "name": "锑",
+    "nameEn": "Antimony",
+    "category": "metalloid",
+    "row": 5,
+    "col": 15,
+    "mass": "121.8"
+  },
+  {
+    "number": 52,
+    "symbol": "Te",
+    "name": "碲",
+    "nameEn": "Tellurium",
+    "category": "metalloid",
+    "row": 5,
+    "col": 16,
+    "mass": "127.6"
+  },
+  {
+    "number": 53,
+    "symbol": "I",
+    "name": "碘",
+    "nameEn": "Iodine",
+    "category": "halogen",
+    "row": 5,
+    "col": 17,
+    "mass": "126.9"
+  },
+  {
+    "number": 54,
+    "symbol": "Xe",
+    "name": "氙",
+    "nameEn": "Xenon",
+    "category": "noble-gas",
+    "row": 5,
+    "col": 18,
+    "mass": "131.3"
+  },
+  {
+    "number": 55,
+    "symbol": "Cs",
+    "name": "铯",
+    "nameEn": "Caesium",
+    "category": "alkali-metal",
+    "row": 6,
+    "col": 1,
+    "mass": "132.9"
+  },
+  {
+    "number": 56,
+    "symbol": "Ba",
+    "name": "钡",
+    "nameEn": "Barium",
+    "category": "alkaline-earth-metal",
+    "row": 6,
+    "col": 2,
+    "mass": "137.3"
+  },
+  {
+    "number": 72,
+    "symbol": "Hf",
+    "name": "铪",
+    "nameEn": "Hafnium",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 4,
+    "mass": "178.5"
+  },
+  {
+    "number": 73,
+    "symbol": "Ta",
+    "name": "钽",
+    "nameEn": "Tantalum",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 5,
+    "mass": "180.9"
+  },
+  {
+    "number": 74,
+    "symbol": "W",
+    "name": "钨",
+    "nameEn": "Tungsten",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 6,
+    "mass": "183.8"
+  },
+  {
+    "number": 75,
+    "symbol": "Re",
+    "name": "铼",
+    "nameEn": "Rhenium",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 7,
+    "mass": "186.2"
+  },
+  {
+    "number": 76,
+    "symbol": "Os",
+    "name": "锇",
+    "nameEn": "Osmium",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 8,
+    "mass": "190.2"
+  },
+  {
+    "number": 77,
+    "symbol": "Ir",
+    "name": "铱",
+    "nameEn": "Iridium",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 9,
+    "mass": "192.2"
+  },
+  {
+    "number": 78,
+    "symbol": "Pt",
+    "name": "铂",
+    "nameEn": "Platinum",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 10,
+    "mass": "195.1"
+  },
+  {
+    "number": 79,
+    "symbol": "Au",
+    "name": "金",
+    "nameEn": "Gold",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 11,
+    "mass": "197.0"
+  },
+  {
+    "number": 80,
+    "symbol": "Hg",
+    "name": "汞",
+    "nameEn": "Mercury",
+    "category": "transition-metal",
+    "row": 6,
+    "col": 12,
+    "mass": "200.6"
+  },
+  {
+    "number": 81,
+    "symbol": "Tl",
+    "name": "铊",
+    "nameEn": "Thallium",
+    "category": "post-transition-metal",
+    "row": 6,
+    "col": 13,
+    "mass": "204.4"
+  },
+  {
+    "number": 82,
+    "symbol": "Pb",
+    "name": "铅",
+    "nameEn": "Lead",
+    "category": "post-transition-metal",
+    "row": 6,
+    "col": 14,
+    "mass": "207.2"
+  },
+  {
+    "number": 83,
+    "symbol": "Bi",
+    "name": "铋",
+    "nameEn": "Bismuth",
+    "category": "post-transition-metal",
+    "row": 6,
+    "col": 15,
+    "mass": "209.0"
+  },
+  {
+    "number": 84,
+    "symbol": "Po",
+    "name": "钋",
+    "nameEn": "Polonium",
+    "category": "metalloid",
+    "row": 6,
+    "col": 16,
+    "mass": "209"
+  },
+  {
+    "number": 85,
+    "symbol": "At",
+    "name": "砹",
+    "nameEn": "Astatine",
+    "category": "halogen",
+    "row": 6,
+    "col": 17,
+    "mass": "210"
+  },
+  {
+    "number": 86,
+    "symbol": "Rn",
+    "name": "氡",
+    "nameEn": "Radon",
+    "category": "noble-gas",
+    "row": 6,
+    "col": 18,
+    "mass": "222"
+  },
+  {
+    "number": 87,
+    "symbol": "Fr",
+    "name": "钫",
+    "nameEn": "Francium",
+    "category": "alkali-metal",
+    "row": 7,
+    "col": 1,
+    "mass": "223"
+  },
+  {
+    "number": 88,
+    "symbol": "Ra",
+    "name": "镭",
+    "nameEn": "Radium",
+    "category": "alkaline-earth-metal",
+    "row": 7,
+    "col": 2,
+    "mass": "226"
+  },
+  {
+    "number": 104,
+    "symbol": "Rf",
+    "name": "鑪",
+    "nameEn": "Rutherfordium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 4,
+    "mass": "267"
+  },
+  {
+    "number": 105,
+    "symbol": "Db",
+    "name": "𬭊",
+    "nameEn": "Dubnium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 5,
+    "mass": "268"
+  },
+  {
+    "number": 106,
+    "symbol": "Sg",
+    "name": "𬭳",
+    "nameEn": "Seaborgium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 6,
+    "mass": "271"
+  },
+  {
+    "number": 107,
+    "symbol": "Bh",
+    "name": "𬭛",
+    "nameEn": "Bohrium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 7,
+    "mass": "272"
+  },
+  {
+    "number": 108,
+    "symbol": "Hs",
+    "name": "𬭶",
+    "nameEn": "Hassium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 8,
+    "mass": "270"
+  },
+  {
+    "number": 109,
+    "symbol": "Mt",
+    "name": "鿏",
+    "nameEn": "Meitnerium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 9,
+    "mass": "278"
+  },
+  {
+    "number": 110,
+    "symbol": "Ds",
+    "name": "𫟼",
+    "nameEn": "Darmstadtium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 10,
+    "mass": "281"
+  },
+  {
+    "number": 111,
+    "symbol": "Rg",
+    "name": "𬬭",
+    "nameEn": "Roentgenium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 11,
+    "mass": "282"
+  },
+  {
+    "number": 112,
+    "symbol": "Cn",
+    "name": "鎶",
+    "nameEn": "Copernicium",
+    "category": "transition-metal",
+    "row": 7,
+    "col": 12,
+    "mass": "285"
+  },
+  {
+    "number": 113,
+    "symbol": "Nh",
+    "name": "鉨",
+    "nameEn": "Nihonium",
+    "category": "post-transition-metal",
+    "row": 7,
+    "col": 13,
+    "mass": "286"
+  },
+  {
+    "number": 114,
+    "symbol": "Fl",
+    "name": "𫓧",
+    "nameEn": "Flerovium",
+    "category": "post-transition-metal",
+    "row": 7,
+    "col": 14,
+    "mass": "289"
+  },
+  {
+    "number": 115,
+    "symbol": "Mc",
+    "name": "镆",
+    "nameEn": "Moscovium",
+    "category": "post-transition-metal",
+    "row": 7,
+    "col": 15,
+    "mass": "290"
+  },
+  {
+    "number": 116,
+    "symbol": "Lv",
+    "name": "鉝",
+    "nameEn": "Livermorium",
+    "category": "post-transition-metal",
+    "row": 7,
+    "col": 16,
+    "mass": "293"
+  },
+  {
+    "number": 117,
+    "symbol": "Ts",
+    "name": "鿬",
+    "nameEn": "Tennessine",
+    "category": "halogen",
+    "row": 7,
+    "col": 17,
+    "mass": "294"
+  },
+  {
+    "number": 118,
+    "symbol": "Og",
+    "name": "鿫",
+    "nameEn": "Oganesson",
+    "category": "noble-gas",
+    "row": 7,
+    "col": 18,
+    "mass": "294"
+  },
+  {
+    "number": 57,
+    "symbol": "La",
+    "name": "镧",
+    "nameEn": "Lanthanum",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 3,
+    "mass": "138.9"
+  },
+  {
+    "number": 58,
+    "symbol": "Ce",
+    "name": "铈",
+    "nameEn": "Cerium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 4,
+    "mass": "140.1"
+  },
+  {
+    "number": 59,
+    "symbol": "Pr",
+    "name": "镨",
+    "nameEn": "Praseodymium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 5,
+    "mass": "140.9"
+  },
+  {
+    "number": 60,
+    "symbol": "Nd",
+    "name": "钕",
+    "nameEn": "Neodymium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 6,
+    "mass": "144.2"
+  },
+  {
+    "number": 61,
+    "symbol": "Pm",
+    "name": "钷",
+    "nameEn": "Promethium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 7,
+    "mass": "145"
+  },
+  {
+    "number": 62,
+    "symbol": "Sm",
+    "name": "钐",
+    "nameEn": "Samarium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 8,
+    "mass": "150.4"
+  },
+  {
+    "number": 63,
+    "symbol": "Eu",
+    "name": "铕",
+    "nameEn": "Europium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 9,
+    "mass": "152.0"
+  },
+  {
+    "number": 64,
+    "symbol": "Gd",
+    "name": "钆",
+    "nameEn": "Gadolinium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 10,
+    "mass": "157.3"
+  },
+  {
+    "number": 65,
+    "symbol": "Tb",
+    "name": "铽",
+    "nameEn": "Terbium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 11,
+    "mass": "158.9"
+  },
+  {
+    "number": 66,
+    "symbol": "Dy",
+    "name": "镝",
+    "nameEn": "Dysprosium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 12,
+    "mass": "162.5"
+  },
+  {
+    "number": 67,
+    "symbol": "Ho",
+    "name": "钬",
+    "nameEn": "Holmium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 13,
+    "mass": "164.9"
+  },
+  {
+    "number": 68,
+    "symbol": "Er",
+    "name": "铒",
+    "nameEn": "Erbium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 14,
+    "mass": "167.3"
+  },
+  {
+    "number": 69,
+    "symbol": "Tm",
+    "name": "铥",
+    "nameEn": "Thulium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 15,
+    "mass": "168.9"
+  },
+  {
+    "number": 70,
+    "symbol": "Yb",
+    "name": "镱",
+    "nameEn": "Ytterbium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 16,
+    "mass": "173.1"
+  },
+  {
+    "number": 71,
+    "symbol": "Lu",
+    "name": "镥",
+    "nameEn": "Lutetium",
+    "category": "lanthanide",
+    "row": 9,
+    "col": 17,
+    "mass": "175.0"
+  },
+  {
+    "number": 89,
+    "symbol": "Ac",
+    "name": "锕",
+    "nameEn": "Actinium",
+    "category": "actinide",
+    "row": 10,
+    "col": 3,
+    "mass": "227"
+  },
+  {
+    "number": 90,
+    "symbol": "Th",
+    "name": "钍",
+    "nameEn": "Thorium",
+    "category": "actinide",
+    "row": 10,
+    "col": 4,
+    "mass": "232.0"
+  },
+  {
+    "number": 91,
+    "symbol": "Pa",
+    "name": "镤",
+    "nameEn": "Protactinium",
+    "category": "actinide",
+    "row": 10,
+    "col": 5,
+    "mass": "231.0"
+  },
+  {
+    "number": 92,
+    "symbol": "U",
+    "name": "铀",
+    "nameEn": "Uranium",
+    "category": "actinide",
+    "row": 10,
+    "col": 6,
+    "mass": "238.0"
+  },
+  {
+    "number": 93,
+    "symbol": "Np",
+    "name": "镎",
+    "nameEn": "Neptunium",
+    "category": "actinide",
+    "row": 10,
+    "col": 7,
+    "mass": "237"
+  },
+  {
+    "number": 94,
+    "symbol": "Pu",
+    "name": "钚",
+    "nameEn": "Plutonium",
+    "category": "actinide",
+    "row": 10,
+    "col": 8,
+    "mass": "244"
+  },
+  {
+    "number": 95,
+    "symbol": "Am",
+    "name": "镅",
+    "nameEn": "Americium",
+    "category": "actinide",
+    "row": 10,
+    "col": 9,
+    "mass": "243"
+  },
+  {
+    "number": 96,
+    "symbol": "Cm",
+    "name": "锔",
+    "nameEn": "Curium",
+    "category": "actinide",
+    "row": 10,
+    "col": 10,
+    "mass": "247"
+  },
+  {
+    "number": 97,
+    "symbol": "Bk",
+    "name": "锫",
+    "nameEn": "Berkelium",
+    "category": "actinide",
+    "row": 10,
+    "col": 11,
+    "mass": "247"
+  },
+  {
+    "number": 98,
+    "symbol": "Cf",
+    "name": "锎",
+    "nameEn": "Californium",
+    "category": "actinide",
+    "row": 10,
+    "col": 12,
+    "mass": "251"
+  },
+  {
+    "number": 99,
+    "symbol": "Es",
+    "name": "锿",
+    "nameEn": "Einsteinium",
+    "category": "actinide",
+    "row": 10,
+    "col": 13,
+    "mass": "252"
+  },
+  {
+    "number": 100,
+    "symbol": "Fm",
+    "name": "镄",
+    "nameEn": "Fermium",
+    "category": "actinide",
+    "row": 10,
+    "col": 14,
+    "mass": "257"
+  },
+  {
+    "number": 101,
+    "symbol": "Md",
+    "name": "钔",
+    "nameEn": "Mendelevium",
+    "category": "actinide",
+    "row": 10,
+    "col": 15,
+    "mass": "258"
+  },
+  {
+    "number": 102,
+    "symbol": "No",
+    "name": "锘",
+    "nameEn": "Nobelium",
+    "category": "actinide",
+    "row": 10,
+    "col": 16,
+    "mass": "259"
+  },
+  {
+    "number": 103,
+    "symbol": "Lr",
+    "name": "铹",
+    "nameEn": "Lawrencium",
+    "category": "actinide",
+    "row": 10,
+    "col": 17,
+    "mass": "266"
+  }
+]
