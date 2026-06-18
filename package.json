@@ -10,10 +10,11 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "crypto-js": "^4.2.0",
+    "express": "^5.2.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.34",
-    "vue-router": "^4.6.4",
-    "crypto-js": "^4.2.0"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@iconify/vue": "^5.0.1",
