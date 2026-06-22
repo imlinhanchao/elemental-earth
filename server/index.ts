@@ -2,6 +2,7 @@ import express, { type Request, type Response } from 'express';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHmac, timingSafeEqual } from 'node:crypto';
 import type { GenerateGameData } from './ai-generator.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -61,6 +62,61 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(resolve(__dirname, 'public')));
 
+// CORS — 允许开发环境跨域请求
+app.use((_req: Request, res: Response, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (_req.method === 'OPTIONS') {
+    res.sendStatus(200);
+    return;
+  }
+  next();
+});
+
+// ============================================================
+// Admin 认证
+// ============================================================
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+const ADMIN_TOKEN = ADMIN_PASSWORD ? createHmac('sha256', 'admin-salt').update(ADMIN_PASSWORD).digest('hex') : '';
+
+/** 验证 admin 请求的 token */
+function requireAdmin(req: Request, res: Response, next: () => void) {
+  if (!ADMIN_TOKEN) {
+    res.status(503).json({ error: '后台未配置密码（ADMIN_PASSWORD）' });
+    return;
+  }
+  const auth = req.headers.authorization || '';
+  const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
+  try {
+    const buf1 = Buffer.from(token);
+    const buf2 = Buffer.from(ADMIN_TOKEN);
+    if (buf1.length !== buf2.length || !timingSafeEqual(buf1, buf2)) {
+      res.status(401).json({ error: '认证失败' });
+      return;
+    }
+  } catch {
+    res.status(401).json({ error: '认证失败' });
+    return;
+  }
+  next();
+}
+
+/** 登录 */
+app.post('/api/admin/login', (req: Request, res: Response) => {
+  const { password } = req.body as { password?: string };
+  if (!password || !ADMIN_PASSWORD) {
+    res.status(401).json({ error: '认证失败' });
+    return;
+  }
+  if (password !== ADMIN_PASSWORD) {
+    res.status(401).json({ error: '密码错误' });
+    return;
+  }
+  res.json({ success: true, token: ADMIN_TOKEN });
+});
+
 // ============================================================
 // API 路由
 // ============================================================
@@ -78,7 +134,7 @@ app.get('/api', (_req: Request, res: Response) => {
 });
 
 // 发布：验证所有 JSON 并写回磁盘
-app.post('/api/publish', (_req: Request, res: Response) => {
+app.post('/api/publish', requireAdmin, (_req: Request, res: Response) => {
   try {
     const errors: string[] = [];
     for (const [, model] of Object.entries(MODELS)) {
@@ -104,7 +160,7 @@ app.post('/api/publish', (_req: Request, res: Response) => {
 // AI 内容生成
 // ============================================================
 
-app.post('/api/generate', async (req: Request, res: Response) => {
+app.post('/api/generate', requireAdmin, async (req: Request, res: Response) => {
   try {
     const { prompt } = req.body as { prompt?: string };
     if (!prompt || !prompt.trim()) {
@@ -133,7 +189,7 @@ app.post('/api/generate', async (req: Request, res: Response) => {
 });
 
 // 获取所有数据的上下文摘要
-app.get('/api/data-context', (_req: Request, res: Response) => {
+app.get('/api/data-context', requireAdmin, (_req: Request, res: Response) => {
   try {
     const context: Record<string, { count: number; keys: unknown[] }> = {};
     for (const [type, model] of Object.entries(MODELS)) {
@@ -154,7 +210,7 @@ app.get('/api/data-context', (_req: Request, res: Response) => {
 // ============================================================
 
 // 获取所有记录
-app.get('/api/:type', (req: Request, res: Response) => {
+app.get('/api/:type', requireAdmin, (req: Request, res: Response) => {
   try {
     const data = readData(req.params.type as string);
     res.json(data);
@@ -164,7 +220,7 @@ app.get('/api/:type', (req: Request, res: Response) => {
 });
 
 // 获取单条记录
-app.get('/api/:type/:key', (req: Request, res: Response) => {
+app.get('/api/:type/:key', requireAdmin, (req: Request, res: Response) => {
   try {
     const data = readData(req.params.type as string);
     const keyField = getModelKey(req.params.type as string);
@@ -180,7 +236,7 @@ app.get('/api/:type/:key', (req: Request, res: Response) => {
 });
 
 // 新增记录
-app.post('/api/:type', (req: Request, res: Response) => {
+app.post('/api/:type', requireAdmin, (req: Request, res: Response) => {
   try {
     const data = readData(req.params.type as string);
     const keyField = getModelKey(req.params.type as string);
@@ -199,7 +255,7 @@ app.post('/api/:type', (req: Request, res: Response) => {
 });
 
 // 更新记录
-app.put('/api/:type/:key', (req: Request, res: Response) => {
+app.put('/api/:type/:key', requireAdmin, (req: Request, res: Response) => {
   try {
     const data = readData(req.params.type as string);
     const keyField = getModelKey(req.params.type as string);
@@ -217,7 +273,7 @@ app.put('/api/:type/:key', (req: Request, res: Response) => {
 });
 
 // 删除记录
-app.delete('/api/:type/:key', (req: Request, res: Response) => {
+app.delete('/api/:type/:key', requireAdmin, (req: Request, res: Response) => {
   try {
     const data = readData(req.params.type as string);
     const keyField = getModelKey(req.params.type as string);
@@ -239,6 +295,21 @@ app.delete('/api/:type/:key', (req: Request, res: Response) => {
 // ============================================================
 
 const PORT = Number(process.env.PORT) || 3001;
+
+// SPA fallback — 非 /api 路径都返回 index.html（需构建到 server/public 或指向 dist）
+const distDir = resolve(__dirname, '../dist');
+if (existsSync(resolve(distDir, 'index.html'))) {
+  // 生产模式：使用构建后的文件
+  app.use(express.static(distDir));
+  app.get('*', (_req: Request, res: Response) => {
+    if (_req.path.startsWith('/api')) return;
+    res.sendFile(resolve(distDir, 'index.html'));
+  });
+} else {
+  // 开发模式：仅提示
+  console.log('⚠️  未找到构建产物 (dist/index.html)，请运行 npm run build 或使用 Vite dev server');
+}
+
 app.listen(PORT, () => {
   console.log(`⚙️  管理后台: http://localhost:${PORT}`);
   console.log(`📁 数据目录: ${DATA_DIR}`);
