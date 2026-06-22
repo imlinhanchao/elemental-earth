@@ -4,6 +4,7 @@ import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Maps } from '@/data/maps';
 import { useLogStore } from '@/stores/modules/log';
+import { useTaskStore } from '@/stores/modules/task';
 import { getElementById } from '@/data/elements';
 
 export interface IGameState {
@@ -64,9 +65,14 @@ export const useStateStore = defineStore('state', () => {
     return dist * TIME_PER_DISTANCE
   }
 
-  /** 开始切换地图 */
+  /** 开始切换地图（任务列表不为空时禁止切换） */
   function startSwitch(targetKey: string) {
     if (targetKey === state.map) return
+    const { tasks } = useTaskStore()
+    if (tasks.length > 0) {
+      logStore.addLog('有任务进行中，无法切换地图', 'warning')
+      return
+    }
     const duration = calcSwitchDuration(state.map, targetKey)
     state.switchingTarget = targetKey
     state.switchStartTime = Date.now()
@@ -95,19 +101,28 @@ export const useStateStore = defineStore('state', () => {
   }
 
   const getElements = computed(() => state.elements);
+
+  /** 新发现的元素（播放动画用），动画播放完后由 UI 清除 */
+  const pendingDiscovery = ref<number | null>(null);
+
   function addElement(element: number) {
     if (!state.elements) state.elements = [];
     if (!state.elements.includes(element)) {
       state.elements.push(element);
+      pendingDiscovery.value = element;
       logStore.addLog(`元素 ${getElementById(element)?.name || element} 已点亮！`, 'reward');
     }
+  }
+
+  function clearPendingDiscovery() {
+    pendingDiscovery.value = null;
   }
 
   return {
     state, getState, getMap, setMap, now,
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
-    getElements, addElement,
+    getElements, addElement, pendingDiscovery, clearPendingDiscovery,
   }
 })
 

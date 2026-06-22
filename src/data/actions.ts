@@ -56,6 +56,15 @@ export interface IAction {
    * 解锁地图
    */
   map?: string[];
+  /**
+   * 引用的配方（若有，则点击此行动时弹出配方执行对话框）
+   */
+  formula?: {
+    /** 配方 key */
+    key: string;
+    /** 实验室操作 key（决定是否需要燃烧等） */
+    operation: string;
+  };
 }
 
 export const Actions: IAction[] = data as IAction[];

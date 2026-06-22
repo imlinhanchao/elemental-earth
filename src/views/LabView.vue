@@ -129,16 +129,30 @@ const formulaProven = computed(() => {
 const formulaProducts = computed(() => {
   const f = matchedFormula.value
   if (!f) return []
+  const canSaveGas = packStore.hasGasContainer()
   return f.products
     .filter(p => {
       const itemDef = getItem(p.key)
-      return itemDef && !itemDef.type.includes('gas')
+      if (!itemDef) return false
+      // 气体物品：只有具备储气容器时才显示
+      if (itemDef.type.includes('gas')) return canSaveGas
+      return true
     })
     .map(p => ({
       key: p.key,
       name: getItem(p.key)?.name || p.key,
       quantity: p.multiple * batches.value,
     }))
+})
+
+/** 配方中是否含有气体产物 */
+const hasGasProducts = computed(() => {
+  const f = matchedFormula.value
+  if (!f) return false
+  return f.products.some(p => {
+    const itemDef = getItem(p.key)
+    return itemDef?.type.includes('gas')
+  })
 })
 
 // ---- 批次数（每个配方的操作最小次数为一组） ----
@@ -311,7 +325,6 @@ const canStart = computed(() => {
   if (!selectedContainerKey.value) return false
   if (selectedMaterials.value.size === 0) return false
   if (!selectedOperation.value) return false
-  if (!matchedFormula.value) return false
 
   if (selectedOperation.value.required_techs &&
       !selectedOperation.value.required_techs.every(t => packStore.hasTech(t))) return false
@@ -324,6 +337,7 @@ const canStart = computed(() => {
     }
   }
 
+  // 有匹配配方时才检查配方材料是否充足
   if (matchedFormula.value?.required_items) {
     for (const req of matchedFormula.value.required_items) {
       if (!findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)) return false
@@ -338,7 +352,7 @@ const canStart = computed(() => {
     if (!hasEnoughFuel.value) return false
   }
 
-  // 批次数必须至少为 1
+  // 批次数必须至少为 1（仅当有配方时）
   if (matchedFormula.value && batches.value < 1) return false
 
   return true
@@ -363,7 +377,7 @@ function getFuelQty(key: string): number {
 
 // ---- 开始实验 ----
 function startExperiment() {
-  if (!canStart.value || !selectedOperation.value || !matchedFormula.value) return
+  if (!canStart.value || !selectedOperation.value) return
 
   const consumedItems: { key: string; quantity: number; use?: number }[] = []
 
@@ -371,11 +385,15 @@ function startExperiment() {
     consumedItems.push({ key: req.key, quantity: 0, use: (req.use ?? 1) * cycles.value })
   }
 
-  for (const req of matchedFormula.value.required_items) {
-    const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)
-    if (matchedKey) {
-      consumedItems.push({ key: matchedKey, quantity: req.quantity * batches.value })
+  // 有匹配配方时才扣除配方材料并记录已验证配方
+  if (matchedFormula.value) {
+    for (const req of matchedFormula.value.required_items) {
+      const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)
+      if (matchedKey) {
+        consumedItems.push({ key: matchedKey, quantity: req.quantity * batches.value })
+      }
     }
+    packStore.addProvenFormula(matchedFormula.value.key)
   }
 
   if (burningNeeded.value) {
@@ -390,8 +408,6 @@ function startExperiment() {
   for (const item of consumedItems) {
     packStore.removeItem(item.key, item.quantity, item.use)
   }
-
-  packStore.addProvenFormula(matchedFormula.value.key)
 
   taskStore.pushLabTask({
     name: `实验室 - ${selectedOperation.value.name}`,
@@ -601,6 +617,10 @@ function startExperiment() {
                 产出 {{ p.name }} ×{{ p.quantity }}
               </span>
             </div>
+            <!-- 气体提示 -->
+            <div v-if="matchedFormula && hasGasProducts && !packStore.hasGasContainer()" class="text-xs text-warning mt-1">
+              ⚠️ 该配方会产生气体，但当前没有具备储气功能的容器，气体将逸散
+            </div>
           </template>
           <template v-else>
             <div class="flex items-center gap-1 text-sm font-medium text-warning">
@@ -613,7 +633,7 @@ function startExperiment() {
           </template>
         </div>
         <div v-else-if="selectedOperation" class="text-xs text-base-content/50 mb-3">
-          无匹配配方 — 当前组合无法进行有效实验
+          暂无已知配方 — 实验可能不会产生可用物质
         </div>
 
         <!-- 开始按钮 -->
@@ -622,8 +642,8 @@ function startExperiment() {
           开始实验
         </button>
 
-        <p v-if="!canStart && selectedOperation && !matchedFormula" class="text-xs text-base-content/40 text-center mt-1">
-          请调整材料或容器以匹配配方
+        <p v-if="!canStart && selectedOperation" class="text-xs text-base-content/40 text-center mt-1">
+          请检查材料、容器和燃料是否充足
         </p>
       </div>
     </div>

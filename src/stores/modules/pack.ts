@@ -4,6 +4,7 @@ import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Items } from '@/data/items';
 import { useStateStore } from './state';
+import { useLogStore } from './log';
 export interface IPackItem {
   name: string;
   key: string;
@@ -15,9 +16,27 @@ export const usePackStore = defineStore('pack', () => {
   const items = reactive<IPackItem[]>([]);
   const techs = reactive<string[]>([]);
   const provenFormulas = reactive<string[]>([])
+  /** 玩家曾经拥有过的物品 key 集合（用完后被消耗掉的也算） */
+  const discoveredItems = reactive<Set<string>>(new Set())
+
+  const logStore = useLogStore();
+
+  /** 检查玩家是否有具备储气功能的容器 */
+  function hasGasContainer(): boolean {
+    return items.some(i => {
+      const def = Items.find(d => d.key === i.key);
+      return !!def?.type.includes('container') && def?.attrs?.save_gas === true;
+    });
+  }
 
   const getItems = computed(() => items);
   const addItem = (itemKey: string, quantity: number, use: number = 0) => {
+    // 气体物品检查：没有 save_gas 容器则无法收集
+    const itemData = Items.find(i => i.key === itemKey);
+    if (itemData?.type.includes('gas') && !hasGasContainer()) {
+      logStore.addLog(`⚠️ 气体 ${itemData.name} 无法收集——需要具备储气功能的容器`, 'warning');
+      return;
+    }
     const existingItem = items.find(i => i.key === itemKey);
     if (existingItem) {
       const itemData = Items.find(i => i.key === itemKey);
@@ -39,6 +58,7 @@ export const usePackStore = defineStore('pack', () => {
       const itemData = Items.find(i => i.key === itemKey);
       if (itemData) {
         items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
+        discoveredItems.add(itemKey);
         if (itemData.elemental) {
           const stateStore = useStateStore();
           stateStore.addElement(itemData.elemental);
@@ -92,11 +112,15 @@ export const usePackStore = defineStore('pack', () => {
   }
   const hasProvenFormula = (formulaKey: string) => provenFormulas.includes(formulaKey);
 
+  /** 玩家是否曾经拥有过某物品（消耗光的也算） */
+  const hasEverHad = (itemKey: string) => discoveredItems.has(itemKey);
+
   return { 
-    items, techs, provenFormulas, 
-    getItems, addItem, removeItem, hasItem, getItemQuantity,
+    items, techs, provenFormulas, discoveredItems,
+    getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
-    getProvenFormulas, addProvenFormula, hasProvenFormula 
+    getProvenFormulas, addProvenFormula, hasProvenFormula,
+    hasEverHad,
   }
 })
 

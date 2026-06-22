@@ -24,6 +24,8 @@ export interface SaveData {
   tasks: ITask[];
   logs: ILog[];
   formulas: string[];
+  /** 玩家曾拥有过的物品 key 列表（v1 新增） */
+  discovered: string[];
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -48,6 +50,7 @@ export function saveGame(): boolean {
       tasks: JSON.parse(JSON.stringify(taskStore.tasks)),
       logs: JSON.parse(JSON.stringify(logStore.logs)),
       formulas: JSON.parse(JSON.stringify(packStore.provenFormulas)),
+      discovered: Array.from(packStore.discoveredItems),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -102,6 +105,16 @@ export function loadGame(): boolean {
     // 恢复已验证配方（旧存档可能没有此字段）
     if (Array.isArray(data.formulas)) {
       packStore.provenFormulas.splice(0, packStore.provenFormulas.length, ...data.formulas);
+    }
+
+    // 恢复曾拥有物品记录（v1 新增），兼容旧存档则从 items 推算
+    packStore.discoveredItems.clear();
+    if (Array.isArray(data.discovered)) {
+      for (const k of data.discovered) packStore.discoveredItems.add(k);
+    }
+    // 兜底：当前背包里的物品肯定被拥有过
+    for (const item of packStore.items) {
+      packStore.discoveredItems.add(item.key);
     }
 
     lastSavedTime.value = data.timestamp;

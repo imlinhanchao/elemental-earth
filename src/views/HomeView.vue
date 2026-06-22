@@ -1,17 +1,15 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { Actions } from '@/data/actions';
   import { Formulas } from '@/data/formula';
-  import { getItem } from '@/data/items';
   import Action from '@/components/Action.vue';
   import ActionTip from '@/components/ActionTip.vue';
+  import FormulaDialog from '@/components/FormulaDialog.vue';
   import { usePackStore } from '@/stores/modules/pack';
-  import { useTaskStore } from '@/stores/modules/task';
-  import { useLogStore } from '@/stores/modules/log';
+  import { useStateStore } from '@/stores/modules/state';
 
   const packStore = usePackStore();
-  const taskStore = useTaskStore();
-  const logStore = useLogStore();
+  const stateStore = useStateStore();
 
   /** 已习得的配方 */
   const provenFormulas = computed(() => {
@@ -21,12 +19,17 @@
   /** 分类显示顺序 */
   const categoryOrder = ['采集', '制作'];
 
-  /** 按分类分组的行动列表 */
+  /** 按分类分组的行动列表（仅显示满足可见条件的按钮） */
   const groupedActions = computed(() => {
     const groups: { category: string; actions: typeof Actions }[] = [];
     const map = new Map<string, typeof Actions>();
 
     for (const action of Actions) {
+      // 跳过不可见的行动（科技未解锁 / 依赖物品不曾拥有 / 不在所需地图）
+      if (action.required_techs && !action.required_techs.every(t => packStore.hasTech(t))) continue
+      if (action.required_items.some(item => !packStore.hasEverHad(item.key))) continue
+      if (action.map && !action.map.includes(stateStore.state.map)) continue
+
       const cat = action.category || '未分类';
       if (!map.has(cat)) map.set(cat, []);
       map.get(cat)!.push(action);
@@ -46,51 +49,29 @@
     return groups;
   });
 
-  /** 检查是否可以执行配方 */
-  function canPerformFormula(formula: typeof Formulas[number]): boolean {
-    if (taskStore.tasks.length >= 100) return false;
-    return formula.required_items.every((req) => {
-      const reqKey = Array.isArray(req.key) ? req.key[0] : req.key;
-      return packStore.hasItem(reqKey, req.quantity);
-    });
+  // ─── 配方对话框状态 ────────────────────────────────────────────
+  const dialogFormulaKey = ref('')
+  const dialogOperationKey = ref('')
+  const showFormulaDialog = ref(false)
+
+  function openFormulaDialog(formula: typeof Formulas[number]) {
+    dialogFormulaKey.value = formula.key
+    // 从配方中取操作 key
+    dialogOperationKey.value = formula.required_actions?.key || ''
+    showFormulaDialog.value = true
   }
 
-  /** 执行配方 */
-  function performFormula(formula: typeof Formulas[number]): void {
-    if (!canPerformFormula(formula)) return;
+  /** 配方是否至少有一种材料可执行 */
+  function canPerformFormula(formula: typeof Formulas[number]): boolean {
+    if (!formula.required_actions) return false
+    return formula.required_items.every(req => {
+      const keys = Array.isArray(req.key) ? req.key : [req.key]
+      return keys.some(k => packStore.hasItem(k, req.quantity))
+    })
+  }
 
-    // 1. 消耗材料
-    for (const req of formula.required_items) {
-      const reqKey = Array.isArray(req.key) ? req.key[0] : req.key;
-      packStore.removeItem(reqKey, req.quantity, req.use);
-    }
-
-    // 2. 构建奖励
-    const rewards = formula.products.map(p => ({
-      key: p.key,
-      quantity: p.multiple,
-      probability: 1,
-    }));
-
-    // 3. 推入任务
-    taskStore.pushLabTask({
-      name: formula.name,
-      key: `formula_${formula.key}_${Date.now()}`,
-      description: formula.description,
-      time_required: formula.time_required,
-      rewards,
-      required_items: formula.required_items.map(req => ({
-        key: Array.isArray(req.key) ? req.key[0] : req.key,
-        quantity: req.quantity,
-        use: req.use,
-      })),
-    });
-
-    // 4. 日志
-    const productNames = formula.products
-      .map(p => `${getItem(p.key)?.name || p.key} x${p.multiple}`)
-      .join('、');
-    logStore.addLog(`开始配方: ${formula.name}（${productNames}）`, 'craft');
+  function onFormulaDialogClose() {
+    showFormulaDialog.value = false
   }
 </script>
 <template>
@@ -122,7 +103,7 @@
             <button
               class="btn w-[10em]"
               :disabled="!canPerformFormula(f)"
-              @click="performFormula(f)"
+              @click="openFormulaDialog(f)"
             >
               {{ f.name }}
             </button>
@@ -130,6 +111,13 @@
         </div>
       </div>
     </details>
+
+    <FormulaDialog
+      :visible="showFormulaDialog"
+      :formulaKey="dialogFormulaKey"
+      :operationKey="dialogOperationKey"
+      @close="onFormulaDialogClose"
+    />
 
     <!-- 行动分组 -->
     <details

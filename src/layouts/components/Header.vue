@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 import { useAppStore } from '@/stores/modules/app'
 import { useStateStore } from '@/stores/modules/state'
+import { useTaskStore } from '@/stores/modules/task'
 import { saveGame, getLastSavedLabel } from '@/utils/archive'
 import MapSwitchModal from './MapSwitch/MapSwitchModal.vue'
 import MapSwitchOverlay from './MapSwitch/MapSwitchOverlay.vue'
 
 const appStore = useAppStore()
 const stateStore = useStateStore()
+const taskStore = useTaskStore()
 
 const saving = ref(false)
 const modalVisible = ref(false)
@@ -25,6 +27,7 @@ function handleSave() {
 
 function openSwitchModal() {
   if (stateStore.isSwitching) return
+  if (taskStore.tasks.length > 0) return
   modalVisible.value = true
 }
 
@@ -48,7 +51,7 @@ function handleSelectMap(targetKey: string) {
 
         <!-- 当前地图 -->
         <div class="flex items-center gap-1 mr-2">
-          <button class="btn btn-ghost btn-sm gap-1" :disabled="stateStore.isSwitching" @click="openSwitchModal" title="点击切换地图">
+          <button class="btn btn-ghost btn-sm gap-1" :disabled="stateStore.isSwitching || taskStore.tasks.length > 0" @click="openSwitchModal" title="点击切换地图">
             <Icon :icon="stateStore.getMap?.icon || 'tabler:map-filled'" class="text-xl" />
             <span>{{ stateStore.getMap?.name }}</span>
             <Icon icon="tabler:chevron-down" class="text-sm opacity-60" />

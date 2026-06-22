@@ -1,0 +1,378 @@
+import OpenAI from 'openai';
+
+// ============================================================
+// 类型定义
+// ============================================================
+
+/** 上下文数据类型 — 与 JSON 数据文件结构一致 */
+export interface ContextData {
+  items?: Record<string, unknown>[]
+  actions?: Record<string, unknown>[]
+  techs?: Record<string, unknown>[]
+  labs?: Record<string, unknown>[]
+  formulas?: Record<string, unknown>[]
+  maps?: Record<string, unknown>[]
+  [key: string]: unknown[] | undefined
+}
+
+/** AI 生成的游戏数据输出结构 */
+export interface GeneratedOutput {
+  items: Record<string, unknown>[]
+  actions: Record<string, unknown>[]
+  techs: Record<string, unknown>[]
+  labs: Record<string, unknown>[]
+  formulas: Record<string, unknown>[]
+}
+
+export type GenerateGameData = (
+  userPrompt: string,
+  contextData: ContextData,
+  apiKey?: string,
+  baseURL?: string,
+) => Promise<GeneratedOutput>;
+
+// ============================================================
+// 主生成函数
+// ============================================================
+
+/**
+ * 调用 OpenAI 生成游戏数据。
+ * 根据用户输入的材料/元素名，自动生成相关的物品、行动、科技、实验操作和实验配方。
+ */
+export const generateGameData: GenerateGameData = async (
+  userPrompt,
+  contextData,
+  apiKey,
+  baseURL,
+) => {
+  const key = apiKey || process.env.OPENAI_API_KEY;
+  if (!key) {
+    throw new Error('未设置 OPENAI_API_KEY 环境变量');
+  }
+
+  const client = new OpenAI({
+    apiKey: key,
+    baseURL: baseURL || process.env.OPENAI_BASE_URL || undefined,
+    timeout: 60000,
+    maxRetries: 2,
+  });
+
+  const systemPrompt = buildSystemPrompt(contextData);
+  const userMessage = buildUserPrompt(userPrompt, contextData);
+
+  const response = await client.chat.completions.create({
+    model: process.env.OPENAI_MODEL || 'gpt-4o',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userMessage },
+    ],
+    response_format: { type: 'json_object' },
+    temperature: 0.7,
+    max_tokens: 8192,
+  });
+
+  const content = response.choices[0]?.message?.content;
+  if (!content) {
+    throw new Error('OpenAI 返回为空');
+  }
+
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(content) as Record<string, unknown>;
+  } catch {
+    throw new Error(`OpenAI 返回非 JSON 格式: ${content.slice(0, 200)}`);
+  }
+
+  return normalizeOutput(parsed);
+};
+
+// ============================================================
+// 提示词构建
+// ============================================================
+
+function buildSystemPrompt(contextData: ContextData): string {
+  const existingItemNames = contextData.items?.map(i => `${i.key} (${i.name})`) || [];
+
+  return `你是一个化学模拟文字游戏的 AI 数据生成器。你的任务是根据用户输入的一种材料、矿物或元素名称，基于现实世界的化学、矿物学和地理学原理，自动生成游戏中合理的新增数据。
+
+## 游戏简介
+这是一个以化学元素和炼金术为主题的增量/放置类文字游戏。玩家通过「行动」获取基础材料，研究「科技」解锁能力，在「实验室」进行「实验操作」来获得新物质「配方」。
+
+### 核心数据模型
+
+**物品 (items)** — 所有可持有的物品，包括材料、工具、容器、燃料、气体、液体等。
+\`\`\`json
+{
+  "name": "物品名称",
+  "key": "唯一标识符（英文小写+下划线）",
+  "category": "分类（材料/工具/容器/燃料/气体/液体/火源）",
+  "description": "描述（中文）",
+  "type": ["类型标签（material, tool, container, fuel, gas, liquid, fire_source 等）"],
+  "elemental": 6,           // 可选，关联的元素周期表序数
+  "durable": 1,             // 可选，耐久度 0-1
+  "attrs": { "burn_time": 30 }  // 可选，额外属性
+}
+\`\`\`
+
+**行动 (actions)** — 玩家执行的采集/制作行动，获得物品奖励。
+\`\`\`json
+{
+  "name": "行动名称",
+  "key": "唯一标识符",
+  "category": "行动分类（采集/制作等）",
+  "description": "描述",
+  "required_items": [{ "key": "所需物品key", "quantity": 数量, "use": 0.01 }],
+  "required_techs": ["前置科技key"],
+  "rewards": [{ "key": "奖励物品key", "quantity": 数量, "probability": 权重 }],
+  "time_required": 时间秒,
+  "map": ["可执行的地图key"]
+}
+\`\`\`
+
+**科技 (techs)** — 解锁新能力的科技树节点。
+\`\`\`json
+{
+  "name": "科技名称",
+  "key": "唯一标识符",
+  "description": "描述",
+  "required_items": [{ "key": "所需物品key", "quantity": 数量 }],
+  "required_techs": ["前置科技key"],
+  "time_required": 研究时间秒
+}
+\`\`\`
+
+**实验操作 (labs)** — 实验室中的操作动作，如焙烧、搅拌、蒸馏等。
+\`\`\`json
+{
+  "name": "操作名称",
+  "key": "唯一标识符",
+  "description": "描述",
+  "time_required": 时间秒,
+  "required_item": [{ "key": "所需物品key", "quantity": 数量, "use": 0.01 }],
+  "required_techs": ["前置科技key"],
+  "requires_burning": true   // true=需要燃烧, false=无需燃烧, undefined=不确定
+}
+\`\`\`
+
+**配方 (formulas)** — 实验配方，输入物品在特定容器和操作下产出新物质。
+\`\`\`json
+{
+  "name": "配方名称",
+  "key": "唯一标识符",
+  "description": "描述",
+  "required_items": [{ "key": "所需物品key 或 ['key1','key2']表示可替代", "quantity": 数量 }],
+  "required_container": "要求容器items的key（如 kiln, clay_pot）",
+  "required_actions": { "key": "操作key", "min": 最少次数, "max": 最多次数 },
+  "required_techs": ["前置科技key"],
+  "time_required": 时间秒,
+  "products": [{ "key": "产物物品key", "multiple": 数量倍率 }]
+}
+\`\`\`
+
+## 生成规则
+
+### 核心原则
+1. **基于现实科学**：所有生成的物品、行动、配方必须基于真实的化学、矿物学和地理学知识。
+2. **游戏平衡**：生成的数据应该符合游戏的渐进难度——新手可以从简单材料开始，高级材料需要前置科技。
+3. **合理关联**：新生成的行动可以产出已有物品，新配方可以使用已有物品作为原料。
+4. **中文命名**：所有名称和描述使用中文。
+
+### 物品生成规则
+- 如果是新元素（在已有元素列表中不存在），需要先生成对应的元素信息（元素名称、符号、类别等）
+- 矿物名称使用真实矿物名（如赤铁矿、方铅矿、闪锌矿）
+- 化工产物使用正确的化学名称（如硫酸、硝酸、氨）
+- type 分类：纯元素/矿物用 ["material"]，可作燃料的添加 "fuel"，气体加 "gas"，液体加 "liquid"
+- 如有对应的元素序数，添加 elemental 字段
+- 工具的耐久度 durable 设为 1，容器 durable 设为 1
+
+### 行动生成规则
+- 采集类行动应该有合适的 map（地图）关联
+- 如果有对应的元素（如铁），可增加在该元素产地的采集行动
+- 概率 probability 按稀有度设置：常见 800-1000，较常见 300-700，稀有 50-200，极稀有 5-30
+- quantity 使用数字或 [最小,最大] 范围
+
+### 科技生成规则
+- 新物质的制备往往需要前置科技解锁
+- 科技应该有层级关系（比如"采矿"→"金属冶炼"→"合金制作"）
+- required_items 中的物品应该已有或本次同步生成
+
+### 实验操作生成规则
+- 如果需要加热/燃烧，requires_burning: true
+- 需要特殊设备时添加 required_item
+- 如果需要前置科技才能使用，添加 required_techs
+
+### 配方生成规则
+- required_container 用于需要特定容器的反应（窑炉、烧杯、蒸馏瓶等）
+- required_actions 对应实验室操作（搅拌、焙烧、加热、蒸馏、过滤等）
+- 多个输入可以用逗号分隔 key 表示可替代材料
+- 化学反应要符合真实化学方程式（虽简化但不要造出违背科学原理的反应）
+- 副产物也应该考虑在内
+
+### 引用规则
+- 引用已有数据时，使用 key 值（不是名称）
+- 物品 key 引用已有的 items，科技 key 引用已有的 techs
+- 操作 key 引用已有的 labs，地图 key 引用已有的 maps
+- \`\`\` 如果生成的配方需要新的操作，请同步生成该操作\`\`\`
+
+## 输出格式
+
+始终输出以下 JSON 结构，即使某些数组为空：
+\`\`\`json
+{
+  "items": [...],     // 新物品列表
+  "actions": [...],   // 新行动列表
+  "techs": [...],     // 新科技列表
+  "labs": [...],      // 新实验操作列表
+  "formulas": [...]   // 新配方列表
+}
+\`\`\`
+
+生成的数量控制在合理范围内：
+- items: 2-8 个
+- actions: 1-4 个  
+- techs: 1-3 个
+- labs: 0-2 个（尽量复用已有的实验操作）
+- formulas: 1-4 个`;
+}
+
+function buildUserPrompt(userPrompt: string, contextData: ContextData): string {
+  const summaries = {
+    items: (contextData.items || []).map(i =>
+      `${i.key}（${i.name}）[${i.category}][type:${(i.type as string[] || []).join(',')}]${i.elemental ? ` 元素#${i.elemental}` : ''}`
+    ),
+    actions: (contextData.actions || []).map(a =>
+      `${a.key}（${a.name}）[${a.category}] 产出: ${(a.rewards as Array<Record<string, unknown>> || []).map(r => String(r.key)).join(',')}`
+    ),
+    techs: (contextData.techs || []).map(t =>
+      `${t.key}（${t.name}）${t.required_techs ? ` 前置:${(t.required_techs as string[]).join(',')}` : ''}`
+    ),
+    labs: (contextData.labs || []).map(l =>
+      `${l.key}（${l.name}）${l.requires_burning ? '[需燃烧]' : '[无需燃烧]'}`
+    ),
+    maps: (contextData.maps || []).map(m => `${m.key}（${m.name}）`),
+    formulas: (contextData.formulas || []).map(f =>
+      `${f.key}（${f.name}） 产物: ${(f.products as Array<Record<string, unknown>> || []).map(p => String(p.key)).join(',')}`
+    ),
+  };
+
+  return `## 用户需求
+用户希望基于「${userPrompt}」生成新的游戏数据。
+
+## 已有数据摘要（供你引用参考）
+
+### 地图
+${summaries.maps.join('\n') || '(暂无)'}
+
+### 已有物品
+${summaries.items.join('\n') || '(暂无)'}
+
+### 已有行动
+${summaries.actions.join('\n') || '(暂无)'}
+
+### 已有科技
+${summaries.techs.join('\n') || '(暂无)'}
+
+### 已有实验操作
+${summaries.labs.join('\n') || '(暂无)'}
+
+### 已有配方
+${summaries.formulas.join('\n') || '(暂无)'}
+
+## 要求
+1. 根据「${userPrompt}」在现实世界化学/矿物学/地理学中的真实情况，生成游戏数据
+2. 可以引用已有的物品、科技、地图、操作作为新行动和配方的输入/前置条件
+3. 合理设计科技树和游戏流程
+4. 如果是矿物，考虑它的主要产地（关联地图）、化学成分（关联配方）、用途（关联物品和行动）
+5. 如果是元素，考虑它的单质形态、主要化合物、矿石来源、提取方法
+6. 新物品的 key 使用英文小写+下划线，确保不与已有 key 冲突`;
+}
+
+// ============================================================
+// 输出规范化
+// ============================================================
+
+function normalizeOutput(parsed: Record<string, unknown>): GeneratedOutput {
+  return {
+    items: (Array.isArray(parsed.items) ? parsed.items.map(cleanItem) : []).filter(Boolean) as Record<string, unknown>[],
+    actions: (Array.isArray(parsed.actions) ? parsed.actions.map(cleanAction) : []).filter(Boolean) as Record<string, unknown>[],
+    techs: (Array.isArray(parsed.techs) ? parsed.techs.map(cleanTech) : []).filter(Boolean) as Record<string, unknown>[],
+    labs: (Array.isArray(parsed.labs) ? parsed.labs.map(cleanLab) : []).filter(Boolean) as Record<string, unknown>[],
+    formulas: (Array.isArray(parsed.formulas) ? parsed.formulas.map(cleanFormula) : []).filter(Boolean) as Record<string, unknown>[],
+  };
+}
+
+function cleanItem(item: unknown): Record<string, unknown> | null {
+  if (!item || typeof item !== 'object') return null;
+  const cleaned: Record<string, unknown> = { ...item as Record<string, unknown> };
+  if (!cleaned.name) cleaned.name = cleaned.key || '未命名';
+  if (!cleaned.key) cleaned.key = 'unknown';
+  if (!cleaned.category) cleaned.category = '材料';
+  if (!cleaned.description) cleaned.description = cleaned.name;
+  if (!Array.isArray(cleaned.type)) cleaned.type = ['material'];
+  if (Array.isArray(cleaned.type) && cleaned.type.length === 0) delete cleaned.type;
+  if (cleaned.elemental === undefined || cleaned.elemental === null) delete cleaned.elemental;
+  if (cleaned.durable === undefined || cleaned.durable === null) delete cleaned.durable;
+  if (cleaned.attrs && typeof cleaned.attrs === 'object' && Object.keys(cleaned.attrs as Record<string, unknown>).length === 0) delete cleaned.attrs;
+  return cleaned;
+}
+
+function cleanAction(action: unknown): Record<string, unknown> | null {
+  if (!action || typeof action !== 'object') return null;
+  const cleaned: Record<string, unknown> = { ...action as Record<string, unknown> };
+  if (!cleaned.name) cleaned.name = cleaned.key || '未命名';
+  if (!cleaned.key) cleaned.key = 'unknown';
+  if (!cleaned.category) cleaned.category = '采集';
+  if (!cleaned.description) cleaned.description = cleaned.name;
+  if (!Array.isArray(cleaned.required_items)) cleaned.required_items = [];
+  if (Array.isArray(cleaned.required_items) && cleaned.required_items.length === 0) delete cleaned.required_items;
+  if (!Array.isArray(cleaned.rewards)) cleaned.rewards = [];
+  if (Array.isArray(cleaned.rewards) && cleaned.rewards.length === 0) delete cleaned.rewards;
+  if (!cleaned.required_techs || (Array.isArray(cleaned.required_techs) && cleaned.required_techs.length === 0)) delete cleaned.required_techs;
+  if (!cleaned.map || (Array.isArray(cleaned.map) && cleaned.map.length === 0)) delete cleaned.map;
+  if (cleaned.time_required === undefined) cleaned.time_required = 10;
+  return cleaned;
+}
+
+function cleanTech(tech: unknown): Record<string, unknown> | null {
+  if (!tech || typeof tech !== 'object') return null;
+  const cleaned: Record<string, unknown> = { ...tech as Record<string, unknown> };
+  if (!cleaned.name) cleaned.name = cleaned.key || '未命名';
+  if (!cleaned.key) cleaned.key = 'unknown';
+  if (!cleaned.description) cleaned.description = cleaned.name;
+  if (!Array.isArray(cleaned.required_items)) cleaned.required_items = [];
+  if (Array.isArray(cleaned.required_items) && cleaned.required_items.length === 0) delete cleaned.required_items;
+  if (!cleaned.required_techs || (Array.isArray(cleaned.required_techs) && cleaned.required_techs.length === 0)) delete cleaned.required_techs;
+  if (cleaned.time_required === undefined) cleaned.time_required = 30;
+  return cleaned;
+}
+
+function cleanLab(lab: unknown): Record<string, unknown> | null {
+  if (!lab || typeof lab !== 'object') return null;
+  const cleaned: Record<string, unknown> = { ...lab as Record<string, unknown> };
+  if (!cleaned.name) cleaned.name = cleaned.key || '未命名';
+  if (!cleaned.key) cleaned.key = 'unknown';
+  if (!cleaned.description) cleaned.description = cleaned.name;
+  if (!Array.isArray(cleaned.required_item)) cleaned.required_item = [];
+  if (Array.isArray(cleaned.required_item) && cleaned.required_item.length === 0) delete cleaned.required_item;
+  if (!cleaned.required_techs || (Array.isArray(cleaned.required_techs) && cleaned.required_techs.length === 0)) delete cleaned.required_techs;
+  if (cleaned.time_required === undefined) cleaned.time_required = 20;
+  return cleaned;
+}
+
+function cleanFormula(formula: unknown): Record<string, unknown> | null {
+  if (!formula || typeof formula !== 'object') return null;
+  const cleaned: Record<string, unknown> = { ...formula as Record<string, unknown> };
+  if (!cleaned.name) cleaned.name = cleaned.key || '未命名';
+  if (!cleaned.key) cleaned.key = 'unknown';
+  if (!cleaned.description) cleaned.description = cleaned.name;
+  if (!Array.isArray(cleaned.required_items)) cleaned.required_items = [];
+  if (Array.isArray(cleaned.required_items) && cleaned.required_items.length === 0) delete cleaned.required_items;
+  if (!cleaned.required_techs || (Array.isArray(cleaned.required_techs) && cleaned.required_techs.length === 0)) delete cleaned.required_techs;
+  if (!cleaned.products || (Array.isArray(cleaned.products) && cleaned.products.length === 0)) delete cleaned.products;
+  if (cleaned.time_required === undefined) cleaned.time_required = 30;
+  // 确保 required_actions 格式正确
+  if (cleaned.required_actions && typeof cleaned.required_actions === 'object' && !(cleaned.required_actions as Record<string, unknown>).key) {
+    delete cleaned.required_actions;
+  }
+  return cleaned;
+}

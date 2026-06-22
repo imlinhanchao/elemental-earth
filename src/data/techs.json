@@ -72,24 +72,60 @@
     "time_required": 20
   },
   {
-    "name": "高炉冶炼",
-    "key": "smelting",
-    "description": "使用高炉将矿石冶炼成金属。",
+    "name": "耐火材料",
+    "key": "refractory_materials",
+    "description": "掌握制造耐火砖的技术，以建造高温炉窑。",
     "required_items": [
       {
-        "key": "bellows",
-        "quantity": 5
-      },
-      {
-        "key": "kiln",
-        "quantity": 5
+        "key": "clay",
+        "quantity": 10
       }
     ],
     "required_techs": [
-      "pottery",
-      "fire_starting",
-      "wood_processing"
+      "pottery"
     ],
-    "time_required": 45
+    "time_required": 120
+  },
+  {
+    "name": "高温熔炉",
+    "key": "high_temp_furnace",
+    "description": "建造能够达到更高温度的熔炉，以处理更高级的材料。",
+    "required_items": [
+      {
+        "key": "kiln",
+        "quantity": 1
+      },
+      {
+        "key": "bellows",
+        "quantity": 4
+      },
+      {
+        "key": "fire_brick",
+        "quantity": 20
+      }
+    ],
+    "required_techs": [
+      "refractory_materials"
+    ],
+    "time_required": 180
+  },
+  {
+    "name": "铁器制作",
+    "key": "iron_tool_crafting",
+    "description": "掌握使用铁制作工具和容器的技术。",
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "refractory_materials"
+    ],
+    "time_required": 3600
   }
 ]

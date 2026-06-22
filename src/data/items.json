@@ -31,13 +31,16 @@
     ]
   },
   {
-    "name": "树皮",
     "key": "bark",
+    "name": "树皮",
     "category": "材料",
     "description": "树木的外层，可以用来制作绳子和其他物品。",
     "type": [
       "material"
-    ]
+    ],
+    "attrs": {
+      "burn_time": 10
+    }
   },
   {
     "name": "树脂",
@@ -158,7 +161,8 @@
       "container"
     ],
     "attrs": {
-      "can_heat": true
+      "can_heat": true,
+      "save_gas": true
     }
   },
   {
@@ -175,13 +179,12 @@
     }
   },
   {
-    "name": "过滤布",
-    "key": "filter_cloth",
-    "category": "工具",
-    "description": "用来过滤液体的布料。",
-    "durable": 1,
+    "name": "纤维布",
+    "key": "fiber_cloth",
+    "category": "材料",
+    "description": "用植物纤维制作的布料，可以用来制作衣物和其他物品。",
     "type": [
-      "tool"
+      "material"
     ]
   },
   {
@@ -242,5 +245,130 @@
       "material",
       "liquid"
     ]
+  },
+  {
+    "key": "hematite",
+    "name": "赤铁矿",
+    "category": "材料",
+    "description": "主要成分为氧化铁(Fe₂O₃)的红色铁矿石，是炼铁的主要原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "生铁",
+    "key": "pig_iron",
+    "category": "材料",
+    "description": "高炉炼铁得到的含碳量较高的铁，质硬脆，是炼钢的原料。",
+    "type": [
+      "material"
+    ],
+    "elemental": 26
+  },
+  {
+    "name": "钢",
+    "key": "steel",
+    "category": "材料",
+    "description": "铁碳合金，含碳量介于生铁和熟铁之间，强度高、韧性好，用途广泛。",
+    "type": [
+      "material"
+    ],
+    "elemental": 26
+  },
+  {
+    "name": "炉渣",
+    "key": "slag",
+    "category": "材料",
+    "description": "炼铁过程中产生的废渣，主要成分为硅酸盐和氧化物，可用于制造建材或肥料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "焦炭",
+    "key": "coke",
+    "category": "材料",
+    "description": "煤在隔绝空气条件下干馏得到的多孔固体燃料，发热量高，是炼铁的重要燃料。",
+    "type": [
+      "material",
+      "fuel"
+    ],
+    "elemental": 6,
+    "attrs": {
+      "burn_time": 90
+    }
+  },
+  {
+    "name": "煤",
+    "key": "coal",
+    "category": "材料",
+    "description": "一种黑色固体燃料，由古代植物埋藏在地下经过长时间地质作用形成。",
+    "type": [
+      "material",
+      "fuel"
+    ],
+    "elemental": 6,
+    "attrs": {
+      "burn_time": 60
+    }
+  },
+  {
+    "name": "耐火砖",
+    "key": "fire_brick",
+    "category": "材料",
+    "description": "用粘土烧制而成的耐火砖，用于建造高炉。",
+    "type": [
+      "material"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "高炉",
+    "key": "blast_furnace",
+    "category": "容器",
+    "description": "用于高温冶炼金属的竖炉，需耐火砖建造，可进行还原熔炼。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "石灰石",
+    "key": "limestone",
+    "category": "材料",
+    "description": "碳酸钙矿石，在冶炼中用作熔剂，与杂质反应生成炉渣。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫磺",
+    "key": "sulfur",
+    "category": "材料",
+    "description": "一种黄色非金属元素，具有易燃性和腐蚀性，在冶炼中可能作为杂质存在。",
+    "type": [
+      "material"
+    ],
+    "elemental": 16
+  },
+  {
+    "name": "铁镐",
+    "key": "iron_pickaxe",
+    "category": "工具",
+    "description": "用铁打造的镐，比石镐更坚固耐用。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "坩埚",
+    "key": "crucible",
+    "category": "容器",
+    "description": "耐高温的容器，可用于熔炼金属和进行高温反应。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
   }
 ]

@@ -147,6 +147,32 @@
   .publish-status { font-size: 12px; color: var(--text-2); }
   .publish-status.success { color: var(--success); }
   .publish-status.error { color: var(--danger); }
+
+  /* ---- AI Generator ---- */
+  .ai-section { max-width: 900px; margin: 0 auto; }
+  .ai-input-row { display: flex; gap: 12px; align-items: flex-end; margin-bottom: 20px; }
+  .ai-input-row .form-row { flex: 1; margin-bottom: 0; }
+  .ai-input-row .btn { padding: 8px 24px; font-size: 14px; white-space: nowrap; }
+  .ai-loading { text-align: center; padding: 40px; color: var(--text-2); }
+  .ai-loading .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ai-error { background: #3d1f1f; border: 1px solid var(--danger); padding: 12px 16px; border-radius: var(--radius); margin-bottom: 16px; color: #fca5a5; }
+  .ai-result { margin-top: 16px; }
+  .ai-result-section { margin-bottom: 24px; }
+  .ai-result-section h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .ai-result-section .badge { font-size: 11px; background: var(--bg-3); color: var(--text-2); padding: 2px 8px; border-radius: 10px; }
+  .ai-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 10px; }
+  .ai-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .ai-card-header .name { font-weight: 600; font-size: 14px; }
+  .ai-card-header .key-tag { font-size: 11px; color: var(--text-2); background: var(--bg-3); padding: 1px 6px; border-radius: 3px; }
+  .ai-card-body { font-size: 13px; color: var(--text-2); }
+  .ai-card-body .field { display: inline-flex; gap: 4px; margin-right: 12px; }
+  .ai-card-body .field-label { color: var(--text-2); opacity: .6; }
+  .ai-card-body .field-value { color: var(--text); }
+  .ai-card-actions { margin-top: 8px; display: flex; gap: 6px; }
+  .ai-empty { text-align: center; padding: 40px; color: var(--text-2); font-size: 14px; }
+  .ai-hint { font-size: 12px; color: var(--text-2); opacity: .7; margin-top: 4px; }
+  .ai-batch-actions { display: flex; gap: 8px; margin-bottom: 16px; }
 </style>
 </head>
 <body>
@@ -187,6 +213,45 @@
   </div>
 </div>
 
+<!-- AI Generator Panel -->
+<div id="aiPanel" class="main" style="display:none">
+  <div class="ai-section">
+    <div class="toolbar">
+      <h2>🤖 AI 内容生成器</h2>
+    </div>
+    <p style="color:var(--text-2);font-size:13px;margin-bottom:16px">
+      输入一种材料、矿物或元素的名称，AI 将根据现实世界的化学、矿物学和地理学知识，自动生成相关的游戏数据（物品、行动、科技、实验操作和配方）。
+    </p>
+
+    <div class="ai-input-row">
+      <div class="form-row" style="margin:0">
+        <label for="aiPrompt">输入材料/矿物/元素名称</label>
+        <input type="text" id="aiPrompt" placeholder="例如：铁、赤铁矿、硫酸、石英、黄金…" onkeydown="if(event.key==='Enter') generateWithAI()">
+      </div>
+      <button class="btn btn-primary" id="aiGenerateBtn" onclick="generateWithAI()">🚀 生成</button>
+    </div>
+
+    <div id="aiLoading" class="ai-loading" style="display:none">
+      <div class="spinner"></div>
+      <div>AI 正在思考中，请稍候…<br><span style="font-size:12px;opacity:.6">基于真实化学和矿物学知识生成中</span></div>
+    </div>
+
+    <div id="aiError" class="ai-error" style="display:none"></div>
+
+    <div id="aiResult" class="ai-result" style="display:none">
+      <div class="ai-batch-actions">
+        <button class="btn btn-success" onclick="saveAllGenerated()">💾 保存全部</button>
+        <button class="btn btn-ghost" onclick="clearGenerated()">🗑 清空结果</button>
+      </div>
+      <div id="aiItemsSection" class="ai-result-section"></div>
+      <div id="aiActionsSection" class="ai-result-section"></div>
+      <div id="aiTechsSection" class="ai-result-section"></div>
+      <div id="aiLabsSection" class="ai-result-section"></div>
+      <div id="aiFormulasSection" class="ai-result-section"></div>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
@@ -197,6 +262,7 @@ let currentType = '';         // 当前选中的类型
 let records = [];             // 当前类型的记录
 let editingKey = null;        // 正在编辑的记录的 key
 let isNewRecord = false;      // 是否为新增模式
+let generatedData = null;     // AI 生成的数据缓存
 
 // 字段类型分类
 const FIELD_TAGS = {
@@ -234,10 +300,280 @@ async function init() {
   if (models.length) switchType(models[0].key);
 }
 
+// ======== AI Generator ========
+
+async function generateWithAI() {
+  const prompt = document.getElementById('aiPrompt').value.trim();
+  if (!prompt) { toast('请输入材料或元素名称', 'error'); return; }
+
+  const btn = document.getElementById('aiGenerateBtn');
+  const loading = document.getElementById('aiLoading');
+  const error = document.getElementById('aiError');
+  const result = document.getElementById('aiResult');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 生成中...';
+  loading.style.display = 'block';
+  error.style.display = 'none';
+  result.style.display = 'none';
+  generatedData = null;
+
+  try {
+    const resp = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+    });
+    const json = await resp.json();
+    if (!resp.ok) throw new Error(json.error || '生成失败');
+
+    generatedData = json.data;
+    displayGeneratedData(json.data);
+    result.style.display = 'block';
+    toast('✅ 生成完成！请预览后保存', 'success');
+  } catch (e) {
+    error.textContent = '❌ ' + e.message;
+    error.style.display = 'block';
+    toast('生成失败: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 生成';
+    loading.style.display = 'none';
+  }
+}
+
+function displayGeneratedData(data) {
+  renderGeneratedSection('aiItemsSection', '🧪 新物品', data.items, renderItemCard);
+  renderGeneratedSection('aiActionsSection', '⚡ 新行动', data.actions, renderActionCard);
+  renderGeneratedSection('aiTechsSection', '🔬 新科技', data.techs, renderTechCard);
+  renderGeneratedSection('aiLabsSection', '🧫 新实验操作', data.labs, renderLabCard);
+  renderGeneratedSection('aiFormulasSection', '📜 新配方', data.formulas, renderFormulaCard);
+}
+
+function renderGeneratedSection(containerId, title, items, renderFn) {
+  const container = document.getElementById(containerId);
+  if (!items || items.length === 0) {
+    container.innerHTML = `<h3>${title} <span class="badge">0 项</span></h3><div class="ai-empty">（本次未生成）</div>`;
+    return;
+  }
+  let html = `<h3>${title} <span class="badge">${items.length} 项</span></h3>`;
+  for (const item of items) {
+    html += renderFn(item);
+  }
+  container.innerHTML = html;
+}
+
+function renderItemCard(item) {
+  const typeStr = (item.type || []).join(', ');
+  const elementalStr = item.elemental ? `元素#${item.elemental}` : '';
+  return `<div class="ai-card">
+    <div class="ai-card-header">
+      <div><span class="name">${escHtml(item.name)}</span> <span class="key-tag">${escHtml(item.key)}</span></div>
+      <span style="font-size:12px;color:var(--primary)">${escHtml(item.category)}</span>
+    </div>
+    <div class="ai-card-body">
+      <p style="margin-bottom:4px">${escHtml(item.description)}</p>
+      <div>
+        ${typeStr ? `<span class="field"><span class="field-label">类型:</span> <span class="field-value">${escHtml(typeStr)}</span></span>` : ''}
+        ${elementalStr ? `<span class="field"><span class="field-label">元素:</span> <span class="field-value">${escHtml(elementalStr)}</span></span>` : ''}
+        ${item.durable ? `<span class="field"><span class="field-label">耐久:</span> <span class="field-value">${item.durable}</span></span>` : ''}
+      </div>
+    </div>
+    <div class="ai-card-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveSingle('items', '${item.key}')">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="viewRaw('items', '${item.key}')">👁 查看</button>
+    </div>
+  </div>`;
+}
+
+function renderActionCard(action) {
+  const rewardsStr = (action.rewards || []).map(r => `${r.key}×${r.quantity}(${r.probability})`).join(', ');
+  const itemsStr = (action.required_items || []).map(r => `${r.key}×${r.quantity}`).join(', ');
+  const mapStr = (action.map || []).join(', ');
+  const techStr = (action.required_techs || []).join(', ');
+  return `<div class="ai-card">
+    <div class="ai-card-header">
+      <div><span class="name">${escHtml(action.name)}</span> <span class="key-tag">${escHtml(action.key)}</span></div>
+      <span style="font-size:12px;color:var(--primary)">${escHtml(action.category)}</span>
+    </div>
+    <div class="ai-card-body">
+      <p style="margin-bottom:4px">${escHtml(action.description)}</p>
+      <div>
+        <span class="field"><span class="field-label">耗时:</span> <span class="field-value">${action.time_required || 0}s</span></span>
+        ${itemsStr ? `<span class="field"><span class="field-label">需求:</span> <span class="field-value">${escHtml(itemsStr)}</span></span>` : ''}
+        ${rewardsStr ? `<span class="field"><span class="field-label">奖励:</span> <span class="field-value">${escHtml(rewardsStr)}</span></span>` : ''}
+        ${techStr ? `<span class="field"><span class="field-label">科技:</span> <span class="field-value">${escHtml(techStr)}</span></span>` : ''}
+        ${mapStr ? `<span class="field"><span class="field-label">地图:</span> <span class="field-value">${escHtml(mapStr)}</span></span>` : ''}
+      </div>
+    </div>
+    <div class="ai-card-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveSingle('actions', '${action.key}')">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="viewRaw('actions', '${action.key}')">👁 查看</button>
+    </div>
+  </div>`;
+}
+
+function renderTechCard(tech) {
+  const itemsStr = (tech.required_items || []).map(r => `${r.key}×${r.quantity}`).join(', ');
+  const techStr = (tech.required_techs || []).join(', ');
+  return `<div class="ai-card">
+    <div class="ai-card-header">
+      <div><span class="name">${escHtml(tech.name)}</span> <span class="key-tag">${escHtml(tech.key)}</span></div>
+    </div>
+    <div class="ai-card-body">
+      <p style="margin-bottom:4px">${escHtml(tech.description)}</p>
+      <div>
+        <span class="field"><span class="field-label">耗时:</span> <span class="field-value">${tech.time_required || 30}s</span></span>
+        ${itemsStr ? `<span class="field"><span class="field-label">需求:</span> <span class="field-value">${escHtml(itemsStr)}</span></span>` : ''}
+        ${techStr ? `<span class="field"><span class="field-label">前置:</span> <span class="field-value">${escHtml(techStr)}</span></span>` : ''}
+      </div>
+    </div>
+    <div class="ai-card-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveSingle('techs', '${tech.key}')">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="viewRaw('techs', '${tech.key}')">👁 查看</button>
+    </div>
+  </div>`;
+}
+
+function renderLabCard(lab) {
+  const itemsStr = (lab.required_item || []).map(r => `${r.key}×${r.quantity}`).join(', ');
+  const techStr = (lab.required_techs || []).join(', ');
+  const burnStr = lab.requires_burning === true ? '🔥 需燃烧' : lab.requires_burning === false ? '❄️ 无需燃烧' : '';
+  return `<div class="ai-card">
+    <div class="ai-card-header">
+      <div><span class="name">${escHtml(lab.name)}</span> <span class="key-tag">${escHtml(lab.key)}</span></div>
+      ${burnStr ? `<span style="font-size:12px">${escHtml(burnStr)}</span>` : ''}
+    </div>
+    <div class="ai-card-body">
+      <p style="margin-bottom:4px">${escHtml(lab.description)}</p>
+      <div>
+        <span class="field"><span class="field-label">耗时:</span> <span class="field-value">${lab.time_required || 20}s</span></span>
+        ${itemsStr ? `<span class="field"><span class="field-label">需求:</span> <span class="field-value">${escHtml(itemsStr)}</span></span>` : ''}
+        ${techStr ? `<span class="field"><span class="field-label">前置:</span> <span class="field-value">${escHtml(techStr)}</span></span>` : ''}
+      </div>
+    </div>
+    <div class="ai-card-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveSingle('labs', '${lab.key}')">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="viewRaw('labs', '${lab.key}')">👁 查看</button>
+    </div>
+  </div>`;
+}
+
+function renderFormulaCard(formula) {
+  const itemsStr = (formula.required_items || []).map(r => `${Array.isArray(r.key) ? r.key.join('/') : r.key}×${r.quantity}`).join(', ');
+  const prodStr = (formula.products || []).map(p => `${p.key}×${p.multiple}`).join(', ');
+  const containerStr = formula.required_container ? `容器: ${formula.required_container}` : '';
+  const actionStr = formula.required_actions ? `操作: ${formula.required_actions.key}${formula.required_actions.min ? '×'+formula.required_actions.min : ''}` : '';
+  const techStr = (formula.required_techs || []).join(', ');
+  return `<div class="ai-card">
+    <div class="ai-card-header">
+      <div><span class="name">${escHtml(formula.name)}</span> <span class="key-tag">${escHtml(formula.key)}</span></div>
+    </div>
+    <div class="ai-card-body">
+      <p style="margin-bottom:4px">${escHtml(formula.description)}</p>
+      <div>
+        <span class="field"><span class="field-label">耗时:</span> <span class="field-value">${formula.time_required || 30}s</span></span>
+        ${itemsStr ? `<span class="field"><span class="field-label">原料:</span> <span class="field-value">${escHtml(itemsStr)}</span></span>` : ''}
+        ${prodStr ? `<span class="field"><span class="field-label">产物:</span> <span class="field-value">${escHtml(prodStr)}</span></span>` : ''}
+        ${containerStr ? `<br><span class="field"><span class="field-label">${escHtml(containerStr)}</span></span>` : ''}
+        ${actionStr ? `<span class="field"><span class="field-label">${escHtml(actionStr)}</span></span>` : ''}
+        ${techStr ? `<br><span class="field"><span class="field-label">前置科技:</span> <span class="field-value">${escHtml(techStr)}</span></span>` : ''}
+      </div>
+    </div>
+    <div class="ai-card-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveSingle('formulas', '${formula.key}')">💾 保存</button>
+      <button class="btn btn-ghost btn-sm" onclick="viewRaw('formulas', '${formula.key}')">👁 查看</button>
+    </div>
+  </div>`;
+}
+
+/** 保存单条生成的数据 */
+async function saveSingle(type, key) {
+  if (!generatedData || !generatedData[type]) {
+    toast('没有可保存的数据', 'error');
+    return;
+  }
+  const record = generatedData[type].find(r => r.key === key);
+  if (!record) {
+    toast('数据不存在', 'error');
+    return;
+  }
+  try {
+    const resp = await fetch(`/api/${type}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(record),
+    });
+    const json = await resp.json();
+    if (!resp.ok) throw new Error(json.error || '保存失败');
+    toast(`✅ ${type}/${key} 已保存`, 'success');
+    _allRecordsCache = {};
+  } catch (e) {
+    toast(`保存失败: ${e.message}`, 'error');
+  }
+}
+
+/** 保存所有生成的数据 */
+async function saveAllGenerated() {
+  if (!generatedData) {
+    toast('没有可保存的数据', 'error');
+    return;
+  }
+  const types = ['items', 'actions', 'techs', 'labs', 'formulas'];
+  let success = 0, fail = 0;
+  for (const type of types) {
+    const list = generatedData[type] || [];
+    for (const record of list) {
+      try {
+        const resp = await fetch(`/api/${type}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record),
+        });
+        const json = await resp.json();
+        if (resp.ok) {
+          success++;
+        } else {
+          console.warn(`保存 ${type}/${record.key} 失败:`, json.error);
+          fail++;
+        }
+      } catch (e) {
+        console.warn(`保存 ${type}/${record.key} 失败:`, e.message);
+        fail++;
+      }
+    }
+  }
+  _allRecordsCache = {};
+  toast(`✅ 保存完成：成功 ${success} 项${fail ? `，失败 ${fail} 项` : ''}`, fail ? 'error' : 'success');
+}
+
+/** 查看原始 JSON */
+function viewRaw(type, key) {
+  if (!generatedData || !generatedData[type]) return;
+  const record = generatedData[type].find(r => r.key === key);
+  if (!record) return;
+  alert(JSON.stringify(record, null, 2));
+}
+
+/** 清空 AI 结果 */
+function clearGenerated() {
+  generatedData = null;
+  document.getElementById('aiResult').style.display = 'none';
+  document.getElementById('aiItemsSection').innerHTML = '';
+  document.getElementById('aiActionsSection').innerHTML = '';
+  document.getElementById('aiTechsSection').innerHTML = '';
+  document.getElementById('aiLabsSection').innerHTML = '';
+  document.getElementById('aiFormulasSection').innerHTML = '';
+  document.getElementById('aiError').style.display = 'none';
+}
+
 // ======== Tab ========
 function renderTabs() {
   const bar = document.getElementById('tabBar');
-  bar.innerHTML = models.map(m =>
+  // 在数据标签前加上 AI 生成标签
+  const aiActive = currentType === 'ai_generator';
+  bar.innerHTML = `<div class="tab${aiActive ? ' active' : ''}" onclick="switchType('ai_generator')">🤖 AI 生成</div>`
+    + models.map(m =>
     `<div class="tab${m.key === currentType ? ' active' : ''}" onclick="switchType('${m.key}')">${m.label}</div>`
   ).join('');
 }
@@ -245,6 +581,17 @@ function renderTabs() {
 function switchType(type) {
   currentType = type;
   renderTabs();
+
+  if (type === 'ai_generator') {
+    // 显示 AI 生成面板，隐藏 CRUD 面板
+    document.querySelector('.main').style.display = 'none';
+    document.getElementById('aiPanel').style.display = 'block';
+    return;
+  }
+
+  // 显示 CRUD 面板，隐藏 AI 面板
+  document.querySelector('.main').style.display = 'block';
+  document.getElementById('aiPanel').style.display = 'none';
   loadRecords();
 }
 
@@ -398,7 +745,7 @@ async function buildForm(record) {
       const arr = val || [];
       html += `<div class="tag-list" id="tags_${f}">`;
       for (const item of arr) {
-        html += `<span class="tag">${escHtml(item)} <span class="remove" onclick="removeTag('${f}', '${escHtml(item)}')">&times;</span></span>`;
+        html += `<span class="tag">${escHtml(item)} <span class="remove" onclick="this.parentElement.remove()">&times;</span></span>`;
       }
       html += `</div>
         <div class="tag-input">
@@ -551,12 +898,6 @@ function addTag(field) {
   input.focus();
 }
 
-function removeTag(field, val) {
-  const list = document.getElementById(`tags_${field}`);
-  for (const tag of list.children) {
-    if (tag.textContent.trim() === val) { tag.remove(); break; }
-  }
-}
 
 // ---- Sub-row helpers ----
 function addSubRow(field) {
@@ -637,6 +978,13 @@ async function saveRecord() {
               } else if (!isNaN(Number(v)) && v !== '') {
                 v = Number(v);
               }
+              // 数量/概率支持逗号分隔的数组值，如 "5,7,8" → [5,7,8]
+              if ((sf === 'quantity' || sf === 'multiple') && typeof v === 'string' && v.includes(',')) {
+                v = v.split(',').map(s => {
+                  const trimmed = s.trim()
+                  return isNaN(Number(trimmed)) ? trimmed : Number(trimmed)
+                }).filter(s => s !== '')
+              }
               obj[sf] = v;
             }
           }
@@ -658,7 +1006,7 @@ async function saveRecord() {
       data[f] = Object.keys(obj).length ? obj : undefined;
     } else {
       // key 只读字段
-      const input = row.querySelector('input[type="text"]:not([readonly])') || row.querySelector('textarea');
+      const input = row.querySelector('input[type="text"]') || row.querySelector('textarea');
       if (input && !input.readOnly) {
         let v = input.value.trim() || undefined;
         if (v !== undefined && !isNaN(Number(v)) && v !== '') v = Number(v);
