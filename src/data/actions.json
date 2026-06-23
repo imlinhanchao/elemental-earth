@@ -379,7 +379,7 @@
     ],
     "rewards": [
       {
-        "key": "filter_cloth",
+        "key": "fiber_cloth",
         "quantity": 1,
         "probability": 1000
       }

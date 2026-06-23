@@ -23,15 +23,17 @@ function findMatchingMaterial(keys: string[], needQty: number): string | null {
 const selectedContainerKey = ref<string | null>(null)
 const selectedMaterials = ref<Map<string, number>>(new Map())
 const selectedOperationKey = ref<string | null>(null)
+const selectedChainOperationKey = ref<string | null>(null)
 const selectedFireSourceKey = ref<string | null>(null)
 const selectedFuels = ref<Map<string, number>>(new Map())
 const cycles = ref(1)
 const materialModalOpen = ref(false)
 
-// 切换操作时重置引火/燃料选择
+// 切换操作时重置引火/燃料/chain选择
 watch(selectedOperationKey, () => {
   selectedFireSourceKey.value = null
   selectedFuels.value = new Map()
+  selectedChainOperationKey.value = null
   cycles.value = 1
 })
 
@@ -58,6 +60,33 @@ const selectedOperation = computed<ILabAction | null>(() => {
 const selectedContainerPack = computed(() => {
   if (!selectedContainerKey.value) return null
   return packStore.items.find(i => i.key === selectedContainerKey.value) || null
+})
+
+// ---- 追加操作 ----
+const selectedChainOperation = computed<ILabAction | null>(() => {
+  if (!selectedChainOperationKey.value) return null
+  return LabActions.find(a => a.key === selectedChainOperationKey.value) || null
+})
+
+const availableChainOperations = computed(() => {
+  const op = selectedOperation.value
+  if (!op?.chain_operations?.length) return []
+  return LabActions.filter(a =>
+    op.chain_operations!.includes(a.key) &&
+    (!a.required_techs || a.required_techs.every(t => packStore.hasTech(t)))
+  )
+})
+
+/** 操作所需的容器/设备是否已满足 */
+const operationRequirementMet = computed(() => {
+  const op = selectedOperation.value
+  if (!op?.required_item) return true
+  for (const req of op.required_item) {
+    if (req.key !== selectedContainerKey.value) return false
+    const pack = selectedContainerPack.value
+    if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+  }
+  return true
 })
 
 // ---- 材料弹窗 ----
@@ -129,13 +158,19 @@ const formulaProven = computed(() => {
 const formulaProducts = computed(() => {
   const f = matchedFormula.value
   if (!f) return []
-  const canSaveGas = selectedOperation.value?.collects_gas === true
+  const chainOp = selectedChainOperation.value?.key
   return f.products
     .filter(p => {
       const itemDef = getItem(p.key)
       if (!itemDef) return false
-      // 气体物品：只有选择「气体收集」操作时才显示
-      if (itemDef.type.includes('gas')) return canSaveGas
+      // 需要特定追加操作才能收集的产物
+      if (p.required_chain_operation) {
+        return p.required_chain_operation === chainOp
+      }
+      // 气体：有追加操作时由追加操作决定，无追加操作时保留（由主操作决定）
+      if (itemDef.type.includes('gas')) {
+        return chainOp === 'gas_collecting'
+      }
       return true
     })
     .map(p => ({
@@ -317,7 +352,11 @@ const fireSourceAvailable = computed(() => {
 // ---- 总耗时 ----
 const totalTime = computed(() => {
   if (!selectedOperation.value) return 0
-  return selectedOperation.value.time_required * cycles.value
+  let t = selectedOperation.value.time_required * cycles.value
+  if (selectedChainOperation.value) {
+    t += selectedChainOperation.value.time_required * cycles.value
+  }
+  return t
 })
 
 // ---- 能否开始 ----
@@ -410,7 +449,7 @@ function startExperiment() {
   }
 
   taskStore.pushLabTask({
-    name: `实验室 - ${selectedOperation.value.name}`,
+    name: `实验室 - ${selectedOperation.value.name}${selectedChainOperation.value ? ' → ' + selectedChainOperation.value.name : ''}`,
     key: `lab_${selectedOperation.value.key}_${Date.now()}`,
     description: selectedOperation.value.description,
     time_required: totalTime.value,
@@ -421,6 +460,7 @@ function startExperiment() {
   selectedContainerKey.value = null
   selectedMaterials.value = new Map()
   selectedOperationKey.value = null
+  selectedChainOperationKey.value = null
   selectedFireSourceKey.value = null
   selectedFuels.value = new Map()
   cycles.value = 1
@@ -484,15 +524,40 @@ function startExperiment() {
         <div v-if="selectedOperation" class="mt-2 text-xs text-base-content/70 space-y-0.5">
           <p>{{ selectedOperation.description }}</p>
           <p v-if="selectedOperation.requires_burning" class="text-warning">🔥 需要火源</p>
-          <p v-if="selectedOperation.required_item">
+          <p v-if="selectedOperation.required_item"
+             :class="operationRequirementMet ? '' : 'text-error'">
             需要: {{ selectedOperation.required_item.map(r => {
               const def = getItem(r.key)
               return `${def?.name || r.key}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
             }).join(', ') }}
+            <span v-if="!operationRequirementMet" class="text-error"> ⚠️ 未满足</span>
           </p>
           <p v-if="selectedOperation.required_techs && !selectedOperation.required_techs.every(t => packStore.hasTech(t))" class="text-error">
             前置科技未解锁
           </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.5 追加操作（可选） -->
+    <div v-if="availableChainOperations.length > 0" class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">3.5 追加操作（可选）</h3>
+        <p class="text-xs text-base-content/50 mb-2">在主操作完成后追加额外操作，不消耗额外材料</p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="op in availableChainOperations"
+            :key="op.key"
+            class="btn btn-outline btn-sm gap-1"
+            :class="selectedChainOperationKey === op.key ? 'btn-secondary' : ''"
+            @click="selectedChainOperationKey = selectedChainOperationKey === op.key ? null : op.key"
+          >
+            {{ op.name }}
+            <span class="text-xs opacity-60">{{ op.time_required }}秒</span>
+          </button>
+        </div>
+        <div v-if="selectedChainOperation" class="mt-2 text-xs text-base-content/70">
+          <p>{{ selectedChainOperation.description }}</p>
         </div>
       </div>
     </div>
@@ -563,7 +628,7 @@ function startExperiment() {
     <!-- 5. 执行实验 -->
     <div class="card bg-base-200">
       <div class="card-body p-4">
-        <h3 class="card-title text-sm">{{ burningNeeded ? '5' : '4' }}. 执行实验</h3>
+        <h3 class="card-title text-sm">{{ burningNeeded ? '6' : '5' }}. 执行实验</h3>
 
         <!-- 周期选择 -->
         <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -618,8 +683,8 @@ function startExperiment() {
               </span>
             </div>
             <!-- 气体提示 -->
-            <div v-if="matchedFormula && hasGasProducts && selectedOperation?.collects_gas !== true" class="text-xs text-warning mt-1">
-              ⚠️ 该配方会产生气体，但没有选择「气体收集」操作，气体将逸散
+            <div v-if="matchedFormula && hasGasProducts && selectedChainOperation?.key !== 'gas_collecting'" class="text-xs text-warning mt-1">
+              ⚠️ 该配方会产生气体，但未追加「气体收集」操作，气体将逸散
             </div>
           </template>
           <template v-else>
@@ -632,8 +697,14 @@ function startExperiment() {
             </div>
           </template>
         </div>
-        <div v-else-if="selectedOperation" class="text-xs text-base-content/50 mb-3">
-          暂无已知配方 — 实验可能不会产生可用物质
+        <div v-else-if="selectedOperation"  class="border rounded-lg p-3 mb-3 border-warning/30 bg-warning/5">
+          <div class="flex items-center gap-1 text-sm font-medium text-warning">
+            <Icon icon="tabler:question-mark" class="text-lg" />
+            未知结果
+          </div>
+          <div class="text-xs text-base-content/70 mt-1">
+            当前配方的产物尚不清楚，或许会有新发现！
+          </div>
         </div>
 
         <!-- 开始按钮 -->

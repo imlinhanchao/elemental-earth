@@ -28,6 +28,14 @@ export interface ILabAction {
      * true表示需要燃烧，false表示不需要，undefined表示不确定
      */
     requires_burning?: boolean;
+    /**
+     * 可追加的操作 chain（构成实验链条）
+     */
+    chain_operations?: string[];
+    /**
+     * 是否作为追加操作（不消耗额外材料）
+     */
+    is_chain?: boolean;
 }
 
 export const LabActions: ILabAction[] = data as ILabAction[];

@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 
+const ADMIN_STORAGE_KEY = 'admin_token'
+function isAdminLoggedIn(): boolean {
+  return !!localStorage.getItem(ADMIN_STORAGE_KEY)
+}
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -44,7 +49,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     component: () => import('../layouts/AdminLayout.vue'),
-    redirect: '/admin/login',
+    redirect: '/admin/dashboard',
     children: [
       { path: 'login',     name: 'AdminLogin',     component: () => import('../views/admin/AdminLogin.vue') },
       { path: 'dashboard', name: 'AdminDashboard',  component: () => import('../views/admin/AdminDashboard.vue') },
@@ -67,12 +72,10 @@ const router = createRouter({
 })
 
 // ─── 路由守卫：未登录时跳转登录页 ────────────────────────────
-router.beforeEach(async (to) => {
+router.beforeEach((to) => {
   if (to.path.startsWith('/admin')) {
     if (to.name === 'AdminLogin') return true
-    const { useAdminStore } = await import('@/stores/modules/admin')
-    const admin = useAdminStore()
-    if (!admin.isLoggedIn) return { name: 'AdminLogin' }
+    if (!isAdminLoggedIn()) return { name: 'AdminLogin' }
   }
   return true
 })

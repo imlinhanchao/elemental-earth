@@ -40,7 +40,7 @@ export interface IFormula {
     /**
      * 产物
      */
-    products: { key: string; multiple: number }[];
+    products: { key: string; multiple: number; required_chain_operation?: string }[];
 }
 
 export const Formulas: IFormula[] = data as IFormula[];
