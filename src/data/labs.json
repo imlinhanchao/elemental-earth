@@ -88,7 +88,7 @@
   },
   {
     "key": "gas_collecting",
-    "name": "气体收集",
+    "name": "排水集气",
     "description": "使用集气瓶收集反应产生的气体。",
     "time_required": 5,
     "requires_burning": false,
@@ -97,6 +97,9 @@
         "key": "gas_bottle",
         "quantity": 1,
         "use": 1
+      }, {
+        "key": "water",
+        "quantity": 1
       }
     ],
     "required_techs": [
