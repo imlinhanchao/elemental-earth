@@ -204,8 +204,12 @@
     "description": "一种有毒的气体，可以通过干馏产生。",
     "type": [
       "material",
-      "gas"
-    ]
+      "gas",
+      "fuel"
+    ],
+    "attrs": {
+      "burn_time": 30
+    }
   },
   {
     "name": "二氧化碳",
@@ -370,5 +374,39 @@
       "container"
     ],
     "durable": 1
+  },
+  {
+    "name": "硝石",
+    "key": "niter",
+    "category": "材料",
+    "description": "一种矿物，主要成分为硝酸钾，加热可分解产生氧气。",
+    "type": [
+      "material"
+    ],
+    "elemental": 19
+  },
+  {
+    "name": "集气瓶",
+    "key": "gas_bottle",
+    "category": "容器",
+    "description": "一种带有密封盖的玻璃容器，用于收集和储存气体。",
+    "type": [
+      "container"
+    ],
+    "durable": 1,
+    "attrs": {
+      "save_gas": true
+    }
+  },
+  {
+    "name": "氢气",
+    "key": "hydrogen",
+    "category": "气体",
+    "description": "最轻的气体，可燃，常用于还原反应。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 1
   }
 ]

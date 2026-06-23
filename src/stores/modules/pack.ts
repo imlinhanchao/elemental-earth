@@ -71,6 +71,11 @@ export const usePackStore = defineStore('pack', () => {
   const removeItem = (key: string, quantity: number, use: number = 0) => {
     const existingItem = items.find(i => i.key === key);
     if (existingItem) {
+      // 气体材料被消耗时：归还一个集气瓶
+      const itemDef = Items.find(d => d.key === key);
+      if (itemDef?.type.includes('gas')) {
+        addItem('gas_bottle', 1);
+      }
       if (use) {
         existingItem.durable -= use;
         if (existingItem.durable <= 0) {

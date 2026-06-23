@@ -129,12 +129,12 @@ const formulaProven = computed(() => {
 const formulaProducts = computed(() => {
   const f = matchedFormula.value
   if (!f) return []
-  const canSaveGas = packStore.hasGasContainer()
+  const canSaveGas = selectedOperation.value?.collects_gas === true
   return f.products
     .filter(p => {
       const itemDef = getItem(p.key)
       if (!itemDef) return false
-      // 气体物品：只有具备储气容器时才显示
+      // 气体物品：只有选择「气体收集」操作时才显示
       if (itemDef.type.includes('gas')) return canSaveGas
       return true
     })
@@ -618,8 +618,8 @@ function startExperiment() {
               </span>
             </div>
             <!-- 气体提示 -->
-            <div v-if="matchedFormula && hasGasProducts && !packStore.hasGasContainer()" class="text-xs text-warning mt-1">
-              ⚠️ 该配方会产生气体，但当前没有具备储气功能的容器，气体将逸散
+            <div v-if="matchedFormula && hasGasProducts && selectedOperation?.collects_gas !== true" class="text-xs text-warning mt-1">
+              ⚠️ 该配方会产生气体，但没有选择「气体收集」操作，气体将逸散
             </div>
           </template>
           <template v-else>

@@ -46,16 +46,17 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../layouts/AdminLayout.vue'),
     redirect: '/admin/login',
     children: [
-      {
-        path: 'login',
-        name: 'AdminLogin',
-        component: () => import('../views/admin/AdminLogin.vue'),
-      },
-      {
-        path: 'dashboard',
-        name: 'AdminDashboard',
-        component: () => import('../views/admin/AdminDashboard.vue'),
-      },
+      { path: 'login',     name: 'AdminLogin',     component: () => import('../views/admin/AdminLogin.vue') },
+      { path: 'dashboard', name: 'AdminDashboard',  component: () => import('../views/admin/AdminDashboard.vue') },
+      { path: 'ai',        name: 'AdminAi',         component: () => import('../views/admin/AiGenerator.vue') },
+      // 每种数据类型独立路由和组件
+      { path: 'maps',      name: 'AdminMaps',       component: () => import('../views/admin/types/MapsView.vue') },
+      { path: 'items',     name: 'AdminItems',      component: () => import('../views/admin/types/ItemsView.vue') },
+      { path: 'actions',   name: 'AdminActions',    component: () => import('../views/admin/types/ActionsView.vue') },
+      { path: 'techs',     name: 'AdminTechs',      component: () => import('../views/admin/types/TechsView.vue') },
+      { path: 'labs',      name: 'AdminLabs',       component: () => import('../views/admin/types/LabsView.vue') },
+      { path: 'formulas',  name: 'AdminFormulas',   component: () => import('../views/admin/types/FormulasView.vue') },
+      { path: 'elements',  name: 'AdminElements',   component: () => import('../views/admin/types/ElementsView.vue') },
     ],
   },
 ]
@@ -69,7 +70,6 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   if (to.path.startsWith('/admin')) {
     if (to.name === 'AdminLogin') return true
-    // 检查是否已登录（通过 store 中的 token）
     const { useAdminStore } = await import('@/stores/modules/admin')
     const admin = useAdminStore()
     if (!admin.isLoggedIn) return { name: 'AdminLogin' }

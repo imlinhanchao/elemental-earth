@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <Transition name="overlay-fade">
-      <div v-if="visible" class="discovery-overlay" @click="skip">
+      <div v-if="visible" class="discovery-overlay" @click="onOverlayClick">
         <!-- 星空背景粒子 -->
         <div class="discovery-particles">
           <span v-for="i in 40" :key="i" class="particle" :style="particleStyle(i)" />
@@ -66,6 +66,13 @@
             </div>
           </div>
 
+          <!-- 点击揭示提示（阶段 1 和阶段 3 通用） -->
+          <Transition name="fade-up">
+            <div v-if="waitingForClick" class="click-reveal-hint" @click.stop="reveal">
+              点击揭示新元素 ✦
+            </div>
+          </Transition>
+
           <!-- Phase 4: 点亮完成 -->
           <Transition name="pulse-in">
             <div v-if="stage === 4" key="done" class="done-container">
@@ -105,6 +112,7 @@ const router = useRouter()
 // ─── 阶段控制 ──────────────────────────────────────────────────────────
 const stage = ref(0)      // 0=hidden, 1=title, 2=card, 3=fly, 4=done
 const cardFlipped = ref(false)
+const waitingForClick = ref(false)
 
 const element = computed<PeriodicElement | undefined>(() =>
   props.elementNumber ? getElementById(props.elementNumber) : undefined
@@ -133,25 +141,8 @@ watch(() => props.visible, async (val) => {
   stage.value = 1
   await sleep(800)
 
-  // Phase 2: 卡片翻转
-  stage.value = 2
-  await nextTick()
-  await sleep(600)
-
-  cardFlipped.value = true
-  await sleep(1200)
-
-  // Phase 3: 飞向周期表
-  stage.value = 3
-  await nextTick()
-  await sleep(1200)
-
-  // Phase 4: 点亮完成
-  stage.value = 4
-  await sleep(1500)
-
-  // 完成
-  emit('done')
+  // 停住，点击后才展示新元素
+  waitingForClick.value = true
 })
 
 // ─── 飞行动画位置计算 ──────────────────────────────────────────────────
@@ -250,6 +241,40 @@ function particleStyle(i: number): Record<string, string> {
 // ─── 帮助函数 ──────────────────────────────────────────────────────────
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/** 点击遮罩：等待揭示时揭示，否则跳过 */
+function onOverlayClick() {
+  if (waitingForClick.value) {
+    reveal()
+  } else {
+    skip()
+  }
+}
+
+/** 揭示新元素 → 播放完整动画序列 */
+async function reveal() {
+  if (!waitingForClick.value) return
+  waitingForClick.value = false
+
+  // Phase 2: 卡片翻转
+  stage.value = 2
+  await nextTick()
+  await sleep(600)
+
+  cardFlipped.value = true
+  await sleep(1200)
+
+  // Phase 3: 飞向周期表
+  stage.value = 3
+  await nextTick()
+  await sleep(1200)
+
+  // Phase 4: 点亮完成
+  stage.value = 4
+  await sleep(1500)
+
+  emit('done')
 }
 
 function skip() {
@@ -519,4 +544,36 @@ function skip() {
   color: rgba(255,255,255,0.3);
   letter-spacing: 1px;
 }
+
+/* ─── 点击揭示提示 ────────────────────────────────────────── */
+.click-reveal-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+  padding: 10px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.2s;
+  z-index: 20;
+  animation: hintPulse 1.5s ease-in-out infinite;
+}
+.click-reveal-hint:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateX(-50%) scale(1.05);
+}
+@keyframes hintPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,255,255,0.1); }
+  50%      { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+}
+
+.fade-up-enter-active { transition: all 0.4s ease-out; }
+.fade-up-enter-from { opacity: 0; transform: translateX(-50%) translateY(10px); }
 </style>

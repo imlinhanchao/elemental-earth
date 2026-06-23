@@ -178,5 +178,41 @@
         "multiple": 5
       }
     ]
+  },
+  {
+    "key": "water_gas_reaction",
+    "name": "水煤气反应",
+    "description": "将水蒸气通入炽热的焦炭中，生成一氧化碳和氢气。",
+    "time_required": 60,
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "gas_collecting",
+      "min": 1,
+      "max": 2
+    },
+    "required_items": [
+      {
+        "key": "charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "gas_collection",
+      "high_temp_furnace"
+    ]
   }
 ]

@@ -127,5 +127,25 @@
       "refractory_materials"
     ],
     "time_required": 3600
+  },
+  {
+    "key": "gas_collection",
+    "name": "气体收集",
+    "description": "学会了制作气密容器来收集和储存反应产生的气体。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "pottery",
+      "iron_tool_crafting"
+    ]
   }
 ]

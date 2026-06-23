@@ -1,5 +1,9 @@
 <template>
-  <div class="max-w-3xl mx-auto">
+  <div class="max-w-3xl mx-auto p-4">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn btn-ghost btn-xs" @click="$router.push('/admin/dashboard')">← 返回</button>
+      <h2 class="text-lg font-bold">🤖 AI 内容生成器</h2>
+    </div>
     <p class="text-sm text-base-content/60 mb-4">
       输入一种材料、矿物或元素的名称，AI 将根据化学、矿物学知识自动生成游戏数据。
     </p>

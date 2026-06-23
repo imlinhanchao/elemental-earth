@@ -85,5 +85,23 @@
     "description": "将物体碾磨成粉末，以促进化学反应或物理变化。",
     "time_required": 20,
     "requires_burning": false
+  },
+  {
+    "key": "gas_collecting",
+    "name": "气体收集",
+    "description": "使用集气瓶收集反应产生的气体。",
+    "time_required": 5,
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": "gas_bottle",
+        "quantity": 1,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "gas_collection"
+    ],
+    "collects_gas": true
   }
 ]

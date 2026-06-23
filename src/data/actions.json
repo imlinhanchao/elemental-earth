@@ -105,6 +105,12 @@
       {
         "key": "gold_sand",
         "quantity": 1,
+        "probability": 10,
+        "map": "volcano"
+      },
+      {
+        "key": "gold_sand",
+        "quantity": 1,
         "probability": 1,
         "map": "river_side"
       },
@@ -118,7 +124,7 @@
         "key": "sulfur",
         "quantity": 1,
         "probability": 10,
-        "map": "map"
+        "map": "volcano"
       }
     ]
   },
@@ -162,12 +168,22 @@
     "rewards": [
       {
         "key": "wood",
-        "quantity": [5, 7, 8, 9, 10],
+        "quantity": [
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
         "probability": 10
       },
       {
         "key": "bark",
-        "quantity": [1, 2, 3],
+        "quantity": [
+          1,
+          2,
+          3
+        ],
         "probability": 5
       }
     ],
@@ -527,6 +543,31 @@
         "quantity": 1,
         "probability": 1000
       }
+    ]
+  },
+  {
+    "key": "craft_gas_bottle",
+    "name": "制作集气瓶",
+    "category": "制作",
+    "description": "利用粘土和火制作一个集气瓶。",
+    "time_required": 30,
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 2,
+        "use": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "gas_bottle",
+        "quantity": 1,
+        "probability": 1
+      }
+    ],
+    "required_techs": [
+      "pottery",
+      "gas_collection"
     ]
   }
 ]
