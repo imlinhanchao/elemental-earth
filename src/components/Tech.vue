@@ -30,7 +30,10 @@
   }
 </script>
 <template>
-  <ActionTip v-if="isVisible" :description="data.description" :required_items="data.required_items" :required_techs="data.required_techs">
+  <ActionTip v-if="isVisible" :description="data.description" :required_items="data.required_items.map(req => ({
+    key: Array.isArray(req.key) ? req.key[0] : req.key,
+    quantity: req.quantity,
+  }))" :required_techs="data.required_techs">
     <button 
       class="btn w-[10em]" 
       :disabled="!isEnabled" 
