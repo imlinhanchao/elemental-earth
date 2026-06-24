@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Items } from '@/data/items';
@@ -12,12 +12,21 @@ export interface IPackItem {
   durable: number; // 耐久度，0-1之间，表示物品的使用程度
 }
 
+/** 玩家对物品的自定义命名和备注 */
+export interface ItemCustomization {
+  customName: string;
+  note: string;
+}
+
 export const usePackStore = defineStore('pack', () => {
   const items = reactive<IPackItem[]>([]);
   const techs = reactive<string[]>([]);
   const provenFormulas = reactive<string[]>([])
-  /** 玩家曾经拥有过的物品 key 集合（用完后被消耗掉的也算） */
   const discoveredItems = reactive<Set<string>>(new Set())
+  /** 玩家对物品的自定义命名和备注 key → { customName, note } */
+  const itemRenames = reactive<Record<string, ItemCustomization>>({})
+  /** 等待命名的发现物品 key（由 AddItem 触发，UI 消费后清除） */
+  const pendingDiscovery = ref<string | null>(null)
 
   const logStore = useLogStore();
 
@@ -59,6 +68,10 @@ export const usePackStore = defineStore('pack', () => {
       if (itemData) {
         items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
         discoveredItems.add(itemKey);
+        // 重大发现物品：触发命名弹窗
+        if (itemData.is_discovery && !itemRenames[itemKey]) {
+          pendingDiscovery.value = itemKey;
+        }
         if (itemData.elemental) {
           const stateStore = useStateStore();
           stateStore.addElement(itemData.elemental);
@@ -80,6 +93,7 @@ export const usePackStore = defineStore('pack', () => {
         existingItem.durable -= use;
         if (existingItem.durable <= 0) {
           existingItem.quantity -= quantity;
+          existingItem.durable = 1; // 重置耐久度为 1，避免负数
         }
       } else {
         existingItem.quantity -= quantity;
@@ -120,12 +134,40 @@ export const usePackStore = defineStore('pack', () => {
   /** 玩家是否曾经拥有过某物品（消耗光的也算） */
   const hasEverHad = (itemKey: string) => discoveredItems.has(itemKey);
 
+  /** 获取物品的显示名称（优先使用自定义名称） */
+  function getDisplayName(itemKey: string): string {
+    const rename = itemRenames[itemKey];
+    if (rename?.customName) return rename.customName;
+    const def = Items.find(i => i.key === itemKey);
+    return def?.name || itemKey;
+  }
+
+  /** 设置物品自定义名称 */
+  function setItemName(itemKey: string, name: string) {
+    if (!itemRenames[itemKey]) itemRenames[itemKey] = { customName: '', note: '' };
+    itemRenames[itemKey].customName = name;
+    // 同步 items 中的 name
+    const packItem = items.find(i => i.key === itemKey);
+    if (packItem) packItem.name = name;
+  }
+
+  /** 设置物品备注 */
+  function setItemNote(itemKey: string, note: string) {
+    if (!itemRenames[itemKey]) itemRenames[itemKey] = { customName: '', note: '' };
+    itemRenames[itemKey].note = note;
+  }
+
+  /** 清除等待命名的发现 */
+  function clearPendingDiscovery() {
+    pendingDiscovery.value = null;
+  }
+
   return { 
-    items, techs, provenFormulas, discoveredItems,
+    items, techs, provenFormulas, discoveredItems, itemRenames, pendingDiscovery,
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
-    hasEverHad,
+    hasEverHad, getDisplayName, setItemName, setItemNote, clearPendingDiscovery,
   }
 })
 

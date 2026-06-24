@@ -26,6 +26,8 @@ export interface SaveData {
   formulas: string[];
   /** 玩家曾拥有过的物品 key 列表（v1 新增） */
   discovered: string[];
+  /** 玩家自定义的物品命名和备注（v2 新增） */
+  renames: Record<string, { customName: string; note: string }>;
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -51,6 +53,7 @@ export function saveGame(): boolean {
       logs: JSON.parse(JSON.stringify(logStore.logs)),
       formulas: JSON.parse(JSON.stringify(packStore.provenFormulas)),
       discovered: Array.from(packStore.discoveredItems),
+      renames: JSON.parse(JSON.stringify(packStore.itemRenames)),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -115,6 +118,16 @@ export function loadGame(): boolean {
     // 兜底：当前背包里的物品肯定被拥有过
     for (const item of packStore.items) {
       packStore.discoveredItems.add(item.key);
+    }
+
+    // 恢复物品自定义命名和备注（v2 新增）
+    if (data.renames) {
+      for (const [k, v] of Object.entries(data.renames)) {
+        packStore.itemRenames[k] = v;
+        // 同步背包中的 name
+        const packItem = packStore.items.find(i => i.key === k);
+        if (packItem && v.customName) packItem.name = v.customName;
+      }
     }
 
     lastSavedTime.value = data.timestamp;

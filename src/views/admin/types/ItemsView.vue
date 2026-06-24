@@ -72,6 +72,13 @@
               </label>
             </div>
             <label class="form-control w-full">
+              <span class="label-text mb-1">重大发现</span>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" class="toggle toggle-sm" v-model="form.is_discovery" />
+                <span class="text-xs opacity-60">{{ form.is_discovery ? '首次获得时触发命名弹窗' : '直接获得' }}</span>
+              </div>
+            </label>
+            <label class="form-control w-full">
               <span class="label-text mb-1">额外属性（JSON）</span>
               <textarea class="textarea textarea-bordered textarea-sm w-full font-mono" v-model="formJson.attrs" rows="2" placeholder='{"burn_time":30}'></textarea>
             </label>
@@ -96,14 +103,14 @@ const modalRef = ref<HTMLDialogElement | null>(null)
 const editing = ref<any>(null)
 const categories = ['材料','工具','容器','燃料','气体','液体','火源']
 const typeOptions = ['material','tool','container','fuel','gas','liquid','fire_source']
-const form = reactive({ key:'', name:'', category:'', description:'', type:[] as string[], elemental: undefined as number|undefined, durable: undefined as number|undefined })
+const form = reactive({ key:'', name:'', category:'', description:'', type:[] as string[], elemental: undefined as number|undefined, durable: undefined as number|undefined, is_discovery: false })
 const formJson = reactive({ attrs:'' })
 onMounted(loadRecords)
 async function loadRecords() { const r = await admin.apiFetch('/api/items'); records.value = await r.json() }
 function toggleType(t: string) { const i = form.type.indexOf(t); i >= 0 ? form.type.splice(i,1) : form.type.push(t) }
-function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', type:[], elemental:undefined, durable:undefined }); formJson.attrs = ''; editing.value = null }
+function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', type:[], elemental:undefined, durable:undefined, is_discovery:false }); formJson.attrs = ''; editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { editing.value = r; resetForm(); Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', type:Array.isArray(r.type)?[...r.type]:[], elemental:r.elemental, durable:r.durable }); formJson.attrs = r.attrs ? JSON.stringify(r.attrs,null,2) : ''; modalRef.value?.showModal() }
+function openEdit(r: any) { editing.value = r; resetForm(); Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', type:Array.isArray(r.type)?[...r.type]:[], elemental:r.elemental, durable:r.durable, is_discovery:!!r.is_discovery }); formJson.attrs = r.attrs ? JSON.stringify(r.attrs,null,2) : ''; modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
@@ -112,6 +119,7 @@ async function save() {
   if (form.type.length) body.type = [...form.type]
   if (form.elemental !== undefined && form.elemental !== '' && !isNaN(Number(form.elemental))) body.elemental = Number(form.elemental)
   if (form.durable !== undefined && form.durable !== '' && !isNaN(Number(form.durable))) body.durable = Number(form.durable)
+  if (form.is_discovery) body.is_discovery = true
   if (formJson.attrs.trim()) { try { body.attrs = JSON.parse(formJson.attrs) } catch { alert('属性 JSON 格式错误'); return } }
   try {
     const res = editing.value ? await admin.apiFetch(`/api/items/${editing.value.key}`, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) }) : await admin.apiFetch('/api/items', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) })

@@ -173,7 +173,7 @@ const formulaProducts = computed(() => {
     })
     .map(p => ({
       key: p.key,
-      name: getItem(p.key)?.name || p.key,
+      name: packStore.getDisplayName(p.key),
       quantity: p.multiple * batches.value,
     }))
 })

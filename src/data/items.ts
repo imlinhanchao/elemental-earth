@@ -33,6 +33,10 @@ export interface IItem {
    * 其他属性
    */
   attrs?: Record<string, any>;
+  /**
+   * 是否为重大发现物品，首次获得时触发命名弹窗
+   */
+  is_discovery?: boolean;
 }
 
 export const Items: IItem[] = data as IItem[];
