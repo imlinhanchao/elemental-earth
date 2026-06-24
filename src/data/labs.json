@@ -14,10 +14,7 @@
     "required_techs": [
       "pottery"
     ],
-    "requires_burning": true,
-    "chain_operations": [
-      "gas_collecting"
-    ]
+    "requires_burning": true
   },
   {
     "name": "焙烧",
@@ -31,10 +28,7 @@
         "use": 0.1
       }
     ],
-    "requires_burning": true,
-    "chain_operations": [
-      "gas_collecting"
-    ]
+    "requires_burning": true
   },
   {
     "name": "加热",
@@ -112,7 +106,6 @@
     "required_techs": [
       "gas_collection"
     ],
-    "collects_gas": true,
     "is_chain": true
   }
 ]

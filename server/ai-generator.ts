@@ -98,7 +98,7 @@ function buildSystemPrompt(contextData: ContextData): string {
 ## 游戏简介
 这是一个以化学元素和炼金术为主题的增量/放置类文字游戏。玩家通过「行动」获取基础材料，研究「科技」解锁能力，在「实验室」进行「实验操作」来获得新物质「配方」。
 
-### 核心数据模型
+### 各部分用途（生成时请严格遵循）
 
 **物品 (items)** — 所有可持有的物品，包括材料、工具、容器、燃料、气体、液体等。
 \`\`\`json
@@ -114,22 +114,35 @@ function buildSystemPrompt(contextData: ContextData): string {
 }
 \`\`\`
 
-**行动 (actions)** — 玩家执行的采集/制作行动，获得物品奖励。
+**地图 (maps)** — 游戏中的地点。不同地图上的「行动」奖励不同，某些稀有材料只在特定地图出现。
+\`\`\`json
+{
+  "name": "地图名称",
+  "key": "唯一标识符",
+  "description": "描述",
+  "icon": "Iconify 图标名",
+  "position": { "x": 数字, "y": 数字 }
+}
+\`\`\`
+行动可以通过 map 字段限定只在某些地图可用，奖励也可以通过 map 字段限定只在某些地图产出。
+
+**行动 (actions)** — 玩家执行的采集/制作。主要用途是生产「工具」类物品。
 \`\`\`json
 {
   "name": "行动名称",
   "key": "唯一标识符",
   "category": "行动分类（采集/制作等）",
   "description": "描述",
-  "required_items": [{ "key": "所需物品key", "quantity": 数量, "use": 0.01 }],
+  "required_items": [{ "key": "所需物品key", "quantity": 数量, "use": 0.01 （耐久消耗）}],
   "required_techs": ["前置科技key"],
-  "rewards": [{ "key": "奖励物品key", "quantity": 数量, "probability": 权重 }],
+  "rewards": [{ "key": "奖励物品key", "quantity": 数量或[随机最小,最大], "probability": 权重 }],
   "time_required": 时间秒,
-  "map": ["可执行的地图key"]
+  "map": ["可执行的地图key"],        // 不填则所有地图可用
+  "formula": { "key": "配方key", "operation": "操作key" }  // 可选，引用配方时弹出对话框
 }
 \`\`\`
 
-**科技 (techs)** — 解锁新能力的科技树节点。
+**科技 (techs)** — 解锁新能力的科技树节点。主要用途是解锁「制作工具」类的行动。
 \`\`\`json
 {
   "name": "科技名称",
@@ -141,20 +154,25 @@ function buildSystemPrompt(contextData: ContextData): string {
 }
 \`\`\`
 
-**实验操作 (labs)** — 实验室中的操作动作，如焙烧、搅拌、蒸馏等。
+**实验操作 (labs)** — 实验室中的操作动作。用途：配方的材料处理/气体收集等，不是制作工具。
 \`\`\`json
 {
   "name": "操作名称",
   "key": "唯一标识符",
   "description": "描述",
   "time_required": 时间秒,
-  "required_item": [{ "key": "所需物品key", "quantity": 数量, "use": 0.01 }],
+  "required_item": [{ "key": "所需物品key（设备/容器）", "quantity": 数量, "use": 0.01（耐久消耗）}],
   "required_techs": ["前置科技key"],
-  "requires_burning": true   // true=需要燃烧, false=无需燃烧, undefined=不确定
+  "requires_burning": true,    // true=需要燃烧, false=无需燃烧, undefined=不确定
+  "is_chain": true             // 标记为追加操作（不消耗材料，仅增加耗时）
 }
 \`\`\`
+追加操作：在主操作之后附加执行，不消耗额外材料，仅用于收集特定产物。例如：
+  - 焙烧锌矿石后追加「冷凝」操作才能收集锌
+  - 焙烧/干馏后追加「气体收集」操作才能收集气体产物
+可以通过在产品上设置 required_chain_operation 来指定哪些产物需要追加操作。
 
-**配方 (formulas)** — 实验配方，输入物品在特定容器和操作下产出新物质。
+**配方 (formulas)** — 定义如何通过实验室操作生成新材料（非工具的制作在行动中完成）。
 \`\`\`json
 {
   "name": "配方名称",
@@ -165,7 +183,10 @@ function buildSystemPrompt(contextData: ContextData): string {
   "required_actions": { "key": "操作key", "min": 最少次数, "max": 最多次数 },
   "required_techs": ["前置科技key"],
   "time_required": 时间秒,
-  "products": [{ "key": "产物物品key", "multiple": 数量倍率 }]
+  "products": [
+    { "key": "产物物品key", "multiple": 数量倍率 },
+    { "key": "产物key", "multiple": 1, "required_chain_operation": "操作key" }  // 需追加操作才能收集
+  ]
 }
 \`\`\`
 
@@ -186,27 +207,35 @@ function buildSystemPrompt(contextData: ContextData): string {
 - 工具的耐久度 durable 设为 1，容器 durable 设为 1
 
 ### 行动生成规则
+- 行动主要用途是生产「工具」类物品。工具消耗耐久（use 字段）
 - 采集类行动应该有合适的 map（地图）关联
 - 如果有对应的元素（如铁），可增加在该元素产地的采集行动
 - 概率 probability 按稀有度设置：常见 800-1000，较常见 300-700，稀有 50-200，极稀有 5-30
 - quantity 使用数字或 [最小,最大] 范围
 
 ### 科技生成规则
+- 科技主要用途是解锁「制作工具」类的行动
 - 新物质的制备往往需要前置科技解锁
 - 科技应该有层级关系（比如"采矿"→"金属冶炼"→"合金制作"）
 - required_items 中的物品应该已有或本次同步生成
 
 ### 实验操作生成规则
+- 用途：配方的材料处理/气体收集等，不是制作工具
 - 如果需要加热/燃烧，requires_burning: true
 - 需要特殊设备时添加 required_item
 - 如果需要前置科技才能使用，添加 required_techs
+- 某些操作可标记为 is_chain: true，表示作为追加操作（不消耗额外材料，仅增加耗时用于收集产物）
 
 ### 配方生成规则
+- 用途：定义如何通过实验室操作生成新材料（非工具的制作，工具制作由行动完成）
 - required_container 用于需要特定容器的反应（窑炉、烧杯、蒸馏瓶等）
 - required_actions 对应实验室操作（搅拌、焙烧、加热、蒸馏、过滤等）
 - 多个输入可以用逗号分隔 key 表示可替代材料
 - 化学反应要符合真实化学方程式（虽简化但不要造出违背科学原理的反应）
 - 副产物也应该考虑在内
+- 某些产物可以通过追加操作才能收集：products 中设置 required_chain_operation 指向操作 key
+  - 例如：焙烧锌矿后追加「冷凝」操作才能收集锌
+  - 例如：焙烧/干馏后追加「气体收集」操作才能收集气体
 
 ### 引用规则
 - 引用已有数据时，使用 key 值（不是名称）

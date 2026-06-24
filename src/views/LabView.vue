@@ -70,11 +70,9 @@ const selectedChainOperation = computed<ILabAction | null>(() => {
 
 const availableChainOperations = computed(() => {
   const op = selectedOperation.value
-  if (!op?.chain_operations?.length) return []
-  return LabActions.filter(a =>
-    op.chain_operations!.includes(a.key) &&
-    (!a.required_techs || a.required_techs.every(t => packStore.hasTech(t)))
-  )
+  if (!op) return []
+  // 所有操作都可作为追加操作，排除已选的主操作本身
+  return LabActions.filter(a => a.key !== op.key)
 })
 
 /** 操作所需的容器/设备是否已满足 */
@@ -543,7 +541,7 @@ function startExperiment() {
     <div v-if="availableChainOperations.length > 0" class="card bg-base-200">
       <div class="card-body p-4">
         <h3 class="card-title text-sm">3.5 追加操作（可选）</h3>
-        <p class="text-xs text-base-content/50 mb-2">在主操作完成后追加额外操作，不消耗额外材料</p>
+        <p class="text-xs text-base-content/50 mb-2">在主操作完成后追加额外操作（仅增加耗时，不消耗额外材料）</p>
         <div class="flex flex-wrap gap-2">
           <button
             v-for="op in availableChainOperations"

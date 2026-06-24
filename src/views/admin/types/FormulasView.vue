@@ -99,9 +99,13 @@
                 <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
               </select>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">倍率<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.multiple" /></label>
+              <select class="select select-bordered select-xs" v-model="row.required_chain_operation">
+                <option value="">无需追加</option>
+                <option v-for="o in labOptions" :key="o.key" :value="o.key">需「{{ o.name }}」</option>
+              </select>
               <button class="btn btn-xs btn-ghost text-error" @click="objProducts.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objProducts.push({key:'',multiple:1})">＋ 添加产物</button>
+            <button class="btn btn-xs btn-ghost" @click="objProducts.push({key:'',multiple:1,required_chain_operation:''})">＋ 添加产物</button>
 
             <!-- 前置科技 -->
             <label class="form-control w-full">
@@ -162,7 +166,7 @@ async function save() {
   if (form.container) body.required_container = form.container
   if (form.action_key) { body.required_actions = { key:form.action_key, min:form.action_min??1 }; if (form.action_max !== undefined && form.action_max !== null) body.required_actions.max = form.action_max }
   if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;return o}).filter(Boolean)
-  if (objProducts.length) body.products = objProducts.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.multiple!==undefined&&r.multiple!=='')o.multiple=r.multiple;return o})
+  if (objProducts.length) body.products = objProducts.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.multiple!==undefined&&r.multiple!=='')o.multiple=r.multiple;if(r.required_chain_operation)o.required_chain_operation=r.required_chain_operation;return o})
   if (form.techs.length) body.required_techs = [...form.techs]
   try { const res = editing.value ? await admin.apiFetch(`/api/formulas/${editing.value.key}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}) : await admin.apiFetch('/api/formulas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); const j = await res.json(); if(!res.ok){alert(j.error||'失败');return}; closeModal(); loadRecords() } catch(e:any){alert(e.message)}
 }

@@ -1,22 +1,20 @@
 [
   {
-    "name": "制作木炭",
     "key": "charcoal_production",
+    "name": "制作木炭",
     "description": "将木材放入干馏装置中进行干馏，得到木炭和可燃气体。",
+    "time_required": 30,
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "wood",
         "quantity": 1
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "dry_distillation"
-    },
-    "required_techs": [
-      "pottery"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "charcoal",
@@ -24,12 +22,16 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       },
       {
         "key": "wood_ash",
         "multiple": 1
       }
+    ],
+    "required_techs": [
+      "pottery"
     ]
   },
   {
@@ -58,24 +60,21 @@
     ]
   },
   {
-    "name": "炼铜",
     "key": "copper_smelting",
+    "name": "炼铜",
     "description": "将孔雀石放入窑炉中进行焙烧，得到铜和二氧化碳。",
+    "time_required": 60,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2
+    },
     "required_items": [
       {
         "key": "malachite",
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 2
-    },
-    "required_techs": [
-      "pottery"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "copper",
@@ -83,8 +82,12 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "pottery"
     ]
   },
   {
@@ -117,6 +120,11 @@
     "name": "高炉炼生铁",
     "description": "将赤铁矿与焦炭在高温下反应，得到生铁和炉渣。",
     "time_required": 240,
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2
+    },
     "required_items": [
       {
         "key": "hematite",
@@ -128,15 +136,9 @@
       },
       {
         "key": "bellows",
-        "quantity": 1,
-        "use": 0.01
+        "quantity": 1
       }
     ],
-    "required_container": "blast_furnace",
-    "required_actions": {
-      "key": "roasting",
-      "min": 2
-    },
     "products": [
       {
         "key": "pig_iron",
@@ -148,7 +150,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 2
+        "multiple": 2,
+        "required_chain_operation": "gas_collecting"
       }
     ]
   },
