@@ -3,103 +3,75 @@
     "name": "石头",
     "key": "stone",
     "category": "材料",
-    "description": "一种常见的矿物，可以用来建造和制作工具。",
-    "type": [
-      "material"
-    ]
+    "description": "灰褐色、表面粗糙的碎块，边缘不规则，握在手心能感受沉实的重量。",
+    "type": ["material"]
   },
   {
     "name": "木材",
     "key": "wood",
     "category": "燃料",
     "description": "一种常见的材料，可以用来建造和制作工具。",
-    "type": [
-      "material",
-      "fuel"
-    ],
-    "attrs": {
-      "burn_time": 30
-    }
+    "type": ["material", "fuel"],
+    "attrs": { "burn_time": 30 }
   },
   {
     "name": "燧石",
     "key": "flint",
     "category": "材料",
-    "description": "一种坚硬的矿物，可以用来制作火种和工具。",
-    "type": [
-      "material"
-    ]
+    "description": "深灰至黑色的致密石块，断面呈贝壳状、带有蜡样光泽，边缘锐利如刃。",
+    "type": ["material"]
   },
   {
     "key": "bark",
     "name": "树皮",
     "category": "材料",
-    "description": "树木的外层，可以用来制作绳子和其他物品。",
-    "type": [
-      "material"
-    ],
-    "attrs": {
-      "burn_time": 10
-    }
+    "description": "从树干上剥落的外皮，外侧粗糙龟裂、内侧光滑柔软，带有淡淡的草木气息。",
+    "type": ["material"],
+    "attrs": { "burn_time": 10 }
   },
   {
     "name": "树脂",
     "key": "resin",
     "category": "材料",
-    "description": "树木分泌的粘稠物质，可以用来制作胶水和其他物品。",
-    "type": [
-      "material"
-    ]
+    "description": "金黄色的半透明粘稠液体，从树干的伤口处缓缓渗出，散发出浓郁的松脂气味。",
+    "type": ["material"]
   },
   {
     "name": "粘土",
     "key": "clay",
     "category": "材料",
-    "description": "一种湿润的土壤，可以用来制作陶器和其他物品。",
-    "type": [
-      "material"
-    ]
+    "description": "细腻油润的土块，呈灰白色，触手冰凉湿润，揉捏间能感受到极强的可塑性。",
+    "type": ["material"]
   },
   {
     "name": "泥土",
     "key": "mud",
     "category": "材料",
-    "description": "一种湿润的土壤，可以用来制作建筑材料和其他物品。",
-    "type": [
-      "material"
-    ]
+    "description": "深褐色湿润的松软土块，混杂着细小的砂砾和腐殖质，散发着雨后大地的气息。",
+    "type": ["material"]
   },
   {
     "name": "水",
     "key": "water",
     "category": "材料",
-    "description": "生命之源，可以用来饮用和灌溉。",
-    "type": [
-      "material"
-    ]
+    "description": "清澈透明的液体，无色无味，捧在掌心能看到指缝间透过的光线。",
+    "type": ["material"]
   },
   {
     "name": "木炭",
     "key": "charcoal",
     "category": "燃料",
     "description": "木材燃烧后的产物，可以用来制作火种和其他物品。",
-    "type": [
-      "material",
-      "fuel"
-    ],
+    "type": ["material", "fuel"],
     "elemental": 6,
-    "attrs": {
-      "burn_time": 60
-    }
+    "attrs": { "burn_time": 60 }
   },
   {
     "name": "草木灰",
     "key": "wood_ash",
     "category": "材料",
-    "description": "木材燃烧后的灰烬，可以用来制作肥料和其他物品。",
-    "type": [
-      "material"
-    ]
+    "description": "银灰色粉末，细如轻尘，风一吹便四散飞扬，散发着焦糊的烟气味。",
+    "type": ["material"]
   },
   {
     "name": "火种",
@@ -107,19 +79,15 @@
     "category": "火源",
     "description": "用燧石和木材制作的火种，可以用来生火。",
     "durable": 1,
-    "type": [
-      "fire_source"
-    ]
+    "type": ["fire_source"]
   },
   {
     "name": "砂金",
     "key": "gold_sand",
     "category": "材料",
-    "description": "一种稀有的矿物，可以用来制作贵重物品。",
+    "description": "细碎的金黄色颗粒，混杂在灰黑的河砂之中，在日光下闪烁着耀眼的金属光泽。",
     "elemental": 79,
-    "type": [
-      "material"
-    ]
+    "type": ["material"]
   },
   {
     "name": "石斧",
@@ -127,9 +95,7 @@
     "category": "工具",
     "description": "用石头制作的斧头，可以用来砍树和挖掘。",
     "durable": 1,
-    "type": [
-      "tool"
-    ]
+    "type": ["tool"]
   },
   {
     "name": "石镐",
@@ -137,9 +103,7 @@
     "category": "工具",
     "description": "用石头制作的镐，可以用来挖掘和采矿。",
     "durable": 1,
-    "type": [
-      "tool"
-    ]
+    "type": ["tool"]
   },
   {
     "name": "木桶",
@@ -147,9 +111,7 @@
     "category": "容器",
     "description": "用木材制作的桶，可以用来装水和其他物品。",
     "durable": 1,
-    "type": [
-      "container"
-    ]
+    "type": ["container"]
   },
   {
     "name": "陶罐",
@@ -157,13 +119,8 @@
     "category": "容器",
     "description": "用粘土制作的罐子，可以用来装水和其他物品。",
     "durable": 1,
-    "type": [
-      "container"
-    ],
-    "attrs": {
-      "can_heat": true,
-      "save_gas": true
-    }
+    "type": ["container"],
+    "attrs": { "can_heat": true, "save_gas": true }
   },
   {
     "name": "窑炉",
@@ -171,21 +128,15 @@
     "category": "容器",
     "description": "用来烧制陶器和其他物品的设备。",
     "durable": 1,
-    "type": [
-      "container"
-    ],
-    "attrs": {
-      "can_heat": true
-    }
+    "type": ["container"],
+    "attrs": { "can_heat": true }
   },
   {
     "name": "纤维布",
     "key": "fiber_cloth",
     "category": "材料",
-    "description": "用植物纤维制作的布料，可以用来制作衣物和其他物品。",
-    "type": [
-      "material"
-    ]
+    "description": "由细韧的植物纤维纵横交织而成的粗糙布料，质地轻薄、边缘有些松散。",
+    "type": ["material"]
   },
   {
     "name": "鼓风机",
@@ -193,137 +144,99 @@
     "category": "工具",
     "description": "用来吹风的工具，可以增加火焰的温度。",
     "durable": 1,
-    "type": [
-      "tool"
-    ]
+    "type": ["tool"]
   },
   {
     "name": "一氧化碳",
     "key": "carbon_monoxide",
     "category": "气体",
-    "description": "一种有毒的气体，可以通过干馏产生。",
-    "type": [
-      "material",
-      "gas",
-      "fuel"
-    ],
-    "attrs": {
-      "burn_time": 30
-    }
+    "description": "无色无味的气体，着不见也摸不着，但靠近时感到一股莫名的眩晕和闷热感。",
+    "type": ["material", "gas", "fuel"],
+    "attrs": { "burn_time": 30 }
   },
   {
     "name": "二氧化碳",
     "key": "carbon_dioxide",
     "category": "气体",
-    "description": "一种常见的气体，可以灭火。",
-    "type": [
-      "material",
-      "gas"
-    ]
+    "description": "无色无味的气体，着不见也摸不着，但靠近时感到一股莫名的寒意和窒息感。放入火种中会发出嘶嘶的声音，火焰瞬间熄灭。",
+    "type": ["material", "gas"]
   },
   {
     "name": "孔雀石",
     "key": "malachite",
     "category": "材料",
-    "description": "一种绿色的矿物，可以用来制作颜料和装饰品。",
-    "type": [
-      "material"
-    ]
+    "description": "一簇浓绿色的矿石，表面有深浅交替的弧形纹路，断面显现丝绢般的光泽。",
+    "type": ["material"]
   },
   {
     "name": "铜",
     "key": "copper",
     "category": "材料",
-    "description": "一种金属，可以用来制作工具和其他物品。",
+    "description": "一块暗红色的金属锭，表面略带氧化斑驳，敲击发出清脆绵长的声音。",
     "elemental": 29,
-    "type": [
-      "material"
-    ]
+    "type": ["material"]
   },
   {
     "name": "碱水",
     "key": "alkaline_solution",
     "category": "液体",
     "description": "一种碱性的液体，可以用来中和酸性物质。",
-    "type": [
-      "material",
-      "liquid"
-    ]
+    "type": ["material", "liquid"]
   },
   {
     "key": "hematite",
     "name": "赤铁矿",
     "category": "材料",
-    "description": "主要成分为氧化铁(Fe₂O₃)的红色铁矿石，是炼铁的主要原料。",
-    "type": [
-      "material"
-    ]
+    "description": "暗红色的致密矿石，断面呈不规则的参差状，表面隐约泛着金属光泽。",
+    "type": ["material"]
   },
   {
     "name": "生铁",
     "key": "pig_iron",
     "category": "材料",
-    "description": "高炉炼铁得到的含碳量较高的铁，质硬脆，是炼钢的原料。",
-    "type": [
-      "material"
-    ],
+    "description": "灰黑色的铸铁块，表面粗糙带有砂眼，断面呈现银灰色的结晶颗粒。",
+    "type": ["material"],
     "elemental": 26
   },
   {
     "name": "钢",
     "key": "steel",
     "category": "材料",
-    "description": "铁碳合金，含碳量介于生铁和熟铁之间，强度高、韧性好，用途广泛。",
-    "type": [
-      "material"
-    ],
+    "description": "银灰色的金属条块，表面光洁致密，在光线下反射出冷冽的寒光，敲击声清脆悠长。",
+    "type": ["material"],
     "elemental": 26
   },
   {
     "name": "炉渣",
     "key": "slag",
     "category": "材料",
-    "description": "炼铁过程中产生的废渣，主要成分为硅酸盐和氧化物，可用于制造建材或肥料。",
-    "type": [
-      "material"
-    ]
+    "description": "灰褐色的多孔团块，表面呈玻璃质光泽，质地疏松易碎，像是岩浆冷却后的残骸。",
+    "type": ["material"]
   },
   {
     "name": "焦炭",
     "key": "coke",
     "category": "材料",
-    "description": "煤在隔绝空气条件下干馏得到的多孔固体燃料，发热量高，是炼铁的重要燃料。",
-    "type": [
-      "material",
-      "fuel"
-    ],
+    "description": "银灰色的多孔块状物，质地坚硬而轻，表面布满蜂窝状的空洞，敲击有金属声。",
+    "type": ["material", "fuel"],
     "elemental": 6,
-    "attrs": {
-      "burn_time": 90
-    }
+    "attrs": { "burn_time": 90 }
   },
   {
     "name": "煤",
     "key": "coal",
     "category": "材料",
-    "description": "一种黑色固体燃料，由古代植物埋藏在地下经过长时间地质作用形成。",
-    "type": [
-      "material",
-      "fuel"
-    ],
+    "description": "漆黑色的不规则块体，表面光滑略带光亮，断面平整如镜，会染黑手指。",
+    "type": ["material", "fuel"],
     "elemental": 6,
-    "attrs": {
-      "burn_time": 60
-    }
+    "attrs": { "burn_time": 60 }
   },
   {
     "name": "耐火砖",
     "key": "fire_brick",
     "category": "材料",
-    "description": "用粘土烧制而成的耐火砖，用于建造高炉。",
-    "type": [
-      "material"
-    ],
+    "description": "米黄色的方形砖块，质地致密沉重，表面有细小的砂质颗粒，触感粗糙而坚实。",
+    "type": ["material"],
     "durable": 1
   },
   {
@@ -331,28 +244,22 @@
     "key": "blast_furnace",
     "category": "容器",
     "description": "用于高温冶炼金属的竖炉，需耐火砖建造，可进行还原熔炼。",
-    "type": [
-      "container"
-    ],
+    "type": ["container"],
     "durable": 1
   },
   {
     "name": "石灰石",
     "key": "limestone",
     "category": "材料",
-    "description": "碳酸钙矿石，在冶炼中用作熔剂，与杂质反应生成炉渣。",
-    "type": [
-      "material"
-    ]
+    "description": "浅灰色的致密岩石，表面有细微的砂质感，滴上液体后冒出细密的气泡。",
+    "type": ["material"]
   },
   {
     "name": "硫磺",
     "key": "sulfur",
     "category": "材料",
-    "description": "一种黄色非金属元素，具有易燃性和腐蚀性，在冶炼中可能作为杂质存在。",
-    "type": [
-      "material"
-    ],
+    "description": "鲜黄色的晶体碎块，半透明，表面有油脂般的光泽，散发着刺鼻的气味。",
+    "type": ["material"],
     "elemental": 16
   },
   {
@@ -360,9 +267,7 @@
     "key": "iron_pickaxe",
     "category": "工具",
     "description": "用铁打造的镐，比石镐更坚固耐用。",
-    "type": [
-      "tool"
-    ],
+    "type": ["tool"],
     "durable": 1
   },
   {
@@ -370,19 +275,15 @@
     "key": "crucible",
     "category": "容器",
     "description": "耐高温的容器，可用于熔炼金属和进行高温反应。",
-    "type": [
-      "container"
-    ],
+    "type": ["container"],
     "durable": 1
   },
   {
     "name": "硝石",
     "key": "niter",
     "category": "材料",
-    "description": "一种矿物，主要成分为硝酸钾，加热可分解产生氧气。",
-    "type": [
-      "material"
-    ],
+    "description": "白色针状结晶，在阳光下闪烁如冰霜，尝起来有一丝清冽的咸味。",
+    "type": ["material"],
     "elemental": 19
   },
   {
@@ -390,23 +291,16 @@
     "key": "gas_bottle",
     "category": "容器",
     "description": "一种带有密封盖的玻璃容器，用于收集和储存气体。",
-    "type": [
-      "container"
-    ],
+    "type": ["container"],
     "durable": 1,
-    "attrs": {
-      "save_gas": true
-    }
+    "attrs": { "save_gas": true }
   },
   {
     "name": "氢气",
     "key": "hydrogen",
     "category": "气体",
-    "description": "最轻的气体，可燃，常用于还原反应。",
-    "type": [
-      "material",
-      "gas"
-    ],
+    "description": "无色无味的气体，着不见也摸不着，但装在纸袋中会向上漂浮。尝试点燃会发出清脆的爆鸣声。",
+    "type": ["material", "gas"],
     "elemental": 1
   }
 ]
