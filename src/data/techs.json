@@ -4,8 +4,14 @@
     "key": "stone_tool_crafting",
     "description": "掌握将石块打磨成锋利工具的技术。",
     "required_items": [
-      { "key": "stone", "quantity": 20 },
-      { "key": "wood", "quantity": 10 }
+      {
+        "key": "stone",
+        "quantity": 20
+      },
+      {
+        "key": "wood",
+        "quantity": 10
+      }
     ],
     "time_required": 10
   },
@@ -14,8 +20,14 @@
     "key": "fire_starting",
     "description": "领悟了摩擦生火的原理，能够制作火种随时随地点燃火焰。",
     "required_items": [
-      { "key": "flint", "quantity": 5 },
-      { "key": "wood", "quantity": 10 }
+      {
+        "key": "flint",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 10
+      }
     ],
     "time_required": 8
   },
@@ -24,7 +36,10 @@
     "key": "wood_processing",
     "description": "学会了如何将原木分解加工为更规整的材料。",
     "required_items": [
-      { "key": "wood", "quantity": 50 }
+      {
+        "key": "wood",
+        "quantity": 50
+      }
     ],
     "time_required": 15
   },
@@ -33,7 +48,10 @@
     "key": "pottery",
     "description": "掌握了用粘土塑形并烧制成器的技艺。",
     "required_items": [
-      { "key": "clay", "quantity": 20 }
+      {
+        "key": "clay",
+        "quantity": 20
+      }
     ],
     "time_required": 12
   },
@@ -42,8 +60,14 @@
     "key": "bark_processing",
     "description": "发现了通过揉制和浸泡使树皮纤维变得柔韧的工艺。",
     "required_items": [
-      { "key": "bark", "quantity": 20 },
-      { "key": "alkaline_solution", "quantity": 10 }
+      {
+        "key": "bark",
+        "quantity": 20
+      },
+      {
+        "key": "alkaline_solution",
+        "quantity": 10
+      }
     ],
     "time_required": 20
   },
@@ -52,9 +76,14 @@
     "key": "refractory_materials",
     "description": "发现了能够承受高温的矿物配方，可用于建造耐热结构。",
     "required_items": [
-      { "key": "clay", "quantity": 10 }
+      {
+        "key": "clay",
+        "quantity": 10
+      }
     ],
-    "required_techs": ["pottery"],
+    "required_techs": [
+      "pottery"
+    ],
     "time_required": 120
   },
   {
@@ -62,11 +91,22 @@
     "key": "high_temp_furnace",
     "description": "设计出了能够达到更高温度的熔炉结构。",
     "required_items": [
-      { "key": "kiln", "quantity": 1 },
-      { "key": "bellows", "quantity": 4 },
-      { "key": "fire_brick", "quantity": 20 }
+      {
+        "key": "kiln",
+        "quantity": 1
+      },
+      {
+        "key": "bellows",
+        "quantity": 4
+      },
+      {
+        "key": "fire_brick",
+        "quantity": 20
+      }
     ],
-    "required_techs": ["refractory_materials"],
+    "required_techs": [
+      "refractory_materials"
+    ],
     "time_required": 180
   },
   {
@@ -74,10 +114,18 @@
     "key": "iron_tool_crafting",
     "description": "掌握了将铁锻造成形的方法。",
     "required_items": [
-      { "key": "pig_iron", "quantity": 5 },
-      { "key": "wood", "quantity": 10 }
+      {
+        "key": "pig_iron",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 10
+      }
     ],
-    "required_techs": ["refractory_materials"],
+    "required_techs": [
+      "refractory_materials"
+    ],
     "time_required": 3600
   },
   {
@@ -86,9 +134,18 @@
     "description": "掌握了制作气密容器的技术，能够捕获反应中释放的气体。",
     "time_required": 120,
     "required_items": [
-      { "key": "clay", "quantity": 5 },
-      { "key": "wood", "quantity": 3 }
+      {
+        "key": "clay",
+        "quantity": 5
+      },
+      {
+        "key": "wood",
+        "quantity": 3
+      }
     ],
-    "required_techs": ["pottery", "iron_tool_crafting"]
+    "required_techs": [
+      "pottery",
+      "iron_tool_crafting"
+    ]
   }
 ]

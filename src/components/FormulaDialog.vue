@@ -84,6 +84,23 @@
             </div>
           </template>
 
+          <!-- 追加操作（可选） -->
+          <div v-if="neededChainOperations.length > 0" class="form-row">
+            <label>追加操作（可收集额外产物）</label>
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="op in neededChainOperations"
+                :key="op.key"
+                class="btn btn-outline btn-sm"
+                :class="selectedChainOperations.has(op.key) ? 'btn-secondary' : ''"
+                @click="selectedChainOperations.has(op.key) ? selectedChainOperations.delete(op.key) : selectedChainOperations.add(op.key); selectedChainOperations = new Set(selectedChainOperations)"
+              >
+                {{ op.name }}
+                <span class="text-xs opacity-60">{{ op.time_required }}秒</span>
+              </button>
+            </div>
+          </div>
+
           <!-- 产物预览 -->
           <div class="product-preview">
             <span class="product-label">预计产物：</span>
@@ -153,6 +170,19 @@ const batches = ref(1)
 // ─── 已选材料 ──────────────────────────────────────────────────
 const selectedMaterials = ref<(string | null)[]>([])
 
+// ─── 追加操作 ──────────────────────────────────────────────────
+const selectedChainOperations = ref<Set<string>>(new Set())
+
+/** 配方产物中需要的追加操作 key 集合 */
+const neededChainOperations = computed(() => {
+  if (!formula.value) return []
+  const ops = new Set<string>()
+  for (const p of formula.value.products) {
+    if (p.required_chain_operation) ops.add(p.required_chain_operation)
+  }
+  return LabActions.filter(a => ops.has(a.key))
+})
+
 watch(() => props.visible, (v) => {
   if (v) {
     batches.value = 1
@@ -163,6 +193,7 @@ watch(() => props.visible, (v) => {
     })
     selectedContainer.value = null
     selectedFireSource.value = null
+    selectedChainOperations.value = new Set()
     fuelMap.value = new Map()
   }
 })
@@ -182,11 +213,26 @@ function materialOptions(req: IFormula['required_items'][number]) {
 // ─── 容器选择 ──────────────────────────────────────────────────
 const selectedContainer = ref<string | null>(null)
 
+/** 从操作和设备要求中获取可接受的容器 key 列表 */
+function acceptedContainerKeys(): string[] {
+  const keys: string[] = []
+  // 配方要求的容器
+  if (formula.value?.required_container) keys.push(formula.value.required_container)
+  // 操作要求的设备（required_item 中的 key 可能为数组表示可替代）
+  for (const req of operation.value?.required_item || []) {
+    const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
+    for (const k of reqKeys) {
+      if (!keys.includes(k)) keys.push(k)
+    }
+  }
+  return keys
+}
+
 const containerOptions = computed(() => {
-  const reqContainer = formula.value?.required_container
-  if (!reqContainer) return []
+  const accepted = acceptedContainerKeys()
+  if (accepted.length === 0) return packStore.items.filter(i => { const d = getItem(i.key); return d?.type.includes('container') && i.durable > 0 }).map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: i.durable }))
   return packStore.items
-    .filter(i => i.key === reqContainer && i.durable > 0)
+    .filter(i => accepted.includes(i.key) && i.durable > 0)
     .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: i.durable }))
 })
 
@@ -251,7 +297,13 @@ const neededBurnTime = computed(() => {
 // ─── 产物预览 ──────────────────────────────────────────────────
 const productList = computed(() => {
   if (!formula.value) return []
-  return formula.value.products.map(p => ({
+  const chainOps = selectedChainOperations.value
+  return formula.value.products
+    .filter(p => {
+      if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      return true
+    })
+    .map(p => ({
     key: p.key,
     name: getItem(p.key)?.name || p.key,
     qty: p.multiple,
@@ -279,7 +331,12 @@ const insufficientMaterials = computed(() => {
 // ─── 总耗时 ────────────────────────────────────────────────────
 const totalTime = computed(() => {
   if (!formula.value) return 0
-  return formula.value.time_required * batches.value
+  let t = formula.value.time_required * batches.value
+  for (const key of selectedChainOperations.value) {
+    const op = LabActions.find(a => a.key === key)
+    if (op) t += op.time_required * batches.value
+  }
+  return t
 })
 
 // ─── 校验 ──────────────────────────────────────────────────────
@@ -293,7 +350,9 @@ const canConfirm = computed(() => {
   }
 
   // 需要容器时检查
-  if (formula.value?.required_container && !selectedContainer.value) return false
+  const accepted = acceptedContainerKeys()
+  if (accepted.length > 0 && !selectedContainer.value) return false
+  if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
 
   // 需要燃烧时检查火种和燃料
   if (operation.value?.requires_burning) {
@@ -322,7 +381,16 @@ function confirm() {
 
   // 2. 消耗容器耐久
   if (selectedContainer.value) {
-    consumedItems.push({ key: selectedContainer.value, quantity: 0, use: 0.05 * batches.value })
+    // 检查操作是否有针对容器的耐久消耗
+    let containerUse = 0.05 // 默认消耗
+    for (const req of operation.value?.required_item || []) {
+      const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
+      if (reqKeys.includes(selectedContainer.value) && req.use) {
+        containerUse = req.use
+        break
+      }
+    }
+    consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
   }
 
   // 3. 消耗燃料和火种
@@ -341,7 +409,13 @@ function confirm() {
   }
 
   // 5. 构建奖励
-  const rewards = formula.value.products.map(p => ({
+  const chainOps = selectedChainOperations.value
+  const rewards = formula.value.products
+    .filter(p => {
+      if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      return true
+    })
+    .map(p => ({
     key: p.key,
     quantity: p.multiple * batches.value,
     probability: 1,
@@ -349,7 +423,7 @@ function confirm() {
 
   // 6. 推送任务
   taskStore.pushLabTask({
-    name: formula.value.name,
+    name: `${formula.value.name}${[...selectedChainOperations.value].map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
     key: `action_formula_${formula.value.key}_${Date.now()}`,
     description: formula.value.description,
     time_required: totalTime.value,

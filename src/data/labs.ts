@@ -18,7 +18,7 @@ export interface ILabAction {
     /** 
      * 所需物品
      */
-    required_item?: { key: string; quantity: number, use?: number }[];
+    required_item?: { key: string | string[]; quantity: number, use?: number }[];
     /**
      * 前置科技
      */

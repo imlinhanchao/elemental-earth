@@ -23,7 +23,7 @@ function findMatchingMaterial(keys: string[], needQty: number): string | null {
 const selectedContainerKey = ref<string | null>(null)
 const selectedMaterials = ref<Map<string, number>>(new Map())
 const selectedOperationKey = ref<string | null>(null)
-const selectedChainOperationKey = ref<string | null>(null)
+const selectedChainOperationKey = ref<Set<string>>(new Set())
 const selectedFireSourceKey = ref<string | null>(null)
 const selectedFuels = ref<Map<string, number>>(new Map())
 const cycles = ref(1)
@@ -33,7 +33,7 @@ const materialModalOpen = ref(false)
 watch(selectedOperationKey, () => {
   selectedFireSourceKey.value = null
   selectedFuels.value = new Map()
-  selectedChainOperationKey.value = null
+  selectedChainOperationKey.value = new Set()
   cycles.value = 1
 })
 
@@ -63,9 +63,8 @@ const selectedContainerPack = computed(() => {
 })
 
 // ---- 追加操作 ----
-const selectedChainOperation = computed<ILabAction | null>(() => {
-  if (!selectedChainOperationKey.value) return null
-  return LabActions.find(a => a.key === selectedChainOperationKey.value) || null
+const selectedChainOperations = computed<ILabAction[]>(() => {
+  return LabActions.filter(a => selectedChainOperationKey.value.has(a.key))
 })
 
 const availableChainOperations = computed(() => {
@@ -80,7 +79,8 @@ const operationRequirementMet = computed(() => {
   const op = selectedOperation.value
   if (!op?.required_item) return true
   for (const req of op.required_item) {
-    if (req.key !== selectedContainerKey.value) return false
+    const keys = reqKeys(req.key)
+    if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
     const pack = selectedContainerPack.value
     if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
   }
@@ -156,18 +156,18 @@ const formulaProven = computed(() => {
 const formulaProducts = computed(() => {
   const f = matchedFormula.value
   if (!f) return []
-  const chainOp = selectedChainOperation.value?.key
+  const chainOps = selectedChainOperationKey.value
   return f.products
     .filter(p => {
       const itemDef = getItem(p.key)
       if (!itemDef) return false
       // 需要特定追加操作才能收集的产物
       if (p.required_chain_operation) {
-        return p.required_chain_operation === chainOp
+        return chainOps.has(p.required_chain_operation)
       }
-      // 气体：有追加操作时由追加操作决定，无追加操作时保留（由主操作决定）
+      // 气体：有追加操作时由追加操作决定
       if (itemDef.type.includes('gas')) {
-        return chainOp === 'gas_collecting'
+        return chainOps.has('gas_collecting')
       }
       return true
     })
@@ -255,6 +255,8 @@ const maxByContainer = computed(() => {
   if (!pack) return null
   let max = Infinity
   for (const req of selectedOperation.value.required_item) {
+    const keys = reqKeys(req.key)
+    if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) continue
     if (req.use) {
       max = Math.min(max, Math.floor(pack.durable / req.use))
     }
@@ -351,8 +353,8 @@ const fireSourceAvailable = computed(() => {
 const totalTime = computed(() => {
   if (!selectedOperation.value) return 0
   let t = selectedOperation.value.time_required * cycles.value
-  if (selectedChainOperation.value) {
-    t += selectedChainOperation.value.time_required * cycles.value
+  for (const op of selectedChainOperations.value) {
+    t += op.time_required * cycles.value
   }
   return t
 })
@@ -368,7 +370,8 @@ const canStart = computed(() => {
 
   if (selectedOperation.value.required_item) {
     for (const req of selectedOperation.value.required_item) {
-      if (req.key !== selectedContainerKey.value) return false
+      const keys = reqKeys(req.key)
+      if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
       const pack = selectedContainerPack.value
       if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
     }
@@ -419,7 +422,10 @@ function startExperiment() {
   const consumedItems: { key: string; quantity: number; use?: number }[] = []
 
   for (const req of selectedOperation.value.required_item || []) {
-    consumedItems.push({ key: req.key, quantity: 0, use: (req.use ?? 1) * cycles.value })
+    const keys = reqKeys(req.key)
+    if (selectedContainerKey.value && keys.includes(selectedContainerKey.value)) {
+      consumedItems.push({ key: selectedContainerKey.value, quantity: 0, use: (req.use ?? 1) * cycles.value })
+    }
   }
 
   // 有匹配配方时才扣除配方材料并记录已验证配方
@@ -447,7 +453,7 @@ function startExperiment() {
   }
 
   taskStore.pushLabTask({
-    name: `实验室 - ${selectedOperation.value.name}${selectedChainOperation.value ? ' → ' + selectedChainOperation.value.name : ''}`,
+    name: `实验室 - ${selectedOperation.value.name}${selectedChainOperations.value.map(o => ' → ' + o.name).join('')}`,
     key: `lab_${selectedOperation.value.key}_${Date.now()}`,
     description: selectedOperation.value.description,
     time_required: totalTime.value,
@@ -458,7 +464,7 @@ function startExperiment() {
   selectedContainerKey.value = null
   selectedMaterials.value = new Map()
   selectedOperationKey.value = null
-  selectedChainOperationKey.value = null
+  selectedChainOperationKey.value = new Set()
   selectedFireSourceKey.value = null
   selectedFuels.value = new Map()
   cycles.value = 1
@@ -525,9 +531,12 @@ function startExperiment() {
           <p v-if="selectedOperation.required_item"
              :class="operationRequirementMet ? '' : 'text-error'">
             需要: {{ selectedOperation.required_item.map(r => {
-              const def = getItem(r.key)
-              return `${def?.name || r.key}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
-            }).join(', ') }}
+              const keys = Array.isArray(r.key) ? r.key : [r.key]
+              return keys.map(k => {
+                const def = getItem(k)
+                return `${def?.name || k}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
+              }).join(' 或 ')
+            }).join('、') }}
             <span v-if="!operationRequirementMet" class="text-error"> ⚠️ 未满足</span>
           </p>
           <p v-if="selectedOperation.required_techs && !selectedOperation.required_techs.every(t => packStore.hasTech(t))" class="text-error">
@@ -547,15 +556,15 @@ function startExperiment() {
             v-for="op in availableChainOperations"
             :key="op.key"
             class="btn btn-outline btn-sm gap-1"
-            :class="selectedChainOperationKey === op.key ? 'btn-secondary' : ''"
-            @click="selectedChainOperationKey = selectedChainOperationKey === op.key ? null : op.key"
+            :class="selectedChainOperationKey.has(op.key) ? 'btn-secondary' : ''"
+            @click="selectedChainOperationKey.has(op.key) ? selectedChainOperationKey.delete(op.key) : selectedChainOperationKey.add(op.key); selectedChainOperationKey = new Set(selectedChainOperationKey)"
           >
             {{ op.name }}
             <span class="text-xs opacity-60">{{ op.time_required }}秒</span>
           </button>
         </div>
-        <div v-if="selectedChainOperation" class="mt-2 text-xs text-base-content/70">
-          <p>{{ selectedChainOperation.description }}</p>
+        <div v-if="selectedChainOperations.length > 0" class="mt-2 text-xs text-base-content/70 space-y-0.5">
+          <p v-for="op in selectedChainOperations" :key="op.key">{{ op.description }}</p>
         </div>
       </div>
     </div>
@@ -681,7 +690,7 @@ function startExperiment() {
               </span>
             </div>
             <!-- 气体提示 -->
-            <div v-if="matchedFormula && hasGasProducts && selectedChainOperation?.key !== 'gas_collecting'" class="text-xs text-warning mt-1">
+            <div v-if="matchedFormula && hasGasProducts && !selectedChainOperationKey.has('gas_collecting')" class="text-xs text-warning mt-1">
               ⚠️ 该配方会产生气体，但未追加「气体收集」操作，气体将逸散
             </div>
           </template>

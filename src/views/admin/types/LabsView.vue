@@ -59,16 +59,19 @@
 
             <!-- 所需设备 -->
             <div class="divider text-xs opacity-50 mt-0">所需设备（可选）</div>
+            <button class="btn btn-xs btn-ghost" @click="objReq.push({_keys:[],_input:'',key:'',quantity:1,use:0.1})">＋ 添加设备</button>
             <div v-for="(row,i) in objReq" :key="i" class="flex gap-2 items-center mb-2 bg-base-200 rounded-box p-2">
-              <select class="select select-bordered select-xs flex-1" v-model="row.key">
-                <option value="" disabled>选择物品</option>
-                <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
-              </select>
+              <div class="flex-1 flex flex-wrap gap-1 items-center">
+                <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
+                <select class="select select-bordered select-xs flex-none w-[10em]" v-model="row._input" @change="addReqKey(row)">
+                  <option value="" disabled>添加…</option>
+                  <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
+                </select>
+              </div>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">数量<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" /></label>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">消耗耐久<input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" /></label>
               <button class="btn btn-xs btn-ghost text-error" @click="objReq.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objReq.push({key:'',quantity:1,use:0.1})">＋ 添加设备</button>
 
             <!-- 前置科技 -->
             <label class="form-control w-full">
@@ -108,14 +111,15 @@ async function loadRecords() { const r = await admin.apiFetch('/api/labs'); reco
 async function fetchRefs() { const [ir,tr] = await Promise.all([admin.apiFetch('/api/items'), admin.apiFetch('/api/techs')]); itemOptions.value = await ir.json(); techOptions.value = await tr.json() }
 function resetForm() { Object.assign(form, { key:'', name:'', description:'', time_required:20, requires_burning:undefined, techs:[] }); objReq.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', description:r.description||'', time_required:r.time_required??20, requires_burning:r.requires_burning, techs:[...(r.required_techs||[])] }); objReq.push(...(r.required_item||[]).map((x:any)=>({...x}))); modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', description:r.description||'', time_required:r.time_required??20, requires_burning:r.requires_burning, techs:[...(r.required_techs||[])] }); objReq.push(...(r.required_item||[]).map((x:any)=>{ const keys = Array.isArray(x.key) ? x.key : [x.key]; return {...x, _keys:[...keys], _input:''} })); modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 function addTech() { if (techInput.value && !form.techs.includes(techInput.value)) form.techs.push(techInput.value); techInput.value = '' }
+function addReqKey(row: any) { const v = row._input; if (!v) return; if (!row._keys.includes(v)) row._keys.push(v); row._input = ''; row.key = row._keys.join(',') }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = { key:form.key, name:form.name, description:form.description, time_required:form.time_required }
   if (form.requires_burning !== undefined) body.requires_burning = form.requires_burning
-  if (objReq.length) body.required_item = objReq.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o})
+  if (objReq.length) body.required_item = objReq.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o}).filter(Boolean)
   if (form.techs.length) body.required_techs = [...form.techs]
   try { const res = editing.value ? await admin.apiFetch(`/api/labs/${editing.value.key}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}) : await admin.apiFetch('/api/labs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); const j = await res.json(); if(!res.ok){alert(j.error||'失败');return}; closeModal(); loadRecords() } catch(e:any){alert(e.message)}
 }

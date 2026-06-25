@@ -217,5 +217,35 @@
       "gas_collection",
       "high_temp_furnace"
     ]
+  },
+  {
+    "key": "extract_mercury",
+    "name": "焙烧辰砂取汞",
+    "description": "将辰砂放入窑炉中焙烧，使汞蒸发后再冷凝收集。",
+    "time_required": 30,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "cinnabar",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "mercury",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
   }
 ]

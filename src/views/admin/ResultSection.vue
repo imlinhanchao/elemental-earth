@@ -1,45 +1,39 @@
 <template>
   <div class="card bg-base-200">
     <div class="card-body p-3">
-      <h3 class="font-bold text-sm">{{ title }} <span class="badge badge-sm">{{ items.length }}</span></h3>
-      <div v-if="items.length === 0" class="text-xs text-base-content/40">（未生成）</div>
-      <div v-for="item in items" :key="item.key" class="border-t border-base-300 pt-2 mt-2 first:border-0 first:pt-0 first:mt-0">
-        <div class="flex justify-between items-start">
-          <div>
-            <span class="font-medium text-sm">{{ item.name }}</span>
-            <span class="text-xs text-base-content/40 ml-2">{{ item.key }}</span>
+      <h3 class="font-bold text-sm">
+        {{ title }}
+        <span class="badge badge-sm">{{ items.length }}</span>
+        <span class="text-xs font-normal opacity-50 ml-2">已选 {{ checkedCount }}</span>
+      </h3>
+      <div v-if="items.length === 0" class="text-xs text-base-content/40 py-2">（未生成）</div>
+      <div v-for="(item, idx) in items" :key="item.key || idx"
+        class="flex items-center gap-2 border-t border-base-300 pt-2 mt-2 first:border-0 first:pt-0 first:mt-0">
+        <input type="checkbox" class="checkbox checkbox-xs" v-model="checked[idx]" />
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-medium text-sm truncate">{{ item.name || item.key }}</span>
+            <span class="text-xs text-base-content/40 shrink-0">{{ item.key }}</span>
           </div>
-          <button class="btn btn-xs btn-primary" @click="saveOne(item)">💾 保存</button>
+          <p class="text-xs text-base-content/60 truncate">{{ item.description }}</p>
         </div>
-        <p class="text-xs text-base-content/60 mt-1">{{ item.description }}</p>
+        <button class="btn btn-xs btn-ghost shrink-0" @click="$emit('edit', type, idx)">✏️</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAdminStore } from '@/stores/modules/admin'
+import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
   items: any[]
   type: string
+  checked: boolean[]
 }>()
 
-const admin = useAdminStore()
+defineEmits<{ edit: [type: string, idx: number] }>()
 
-async function saveOne(item: any) {
-  try {
-    const res = await admin.apiFetch(`/api/${props.type}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item),
-    })
-    const json = await res.json()
-    if (!res.ok) { alert(json.error || '保存失败'); return }
-    alert(`✅ ${item.key} 已保存`)
-  } catch (e) {
-    alert('保存失败: ' + (e as Error).message)
-  }
-}
+const checkedCount = computed(() => props.checked.filter(Boolean).length)
 </script>

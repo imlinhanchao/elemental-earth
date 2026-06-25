@@ -415,5 +415,36 @@
       "gas"
     ],
     "elemental": 1
+  },
+  {
+    "name": "辰砂",
+    "key": "cinnabar",
+    "category": "材料",
+    "description": "鲜红色的矿物，质地柔软，表面带有玻璃光泽。",
+    "type": [
+      "material"
+    ],
+    "elemental": 80
+  },
+  {
+    "name": "汞",
+    "key": "mercury",
+    "category": "液体",
+    "description": "银白色的液态金属，流动性极强，滴落时形成圆润的珠状，具有毒性。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 80
+  },
+  {
+    "name": "二氧化硫",
+    "key": "sulfur_dioxide",
+    "category": "气体",
+    "description": "无色气体，具有强烈的刺激性气味，会刺激眼睛和呼吸道。",
+    "type": [
+      "material",
+      "gas"
+    ]
   }
 ]

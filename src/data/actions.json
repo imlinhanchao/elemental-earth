@@ -470,19 +470,17 @@
     "time_required": 30
   },
   {
-    "name": "铁镐挖掘",
     "key": "dig_iron_pickaxe",
+    "name": "铁镐挖掘",
     "category": "采集",
     "description": "用铁镐挖掘矿物，效率更高。",
+    "time_required": 5,
     "required_items": [
       {
         "key": "iron_pickaxe",
         "quantity": 1,
         "use": 0.01
       }
-    ],
-    "required_techs": [
-      "iron_tool_crafting"
     ],
     "rewards": [
       {
@@ -509,9 +507,16 @@
         "key": "gold_sand",
         "quantity": 1,
         "probability": 50
+      },
+      {
+        "key": "cinnabar",
+        "quantity": 1,
+        "probability": 200
       }
     ],
-    "time_required": 5,
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
     "map": [
       "mountain",
       "cave",
