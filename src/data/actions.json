@@ -478,32 +478,64 @@
       {
         "key": "hematite",
         "quantity": 1,
-        "probability": 800
+        "probability": 800,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       },
       {
         "key": "coal",
         "quantity": 1,
-        "probability": 500
+        "probability": 500,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       },
       {
         "key": "limestone",
         "quantity": 1,
-        "probability": 300
+        "probability": 300,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       },
       {
         "key": "flint",
         "quantity": 1,
-        "probability": 200
+        "probability": 200,
+        "map": [
+          "mountain",
+          "river_side",
+          "volcano"
+        ]
       },
       {
         "key": "gold_sand",
         "quantity": 1,
-        "probability": 50
+        "probability": 50,
+        "map": [
+          "river_side",
+          "volcano"
+        ]
       },
       {
         "key": "cinnabar",
         "quantity": 1,
-        "probability": 200
+        "probability": 200,
+        "map": [
+          "volcano"
+        ]
+      },
+      {
+        "key": "sphalerite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          "mountain"
+        ]
       }
     ],
     "required_techs": [

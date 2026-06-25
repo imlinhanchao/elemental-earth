@@ -68,16 +68,25 @@
 
             <!-- 奖励 -->
             <div class="divider text-xs opacity-50 mt-0">奖励物品</div>
-            <div v-for="(row,i) in objRewards" :key="i" class="flex gap-2 items-center mb-2 bg-base-200 rounded-box p-2">
+            <div v-for="(row,i) in objRewards" :key="i" class="flex gap-2 items-start mb-2 bg-base-200 rounded-box p-2">
               <select class="select select-bordered select-xs flex-1" v-model="row.key">
                 <option value="" disabled>选择物品</option>
                 <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
               </select>
               <input class="input input-bordered input-xs w-16" v-model="row.quantity" placeholder="数量" />
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">权重<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" /></label>
-              <button class="btn btn-xs btn-ghost text-error" @click="objRewards.splice(i,1)">✕</button>
+              <div class="flex-1">
+                <div class="flex flex-wrap gap-1 mb-1">
+                  <span v-for="(t,ti) in row._mapTags" :key="ti" class="badge badge-ghost badge-xs gap-1 cursor-pointer" @click="row._mapTags.splice(ti,1)">{{ t }} ✕</span>
+                </div>
+                <select class="select select-bordered select-xs" v-model="row._mapInput" @change="addRewardMap(row)">
+                  <option value="" disabled>地图…</option>
+                  <option v-for="o in mapOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
+                </select>
+              </div>
+              <button class="btn btn-xs btn-ghost text-error shrink-0" @click="objRewards.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000})">＋ 添加奖励</button>
+            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,_mapTags:[],_mapInput:''})">＋ 添加奖励</button>
 
             <!-- 前置条件 -->
             <div class="divider text-xs opacity-50 mt-0">前置条件</div>
@@ -160,16 +169,17 @@ onMounted(() => { loadRecords(); fetchRefs() })
 async function loadRecords() { const r = await admin.apiFetch('/api/actions'); records.value = await r.json() }
 function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', time_required:10, techs:[], maps:[], formula_key:'', formula_op:'' }); objItems.splice(0); objRewards.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>({...x}))); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x}))); modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>({...x}))); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x, _mapTags: x.map ? (Array.isArray(x.map) ? [...x.map] : [x.map]) : [], _mapInput:''}))); modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 function addTech() { if (techInput.value && !form.techs.includes(techInput.value)) form.techs.push(techInput.value); techInput.value = '' }
 function addMap() { if (mapInput.value && !form.maps.includes(mapInput.value)) form.maps.push(mapInput.value); mapInput.value = '' }
+function addRewardMap(row: any) { const v = row._mapInput; if (v && !row._mapTags.includes(v)) row._mapTags.push(v); row._mapInput = '' }
 function parseQty(v: any) { if (v === ''||v===undefined||v===null) return undefined; if (typeof v === 'string' && v.includes(',')) return v.split(',').map((s:string)=>{const n=Number(s.trim());return isNaN(n)?s.trim():n}).filter((s:any)=>s!==''); const n=Number(v);return isNaN(n)?v:n }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = { key:form.key, name:form.name, category:form.category, description:form.description, time_required:form.time_required }
   if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o})
-  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;return o})
+  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r._mapTags?.length) o.map=[...r._mapTags];return o})
   if (form.techs.length) body.required_techs = [...form.techs]
   if (form.maps.length) body.map = [...form.maps]
   if (form.formula_key && form.formula_op) body.formula = { key:form.formula_key, operation:form.formula_op }
