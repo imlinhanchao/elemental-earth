@@ -43,7 +43,7 @@ export const usePackStore = defineStore('pack', () => {
     // 气体物品检查：没有 save_gas 容器则无法收集
     const itemData = Items.find(i => i.key === itemKey);
     if (itemData?.type.includes('gas') && !hasGasContainer()) {
-      logStore.addLog(`⚠️ 气体 ${itemData.name} 无法收集——需要具备储气功能的容器`, 'warning');
+      logStore.addLog(`⚠️ 气体 ${getDisplayName(itemKey)} 无法收集——需要具备储气功能的容器`, 'warning');
       return;
     }
     const existingItem = items.find(i => i.key === itemKey);

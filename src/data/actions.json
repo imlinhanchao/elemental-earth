@@ -31,14 +31,6 @@
         "map": [
           "river_side"
         ]
-      },
-      {
-        "key": "bone",
-        "quantity": 1,
-        "probability": 20,
-        "map": [
-          "mountain"
-        ]
       }
     ],
     "time_required": 0
