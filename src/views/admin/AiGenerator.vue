@@ -30,6 +30,22 @@
       <ResultSection title="🔬 科技" :items="result.techs" type="techs" :checked="checkStates.techs" @edit="openEditor" />
       <ResultSection title="🧫 实验操作" :items="result.labs" type="labs" :checked="checkStates.labs" @edit="openEditor" />
       <ResultSection title="📜 配方" :items="result.formulas" type="formulas" :checked="checkStates.formulas" @edit="openEditor" />
+
+      <!-- 修改建议 -->
+      <div v-if="result.modifications?.length" class="card bg-base-200 border border-warning/30">
+        <div class="card-body p-3">
+          <h3 class="font-bold text-sm">🔄 修改建议 <span class="badge badge-sm">{{ result.modifications.length }}</span></h3>
+          <div v-for="(mod, idx) in (result.modifications as any[])" :key="idx"
+            class="flex items-center gap-2 border-t border-base-300 pt-2 mt-2 first:border-0 first:pt-0 first:mt-0">
+            <input type="checkbox" class="checkbox checkbox-xs" v-model="modChecked[idx]" />
+            <div class="flex-1 text-xs">
+              <span class="font-medium">{{ mod.type }}/{{ mod.key }}</span>
+              <span class="badge badge-ghost badge-xs ml-1">{{ mod.action }}</span>
+              <code class="block text-[10px] opacity-60 mt-0.5">{{ JSON.stringify(mod.data) }}</code>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <DataEditorModal
@@ -58,11 +74,13 @@ const result = ref<any>(null)
 const checkStates = reactive<Record<string, boolean[]>>({
   items: [], actions: [], techs: [], labs: [], formulas: [],
 })
+const modChecked = ref<boolean[]>([])
 
 function initChecks(data: any) {
   for (const type of ['items','actions','techs','labs','formulas']) {
     checkStates[type] = (data[type] || []).map(() => true)
   }
+  modChecked.value = (data.modifications || []).map(() => true)
 }
 
 function toggleAll(v: boolean) {
@@ -120,6 +138,8 @@ async function saveAll() {
   if (!result.value) return
   const types = ['items', 'actions', 'techs', 'labs', 'formulas']
   let ok = 0, fail = 0
+
+  // 保存新数据
   for (const type of types) {
     for (let i = 0; i < (result.value[type] || []).length; i++) {
       if (!checkStates[type][i]) continue
@@ -132,6 +152,40 @@ async function saveAll() {
       } catch { fail++ }
     }
   }
+
+  // 应用修改
+  for (let i = 0; i < (result.value.modifications || []).length; i++) {
+    if (!modChecked.value[i]) continue
+    const mod = result.value.modifications[i]
+    try {
+      if (mod.action === 'add_reward') {
+        // 先获取当前数据
+        const getRes = await admin.apiFetch(`/api/${mod.type}/${mod.key}`)
+        if (!getRes.ok) { fail++; continue }
+        const record = await getRes.json()
+        if (!record.rewards) record.rewards = []
+        record.rewards.push(mod.data)
+        const putRes = await admin.apiFetch(`/api/${mod.type}/${mod.key}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record),
+        })
+        if (putRes.ok) ok++; else fail++
+      } else if (mod.action === 'update') {
+        const getRes = await admin.apiFetch(`/api/${mod.type}/${mod.key}`)
+        if (!getRes.ok) { fail++; continue }
+        const record = await getRes.json()
+        Object.assign(record, mod.data)
+        const putRes = await admin.apiFetch(`/api/${mod.type}/${mod.key}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record),
+        })
+        if (putRes.ok) ok++; else fail++
+      } else {
+        fail++
+      }
+    } catch { fail++ }
+  }
+
   alert(`保存完成：成功 ${ok} 项${fail ? `，失败 ${fail} 项` : ''}`)
 }
 </script>

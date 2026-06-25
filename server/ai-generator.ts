@@ -22,6 +22,12 @@ export interface GeneratedOutput {
   techs: Record<string, unknown>[]
   labs: Record<string, unknown>[]
   formulas: Record<string, unknown>[]
+  modifications?: {
+    type: string
+    key: string
+    action: string
+    data: Record<string, unknown>
+  }[]
 }
 
 export type GenerateGameData = (
@@ -217,13 +223,14 @@ function buildSystemPrompt(contextData: ContextData): string {
 - quantity 使用数字或 [最小,最大] 范围
 
 ### 科技生成规则
-- 科技主要用途是解锁「制作工具」类的行动
-- 新物质的制备往往需要前置科技解锁
-- 科技应该有层级关系（比如"采矿"→"金属冶炼"→"合金制作"）
+- 科技的唯一用途是：解锁「制作工具」类的行动。**不要生成新物质的制备/冶炼科技**
+- 新物质的生成应该通过「配方」来实现，而不是科技
+- 科技应该有层级关系（比如"石器制作"→"铁器制作"）
 - required_items 中的物品应该已有或本次同步生成
 - 科技描述应聚焦于「掌握了什么技术/原理」，不要包含「使用什么材料制作什么物品」的内容
   - ✅「掌握了将石块打磨成锋利工具的技术。」
   - ❌「使用石头制作基本的工具，如石斧和石锤。」
+  - ❌「掌握冶炼铁锭的技术。」（这是配方的职责，不是科技的）
 
 ### 实验操作生成规则
 - 用途：配方的材料处理/气体收集等，不是制作工具
@@ -249,16 +256,40 @@ function buildSystemPrompt(contextData: ContextData): string {
 - 操作 key 引用已有的 labs，地图 key 引用已有的 maps
 - \`\`\` 如果生成的配方需要新的操作，请同步生成该操作\`\`\`
 
+## 修改已有数据
+
+**非常重要**：当用户输入的材料可以通过修改现有行动/配方来实现时，优先使用 modifications 修改现有数据，而不是创建重复的新行动/配方。
+
+### 修改规则
+- **采集类行动**：新矿石/材料应当在现有采集行动上添加奖励，而不是创建新的采集行动。例如新的矿物"方铅矿"应该在已有的「挖掘」或「采矿」行动中添加奖励项，通过 map 字段限定只在特定地图产出。
+- **行动奖励**：使用 \`modifications\` 中的 \`add_reward\` 在现有行动中追加奖励
+- **批量新增**：如果修改涉及 3 个以上的现有记录，优先创建新的行动而不是修改多个旧记录
+
+支持的操作类型：
+| action | 说明 | data 格式 |
+|--------|------|-----------|
+| \`update\` | 覆盖指定字段 | \`{ "field1": value1, "field2": value2 }\` |
+| \`add_reward\` | 在行动奖励中追加一项 | \`{ "key": "物品key", "quantity": 数量, "probability": 权重, "map": ["地图key"] }\` |
+| \`add_required_tech\` | 为行动追加前置科技（仅当新材料的工具需要新科技时） | \`{ "tech": "科技key" }\` |
+
 ## 输出格式
 
 始终输出以下 JSON 结构，即使某些数组为空：
 \`\`\`json
 {
-  "items": [...],     // 新物品列表
-  "actions": [...],   // 新行动列表
-  "techs": [...],     // 新科技列表
-  "labs": [...],      // 新实验操作列表
-  "formulas": [...]   // 新配方列表
+  "items": [...],         // 新物品列表
+  "actions": [...],       // 新行动列表
+  "techs": [...],         // 新科技列表
+  "labs": [...],          // 新实验操作列表
+  "formulas": [...],      // 新配方列表
+  "modifications": [      // 对已有数据的修改（非必填）
+    {
+      "type": "actions",           // 数据类型
+      "key": "dig",               // 要修改的记录 key
+      "action": "add_reward",     // 操作类型
+      "data": { "key": "galena", "quantity": 1, "probability": 300, "map": ["cave"] }
+    }
+  ]
 }
 \`\`\`
 
@@ -333,6 +364,7 @@ function normalizeOutput(parsed: Record<string, unknown>): GeneratedOutput {
     techs: (Array.isArray(parsed.techs) ? parsed.techs.map(cleanTech) : []).filter(Boolean) as Record<string, unknown>[],
     labs: (Array.isArray(parsed.labs) ? parsed.labs.map(cleanLab) : []).filter(Boolean) as Record<string, unknown>[],
     formulas: (Array.isArray(parsed.formulas) ? parsed.formulas.map(cleanFormula) : []).filter(Boolean) as Record<string, unknown>[],
+    modifications: Array.isArray(parsed.modifications) ? parsed.modifications as GeneratedOutput['modifications'] : undefined,
   };
 }
 

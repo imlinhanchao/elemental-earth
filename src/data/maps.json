@@ -1,38 +1,38 @@
 [
   {
-    "icon": "hugeicons:mountain",
-    "name": "山地",
     "key": "mountain",
+    "name": "山地",
+    "icon": "hugeicons:mountain",
     "description": "山地是一个地形复杂的地方，可以找到各种矿物和稀有资源。",
     "position": {
-      "x": 100,
-      "y": 100
+      "x": 81,
+      "y": 48
     }
   },
   {
-    "icon": "fluent:stream-48-regular",
-    "name": "河边",
     "key": "river_side",
+    "name": "河边",
+    "icon": "fluent:stream-48-regular",
     "description": "河边是一个资源丰富的地方，可以找到各种各样的物品。",
     "position": {
-      "x": 200,
-      "y": 100
+      "x": 269,
+      "y": 105
     }
   },
   {
-    "icon": "temaki:tree-row",
-    "name": "森林",
     "key": "forest",
+    "name": "森林",
+    "icon": "temaki:tree-row",
     "description": "森林是一个充满生机的地方，可以找到各种各样的植物和动物。",
     "position": {
-      "x": 100,
-      "y": 200
+      "x": 26,
+      "y": 151
     }
   },
   {
-    "icon": "roentgen:cave",
-    "name": "溶洞",
     "key": "cave",
+    "name": "溶洞",
+    "icon": "roentgen:cave",
     "description": "溶洞是一个神秘的地方，可以找到各种各样的矿物和稀有资源。",
     "position": {
       "x": 150,
@@ -40,61 +40,53 @@
     }
   },
   {
-    "icon": "fa7-solid:volcano",
-    "name": "火山",
     "key": "volcano",
+    "name": "火山",
+    "icon": "fa7-solid:volcano",
     "description": "火山是一个危险的地方，可以找到各种各样的矿物和稀有资源。",
     "position": {
-      "x": 300,
-      "y": 100
+      "x": 279,
+      "y": 0
     }
   },
   {
-    "icon": "tabler:beach",
-    "name": "海滩",
     "key": "beach",
+    "name": "海滩",
+    "icon": "tabler:beach",
     "description": "海滩是一个美丽的地方，可以找到各种各样的贝壳和稀有资源。",
     "position": {
-      "x": 400,
-      "y": 100
+      "x": 426,
+      "y": 201
     }
   },
   {
-    "name": "盆地",
-    "key": "basin",
-    "description": "盆地是一个低洼的地方，可以找到各种各样的矿物和稀有资源。",
-    "position": {
-      "x": 400,
-      "y": 200
-    }
-  },
-  {
-    "icon": "tabler:meteor",
-    "name": "陨石坑",
     "key": "meteor_crater",
+    "name": "陨石坑",
+    "icon": "tabler:meteor",
     "description": "陨石坑是一个神秘的地方，可以找到各种各样的陨石和稀有资源。",
     "position": {
-      "x": 500,
-      "y": 100
+      "x": 407,
+      "y": 0
     }
   },
   {
-    "name": "盐湖",
     "key": "salt_lake",
+    "name": "盐湖",
+    "icon": "la:water",
     "description": "盐湖是一个特殊的地方，可以找到各种各样的盐和稀有资源。",
     "position": {
-      "x": 500,
-      "y": 200
+      "x": 208,
+      "y": 223
     }
   },
   {
-    "icon": "mingcute:tree-4-fill",
-    "name": "海岛",
     "key": "island",
+    "name": "海岛",
+    "icon": "mingcute:tree-4-fill",
     "description": "海岛是一个孤立的地方，可以找到各种各样的植物和动物。",
     "position": {
-      "x": 600,
-      "y": 100
+      "x": 642,
+      "y": 126
     }
   }
 ]

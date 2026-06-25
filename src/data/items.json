@@ -446,5 +446,44 @@
       "material",
       "gas"
     ]
+  },
+  {
+    "name": "闪锌矿",
+    "key": "sphalerite",
+    "category": "材料",
+    "description": "深色带有金属光泽的块状矿物，表面常有条纹，在阳光下闪烁，手感沉重。",
+    "type": [
+      "material"
+    ],
+    "elemental": 30
+  },
+  {
+    "name": "氧化锌",
+    "key": "zinc_oxide",
+    "category": "材料",
+    "description": "白色微细粉末，无味，接触皮肤时有滑腻感。",
+    "type": [
+      "material"
+    ],
+    "elemental": 30
+  },
+  {
+    "name": "锌",
+    "key": "zinc",
+    "category": "材料",
+    "description": "银白色略带蓝光的金属块，表面有结晶花纹，质地较脆。",
+    "type": [
+      "material"
+    ],
+    "elemental": 30
+  },
+  {
+    "name": "黄铜",
+    "key": "brass",
+    "category": "材料",
+    "description": "金黄色的金属块，表面光滑，比重较大，敲击时发出清脆的声响。",
+    "type": [
+      "material"
+    ]
   }
 ]

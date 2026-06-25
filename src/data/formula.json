@@ -247,5 +247,104 @@
         "required_chain_operation": "gas_collecting"
       }
     ]
+  },
+  {
+    "name": "焙烧闪锌矿",
+    "key": "roast_sphalerite",
+    "description": "在窑炉中焙烧闪锌矿，生成氧化锌和二氧化硫气体。",
+    "required_items": [
+      {
+        "key": "sphalerite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "zinc_smelting"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "zinc_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "还原氧化锌",
+    "key": "reduce_zinc_oxide",
+    "description": "在坩埚中用木炭加热还原氧化锌，得到锌蒸气并冷凝收集。",
+    "required_items": [
+      {
+        "key": "zinc_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "zinc_smelting"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "zinc",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "炼黄铜",
+    "key": "smelt_brass",
+    "description": "在坩埚中加热熔融铜和锌，制成黄铜合金。",
+    "required_items": [
+      {
+        "key": "copper",
+        "quantity": 1
+      },
+      {
+        "key": "zinc",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "zinc_smelting"
+    ],
+    "time_required": 10,
+    "products": [
+      {
+        "key": "brass",
+        "multiple": 2
+      }
+    ]
   }
 ]
