@@ -32,18 +32,18 @@
           title="修改命名"
           @click.stop="showRename = true"
         >
-          <Icon icon="fa7-solid:edit" />
+          ✏️
         </button>
         <span class="badge badge-primary badge-xs">{{ data.quantity }}</span>
       </div>
     </div>
-    <span v-if="itemData?.durable" class="tooltip tooltip-bottom inline-flex w-full" :data-tip="`耐久度: ${Math.round((data.durable / (itemData?.durable ?? 1)) * 100)}%`">
+    <InlineTooltip v-if="itemData?.durable" :text="`耐久度: ${Math.round((data.durable / (itemData?.durable ?? 1)) * 100)}%`">
       <progress 
         class="progress progress-primary w-full" 
         :value="data.durable * 100" 
         :max="(itemData?.durable ?? 1) * 100"
       ></progress>
-    </span>
+    </InlineTooltip>
     <RenameDialog
       :visible="showRename"
       :itemKey="data.key"
