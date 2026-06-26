@@ -70,14 +70,19 @@
     "time_required": 0
   },
   {
-    "key": "dig",
-    "name": "石稿挖掘",
+    "name": "挖矿",
+    "key": "mining",
     "category": "采集",
-    "description": "使用工具挖掘地面，可以获得各种资源。",
-    "time_required": 5,
+    "description": "使用镐类工具挖掘地面，根据工具的差异获取不同的矿物资源。",
+    "time_required": 10,
     "required_items": [
       {
-        "key": "stone_pickaxe",
+        "key": [
+          "stone_pickaxe",
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ],
         "quantity": 1,
         "use": 0.01
       }
@@ -114,7 +119,8 @@
         "probability": 10,
         "map": [
           "volcano"
-        ]
+        ],
+        "required_item": "stone_pickaxe"
       },
       {
         "key": "gold_sand",
@@ -122,7 +128,8 @@
         "probability": 1,
         "map": [
           "river_side"
-        ]
+        ],
+        "required_item": "stone_pickaxe"
       },
       {
         "key": "malachite",
@@ -141,7 +148,8 @@
             "key": "volcano",
             "probability": 10
           }
-        ]
+        ],
+        "required_item": "stone_pickaxe"
       },
       {
         "key": "sulfur",
@@ -149,8 +157,165 @@
         "probability": 50,
         "map": [
           "volcano"
+        ],
+        "required_item": "stone_pickaxe"
+      },
+      {
+        "key": "hematite",
+        "quantity": 1,
+        "probability": 800,
+        "map": [
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "coal",
+        "quantity": 1,
+        "probability": 500,
+        "map": [
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "limestone",
+        "quantity": 1,
+        "probability": 300,
+        "map": [
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "cinnabar",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          {
+            "key": "volcano"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "sphalerite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "cassiterite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain"
+          }
+        ]
+      },
+      {
+        "key": "galena",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          {
+            "key": "cave"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "flint",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "river_side"
+          },
+          {
+            "key": "volcano"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
+        ]
+      },
+      {
+        "key": "gold_sand",
+        "quantity": 1,
+        "probability": 50,
+        "map": [
+          {
+            "key": "river_side"
+          },
+          {
+            "key": "volcano"
+          }
+        ],
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe"
         ]
       }
+    ],
+    "required_techs": [],
+    "map": [
+      "mountain",
+      "cave",
+      "volcano",
+      "basin",
+      "river_side"
     ]
   },
   {
@@ -338,7 +503,7 @@
       {
         "key": "kiln",
         "quantity": 1,
-        "use": 0.01
+        "use": 0.1
       }
     ],
     "required_techs": [
@@ -444,6 +609,30 @@
     ],
     "time_required": 30
   },
+  
+  {
+    "name": "烧制耐火砖",
+    "key": "fire_brick_production",
+    "category": "制作",
+    "description": "将粘土在窑炉中焙烧制成耐火砖。",
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "refractory_materials"
+    ],
+    "time_required": 60,
+    "rewards": [
+      {
+        "key": "fire_brick",
+        "quantity": 5,
+        "probability": 1000
+      }
+    ]
+  },
   {
     "name": "制作高炉",
     "key": "craft_blast_furnace",
@@ -498,139 +687,6 @@
       }
     ],
     "time_required": 30
-  },
-  {
-    "key": "dig_iron_pickaxe",
-    "name": "铁镐挖掘",
-    "category": "采集",
-    "description": "用铁镐挖掘矿物，效率更高。",
-    "time_required": 5,
-    "required_items": [
-      {
-        "key": "iron_pickaxe",
-        "quantity": 1,
-        "use": 0.01
-      }
-    ],
-    "rewards": [
-      {
-        "key": "hematite",
-        "quantity": 1,
-        "probability": 800,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ]
-      },
-      {
-        "key": "coal",
-        "quantity": 1,
-        "probability": 500,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ]
-      },
-      {
-        "key": "limestone",
-        "quantity": 1,
-        "probability": 300,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ]
-      },
-      {
-        "key": "flint",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "river_side"
-          },
-          {
-            "key": "volcano"
-          }
-        ]
-      },
-      {
-        "key": "gold_sand",
-        "quantity": 1,
-        "probability": 50,
-        "map": [
-          {
-            "key": "river_side"
-          },
-          {
-            "key": "volcano"
-          }
-        ]
-      },
-      {
-        "key": "cinnabar",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          {
-            "key": "volcano"
-          }
-        ]
-      },
-      {
-        "key": "sphalerite",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          {
-            "key": "mountain"
-          }
-        ]
-      },
-      {
-        "key": "cassiterite",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          {
-            "key": "mountain"
-          }
-        ]
-      },
-      {
-        "key": "galena",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          {
-            "key": "cave"
-          }
-        ]
-      }
-    ],
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "map": [
-      "mountain",
-      "cave",
-      "volcano",
-      "basin"
-    ]
   },
   {
     "key": "craft_crucible",

@@ -156,33 +156,6 @@
     ]
   },
   {
-    "name": "烧制耐火砖",
-    "key": "fire_brick_production",
-    "description": "将粘土在窑炉中焙烧制成耐火砖。",
-    "required_items": [
-      {
-        "key": "clay",
-        "quantity": 5
-      }
-    ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1,
-      "max": 2
-    },
-    "required_techs": [
-      "refractory_materials"
-    ],
-    "time_required": 60,
-    "products": [
-      {
-        "key": "fire_brick",
-        "multiple": 5
-      }
-    ]
-  },
-  {
     "key": "water_gas_reaction",
     "name": "水煤气反应",
     "description": "将水蒸气通入炽热的焦炭中，生成一氧化碳和氢气。",
@@ -190,8 +163,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "gas_collecting",
-      "min": 1,
-      "max": 2
+      "min": 1
     },
     "required_items": [
       {
@@ -226,8 +198,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -249,25 +220,21 @@
     ]
   },
   {
-    "name": "焙烧闪锌矿",
     "key": "roast_sphalerite",
+    "name": "焙烧闪锌矿",
     "description": "在窑炉中焙烧闪锌矿，生成氧化锌和二氧化硫气体。",
+    "time_required": 15,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sphalerite",
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "zinc_smelting"
-    ],
-    "time_required": 15,
     "products": [
       {
         "key": "zinc_oxide",
@@ -281,9 +248,15 @@
     ]
   },
   {
-    "name": "还原氧化锌",
     "key": "reduce_zinc_oxide",
+    "name": "还原氧化锌",
     "description": "在坩埚中用木炭加热还原氧化锌，得到锌蒸气并冷凝收集。",
+    "time_required": 20,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "zinc_oxide",
@@ -294,16 +267,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "zinc_smelting"
-    ],
-    "time_required": 20,
     "products": [
       {
         "key": "zinc",
@@ -314,12 +277,21 @@
         "key": "carbon_monoxide",
         "multiple": 1
       }
+    ],
+    "required_techs": [
+      "zinc_smelting"
     ]
   },
   {
-    "name": "炼黄铜",
     "key": "smelt_brass",
+    "name": "炼黄铜",
     "description": "在坩埚中加热熔融铜和锌，制成黄铜合金。",
+    "time_required": 30,
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "copper",
@@ -330,16 +302,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "zinc_smelting"
-    ],
-    "time_required": 10,
     "products": [
       {
         "key": "brass",
@@ -348,9 +310,15 @@
     ]
   },
   {
-    "name": "焙烧方铅矿",
     "key": "roast_galena",
+    "name": "焙烧方铅矿",
     "description": "将方铅矿在空气中焙烧，生成氧化铅和二氧化硫。",
+    "time_required": 60,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "galena",
@@ -361,16 +329,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "lead_oxide",
@@ -384,9 +342,15 @@
     ]
   },
   {
-    "name": "还原氧化铅",
     "key": "reduce_lead_oxide",
+    "name": "还原氧化铅",
     "description": "用碳还原氧化铅，得到金属铅和一氧化碳。",
+    "time_required": 60,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lead_oxide",
@@ -397,16 +361,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "lead",
@@ -417,12 +371,21 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
     ]
   },
   {
-    "name": "炼锡",
     "key": "smelt_tin",
+    "name": "炼锡",
     "description": "用碳还原锡石，得到金属锡和一氧化碳。",
+    "time_required": 60,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cassiterite",
@@ -433,16 +396,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "tin",
@@ -459,12 +412,11 @@
     "key": "bronze_smelting",
     "name": "炼青铜",
     "description": "将铜和锡置于坩埚中加热熔炼，得到青铜。",
-    "time_required": 120,
-    "required_container": "crucible",
+    "time_required": 60,
+    "required_container": "kiln",
     "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
+      "key": "roasting",
+      "min": 1
     },
     "required_items": [
       {

@@ -194,13 +194,13 @@
       </div>
 
       <!-- 替代材料选择（右上） -->
-      <div v-if="hasAlternatives" class="absolute -top-2 -right-2 z-10">
+      <div v-if="hasAlternatives" class="absolute -top-2 -right-2 z-300">
         <button
           v-if="hasMultipleChoices() && !isRunning"
           class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 rounded-full w-5 h-5 min-h-0 p-0 flex items-center justify-center"
           title="选择材料"
           @click="toggleMaterialPicker"
-        ><span class="text-[12px]">⚙</span></button>
+        ><span class="text-[12px]"><Icon icon="tdesign:setting-1-filled" /></span></button>
         <!-- 材料选择面板 -->
         <div v-if="showMaterialPicker"
           class="absolute top-0 right-0 z-20 bg-base-100 border border-base-300 rounded-lg shadow-lg p-2 min-w-[140px]"

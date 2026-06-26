@@ -31,24 +31,10 @@
     "requires_burning": true
   },
   {
-    "name": "加热",
-    "key": "heating",
-    "description": "对物体进行加热，以促进化学反应或物理变化。",
-    "time_required": 20,
-    "requires_burning": true
-  },
-  {
     "name": "搅拌",
     "key": "stirring",
     "description": "将物体混合在一起，以促进化学反应或物理变化。",
     "time_required": 10,
-    "requires_burning": false
-  },
-  {
-    "name": "浸泡",
-    "key": "soaking",
-    "description": "将物体浸泡在液体中，以促进化学反应或物理变化。",
-    "time_required": 15,
     "requires_burning": false
   },
   {

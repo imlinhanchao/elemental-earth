@@ -149,23 +149,19 @@
     ]
   },
   {
-    "name": "青铜器制作",
     "key": "bronze_tool_crafting",
+    "name": "青铜器制作",
     "description": "掌握了将铜和锡熔炼成青铜，并利用青铜铸造更坚固工具的技术。",
+    "time_required": 60,
     "required_items": [
       {
-        "key": "copper",
-        "quantity": 5
-      },
-      {
-        "key": "tin",
-        "quantity": 2
+        "key": "bronze",
+        "quantity": 4
       }
     ],
     "required_techs": [
-      "refractory_materials"
-    ],
-    "time_required": 60
+      "pottery"
+    ]
   },
   {
     "name": "黄铜锻造",

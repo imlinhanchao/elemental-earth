@@ -22,9 +22,9 @@ export const useTaskStore = defineStore('task', () => {
   const logStore = useLogStore();
 
   // 按照奖励概率计算最终奖励
-  function getReward(rewards: IReward[]): IReward | null {
+  function getReward(rewards: IReward[], consumedKeys?: string[]): IReward | null {
     const currentMap = stateStore.getMap?.key || '';
-    const rewardsList = rewards.filter(r => {
+    let rewardsList = rewards.filter(r => {
       if (!r.map) return true;
       return r.map.some(m => {
         const mapKey = typeof m === 'string' ? m : m.key;
@@ -42,6 +42,14 @@ export const useTaskStore = defineStore('task', () => {
       }
       return r;
     });
+    // 过滤：需要特定消耗品才出现的奖励
+    if (consumedKeys && consumedKeys.length > 0) {
+      rewardsList = rewardsList.filter(r => {
+        if (!r.required_item) return true;
+        const required = Array.isArray(r.required_item) ? r.required_item : [r.required_item];
+        return required.some(k => consumedKeys.includes(k));
+      });
+    }
     if (rewardsList.length === 1) return rewardsList[0];
     rewardsList.sort((a, b) => a.probability - b.probability);
     const totalProbability = rewardsList.reduce((sum, r) => sum + r.probability, 0);
@@ -63,7 +71,7 @@ export const useTaskStore = defineStore('task', () => {
       if (!task) return; // 没有任务，跳过检查
       if (now - task.begin_time >= task.time_required * 1000) {
         if (task.type === 'action') {
-          const reward = getReward(task.rewards);
+          const reward = getReward(task.rewards, task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key));
           if (reward) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
             logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');

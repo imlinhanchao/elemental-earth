@@ -433,7 +433,8 @@
     "description": "鲜红色的矿物，质地柔软，表面带有玻璃光泽。",
     "type": [
       "material"
-    ]
+    ],
+    "is_discovery": true
   },
   {
     "name": "汞",
@@ -463,7 +464,8 @@
     "description": "深色带有金属光泽的块状矿物，表面常有条纹，在阳光下闪烁，手感沉重。",
     "type": [
       "material"
-    ]
+    ],
+    "is_discovery": true
   },
   {
     "key": "zinc_oxide",
@@ -494,22 +496,24 @@
     ]
   },
   {
-    "name": "锡石",
     "key": "cassiterite",
+    "name": "锡石",
     "category": "材料",
     "description": "深棕色至黑色的矿物碎块，密度大，有金属光泽，表面有油脂感。",
     "type": [
       "material"
-    ]
+    ],
+    "is_discovery": true
   },
   {
-    "name": "方铅矿",
     "key": "galena",
+    "name": "方铅矿",
     "category": "材料",
     "description": "铅灰色立方体晶体，金属光泽，质地柔软，比重很大。",
     "type": [
       "material"
-    ]
+    ],
+    "is_discovery": true
   },
   {
     "name": "锡",

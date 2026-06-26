@@ -19,6 +19,10 @@ export interface IReward {
    * 对象 = { key, probability? }（可覆盖 reward.probability）
    */
   map?: (string | { key: string; probability?: number })[];
+  /**
+   * 需要行动消耗了指定物品（或数组中的任一物品）时才可能出现此奖励
+   */
+  required_item?: string | string[];
 }
 
 export interface IAction {

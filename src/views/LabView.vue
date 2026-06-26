@@ -42,10 +42,14 @@ const draftMaterials = ref<Map<string, number>>(new Map())
 
 // ---- 可用容器 ----
 const availableContainers = computed(() => {
-  return packStore.items.filter(pItem => {
+  const map = new Map<string, typeof packStore.items[0]>()
+  for (const pItem of packStore.items) {
     const def = getItem(pItem.key)
-    return def && def.type.includes('container')
-  })
+    if (!def?.type.includes('container')) continue
+    const existing = map.get(pItem.key)
+    if (!existing || pItem.durable > existing.durable) map.set(pItem.key, pItem)
+  }
+  return Array.from(map.values())
 })
 
 const availableMaterials = computed(() => {
@@ -59,7 +63,10 @@ const selectedOperation = computed<ILabAction | null>(() => {
 
 const selectedContainerPack = computed(() => {
   if (!selectedContainerKey.value) return null
-  return packStore.items.find(i => i.key === selectedContainerKey.value) || null
+  // 自动选择耐久最高的实例
+  const matches = packStore.items.filter(i => i.key === selectedContainerKey.value)
+  if (matches.length === 0) return null
+  return matches.reduce((best, cur) => cur.durable > best.durable ? cur : best)
 })
 
 // ---- 追加操作 ----
@@ -78,6 +85,8 @@ const availableChainOperations = computed(() => {
 const operationRequirementMet = computed(() => {
   const op = selectedOperation.value
   if (!op?.required_item) return true
+  // 未验证配方时，不检查容器耐久充分性（自由探索）
+  if (matchedFormula.value && !formulaProven.value) return true
   for (const req of op.required_item) {
     const keys = reqKeys(req.key)
     if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
@@ -276,7 +285,11 @@ const globalMaxCycles = computed(() => {
     limits.push(maxCyclesByFire.value > 0 ? maxCyclesByFire.value : null)
     if (maxCyclesByFuel.value !== Infinity) limits.push(maxCyclesByFuel.value)
   }
-  limits.push(maxByContainer.value, maxByFormula.value)
+  // 只有已验证的配方才应用容器和配方限制（未验证时属于自由探索，不应限制次数）
+  if (matchedFormula.value && formulaProven.value) {
+    limits.push(maxByContainer.value)
+    limits.push(maxByFormula.value)
+  }
   const nums = limits.filter((l): l is number => l !== null)
   if (nums.length === 0) return null
   return Math.min(...nums)
@@ -285,7 +298,7 @@ const globalMaxCycles = computed(() => {
 // 当前次数是否超出限制
 const cyclesExceedsLimit = computed(() => {
   if (globalMaxCycles.value !== null && cycles.value > globalMaxCycles.value) return true
-  if (matchedFormula.value?.required_actions?.min && cycles.value < matchedFormula.value.required_actions.min) return true
+  if (matchedFormula.value && formulaProven.value && matchedFormula.value.required_actions?.min && cycles.value < matchedFormula.value.required_actions.min) return true
   return false
 })
 
@@ -296,8 +309,10 @@ const limitLabel = computed(() => {
     if (maxCyclesByFire.value > 0) parts.push(`引火物 ${maxCyclesByFire.value}次`)
     if (maxCyclesByFuel.value !== Infinity) parts.push(`燃料 ${maxCyclesByFuel.value}次`)
   }
-  if (maxByContainer.value !== null) parts.push(`容器 ${maxByContainer.value}次`)
-  if (maxByFormula.value !== null) parts.push(`配方上限 ${maxByFormula.value}次`)
+  if (matchedFormula.value && formulaProven.value) {
+    if (maxByContainer.value !== null) parts.push(`容器 ${maxByContainer.value}次`)
+    if (maxByFormula.value !== null) parts.push(`配方上限 ${maxByFormula.value}次`)
+  }
   return parts.join('、')
 })
 
@@ -372,8 +387,11 @@ const canStart = computed(() => {
     for (const req of selectedOperation.value.required_item) {
       const keys = reqKeys(req.key)
       if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
-      const pack = selectedContainerPack.value
-      if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+      // 未验证配方时，不检查容器耐久是否足够（自由探索）
+      if (matchedFormula.value && formulaProven.value) {
+        const pack = selectedContainerPack.value
+        if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+      }
     }
   }
 
