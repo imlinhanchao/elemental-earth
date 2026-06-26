@@ -27,7 +27,10 @@
     for (const action of Actions) {
       // 跳过不可见的行动（科技未解锁 / 依赖物品不曾拥有 / 不在所需地图）
       if (action.required_techs && !action.required_techs.every(t => packStore.hasTech(t))) continue
-      if (action.required_items.some(item => !packStore.hasEverHad(item.key))) continue
+      if (action.required_items.some(item => {
+        const keys = Array.isArray(item.key) ? item.key : [item.key]
+        return !keys.some(k => packStore.hasEverHad(k))
+      })) continue
       if (action.map && !action.map.includes(stateStore.state.map)) continue
 
       const cat = action.category || '未分类';

@@ -93,14 +93,16 @@ export const useTaskStore = defineStore('task', () => {
   const pushTask = (task: IAction|ITech) => {
     if (task.required_items.length) {
       for (const req of task.required_items) {
-        if (!packStore.hasItem(req.key, req.quantity)) {
-          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${packStore.getDisplayName(req.key)} x${req.quantity}`, 'warning');
+        const k = Array.isArray(req.key) ? req.key[0] : req.key;
+        if (!packStore.hasItem(k, req.quantity)) {
+          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${packStore.getDisplayName(k)} x${req.quantity}`, 'warning');
           return;
         }
       }
       // 扣除所需物品
       for (const req of task.required_items) {
-        packStore.removeItem(req.key, req.quantity, req.use);
+        const k = Array.isArray(req.key) ? req.key[0] : req.key;
+        packStore.removeItem(k, req.quantity, req.use);
       }
     }
     tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '' });
@@ -112,7 +114,8 @@ export const useTaskStore = defineStore('task', () => {
       if (task.required_items.length) {
         // 返还所需物品
         for (const req of task.required_items) {
-          packStore.addItem(req.key, req.quantity, req.use);
+          const k = Array.isArray(req.key) ? req.key[0] : req.key;
+          packStore.addItem(k, req.quantity, req.use);
         }
       }
     }

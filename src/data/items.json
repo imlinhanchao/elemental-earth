@@ -373,6 +373,16 @@
     "durable": 3
   },
   {
+    "key": "iron_axe",
+    "name": "铁斧",
+    "category": "工具",
+    "description": "用铁打造的斧头，比石斧更坚固耐用。",
+    "type": [
+      "tool"
+    ],
+    "durable": 3
+  },
+  {
     "name": "坩埚",
     "key": "crucible",
     "category": "容器",

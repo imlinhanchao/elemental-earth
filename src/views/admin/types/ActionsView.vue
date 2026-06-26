@@ -56,15 +56,18 @@
             <!-- 所需材料 -->
             <div class="divider text-xs opacity-50 mt-0">所需材料</div>
             <div v-for="(row,i) in objItems" :key="i" class="flex gap-2 items-center mb-2 bg-base-200 rounded-box p-2">
-              <select class="select select-bordered select-xs flex-1" v-model="row.key">
-                <option value="" disabled>选择物品</option>
-                <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
-              </select>
+              <div class="flex-1 flex flex-wrap gap-1 items-center">
+                <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
+                <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
+                  <option value="" disabled>添加…</option>
+                  <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
+                </select>
+              </div>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">数量<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" /></label>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">消耗<input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" /></label>
               <button class="btn btn-xs btn-ghost text-error" @click="objItems.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objItems.push({key:'',quantity:1,use:undefined})">＋ 添加材料</button>
+            <button class="btn btn-xs btn-ghost" @click="objItems.push({_keys:[],_input:'',key:'',quantity:1,use:undefined})">＋ 添加材料</button>
 
             <!-- 奖励 -->
             <div class="divider text-xs opacity-50 mt-0">奖励物品</div>
@@ -178,16 +181,17 @@ onMounted(() => { loadRecords(); fetchRefs() })
 async function loadRecords() { const r = await admin.apiFetch('/api/actions'); records.value = await r.json() }
 function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', time_required:10, techs:[], maps:[], formula_key:'', formula_op:'' }); objItems.splice(0); objRewards.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>({...x}))); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x, _mapEntries: (x.map||[]).map((m:any)=>typeof m==='string'?{key:m,probability:undefined}:{key:m.key,probability:m.probability}), _mapInput:''}))); modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}})); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x, _mapEntries: (x.map||[]).map((m:any)=>typeof m==='string'?{key:m,probability:undefined}:{key:m.key,probability:m.probability}), _mapInput:''}))); modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 function addTech() { if (techInput.value && !form.techs.includes(techInput.value)) form.techs.push(techInput.value); techInput.value = '' }
 function addMap() { if (mapInput.value && !form.maps.includes(mapInput.value)) form.maps.push(mapInput.value); mapInput.value = '' }
+function addItemKey(row: any) { const v = row._input; if (!v) return; if (!row._keys.includes(v)) row._keys.push(v); row._input = ''; row.key = row._keys.join(',') }
 function addRewardMap(row: any) { const v = row._mapInput; if (v && !row._mapEntries.some((e:any)=>e.key===v)) row._mapEntries.push({key:v,probability:undefined}); row._mapInput = '' }
 function parseQty(v: any) { if (v === ''||v===undefined||v===null) return undefined; if (typeof v === 'string' && v.includes(',')) return v.split(',').map((s:string)=>{const n=Number(s.trim());return isNaN(n)?s.trim():n}).filter((s:any)=>s!==''); const n=Number(v);return isNaN(n)?v:n }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = { key:form.key, name:form.name, category:form.category, description:form.description, time_required:form.time_required }
-  if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o})
+  if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else if(r.key) o.key=r.key; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o}).filter(Boolean)
   if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r._mapEntries?.length) o.map=r._mapEntries.map((e:any)=>{if(e.probability!==undefined&&e.probability!=='') return {key:e.key,probability:Number(e.probability)}; return e.key});return o})
   if (form.techs.length) body.required_techs = [...form.techs]
   if (form.maps.length) body.map = [...form.maps]

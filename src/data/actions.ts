@@ -39,9 +39,9 @@ export interface IAction {
    */
   description: string;
   /**
-   * 所需物品
+   * 所需物品（key 为数组表示可替代材料）
    */
-  required_items: { key: string; quantity: number, use?: number }[];
+  required_items: { key: string | string[]; quantity: number, use?: number }[];
   /**
    * 前置科技
    */

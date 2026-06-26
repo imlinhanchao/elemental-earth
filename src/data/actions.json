@@ -185,7 +185,12 @@
     "time_required": 5,
     "required_items": [
       {
-        "key": "stone_axe",
+        "key": [
+          "stone_axe",
+          "bronze_axe",
+          "brass_axe",
+          "iron_axe"
+        ],
         "quantity": 1,
         "use": 0.01
       }
