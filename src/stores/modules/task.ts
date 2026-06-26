@@ -23,9 +23,27 @@ export const useTaskStore = defineStore('task', () => {
 
   // 按照奖励概率计算最终奖励
   function getReward(rewards: IReward[]): IReward | null {
-    const rewardsList = rewards.filter(r => !r.map || r.map.includes(stateStore.getMap?.key || ''));
+    const currentMap = stateStore.getMap?.key || '';
+    const rewardsList = rewards.filter(r => {
+      if (!r.map) return true;
+      return r.map.some(m => {
+        const mapKey = typeof m === 'string' ? m : m.key;
+        return mapKey === currentMap;
+      });
+    }).map(r => {
+      if (!r.map) return r;
+      // 查找当前地图是否配置了覆盖概率
+      const mapEntry = r.map.find(m => {
+        const mapKey = typeof m === 'string' ? m : m.key;
+        return mapKey === currentMap;
+      });
+      if (mapEntry && typeof mapEntry !== 'string' && mapEntry.probability !== undefined) {
+        return { ...r, probability: mapEntry.probability };
+      }
+      return r;
+    });
     if (rewardsList.length === 1) return rewardsList[0];
-    rewardsList.sort((a, b) => a.probability - b.probability); // 按概率从低到高排序
+    rewardsList.sort((a, b) => a.probability - b.probability);
     const totalProbability = rewardsList.reduce((sum, r) => sum + r.probability, 0);
     const random = Math.random() * totalProbability;
     let cumulativeProbability = 0;

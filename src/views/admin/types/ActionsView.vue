@@ -77,7 +77,12 @@
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">权重<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" /></label>
               <div class="flex-1">
                 <div class="flex flex-wrap gap-1 mb-1">
-                  <span v-for="(t,ti) in row._mapTags" :key="ti" class="badge badge-ghost badge-xs gap-1 cursor-pointer" @click="row._mapTags.splice(ti,1)">{{ t }} ✕</span>
+                  <div v-for="(entry,ti) in row._mapEntries" :key="ti" class="flex items-center gap-0.5 badge badge-ghost badge-sm px-1">
+                    <span class="text-[10px]">{{ getMapName(entry.key) }}</span>
+                    <input type="number" class="input input-xs w-12 h-4 text-[10px] px-0.5 bg-transparent border-0 border-b border-base-content/20"
+                      v-model.number="entry.probability" placeholder="权" title="覆盖概率，留空使用默认权重" />
+                    <button class="text-xs leading-none hover:text-error" @click="row._mapEntries.splice(ti,1)">✕</button>
+                  </div>
                 </div>
                 <select class="select select-bordered select-xs" v-model="row._mapInput" @change="addRewardMap(row)">
                   <option value="" disabled>地图…</option>
@@ -86,7 +91,7 @@
               </div>
               <button class="btn btn-xs btn-ghost text-error shrink-0" @click="objRewards.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,_mapTags:[],_mapInput:''})">＋ 添加奖励</button>
+            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,_mapEntries:[],_mapInput:''})">＋ 添加奖励</button>
 
             <!-- 前置条件 -->
             <div class="divider text-xs opacity-50 mt-0">前置条件</div>
@@ -157,29 +162,33 @@ const techInput = ref(''); const mapInput = ref('')
 const objItems = reactive<any[]>([])
 const objRewards = reactive<any[]>([])
 const itemOptions = ref<any[]>([]); const techOptions = ref<any[]>([]); const mapOptions = ref<any[]>([]); const labOptions = ref<any[]>([]); const formulaOptions = ref<any[]>([])
+const mapNameMap = ref<Record<string,string>>({})
 
 async function fetchRefs() {
   const [ir,tr,mr,lr,fr] = await Promise.all([
     admin.apiFetch('/api/items'), admin.apiFetch('/api/techs'), admin.apiFetch('/api/maps'), admin.apiFetch('/api/labs'), admin.apiFetch('/api/formulas')
   ])
   itemOptions.value = await ir.json(); techOptions.value = await tr.json(); mapOptions.value = await mr.json(); labOptions.value = await lr.json(); formulaOptions.value = await fr.json()
+  mapNameMap.value = {}
+  for (const m of mapOptions.value) mapNameMap.value[m.key] = m.name
 }
+function getMapName(key: string): string { return mapNameMap.value[key] || key }
 
 onMounted(() => { loadRecords(); fetchRefs() })
 async function loadRecords() { const r = await admin.apiFetch('/api/actions'); records.value = await r.json() }
 function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', time_required:10, techs:[], maps:[], formula_key:'', formula_op:'' }); objItems.splice(0); objRewards.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>({...x}))); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x, _mapTags: x.map ? (Array.isArray(x.map) ? [...x.map] : [x.map]) : [], _mapInput:''}))); modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>({...x}))); objRewards.push(...(r.rewards||[]).map((x:any)=>({...x, _mapEntries: (x.map||[]).map((m:any)=>typeof m==='string'?{key:m,probability:undefined}:{key:m.key,probability:m.probability}), _mapInput:''}))); modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 function addTech() { if (techInput.value && !form.techs.includes(techInput.value)) form.techs.push(techInput.value); techInput.value = '' }
 function addMap() { if (mapInput.value && !form.maps.includes(mapInput.value)) form.maps.push(mapInput.value); mapInput.value = '' }
-function addRewardMap(row: any) { const v = row._mapInput; if (v && !row._mapTags.includes(v)) row._mapTags.push(v); row._mapInput = '' }
+function addRewardMap(row: any) { const v = row._mapInput; if (v && !row._mapEntries.some((e:any)=>e.key===v)) row._mapEntries.push({key:v,probability:undefined}); row._mapInput = '' }
 function parseQty(v: any) { if (v === ''||v===undefined||v===null) return undefined; if (typeof v === 'string' && v.includes(',')) return v.split(',').map((s:string)=>{const n=Number(s.trim());return isNaN(n)?s.trim():n}).filter((s:any)=>s!==''); const n=Number(v);return isNaN(n)?v:n }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = { key:form.key, name:form.name, category:form.category, description:form.description, time_required:form.time_required }
   if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o})
-  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r._mapTags?.length) o.map=[...r._mapTags];return o})
+  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r._mapEntries?.length) o.map=r._mapEntries.map((e:any)=>{if(e.probability!==undefined&&e.probability!=='') return {key:e.key,probability:Number(e.probability)}; return e.key});return o})
   if (form.techs.length) body.required_techs = [...form.techs]
   if (form.maps.length) body.map = [...form.maps]
   if (form.formula_key && form.formula_op) body.formula = { key:form.formula_key, operation:form.formula_op }

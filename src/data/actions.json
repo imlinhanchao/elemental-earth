@@ -21,7 +21,9 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "volcano"
+          {
+            "key": "volcano"
+          }
         ]
       },
       {
@@ -29,7 +31,9 @@
         "quantity": 1,
         "probability": 100,
         "map": [
-          "river_side"
+          {
+            "key": "river_side"
+          }
         ]
       }
     ],
@@ -57,7 +61,9 @@
         "quantity": 1,
         "probability": 100,
         "map": [
-          "forest"
+          {
+            "key": "forest"
+          }
         ]
       }
     ],
@@ -85,38 +91,65 @@
       {
         "key": "flint",
         "quantity": 1,
-        "probability": 500,
-        "map": "volcano"
+        "probability": 100,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 500
+          },
+          "river_side"
+        ]
       },
       {
         "key": "clay",
         "quantity": 1,
         "probability": 500,
-        "map": "river_side"
+        "map": [
+          "river_side"
+        ]
       },
       {
         "key": "gold_sand",
         "quantity": 1,
         "probability": 10,
-        "map": "volcano"
+        "map": [
+          "volcano"
+        ]
       },
       {
         "key": "gold_sand",
         "quantity": 1,
         "probability": 1,
-        "map": "river_side"
+        "map": [
+          "river_side"
+        ]
       },
       {
         "key": "malachite",
         "quantity": 1,
         "probability": 100,
-        "map": "mountain"
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 300
+          },
+          {
+            "key": "cave",
+            "probability": 100
+          },
+          {
+            "key": "volcano",
+            "probability": 10
+          }
+        ]
       },
       {
         "key": "sulfur",
         "quantity": 1,
-        "probability": 10,
-        "map": "volcano"
+        "probability": 50,
+        "map": [
+          "volcano"
+        ]
       }
     ]
   },
@@ -480,8 +513,12 @@
         "quantity": 1,
         "probability": 800,
         "map": [
-          "mountain",
-          "cave"
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
         ]
       },
       {
@@ -489,8 +526,12 @@
         "quantity": 1,
         "probability": 500,
         "map": [
-          "mountain",
-          "cave"
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
         ]
       },
       {
@@ -498,8 +539,12 @@
         "quantity": 1,
         "probability": 300,
         "map": [
-          "mountain",
-          "cave"
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "cave"
+          }
         ]
       },
       {
@@ -507,9 +552,15 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "mountain",
-          "river_side",
-          "volcano"
+          {
+            "key": "mountain"
+          },
+          {
+            "key": "river_side"
+          },
+          {
+            "key": "volcano"
+          }
         ]
       },
       {
@@ -517,8 +568,12 @@
         "quantity": 1,
         "probability": 50,
         "map": [
-          "river_side",
-          "volcano"
+          {
+            "key": "river_side"
+          },
+          {
+            "key": "volcano"
+          }
         ]
       },
       {
@@ -526,7 +581,9 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "volcano"
+          {
+            "key": "volcano"
+          }
         ]
       },
       {
@@ -534,7 +591,9 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "mountain"
+          {
+            "key": "mountain"
+          }
         ]
       },
       {
@@ -542,7 +601,9 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "mountain"
+          {
+            "key": "mountain"
+          }
         ]
       },
       {
@@ -550,7 +611,9 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          "cave"
+          {
+            "key": "cave"
+          }
         ]
       }
     ],

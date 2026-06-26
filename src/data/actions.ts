@@ -15,8 +15,10 @@ export interface IReward {
   probability: number;
   /**
    * 奖励出现的地图
+   * 字符串 = 地图key（使用 reward.probability）
+   * 对象 = { key, probability? }（可覆盖 reward.probability）
    */
-  map?: string[];
+  map?: (string | { key: string; probability?: number })[];
 }
 
 export interface IAction {
