@@ -52,11 +52,21 @@
     "requires_burning": false
   },
   {
-    "name": "冷凝",
     "key": "condensation",
+    "name": "冷凝",
     "description": "将蒸汽冷却成液体，以促进化学反应或物理变化。",
     "time_required": 10,
-    "requires_burning": false
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": [
+          "clay_pot",
+          "brass_condenser"
+        ],
+        "quantity": 1,
+        "use": 0.1
+      }
+    ]
   },
   {
     "name": "过滤",

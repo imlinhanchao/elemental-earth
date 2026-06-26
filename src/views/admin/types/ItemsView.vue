@@ -110,7 +110,7 @@ async function loadRecords() { const r = await admin.apiFetch('/api/items'); rec
 function toggleType(t: string) { const i = form.type.indexOf(t); i >= 0 ? form.type.splice(i,1) : form.type.push(t) }
 function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', type:[], elemental:undefined, durable:undefined, is_discovery:false }); formJson.attrs = ''; editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { editing.value = r; resetForm(); Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', type:Array.isArray(r.type)?[...r.type]:[], elemental:r.elemental, durable:r.durable, is_discovery:!!r.is_discovery }); formJson.attrs = r.attrs ? JSON.stringify(r.attrs,null,2) : ''; modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', type:Array.isArray(r.type)?[...r.type]:[], elemental:r.elemental, durable:r.durable, is_discovery:!!r.is_discovery }); formJson.attrs = r.attrs ? JSON.stringify(r.attrs,null,2) : ''; modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }

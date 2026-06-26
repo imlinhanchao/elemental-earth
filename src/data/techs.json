@@ -147,5 +147,40 @@
       "pottery",
       "iron_tool_crafting"
     ]
+  },
+  {
+    "name": "青铜器制作",
+    "key": "bronze_tool_crafting",
+    "description": "掌握了将铜和锡熔炼成青铜，并利用青铜铸造更坚固工具的技术。",
+    "required_items": [
+      {
+        "key": "copper",
+        "quantity": 5
+      },
+      {
+        "key": "tin",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "refractory_materials"
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "黄铜锻造",
+    "key": "brass_tool_crafting",
+    "description": "掌握了黄铜的冶炼与锻造技术，可制作黄铜工具和器具。",
+    "required_items": [
+      {
+        "key": "brass",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "bronze_tool_crafting",
+      "high_temp_furnace"
+    ],
+    "time_required": 120
   }
 ]

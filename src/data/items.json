@@ -363,14 +363,14 @@
     "elemental": 16
   },
   {
-    "name": "铁镐",
     "key": "iron_pickaxe",
+    "name": "铁镐",
     "category": "工具",
     "description": "用铁打造的镐，比石镐更坚固耐用。",
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 3
   },
   {
     "name": "坩埚",
@@ -417,14 +417,13 @@
     "elemental": 1
   },
   {
-    "name": "辰砂",
     "key": "cinnabar",
+    "name": "辰砂",
     "category": "材料",
     "description": "鲜红色的矿物，质地柔软，表面带有玻璃光泽。",
     "type": [
       "material"
-    ],
-    "elemental": 80
+    ]
   },
   {
     "name": "汞",
@@ -448,24 +447,22 @@
     ]
   },
   {
-    "name": "闪锌矿",
     "key": "sphalerite",
+    "name": "闪锌矿",
     "category": "材料",
     "description": "深色带有金属光泽的块状矿物，表面常有条纹，在阳光下闪烁，手感沉重。",
     "type": [
       "material"
-    ],
-    "elemental": 30
+    ]
   },
   {
-    "name": "氧化锌",
     "key": "zinc_oxide",
+    "name": "氧化锌",
     "category": "材料",
     "description": "白色微细粉末，无味，接触皮肤时有滑腻感。",
     "type": [
       "material"
-    ],
-    "elemental": 30
+    ]
   },
   {
     "name": "锌",
@@ -485,5 +482,111 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "锡石",
+    "key": "cassiterite",
+    "category": "材料",
+    "description": "深棕色至黑色的矿物碎块，密度大，有金属光泽，表面有油脂感。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "方铅矿",
+    "key": "galena",
+    "category": "材料",
+    "description": "铅灰色立方体晶体，金属光泽，质地柔软，比重很大。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锡",
+    "key": "tin",
+    "category": "材料",
+    "description": "银白色金属，质软，可弯曲，有延展性。",
+    "type": [
+      "material"
+    ],
+    "elemental": 50
+  },
+  {
+    "name": "铅",
+    "key": "lead",
+    "category": "材料",
+    "description": "银灰色软金属，非常重，容易用刀切割。",
+    "type": [
+      "material"
+    ],
+    "elemental": 82
+  },
+  {
+    "name": "氧化铅",
+    "key": "lead_oxide",
+    "category": "材料",
+    "description": "黄色粉末，有毒，微溶于水。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "青铜",
+    "key": "bronze",
+    "category": "材料",
+    "description": "青灰色、带有暗绿色锈斑的金属块，硬度高，断面有细密的颗粒纹理，手感沉实。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "bronze_axe",
+    "name": "青铜斧",
+    "category": "工具",
+    "description": "用青铜铸造的斧头，刃口锋利，用来砍伐树木或收集木材。",
+    "type": [
+      "tool"
+    ],
+    "durable": 2
+  },
+  {
+    "key": "bronze_pickaxe",
+    "name": "青铜镐",
+    "category": "工具",
+    "description": "用青铜铸造的镐头，质地坚硬，适合在矿脉中挖掘矿石。",
+    "type": [
+      "tool"
+    ],
+    "durable": 2
+  },
+  {
+    "key": "brass_pickaxe",
+    "name": "黄铜镐",
+    "category": "工具",
+    "description": "用黄铜打造的镐，比青铜更坚固，适合挖掘中硬度矿石。",
+    "type": [
+      "tool"
+    ],
+    "durable": 2.5
+  },
+  {
+    "key": "brass_axe",
+    "name": "黄铜斧",
+    "category": "工具",
+    "description": "用黄铜打造的斧，切割效率较高，适合伐木。",
+    "type": [
+      "tool"
+    ],
+    "durable": 2.5
+  },
+  {
+    "key": "brass_condenser",
+    "name": "黄铜冷凝管",
+    "category": "容器",
+    "description": "黄铜制成的螺旋冷凝管，可高效冷却蒸汽，用于蒸馏操作。",
+    "type": [
+      "container"
+    ],
+    "durable": 2
   }
 ]

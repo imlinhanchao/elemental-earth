@@ -139,15 +139,23 @@ async function saveAll() {
   const types = ['items', 'actions', 'techs', 'labs', 'formulas']
   let ok = 0, fail = 0
 
-  // 保存新数据
+  // 保存新数据（存在则更新，不存在则新增）
   for (const type of types) {
     for (let i = 0; i < (result.value[type] || []).length; i++) {
       if (!checkStates[type][i]) continue
+      const record = result.value[type][i]
       try {
-        const res = await admin.apiFetch(`/api/${type}`, {
+        let res = await admin.apiFetch(`/api/${type}`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(result.value[type][i]),
+          body: JSON.stringify(record),
         })
+        if (res.status === 409) {
+          // 已存在 → 改为更新
+          res = await admin.apiFetch(`/api/${type}/${record.key}`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(record),
+          })
+        }
         if (res.ok) ok++; else fail++
       } catch { fail++ }
     }

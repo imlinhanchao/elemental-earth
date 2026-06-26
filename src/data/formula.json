@@ -346,5 +346,141 @@
         "multiple": 2
       }
     ]
+  },
+  {
+    "name": "焙烧方铅矿",
+    "key": "roast_galena",
+    "description": "将方铅矿在空气中焙烧，生成氧化铅和二氧化硫。",
+    "required_items": [
+      {
+        "key": "galena",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "lead_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铅",
+    "key": "reduce_lead_oxide",
+    "description": "用碳还原氧化铅，得到金属铅和一氧化碳。",
+    "required_items": [
+      {
+        "key": "lead_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "lead",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "炼锡",
+    "key": "smelt_tin",
+    "description": "用碳还原锡石，得到金属锡和一氧化碳。",
+    "required_items": [
+      {
+        "key": "cassiterite",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "tin",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "炼青铜",
+    "key": "bronze_smelting",
+    "description": "将铜和锡置于坩埚中加热熔炼，得到青铜。",
+    "required_items": [
+      {
+        "key": "copper",
+        "quantity": 4
+      },
+      {
+        "key": "tin",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "bronze",
+        "multiple": 4
+      }
+    ]
   }
 ]

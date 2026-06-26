@@ -536,6 +536,22 @@
         "map": [
           "mountain"
         ]
+      },
+      {
+        "key": "cassiterite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "galena",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          "cave"
+        ]
       }
     ],
     "required_techs": [
@@ -598,5 +614,133 @@
       "pottery",
       "gas_collection"
     ]
+  },
+  {
+    "name": "打造青铜斧",
+    "key": "craft_bronze_axe",
+    "category": "制作",
+    "description": "使用青铜和木材制作一把青铜斧。",
+    "required_items": [
+      {
+        "key": "bronze",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "bronze_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "bronze_axe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 8
+  },
+  {
+    "name": "打造青铜镐",
+    "key": "craft_bronze_pickaxe",
+    "category": "制作",
+    "description": "使用青铜和木材制作一把青铜镐。",
+    "required_items": [
+      {
+        "key": "bronze",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "bronze_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "bronze_pickaxe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 8
+  },
+  {
+    "name": "打造黄铜镐",
+    "key": "craft_brass_pickaxe",
+    "category": "制作",
+    "description": "使用黄铜和木材制作一把黄铜镐。",
+    "required_items": [
+      {
+        "key": "brass",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "brass_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "brass_pickaxe",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "name": "打造黄铜斧",
+    "key": "craft_brass_axe",
+    "category": "制作",
+    "description": "使用黄铜和木材制作一把黄铜斧。",
+    "required_items": [
+      {
+        "key": "brass",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "brass_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "brass_axe",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "name": "制作黄铜冷凝管",
+    "key": "craft_brass_condenser",
+    "category": "制作",
+    "description": "将黄铜锻造成螺旋冷凝管，用于实验室蒸馏。",
+    "required_items": [
+      {
+        "key": "brass",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "brass_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "brass_condenser",
+        "quantity": 1
+      }
+    ],
+    "time_required": 45
   }
 ]
