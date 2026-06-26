@@ -456,26 +456,32 @@
     ]
   },
   {
-    "name": "炼青铜",
     "key": "bronze_smelting",
+    "name": "炼青铜",
     "description": "将铜和锡置于坩埚中加热熔炼，得到青铜。",
-    "required_items": [
-      {
-        "key": "copper",
-        "quantity": 4
-      },
-      {
-        "key": "tin",
-        "quantity": 1
-      }
-    ],
+    "time_required": 120,
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
       "min": 1,
       "max": 1
     },
-    "time_required": 30,
+    "required_items": [
+      {
+        "key": [
+          "copper",
+          "malachite"
+        ],
+        "quantity": 4
+      },
+      {
+        "key": [
+          "tin",
+          "cassiterite"
+        ],
+        "quantity": 1
+      }
+    ],
     "products": [
       {
         "key": "bronze",
