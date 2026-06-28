@@ -68,16 +68,6 @@ function handleSelectMap(targetKey: string) {
         <button class="btn btn-ghost btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleRightSidebar" title="切换右侧栏">
           <Icon :icon="appStore.rightSidebarOpen ? 'icon-park-solid:expand-left' : 'icon-park-solid:expand-right'" class="text-xl" />
         </button>
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar" :class="{ 'pointer-events-none opacity-50': stateStore.isSwitching }">
-            <div class="w-8 rounded-full bg-primary text-primary-content flex items-center justify-center text-sm font-bold">U</div>
-          </div>
-          <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow">
-            <li><a>个人资料</a></li>
-            <li><a>账户设置</a></li>
-            <li><a>退出登录</a></li>
-          </ul>
-        </div>
       </div>
     </header>
 

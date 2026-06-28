@@ -13,6 +13,8 @@ const tasks = taskStore.getTasks
 const logStyles: Record<string, { icon: string; iconColor: string }> = {
   process:     { icon: 'tabler:arrows-right',  iconColor: 'text-base-content/50' },
   reward:      { icon: 'tabler:gift',          iconColor: 'text-success' },
+  lab:         { icon: 'tabler:flask',         iconColor: 'text-info' },
+  elements:    { icon: 'tabler:atom',          iconColor: 'text-warning' },
   tech:        { icon: 'tabler:bulb',          iconColor: 'text-info' },
   warning:     { icon: 'tabler:alert-triangle', iconColor: 'text-warning' },
   'main-event': { icon: 'tabler:star',         iconColor: 'text-primary' },
@@ -69,7 +71,13 @@ const typeEntries = computed(() =>
     >
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
-            <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1">任务队列</div>
+            <header class="sticky top-0 bg-base-200 z-10 flex items-center justify-between">
+              <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1">任务队列</div>
+              <!-- 添加清空按钮 -->
+              <div v-if="tasks.length > 0" class="flex justify-end mb-1 px-1">
+                <button class="btn btn-ghost btn-xs text-base-content/30 hover:text-base-content/60 transition-colors" @click="taskStore.clearTasks()">清空</button>
+              </div>
+            </header>
             <div v-if="tasks.length === 0" class="text-[11px] text-base-content/20 px-1">空闲中</div>
             <div v-else class="flex gap-1 flex-wrap">
                 <Task v-for="(task, i) in tasks" :key="task.id" :task="task" :preTasks="i > 0 ? tasks.slice(0, i) : []" />

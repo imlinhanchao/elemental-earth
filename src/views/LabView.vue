@@ -2,12 +2,14 @@
 import { ref, computed, watch } from 'vue'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
+import { useLogStore } from '@/stores/modules/log'
 import { getItem } from '@/data/items'
 import { LabActions, type ILabAction } from '@/data/labs'
 import { Formulas, type IFormula } from '@/data/formula'
 
 const packStore = usePackStore()
 const taskStore = useTaskStore()
+const logStore = useLogStore()
 
 /** 将配方物品 key 统一为数组（单个字符串也视为数组） */
 function reqKeys(key: string | string[]): string[] {
@@ -477,6 +479,7 @@ function startExperiment() {
     time_required: totalTime.value,
     rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1 })),
     required_items: consumedItems,
+    formulaKey: matchedFormula.value?.key,
   })
 
   selectedContainerKey.value = null

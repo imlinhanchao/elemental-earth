@@ -76,7 +76,20 @@
   }
 
   // ─── 批量次数 ────────────────────────────────────────────────
-  const batchCount = ref(1);
+  const STORAGE_PREFIX = 'action_batch_'
+
+  function loadBatchCount(): number {
+    try {
+      const val = localStorage.getItem(STORAGE_PREFIX + props.data.key)
+      return val ? Math.max(1, Math.min(20, parseInt(val) || 1)) : 1
+    } catch { return 1 }
+  }
+
+  function saveBatchCount(n: number) {
+    try { localStorage.setItem(STORAGE_PREFIX + props.data.key, String(n)) } catch {}
+  }
+
+  const batchCount = ref(loadBatchCount());
   const showBatchPicker = ref(false);
 
   const maxBatch = computed(() => {
@@ -96,6 +109,7 @@
 
   function setBatch(n: number) {
     batchCount.value = Math.max(1, Math.min(n, maxBatch.value));
+    saveBatchCount(batchCount.value);
     showBatchPicker.value = false;
   }
 
@@ -176,8 +190,10 @@
       <!-- 批量次数（左上） -->
       <div class="absolute -top-2 -left-2 z-10">
         <button
-          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 rounded-full w-5 h-5 min-h-0 p-0 text-[10px] font-bold"
+          v-if="packStore.hasTech('fire_starting')"
+          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[10px] font-bold"
           :class="batchCount > 1 ? 'text-primary' : 'text-base-content/40'"
+          data-tip="批量执行"
           @click="toggleBatchPicker"
         >{{ batchCount }}</button>
         <!-- 批量选择面板 -->

@@ -110,7 +110,7 @@ export const useStateStore = defineStore('state', () => {
     if (!state.elements.includes(element)) {
       state.elements.push(element);
       pendingDiscovery.value = element;
-      logStore.addLog(`元素 ${getElementById(element)?.name || element} 已点亮！`, 'reward');
+      logStore.addLog(`元素 ${getElementById(element)?.name || element} 已点亮！`, 'elements');
     }
   }
 

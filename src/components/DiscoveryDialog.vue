@@ -45,6 +45,7 @@
 import { ref, computed, watch, nextTick } from 'vue'
 import { getItem } from '@/data/items'
 import { usePackStore } from '@/stores/modules/pack'
+import { useLogStore } from '@/stores/modules/log'
 
 const props = defineProps<{
   visible: boolean
@@ -75,6 +76,10 @@ function confirm() {
   if (!props.itemKey || !name.value.trim()) return
   packStore.setItemName(props.itemKey, name.value.trim())
   packStore.setItemNote(props.itemKey, note.value.trim())
+  // 写入命名日志
+  const logStore = useLogStore()
+  const itemDef = getItem(props.itemKey)
+  logStore.addLog(`🔬 发现新物质: ${name.value.trim()}`, 'elements')
   packStore.clearPendingDiscovery()
   emit('done')
 }

@@ -42,9 +42,10 @@ export const usePackStore = defineStore('pack', () => {
   const addItem = (itemKey: string, quantity: number, use: number = 0) => {
     // 气体物品检查：没有 save_gas 容器则无法收集
     const itemData = Items.find(i => i.key === itemKey);
+    let ret = true;
     if (itemData?.type.includes('gas') && !hasGasContainer()) {
-      logStore.addLog(`⚠️ 气体 ${getDisplayName(itemKey)} 无法收集——需要具备储气功能的容器`, 'warning');
-      return;
+      //logStore.addLog(`⚠️ 气体 ${getDisplayName(itemKey)} 无法收集——需要具备储气功能的容器`, 'warning');
+      return false;
     }
     const existingItem = items.find(i => i.key === itemKey);
     if (existingItem) {
@@ -63,6 +64,7 @@ export const usePackStore = defineStore('pack', () => {
       } else {
         existingItem.quantity += quantity;
       }
+      return true;
     } else {
       const itemData = Items.find(i => i.key === itemKey);
       if (itemData) {
@@ -71,6 +73,7 @@ export const usePackStore = defineStore('pack', () => {
         // 重大发现物品：触发命名弹窗
         if (itemData.is_discovery && !itemRenames[itemKey]) {
           pendingDiscovery.value = itemKey;
+          ret = false; // 阻止添加 log，等待命名
         }
         if (itemData.elemental) {
           const stateStore = useStateStore();
@@ -80,6 +83,7 @@ export const usePackStore = defineStore('pack', () => {
         console.warn(`尝试添加未知物品: ${itemKey}`);
       }
     }
+    return ret;
   }
   const removeItem = (key: string, quantity: number, use: number = 0) => {
     const existingItem = items.find(i => i.key === key);

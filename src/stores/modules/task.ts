@@ -13,6 +13,7 @@ export interface ITask extends IAction {
   id: number;
   begin_time: number; // timestamp
   type: 'action' | 'tech' | 'lab';
+  formulaKey?: string;
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -65,7 +66,7 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   function taskLoop() {
-    setInterval(() => {
+    setInterval(async () => {
       const now = Date.now();
       const task = tasks[0];
       if (!task) return; // 没有任务，跳过检查
@@ -74,8 +75,9 @@ export const useTaskStore = defineStore('task', () => {
           const reward = getReward(task.rewards, task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key));
           if (reward) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
-            logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
-            packStore.addItem(reward.key, quantity);
+            if (packStore.addItem(reward.key, quantity)) {
+              logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+            }
           } else {
             logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
           }
@@ -83,8 +85,18 @@ export const useTaskStore = defineStore('task', () => {
           // lab 类型：给予所有产物
           for (const reward of task.rewards) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
-            logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
-            packStore.addItem(reward.key, quantity);
+            if (packStore.addItem(reward.key, quantity)) {
+              logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+            }
+          }
+          // 发现新配方日志（任务完成时记录）
+          if ('formulaKey' in task && task.formulaKey && !packStore.hasProvenFormula(task.formulaKey)) {
+            const { Formulas } = await import('@/data/formula')
+            const f = Formulas.find(fm => fm.key === task.formulaKey)
+            packStore.addProvenFormula(task.formulaKey)
+            if (f) {
+              logStore.addLog(`发现新配方: ${f.name}`, 'lab')
+            }
           }
         } else {
           packStore.addTech(task.key);
@@ -136,6 +148,7 @@ export const useTaskStore = defineStore('task', () => {
     time_required: number;
     rewards: IReward[];
     required_items: { key: string; quantity: number; use?: number }[];
+    formulaKey?: string;
   }) {
     tasks.push({
       ...labTask,
@@ -145,9 +158,17 @@ export const useTaskStore = defineStore('task', () => {
     } as ITask);
   }
 
+  function clearTasks() {
+    // 返还所有任务的所需物品
+    for (const task of tasks) {
+      removeTask(task.id);
+    }
+    tasks.splice(0, tasks.length);
+  }
+
   taskLoop();
 
-  return { tasks, getTasks, pushTask, removeTask, pushLabTask }
+  return { tasks, getTasks, pushTask, removeTask, pushLabTask, clearTasks }
 })
 
 export const useTaskStoreWithOut = once(() => useTaskStore(store));
