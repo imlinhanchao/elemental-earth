@@ -30,13 +30,13 @@
         <div class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">显示左侧栏</span>
-            <input type="checkbox" class="toggle" checked />
+            <input type="checkbox" class="toggle" :checked="appStore.leftSidebarOpen" @change="appStore.toggleLeftSidebar" />
           </label>
         </div>
         <div class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">显示右侧栏</span>
-            <input type="checkbox" class="toggle" checked />
+            <input type="checkbox" class="toggle" :checked="appStore.rightSidebarOpen" @change="appStore.toggleRightSidebar" />
           </label>
         </div>
       </div>
@@ -48,14 +48,23 @@
         <h2 class="card-title text-base">通知</h2>
         <div class="form-control">
           <label class="label cursor-pointer">
-            <span class="label-text">任务完成通知（页面内提示）</span>
-            <input type="checkbox" class="toggle" :checked="appStore.taskNotification" @change="appStore.toggleTaskNotification" />
-          </label>
-        </div>
-        <div class="form-control">
-          <label class="label cursor-pointer">
             <span class="label-text">桌面推送</span>
             <input type="checkbox" class="toggle" :checked="appStore.desktopPush" @change="appStore.toggleDesktopPush" />
+          </label>
+        </div>
+        <div v-if="appStore.desktopPush" class="form-control">
+          <label class="label cursor-pointer">
+            <span class="label-text">推送模式</span>
+          </label>
+          <div class="ml-2 join">
+            <button class="btn btn-sm join-item" :class="appStore.taskNotifyMode === 'all' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('all')">全部完成通知</button>
+            <button class="btn btn-sm join-item" :class="appStore.taskNotifyMode === 'each' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('each')">每个任务通知</button>
+          </div>
+        </div>
+        <div v-if="appStore.desktopPush" class="form-control">
+          <label class="label cursor-pointer">
+            <span class="label-text">仅不在当前页面时通知</span>
+            <input type="checkbox" class="toggle" :checked="appStore.notifyOnlyHidden" @change="appStore.toggleNotifyOnlyHidden" />
           </label>
         </div>
       </div>

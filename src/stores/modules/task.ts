@@ -8,7 +8,7 @@ import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { useLogStore } from './log';
 import { getItem } from '@/data/items';
-import { notifyTaskComplete } from '@/utils/notification';
+import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
 
 export interface ITask extends IAction {
   id: number;
@@ -110,6 +110,8 @@ export const useTaskStore = defineStore('task', () => {
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length > 0) {
           tasks[0].begin_time = Date.now(); // 重置下一个任务的开始时间
+        } else {
+          notifyAllTasksDone();
         }
       }
     }, 100); // 每秒检查一次任务状态

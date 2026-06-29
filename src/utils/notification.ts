@@ -1,20 +1,34 @@
 import { useAppStore } from '@/stores/modules/app'
 
-/** 发送任务完成通知（根据玩家设置决定是否弹出） */
-export function notifyTaskComplete(title: string, body: string): void {
+let taskCount = 0
+
+/** 记录一个任务完成，由 taskLoop 调用 */
+export function notifyTaskComplete(_title: string, _body: string): void {
   const app = useAppStore()
+  if (!('Notification' in window) || Notification.permission !== 'granted') return
+  if (!app.desktopPush) return
+  // 仅不在当前页面时通知
+  if (app.notifyOnlyHidden && !document.hidden) return
 
-  // 页面内通知
-  if (app.taskNotification) {
-    // 使用日志系统展示（已在 task.ts 中记录日志）
+  if (app.taskNotifyMode === 'each') {
+    try { new Notification(_title, { body: _body, icon: '/favicon.svg' }) } catch {}
+  } else {
+    taskCount++
   }
+}
 
-  // 桌面推送
-  if (app.desktopPush && 'Notification' in window && Notification.permission === 'granted') {
-    try {
-      new Notification(title, { body, icon: '/favicon.svg' })
-    } catch {
-      // 静默失败
-    }
-  }
+/** 任务队列清空时调用，发送全部完成通知 */
+export function notifyAllTasksDone(): void {
+  const app = useAppStore()
+  if (!('Notification' in window) || Notification.permission !== 'granted') return
+  if (!app.desktopPush || app.taskNotifyMode !== 'all' || taskCount === 0) return
+  // 仅不在当前页面时通知
+  if (app.notifyOnlyHidden && !document.hidden) return
+  try {
+    new Notification('全部任务已完成', {
+      body: `${taskCount} 个任务已执行完毕`,
+      icon: '/favicon.svg',
+    })
+  } catch {}
+  taskCount = 0
 }

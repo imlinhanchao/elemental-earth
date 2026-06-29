@@ -11,8 +11,9 @@ export interface AppConfig {
   theme: Theme;
   left: boolean;
   right: boolean;
-  taskNotification: boolean;
+  taskNotifyMode: 'each' | 'all';
   desktopPush: boolean;
+  notifyOnlyHidden: boolean;
 }
 
 export const useAppStore = defineStore('app', () => {
@@ -21,8 +22,9 @@ export const useAppStore = defineStore('app', () => {
   const theme = ref<Theme>(config?.theme ?? lightTheme)
   const leftSidebarOpen = ref<boolean>(config?.left ?? true)
   const rightSidebarOpen = ref<boolean>(config?.right ?? true)
-  const taskNotification = ref<boolean>(config?.taskNotification ?? true)
+  const taskNotifyMode = ref<'each' | 'all'>(config?.taskNotifyMode ?? 'all')
   const desktopPush = ref<boolean>(config?.desktopPush ?? false)
+  const notifyOnlyHidden = ref<boolean>(config?.notifyOnlyHidden ?? true)
 
   function toggleTheme(): void {
     theme.value = theme.value === lightTheme ? darkTheme : lightTheme
@@ -43,11 +45,6 @@ export const useAppStore = defineStore('app', () => {
     saveConfig();
   }
 
-  function toggleTaskNotification(): void {
-    taskNotification.value = !taskNotification.value
-    saveConfig()
-  }
-
   function toggleDesktopPush(): void {
     desktopPush.value = !desktopPush.value
     // 开启时请求权限
@@ -57,13 +54,24 @@ export const useAppStore = defineStore('app', () => {
     saveConfig()
   }
 
+  function setTaskNotifyMode(mode: 'each' | 'all'): void {
+    taskNotifyMode.value = mode
+    saveConfig()
+  }
+
+  function toggleNotifyOnlyHidden(): void {
+    notifyOnlyHidden.value = !notifyOnlyHidden.value
+    saveConfig()
+  }
+
   function saveConfig() {
     storage.setItem('config', {
       theme: theme.value,
       left: leftSidebarOpen.value,
       right: rightSidebarOpen.value,
-      taskNotification: taskNotification.value,
+      taskNotifyMode: taskNotifyMode.value,
       desktopPush: desktopPush.value,
+      notifyOnlyHidden: notifyOnlyHidden.value,
     } satisfies AppConfig)
   }
   function getConfig() {
@@ -72,8 +80,8 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen,
-    taskNotification, desktopPush,
+    taskNotifyMode, desktopPush, notifyOnlyHidden,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar,
-    toggleTaskNotification, toggleDesktopPush,
+    toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden,
   }
 })
