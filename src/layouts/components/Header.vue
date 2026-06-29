@@ -45,7 +45,7 @@ function handleSelectMap(targetKey: string) {
         </button>
       </div>
       <div class="flex-1 px-2">
-        <span class="text-lg font-bold">Elemental Earth</span>
+        <span class="text-lg font-bold">元素纪元</span>
       </div>
       <div class="flex-none gap-2 flex items-center">
 
