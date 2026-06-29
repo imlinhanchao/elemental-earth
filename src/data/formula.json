@@ -1264,5 +1264,121 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "焙烧石灰石",
+    "key": "roast_limestone",
+    "description": "将石灰石在窑炉中高温焙烧，碳酸钙分解为生石灰和二氧化碳。",
+    "required_items": [
+      {
+        "key": "limestone",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "quicklime",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "熟化石灰",
+    "key": "slake_lime",
+    "description": "生石灰与水反应，放出大量热，生成熟石灰。",
+    "required_items": [
+      {
+        "key": "quicklime",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_container": null,
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "slaked_lime",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "石灰石制取石膏",
+    "key": "limestone_acid_reaction",
+    "description": "石灰石与稀硫酸反应，生成石膏和二氧化碳气体。",
+    "required_items": [
+      {
+        "key": "limestone",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "gypsum",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "水泥制造",
+    "key": "cement_production",
+    "description": "将粘土与石灰石混合后在窑炉中高温焙烧，再研磨成细粉，制成水泥。",
+    "required_items": [
+      {
+        "key": "clay",
+        "quantity": 1
+      },
+      {
+        "key": "limestone",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 40,
+    "products": [
+      {
+        "key": "cement",
+        "multiple": 1
+      }
+    ]
   }
 ]

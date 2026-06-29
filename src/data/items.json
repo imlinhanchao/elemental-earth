@@ -1062,5 +1062,41 @@
       "material"
     ],
     "is_discovery": true
+  },
+  {
+    "name": "生石灰",
+    "key": "quicklime",
+    "category": "材料",
+    "description": "白色或灰白色的块状固体，表面有细微裂纹，质地疏松，一触即碎，吸湿后迅速发热并膨胀。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "熟石灰",
+    "key": "slaked_lime",
+    "category": "材料",
+    "description": "细腻的白色粉末，手感滑腻，微溶于水，溶液呈弱碱性。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "石膏",
+    "key": "gypsum",
+    "category": "材料",
+    "description": "无色或白色透明晶体，呈板状或纤维状，表面具玻璃光泽，质地较软，可被指甲刻划。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "水泥",
+    "key": "cement",
+    "category": "材料",
+    "description": "灰绿色细粉末，触感细腻，掺水搅拌后逐渐凝固硬化，形成坚硬的块状物。",
+    "type": [
+      "material"
+    ]
   }
 ]
