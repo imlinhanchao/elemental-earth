@@ -4,6 +4,7 @@
   import { computed, ref } from 'vue';
   import InlineTooltip from '@/components/InlineTooltip.vue';
   import RenameDialog from '@/components/RenameDialog.vue';
+import { Icon } from '@iconify/vue';
 
   const props = defineProps<{
     data: IPackItem;
@@ -14,9 +15,9 @@
     return Items.find(item => item.key === props.data.key);
   });
 
-  const hasRename = computed(() => !!packStore.itemRenames[props.data.key]);
   const displayName = computed(() => packStore.getDisplayName(props.data.key));
   const description = computed(() => itemData.value?.description || '');
+  const note = computed(() => packStore.getItemNote(props.data.key));
 
   const showRename = ref(false);
 </script>
@@ -24,6 +25,13 @@
   <div class="item-row group">
     <div class="flex items-center justify-between px-4">
       <InlineTooltip :text="description">
+        <template #text>
+          <div>
+            <span>{{ description }}</span>
+            <br />
+            <span v-if="note" class="italic opacity-70">({{ note }})</span>
+          </div>
+        </template>
         <span class="truncate block">{{ displayName }}</span>
       </InlineTooltip>
       <div class="flex items-center gap-1 shrink-0">
@@ -32,7 +40,7 @@
           title="修改命名"
           @click.stop="showRename = true"
         >
-          ✏️
+          <Icon icon="icon-park-outline:edit" class="text-base" />
         </button>
         <span class="badge badge-soft badge-primary badge-xs">{{ data.quantity }}</span>
       </div>

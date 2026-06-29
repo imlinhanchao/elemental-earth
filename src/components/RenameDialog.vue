@@ -3,7 +3,9 @@
     <Transition name="overlay-fade">
       <div v-if="visible" class="rename-overlay" @click.self="cancel">
         <div class="rename-card">
-          <h3 class="rename-title">✏️ 修改命名</h3>
+          <h3 class="rename-title flex items-center gap-2">
+            <Icon icon="icon-park-outline:edit" class="text-base" /> 修改命名
+          </h3>
 
           <div class="form-group">
             <label class="form-label">名称</label>

@@ -146,6 +146,11 @@ export const usePackStore = defineStore('pack', () => {
     return def?.name || itemKey;
   }
 
+  function getItemNote(itemKey: string): string {
+    const rename = itemRenames[itemKey];
+    return rename?.note || '';
+  }
+
   /** 设置物品自定义名称 */
   function setItemName(itemKey: string, name: string) {
     if (!itemRenames[itemKey]) itemRenames[itemKey] = { customName: '', note: '' };
@@ -171,7 +176,8 @@ export const usePackStore = defineStore('pack', () => {
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
-    hasEverHad, getDisplayName, setItemName, setItemNote, clearPendingDiscovery,
+    hasEverHad, getDisplayName, setItemName, setItemNote, getItemNote,
+    clearPendingDiscovery,
   }
 })
 

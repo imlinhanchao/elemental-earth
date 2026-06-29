@@ -24,7 +24,9 @@ function onMouseLeave() {
   <span class="inline-tooltip-trigger" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" ref="el">
     <slot />
     <Teleport to="body">
-      <div v-if="show" class="fixed-tooltip bg-base-100 text-base-content/60" :style="style">{{ text }}</div>
+      <div v-if="show" class="fixed-tooltip bg-base-100 text-base-content/60" :style="style">
+        <slot name="text">{{ text }}</slot>
+      </div>
     </Teleport>
   </span>
 </template>
