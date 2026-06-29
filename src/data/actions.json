@@ -396,6 +396,18 @@
         "map": [
           "cave"
         ]
+      },
+      {
+        "key": "niter",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "map": [
+          "cave",
+          "salt_lake"
+        ]
       }
     ]
   },
@@ -1125,5 +1137,156 @@
       }
     ],
     "time_required": 100
+  },
+  {
+    "key": "blasting",
+    "name": "爆破",
+    "category": "采集",
+    "description": "使用炸药炸开山体，获得大量矿石。",
+    "time_required": 30,
+    "required_items": [
+      {
+        "key": "dynamite",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "stone",
+        "quantity": [
+          5,
+          15
+        ],
+        "probability": 1000,
+        "guaranteed": true
+      },
+      {
+        "key": "flint",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 100
+      },
+      {
+        "key": "hematite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 800,
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "coal",
+        "quantity": [
+          2,
+          6
+        ],
+        "probability": 600,
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "copper",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 400,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "limestone",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 700,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "sulfur",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          "volcano"
+        ]
+      },
+      {
+        "key": "cassiterite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "galena",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          "cave"
+        ]
+      }
+    ],
+    "required_techs": [
+      "explosives"
+    ],
+    "map": [
+      "mountain",
+      "cave",
+      "volcano"
+    ],
+    "cooldown": 600
+  },
+  {
+    "key": "craft_dynamite",
+    "name": "制作炸药",
+    "category": "制作",
+    "description": "将火药装入纸筒，插入导火索，制成可用于爆破的炸药卷。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "gunpowder",
+        "quantity": 10
+      },
+      {
+        "key": [
+          "fiber_cloth",
+          "wood"
+        ],
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "dynamite",
+        "quantity": 1,
+        "probability": 1000,
+        "guaranteed": true
+      }
+    ],
+    "required_techs": [
+      "explosives"
+    ]
   }
 ]

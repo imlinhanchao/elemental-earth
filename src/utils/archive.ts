@@ -28,6 +28,8 @@ export interface SaveData {
   discovered: string[];
   /** 玩家自定义的物品命名和备注（v2 新增） */
   renames: Record<string, { customName: string; note: string }>;
+  /** 行动冷却时间戳（v3 新增） */
+  cooldowns: Record<string, number>;
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -54,6 +56,7 @@ export function saveGame(): boolean {
       formulas: JSON.parse(JSON.stringify(packStore.provenFormulas)),
       discovered: Array.from(packStore.discoveredItems),
       renames: JSON.parse(JSON.stringify(packStore.itemRenames)),
+      cooldowns: JSON.parse(JSON.stringify(packStore.cooldowns)),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -128,6 +131,11 @@ export function loadGame(): boolean {
         const packItem = packStore.items.find(i => i.key === k);
         if (packItem && v.customName) packItem.name = v.customName;
       }
+    }
+
+    // 恢复行动冷却（v3 新增）
+    if (data.cooldowns) {
+      Object.assign(packStore.cooldowns, data.cooldowns)
     }
 
     lastSavedTime.value = data.timestamp;

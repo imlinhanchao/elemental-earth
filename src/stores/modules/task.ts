@@ -15,6 +15,8 @@ export interface ITask extends IAction {
   begin_time: number; // timestamp
   type: 'action' | 'tech' | 'lab';
   formulaKey?: string;
+  /** 任务完成后的冷却时间（秒） */
+  cooldown?: number;
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -73,7 +75,18 @@ export const useTaskStore = defineStore('task', () => {
       if (!task) return; // 没有任务，跳过检查
       if (now - task.begin_time >= task.time_required * 1000) {
         if (task.type === 'action') {
-          const reward = getReward(task.rewards, task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key));
+          // 必定掉落的奖励（并行，不受随机抽选影响）
+          for (const gr of task.rewards.filter(r => r.guaranteed)) {
+            const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity;
+            if (packStore.addItem(gr.key, qty)) {
+              logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
+            }
+          }
+          // 设置冷却
+          if (task.cooldown) {
+            packStore.setCooldown(task.key, task.cooldown)
+          }
+          const reward = getReward(task.rewards.filter(r => !r.guaranteed), task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key));
           if (reward) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
             if (packStore.addItem(reward.key, quantity)) {
@@ -132,7 +145,7 @@ export const useTaskStore = defineStore('task', () => {
         packStore.removeItem(k, req.quantity, req.use);
       }
     }
-    tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '' });
+    tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined });
   }
   const removeTask = (id: number) => {
     const index = tasks.findIndex(task => task.id === id);

@@ -997,5 +997,70 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "氮气",
+    "key": "nitrogen",
+    "category": "气体",
+    "description": "无色无味的气体，看不见也摸不着，但它是空气中含量最多的成分。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 7
+  },
+  {
+    "name": "氨气",
+    "key": "ammonia",
+    "category": "气体",
+    "description": "无色、有强烈刺激性气味的气体，吸入会令人窒息。",
+    "type": [
+      "material",
+      "gas"
+    ]
+  },
+  {
+    "name": "浓硫酸",
+    "key": "concentrated_sulfuric_acid",
+    "category": "液体",
+    "description": "无色、粘稠的油状液体，具有极强的腐蚀性和吸水性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "硝酸",
+    "key": "nitric_acid",
+    "category": "液体",
+    "description": "无色或淡黄色发烟液体，具有强烈的刺激性气味和腐蚀性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "火药",
+    "key": "gunpowder",
+    "category": "燃料",
+    "description": "灰黑色的粉末，由硫磺、硝石和木炭按比例混合而成。握在手中能感受到砂粒般的质感，散发着刺鼻的硫磺味。遇火即燃，爆发力极强。",
+    "type": [
+      "material",
+      "fuel"
+    ],
+    "attrs": {
+      "burn_time": 5,
+      "explosive": true
+    }
+  },
+  {
+    "name": "炸药",
+    "key": "dynamite",
+    "category": "材料",
+    "description": "用纸包裹的圆柱形药卷，一端引出一根细细的导火索，散发着刺鼻的硝烟味。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
   }
 ]

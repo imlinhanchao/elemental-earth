@@ -1142,5 +1142,127 @@
         "required_item": "nickel"
       }
     ]
+  },
+  {
+    "name": "硝石制氮气",
+    "key": "nitrogen_from_niter",
+    "description": "将硝石与木炭混合后焙烧，产生氮气和草木灰。",
+    "required_items": [
+      {
+        "key": "niter",
+        "quantity": 2
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "gas_collection"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "nitrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "wood_ash",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "稀硫酸浓缩",
+    "key": "concentrate_sulfuric_acid",
+    "description": "通过蒸馏将稀硫酸中的水分蒸发，得到浓硫酸。",
+    "required_items": [
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "brass_condenser",
+    "required_actions": {
+      "key": "distillation",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "concentrated_sulfuric_acid",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝石制硝酸",
+    "key": "nitric_acid_from_niter",
+    "description": "用浓硫酸与硝石反应，蒸馏冷凝得到硝酸。",
+    "required_items": [
+      {
+        "key": "niter",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "brass_condenser",
+    "required_actions": {
+      "key": "distillation",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "gas_collection"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "nitric_acid",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "配制火药",
+    "key": "gunpowder_production",
+    "description": "将硫磺、硝石和木炭按适当比例混合并碾磨，制成火药。",
+    "required_items": [
+      {
+        "key": "sulfur",
+        "quantity": 1
+      },
+      {
+        "key": "niter",
+        "quantity": 3
+      },
+      {
+        "key": "charcoal",
+        "quantity": 2
+      }
+    ],
+    "required_actions": {
+      "key": "grinding",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "gunpowder",
+        "multiple": 1
+      }
+    ]
   }
 ]

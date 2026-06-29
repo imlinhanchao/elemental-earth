@@ -50,6 +50,12 @@
                 <input type="number" class="input input-bordered input-sm w-full" v-model.number="form.time_required" />
               </label>
             </div>
+            <div class="grid grid-cols-2 gap-4">
+              <label class="form-control w-full">
+                <span class="label-text mb-1">冷却（秒，0=无冷却）</span>
+                <input type="number" class="input input-bordered input-sm w-full" v-model.number="form.cooldown" />
+              </label>
+            </div>
             <label class="form-control w-full">
               <span class="label-text mb-1">描述</span>
               <textarea class="textarea textarea-bordered textarea-sm w-full" v-model="form.description" rows="2"></textarea>
@@ -79,7 +85,11 @@
                 <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
               </select>
               <input class="input input-bordered input-xs w-16" v-model="row.quantity" placeholder="数量" />
-              <label class="flex items-center gap-1 text-xs whitespace-nowrap">权重<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" /></label>
+              <label class="flex items-center gap-1 text-xs whitespace-nowrap">权重<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" :disabled="row.guaranteed" /></label>
+              <label class="flex items-center gap-1 text-xs whitespace-nowrap">
+                <input type="checkbox" class="checkbox checkbox-xs" v-model="row.guaranteed" />
+                必掉
+              </label>
               <div class="flex-1 min-w-[100px]">
                 <div class="flex flex-wrap gap-0.5 mb-0.5">
                   <span v-for="(k,ki) in row._reqItemKeys" :key="ki" class="badge badge-ghost badge-xs gap-0.5 cursor-pointer" @click="row._reqItemKeys.splice(ki,1)">{{ k }} ✕</span>
@@ -106,7 +116,7 @@
               </div>
               <button class="btn btn-xs btn-ghost text-error shrink-0" @click="objRewards.splice(i,1)">✕</button>
             </div>
-            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,_mapEntries:[],_mapInput:'',_reqItemKeys:[],_reqItemInput:''})">＋ 添加奖励</button>
+            <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,guaranteed:false,_mapEntries:[],_mapInput:'',_reqItemKeys:[],_reqItemInput:''})">＋ 添加奖励</button>
 
             <!-- 前置条件 -->
             <div class="divider text-xs opacity-50 mt-0">前置条件</div>
@@ -172,7 +182,7 @@ const admin = useAdminStore()
 const records = ref<any[]>([])
 const modalRef = ref<HTMLDialogElement | null>(null)
 const editing = ref<any>(null)
-const form = reactive({ key:'', name:'', category:'', description:'', time_required:10, techs:[] as string[], maps:[] as string[], formula_key:'', formula_op:'' })
+const form = reactive({ key:'', name:'', category:'', description:'', time_required:10, cooldown:0, techs:[] as string[], maps:[] as string[], formula_key:'', formula_op:'' })
 const techInput = ref(''); const mapInput = ref('')
 const objItems = reactive<any[]>([])
 const objRewards = reactive<any[]>([])
@@ -191,9 +201,9 @@ function getMapName(key: string): string { return mapNameMap.value[key] || key }
 
 onMounted(() => { loadRecords(); fetchRefs() })
 async function loadRecords() { const r = await admin.apiFetch('/api/actions'); records.value = await r.json() }
-function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', time_required:10, techs:[], maps:[], formula_key:'', formula_op:'' }); objItems.splice(0); objRewards.splice(0); editing.value = null }
+function resetForm() { Object.assign(form, { key:'', name:'', category:'', description:'', time_required:10, cooldown:0, techs:[], maps:[], formula_key:'', formula_op:'' }); objItems.splice(0); objRewards.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }
-function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}})); objRewards.push(...(r.rewards||[]).map((x:any)=>{const reqKeys=Array.isArray(x.required_item)?[...x.required_item]:(x.required_item?[x.required_item]:[]);return{...x,_mapEntries:(x.map||[]).map((m:any)=>typeof m==='string'?{key:m,probability:undefined}:{key:m.key,probability:m.probability}),_mapInput:'',_reqItemKeys:reqKeys,_reqItemInput:''}})); modalRef.value?.showModal() }
+function openEdit(r: any) { resetForm(); editing.value = r; Object.assign(form, { key:r.key||'', name:r.name||'', category:r.category||'', description:r.description||'', time_required:r.time_required??10, cooldown:r.cooldown||0, techs:[...(r.required_techs||[])], maps:[...(r.map||[])], formula_key:r.formula?.key||'', formula_op:r.formula?.operation||'' }); objItems.push(...(r.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}})); objRewards.push(...(r.rewards||[]).map((x:any)=>{const reqKeys=Array.isArray(x.required_item)?[...x.required_item]:(x.required_item?[x.required_item]:[]);return{...x,_mapEntries:(x.map||[]).map((m:any)=>typeof m==='string'?{key:m,probability:undefined}:{key:m.key,probability:m.probability}),_mapInput:'',_reqItemKeys:reqKeys,_reqItemInput:''}})); modalRef.value?.showModal() }
 function closeModal() { modalRef.value?.close() }
 function addTech() { if (techInput.value && !form.techs.includes(techInput.value)) form.techs.push(techInput.value); techInput.value = '' }
 function addMap() { if (mapInput.value && !form.maps.includes(mapInput.value)) form.maps.push(mapInput.value); mapInput.value = '' }
@@ -204,8 +214,9 @@ function parseQty(v: any) { if (v === ''||v===undefined||v===null) return undefi
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = { key:form.key, name:form.name, category:form.category, description:form.description, time_required:form.time_required }
+  if (form.cooldown > 0) body.cooldown = form.cooldown
   if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else if(r.key) o.key=r.key; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o}).filter(Boolean)
-  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r._reqItemKeys?.length===1)o.required_item=r._reqItemKeys[0];else if(r._reqItemKeys?.length>1)o.required_item=[...r._reqItemKeys];if(r._mapEntries?.length) o.map=r._mapEntries.map((e:any)=>{if(e.probability!==undefined&&e.probability!=='') return {key:e.key,probability:Number(e.probability)}; return e.key});return o})
+  if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=parseQty(r.quantity);if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r.guaranteed)o.guaranteed=true;if(r._reqItemKeys?.length===1)o.required_item=r._reqItemKeys[0];else if(r._reqItemKeys?.length>1)o.required_item=[...r._reqItemKeys];if(r._mapEntries?.length) o.map=r._mapEntries.map((e:any)=>{if(e.probability!==undefined&&e.probability!=='') return {key:e.key,probability:Number(e.probability)}; return e.key});return o})
   if (form.techs.length) body.required_techs = [...form.techs]
   if (form.maps.length) body.map = [...form.maps]
   if (form.formula_key && form.formula_op) body.formula = { key:form.formula_key, operation:form.formula_op }

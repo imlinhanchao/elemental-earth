@@ -10,9 +10,13 @@ export interface IReward {
    */
   quantity: number | number[];
   /**
-   * 奖励概率
+   * 奖励概率（用于随机抽选）
    */
   probability: number;
+  /**
+   * 是否必定掉落（不受随机抽选影响，与随机奖励并行）
+   */
+  guaranteed?: boolean;
   /**
    * 奖励出现的地图
    * 字符串 = 地图key（使用 reward.probability）
@@ -58,6 +62,10 @@ export interface IAction {
    * 所需时间（秒）
    */
   time_required: number; // in seconds,
+  /**
+   * 冷却时间（秒）。有冷却时间的行动在任务完成后需等待冷却结束才能再次触发
+   */
+  cooldown?: number;
   /**
    * 解锁地图
    */

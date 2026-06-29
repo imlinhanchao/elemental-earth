@@ -228,5 +228,25 @@
       "high_temp_furnace"
     ],
     "time_required": 120
+  },
+  {
+    "name": "爆破技术",
+    "key": "explosives",
+    "description": "掌握了硝石和硫磺的混合配比，能够制造出具有强大破坏力的炸药。",
+    "required_items": [
+      {
+        "key": "niter",
+        "quantity": 10
+      },
+      {
+        "key": "sulfur",
+        "quantity": 5
+      },
+      {
+        "key": "charcoal",
+        "quantity": 5
+      }
+    ],
+    "time_required": 60
   }
 ]

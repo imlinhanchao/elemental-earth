@@ -27,6 +27,8 @@ export const usePackStore = defineStore('pack', () => {
   const itemRenames = reactive<Record<string, ItemCustomization>>({})
   /** 等待命名的发现物品 key（由 AddItem 触发，UI 消费后清除） */
   const pendingDiscovery = ref<string | null>(null)
+  /** 行动冷却结束时间戳 actionKey → timestamp */
+  const cooldowns = reactive<Record<string, number>>({})
 
   const logStore = useLogStore();
 
@@ -171,13 +173,36 @@ export const usePackStore = defineStore('pack', () => {
     pendingDiscovery.value = null;
   }
 
+  /** 设置行动冷却 */
+  function setCooldown(actionKey: string, seconds: number) {
+    cooldowns[actionKey] = Date.now() + seconds * 1000
+  }
+
+  /** 检查行动是否在冷却中 */
+  function isOnCooldown(actionKey: string): boolean {
+    const end = cooldowns[actionKey]
+    if (!end) return false
+    if (Date.now() >= end) { delete cooldowns[actionKey]; return false }
+    return true
+  }
+
+  /** 获取冷却剩余秒数 */
+  function getCooldownRemaining(actionKey: string): number {
+    const end = cooldowns[actionKey]
+    if (!end) return 0
+    const r = Math.ceil((end - Date.now()) / 1000)
+    if (r <= 0) { delete cooldowns[actionKey]; return 0 }
+    return r
+  }
+
   return { 
-    items, techs, provenFormulas, discoveredItems, itemRenames, pendingDiscovery,
+    items, techs, provenFormulas, discoveredItems, itemRenames, pendingDiscovery, cooldowns,
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
     hasEverHad, getDisplayName, setItemName, setItemNote, getItemNote,
     clearPendingDiscovery,
+    setCooldown, isOnCooldown, getCooldownRemaining,
   }
 })
 

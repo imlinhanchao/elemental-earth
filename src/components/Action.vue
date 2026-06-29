@@ -5,7 +5,7 @@
   import { usePackStore } from '@/stores/modules/pack';
   import { useTaskStore } from '@/stores/modules/task';
   import { useStateStore } from '@/stores/modules/state';
-  import { computed, ref, reactive } from 'vue';
+  import { computed, ref, reactive, onBeforeUnmount } from 'vue';
 
   const props = defineProps<{
     data: IAction;
@@ -14,6 +14,20 @@
   const packStore = usePackStore();
   const taskStore = useTaskStore();
   const stateStore = useStateStore();
+
+  // ─── 冷却时间 ────────────────────────────────────────────────
+  const cooldownRemaining = ref(0)
+  let cooldownTimer: ReturnType<typeof setInterval> | null = null
+
+  function updateCooldown() {
+    cooldownRemaining.value = packStore.getCooldownRemaining(props.data.key)
+  }
+
+  // 每秒刷新冷却倒计时
+  if (cooldownTimer) clearInterval(cooldownTimer)
+  cooldownTimer = setInterval(updateCooldown, 1000)
+  updateCooldown()
+  onBeforeUnmount(() => { if (cooldownTimer) clearInterval(cooldownTimer) })
 
   // ─── 替代材料选择 ────────────────────────────────────────────
   /** 按 action key 存储用户为每个替代材料组选定的 key */
@@ -126,7 +140,8 @@
       const keys = Array.isArray(r.key) ? r.key : [r.key];
       return keys.some(k => packStore.hasItem(k, r.quantity));
     });
-    return mapOk && itemsOk && (!props.data.required_techs || props.data.required_techs.every(t => packStore.hasTech(t)));
+    const cdOk = !props.data.cooldown || !packStore.isOnCooldown(props.data.key);
+    return mapOk && itemsOk && cdOk && (!props.data.required_techs || props.data.required_techs.every(t => packStore.hasTech(t)));
   });
 
   const isVisible = computed(() => {
@@ -186,6 +201,10 @@
       >
         {{ data.name }}
       </button>
+      <!-- 冷却倒计时遮罩 -->
+      <div v-if="cooldownRemaining > 0" class="absolute inset-0 flex items-center justify-center bg-base-300/60 rounded-xl backdrop-blur-sm z-20 pointer-events-none">
+        <span class="text-xs font-bold">{{ cooldownRemaining }}s</span>
+      </div>
 
       <!-- 批量次数（左上） -->
       <div class="absolute -top-2.75 -left-2 z-10">
