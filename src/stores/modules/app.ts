@@ -1,20 +1,27 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Storage from '@/utils/storage';
 
-type Theme = 'light' | 'dark'
+const lightTheme = 'corporate'
+const darkTheme = 'dark'
+
+type Theme = string
 
 export const useAppStore = defineStore('app', () => {
   const storage = new Storage();
   const config = getConfig()
-  const theme = ref<Theme>(config?.theme ?? 'light')
+  const theme = ref<Theme>(config?.theme ?? lightTheme)
   const leftSidebarOpen = ref<boolean>(config?.left ?? true)
   const rightSidebarOpen = ref<boolean>(config?.right ?? true)
 
   function toggleTheme(): void {
-    theme.value = theme.value === 'light' ? 'dark' : 'light'
+    theme.value = theme.value === lightTheme ? darkTheme : lightTheme
     saveConfig();
   }
+
+  const isDarkTheme = computed(() => {
+    return theme.value === darkTheme
+  })
 
   function toggleLeftSidebar(): void {
     leftSidebarOpen.value = !leftSidebarOpen.value
@@ -41,5 +48,5 @@ export const useAppStore = defineStore('app', () => {
     }>('config')
   }
 
-  return { theme, leftSidebarOpen, rightSidebarOpen, toggleTheme, toggleLeftSidebar, toggleRightSidebar }
+  return { theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, toggleTheme, toggleLeftSidebar, toggleRightSidebar }
 })

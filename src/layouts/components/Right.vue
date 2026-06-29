@@ -11,14 +11,15 @@ const logStore = useLogStore()
 const tasks = taskStore.getTasks
 
 const logStyles: Record<string, { icon: string; iconColor: string }> = {
-  process:     { icon: 'tabler:arrows-right',  iconColor: 'text-base-content/50' },
+  process:     { icon: 'tabler:arrows-right',  iconColor: 'text-base-content' },
   reward:      { icon: 'tabler:gift',          iconColor: 'text-success' },
   lab:         { icon: 'tabler:flask',         iconColor: 'text-info' },
+  craft:       { icon: 'tabler:hammer',        iconColor: 'text-warning' },
   elements:    { icon: 'tabler:atom',          iconColor: 'text-warning' },
   tech:        { icon: 'tabler:bulb',          iconColor: 'text-info' },
   warning:     { icon: 'tabler:alert-triangle', iconColor: 'text-warning' },
   'main-event': { icon: 'tabler:star',         iconColor: 'text-primary' },
-  'sub-event':  { icon: 'tabler:dots',         iconColor: 'text-base-content/40' },
+  'sub-event':  { icon: 'tabler:dots',         iconColor: 'text-base-content' },
 }
 
 function logStyle(type: string) {
@@ -66,12 +67,12 @@ const typeEntries = computed(() =>
 
 <template>
     <aside
-        class="bg-base-200 border-l border-base-300 flex-none transition-all duration-300 p-2 flex flex-col"
+        class="bg-base-100 border-l border-base-300 flex-none transition-all duration-300 p-2 flex flex-col"
         :class="appStore.rightSidebarOpen ? 'w-72' : 'w-0 overflow-hidden'"
     >
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
-            <header class="sticky top-0 bg-base-200 z-10 flex items-center justify-between">
+            <header class="sticky top-0 z-10 flex items-center justify-between">
               <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1">任务队列</div>
               <!-- 添加清空按钮 -->
               <div v-if="tasks.length > 0" class="flex justify-end mb-1 px-1">
@@ -86,27 +87,27 @@ const typeEntries = computed(() =>
 
         <!-- 下半：日志 -->
         <section class="flex-1 min-h-0 overflow-y-auto border-t border-base-300/50 relative">
-            <header class="sticky top-0 bg-base-200 z-10">
-                <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1 flex items-center justify-between">
+            <header class="sticky top-0 z-10 p-2">
+                <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-2 flex items-center justify-between">
                     <span>日志</span>
+                    <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-1 mb-1">
+                        <button
+                            v-for="[type, style] in typeEntries"
+                            :key="type"
+                            class="flex btn-ghost items-center gap-0.5 rounded text-[10px] btn bg-transparent btn-xs"
+                            :class="isTypeVisible(type)
+                                ? ''
+                                : 'opacity-40 hover:opacity-60'"
+                            @click="toggleType(type)"
+                            :title="`${isTypeVisible(type) ? '隐藏' : '显示'} ${type} 类型`"
+                        >
+                            <Icon :icon="style.icon" class="text-xs" :class="isTypeVisible(type) ? style.iconColor : ''" />
+                        </button>
+                    </div>
                     <button v-if="logStore.logs.length > 0" class="text-[10px] text-base-content/30 hover:text-base-content/60 transition-colors" @click="logStore.clearLogs()">清空</button>
                 </div>
     
                 <!-- 过滤按钮 -->
-                <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-0.5 px-1 mb-1">
-                    <button
-                        v-for="[type, style] in typeEntries"
-                        :key="type"
-                        class="flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] transition-colors"
-                        :class="isTypeVisible(type)
-                            ? 'bg-base-300/40 text-base-content/60'
-                            : 'bg-base-300/15 text-base-content/25'"
-                        @click="toggleType(type)"
-                        :title="`${isTypeVisible(type) ? '隐藏' : '显示'} ${type} 类型`"
-                    >
-                        <Icon :icon="style.icon" class="text-xs" :class="isTypeVisible(type) ? style.iconColor : ''" />
-                    </button>
-                </div>
             </header>
 
             <div v-if="collapsedLogs.length === 0" class="text-[11px] text-base-content/20 px-1">暂无日志</div>

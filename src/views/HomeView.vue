@@ -78,11 +78,11 @@
   }
 </script>
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-3">
     <!-- 已习得的配方 -->
     <details
       v-if="provenFormulas.length > 0"
-      class="collapse collapse-arrow bg-base-200 overflow-visible isolation-auto"
+      class="collapse collapse-arrow bg-base-200/40 shadow overflow-visible isolation-auto"
       open
     >
       <summary class="collapse-title font-bold text-lg">
@@ -92,7 +92,7 @@
         </span>
       </summary>
       <div class="collapse-content">
-        <div class="flex gap-3 flex-wrap">
+        <div class="flex gap-4 flex-wrap">
           <ActionTip
             v-for="f in provenFormulas"
             :key="f.key"
@@ -104,7 +104,7 @@
             :required_techs="f.required_techs"
           >
             <button
-              class="btn w-[10em]"
+              class="btn btn-soft w-[10em]"
               :disabled="!canPerformFormula(f)"
               @click="openFormulaDialog(f)"
             >
@@ -126,7 +126,7 @@
     <details
       v-for="group in groupedActions"
       :key="group.category"
-      class="collapse collapse-arrow bg-base-200 overflow-visible isolation-auto"
+      class="collapse collapse-arrow bg-base-200/40 shadow overflow-visible isolation-auto"
       open
     >
       <summary class="collapse-title font-bold text-lg">
@@ -136,7 +136,7 @@
         </span>
       </summary>
       <div class="collapse-content">
-        <div class="flex gap-3 flex-wrap">
+        <div class="flex gap-4 flex-wrap">
           <Action v-for="action in group.actions" :key="action.key" :data="action" />
         </div>
       </div>

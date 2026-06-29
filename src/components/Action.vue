@@ -180,7 +180,7 @@
   >
     <div class="relative inline-flex">
       <button 
-        class="btn w-[10em]" 
+        class="btn btn-soft w-[10em]" 
         :disabled="!isEnabled" 
         @click="performAction"
       >
@@ -188,22 +188,22 @@
       </button>
 
       <!-- 批量次数（左上） -->
-      <div class="absolute -top-2 -left-2 z-10">
+      <div class="absolute -top-2.75 -left-2 z-10">
         <button
           v-if="packStore.hasTech('fire_starting')"
-          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[10px] font-bold"
-          :class="batchCount > 1 ? 'text-primary' : 'text-base-content/40'"
+          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[8px] font-bold"
+          :class="batchCount > 1 ? 'text-secondary' : 'text-base-content/40'"
           data-tip="批量执行"
           @click="toggleBatchPicker"
         >{{ batchCount }}</button>
         <!-- 批量选择面板 -->
         <div v-if="showBatchPicker"
-          class="absolute top-0 left-0 z-20 bg-base-100 border border-base-300 rounded-lg shadow-lg p-1.5 flex gap-1 flex-wrap min-w-[120px]"
+          class="absolute top-0 left-0 z-20 bg-base-100 border border-base-300 rounded-lg shadow-lg p-1.5 flex gap-1 flex-wrap min-w-30"
           @click.stop
         >
           <button v-for="n in batchOptions" :key="n"
             class="btn btn-xs"
-            :class="batchCount === n ? 'btn-primary' : 'btn-ghost'"
+            :class="batchCount === n ? 'btn-secondary' : 'btn-ghost'"
             @click="setBatch(n)"
           >{{ n }}</button>
         </div>
@@ -227,7 +227,7 @@
               <div class="text-[10px] opacity-50 mb-1">替代材料</div>
               <button v-for="opt in getAvailableOptions(r.key)" :key="opt.key"
                 class="btn btn-xs w-full justify-start mb-0.5"
-                :class="(materialChoices[`${data.key}_${r.key}`] || resolveMaterials().find(m => r.key.includes ? r.key.includes(m.key) : false)?.key) === opt.key ? 'btn-primary' : 'btn-ghost'"
+                :class="(materialChoices[`${data.key}_${r.key}`] || resolveMaterials().find(m => r.key.includes ? r.key.includes(m.key) : false)?.key) === opt.key ? 'btn-secondary' : 'btn-ghost'"
                 @click="selectAlternative(`${data.key}_${r.key}`, opt.key)"
               >{{ opt.name }}</button>
             </template>

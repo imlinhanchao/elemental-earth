@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui"{
+   themes: corporate --default, dark --prefersdark;
+ };
 
 html, body, #app {
   height: 100%;

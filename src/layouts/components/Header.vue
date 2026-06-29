@@ -6,6 +6,7 @@ import { useTaskStore } from '@/stores/modules/task'
 import { saveGame, getLastSavedLabel } from '@/utils/archive'
 import MapSwitchModal from './MapSwitch/MapSwitchModal.vue'
 import MapSwitchOverlay from './MapSwitch/MapSwitchOverlay.vue'
+import { Icon } from '@iconify/vue'
 
 const appStore = useAppStore()
 const stateStore = useStateStore()
@@ -38,14 +39,15 @@ function handleSelectMap(targetKey: string) {
 }
 </script>
 <template>
-    <header class="navbar bg-base-300 shadow-sm z-10 flex-none">
+    <header class="navbar bg-base-100 shadow-sm z-10 flex-none">
       <div class="flex-none">
-        <button class="btn btn-square btn-ghost" :disabled="stateStore.isSwitching" @click="appStore.toggleLeftSidebar">
-          <Icon :icon="appStore.leftSidebarOpen ? 'icon-park-solid:expand-right' : 'icon-park-solid:expand-left'" class="text-xl" />
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleLeftSidebar">
+          <Icon :icon="appStore.leftSidebarOpen ? 'icon-park-outline:expand-right' : 'icon-park-outline:expand-left'" class="text-xl" />
         </button>
       </div>
-      <div class="flex-1 px-2">
-        <span class="text-lg font-bold">元素纪元</span>
+      <div class="flex-1 px-2 flex items-center gap-2">
+        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary" />
+        <span class="text-xl font-bold">元素纪元</span>
       </div>
       <div class="flex-none gap-2 flex items-center">
 
@@ -58,15 +60,15 @@ function handleSelectMap(targetKey: string) {
           </button>
         </div>
 
-        <button class="btn btn-ghost btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleTheme" :title="appStore.theme === 'light' ? '切换深色' : '切换浅色'">
-          <span v-if="appStore.theme === 'light'"><Icon icon="tabler:moon-filled" class="text-xl" /></span>
-          <span v-else><Icon icon="tabler:sun-filled" class="text-xl" /></span>
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleTheme" :title="appStore.isDarkTheme ? '切换浅色' : '切换深色'">
+          <span v-if="!appStore.isDarkTheme"><Icon icon="tabler:moon" class="text-xl" /></span>
+          <span v-else><Icon icon="tabler:sun" class="text-xl" /></span>
         </button>
-        <button class="btn btn-ghost btn-circle" :disabled="stateStore.isSwitching || saving" @click="handleSave" :title="getLastSavedLabel()">
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching || saving" @click="handleSave" :title="getLastSavedLabel()">
           <Icon :icon="saving ? 'tabler:check' : 'tabler:device-floppy'" class="text-xl" />
         </button>
-        <button class="btn btn-ghost btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleRightSidebar" title="切换右侧栏">
-          <Icon :icon="appStore.rightSidebarOpen ? 'icon-park-solid:expand-left' : 'icon-park-solid:expand-right'" class="text-xl" />
+        <button class="btn btn-circle" :disabled="stateStore.isSwitching" @click="appStore.toggleRightSidebar" title="切换右侧栏">
+          <Icon :icon="appStore.rightSidebarOpen ? 'icon-park-outline:expand-left' : 'icon-park-outline:expand-right'" class="text-xl" />
         </button>
       </div>
     </header>

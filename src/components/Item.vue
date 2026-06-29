@@ -34,7 +34,7 @@
         >
           ✏️
         </button>
-        <span class="badge badge-primary badge-xs">{{ data.quantity }}</span>
+        <span class="badge badge-soft badge-primary badge-xs">{{ data.quantity }}</span>
       </div>
     </div>
     <InlineTooltip v-if="itemData?.durable" :text="`耐久度: ${Math.round((data.durable / (itemData?.durable ?? 1)) * 100)}%`">
