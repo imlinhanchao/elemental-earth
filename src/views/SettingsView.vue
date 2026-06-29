@@ -14,7 +14,7 @@
             <span class="label-text">深色模式</span>
             <input
               type="checkbox"
-              class="toggle"
+              class="toggle toggle-primary"
               :checked="appStore.theme === 'dark'"
               @change="appStore.toggleTheme"
             />
@@ -30,13 +30,13 @@
         <div class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">显示左侧栏</span>
-            <input type="checkbox" class="toggle" :checked="appStore.leftSidebarOpen" @change="appStore.toggleLeftSidebar" />
+            <input type="checkbox" class="toggle toggle-primary" :checked="appStore.leftSidebarOpen" @change="appStore.toggleLeftSidebar" />
           </label>
         </div>
         <div class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">显示右侧栏</span>
-            <input type="checkbox" class="toggle" :checked="appStore.rightSidebarOpen" @change="appStore.toggleRightSidebar" />
+            <input type="checkbox" class="toggle toggle-primary" :checked="appStore.rightSidebarOpen" @change="appStore.toggleRightSidebar" />
           </label>
         </div>
       </div>
@@ -49,7 +49,7 @@
         <div class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">桌面推送</span>
-            <input type="checkbox" class="toggle" :checked="appStore.desktopPush" @change="appStore.toggleDesktopPush" />
+            <input type="checkbox" class="toggle toggle-primary" :checked="appStore.desktopPush" @change="appStore.toggleDesktopPush" />
           </label>
         </div>
         <div v-if="appStore.desktopPush" class="form-control">
@@ -57,14 +57,14 @@
             <span class="label-text">推送模式</span>
           </label>
           <div class="ml-2 join">
-            <button class="btn btn-sm join-item" :class="appStore.taskNotifyMode === 'all' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('all')">全部完成通知</button>
-            <button class="btn btn-sm join-item" :class="appStore.taskNotifyMode === 'each' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('each')">每个任务通知</button>
+            <button class="btn btn-xs join-item" :class="appStore.taskNotifyMode === 'all' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('all')">全部完成通知</button>
+            <button class="btn btn-xs join-item" :class="appStore.taskNotifyMode === 'each' ? 'btn-primary' : 'btn-soft'" @click="appStore.setTaskNotifyMode('each')">每个任务通知</button>
           </div>
         </div>
         <div v-if="appStore.desktopPush" class="form-control">
           <label class="label cursor-pointer">
             <span class="label-text">仅不在当前页面时通知</span>
-            <input type="checkbox" class="toggle" :checked="appStore.notifyOnlyHidden" @change="appStore.toggleNotifyOnlyHidden" />
+            <input type="checkbox" class="toggle toggle-primary" :checked="appStore.notifyOnlyHidden" @change="appStore.toggleNotifyOnlyHidden" />
           </label>
         </div>
       </div>
