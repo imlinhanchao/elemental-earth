@@ -60,23 +60,36 @@
               <label class="form-control"><span class="label-text">耗时（秒）</span><input type="number" class="input input-bordered input-sm" v-model.number="form.time_required" /></label>
             </div>
             <label class="form-control"><span class="label-text">描述</span><textarea class="textarea textarea-bordered textarea-sm" v-model="form.description" rows="2"></textarea></label>
-            <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">所需材料</legend>
+            <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">所需材料（多个 key 表示可替代）</legend>
               <div v-for="(row,i) in objItems" :key="i" class="flex gap-1 items-start mb-1">
-                <input class="input input-bordered input-xs flex-1" v-model="row.key" placeholder="物品key" />
+                <div class="flex-1 flex flex-wrap gap-1">
+                  <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
+                  <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
+                    <option value="" disabled>添加…</option>
+                    <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}</option>
+                  </select>
+                </div>
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" placeholder="数量" />
                 <input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" placeholder="消耗" />
                 <button class="btn btn-xs btn-ghost text-error" @click="objItems.splice(i,1)">✕</button>
               </div>
-              <button class="btn btn-xs btn-ghost" @click="objItems.push({key:'',quantity:1,use:undefined})">＋ 添加</button>
+              <button class="btn btn-xs btn-ghost" @click="objItems.push({_keys:[],_input:'',key:'',quantity:1,use:undefined})">＋ 添加</button>
             </fieldset>
             <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">奖励</legend>
               <div v-for="(row,i) in objRewards" :key="i" class="flex gap-1 items-start mb-1">
-                <input class="input input-bordered input-xs flex-1" v-model="row.key" placeholder="物品key" />
+                <select class="select select-bordered select-xs flex-1" v-model="row.key">
+                  <option value="" disabled>选择物品</option>
+                  <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
+                </select>
                 <input class="input input-bordered input-xs w-14" v-model="row.quantity" placeholder="数量" />
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" placeholder="概率" />
+                <select class="select select-bordered select-xs" v-model="row.required_item">
+                  <option value="">不限</option>
+                  <option v-for="o in refs.items" :key="o.key" :value="o.key">需{{ o.name }}</option>
+                </select>
                 <button class="btn btn-xs btn-ghost text-error" @click="objRewards.splice(i,1)">✕</button>
               </div>
-              <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000})">＋ 添加</button>
+              <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,required_item:''})">＋ 添加</button>
             </fieldset>
             <label class="form-control"><span class="label-text">前置科技（逗号分隔）</span><input class="input input-bordered input-sm" v-model="form.techs" /></label>
             <label class="form-control"><span class="label-text">地图（逗号分隔）</span><input class="input input-bordered input-sm" v-model="form.maps" /></label>
@@ -132,17 +145,26 @@
               <label class="form-control"><span class="label-text">容器</span><input class="input input-bordered input-sm" v-model="form.container" /></label>
               <label class="form-control"><span class="label-text">操作 key</span><input class="input input-bordered input-sm" v-model="form.action_key" /></label>
             </div>
-            <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">所需材料</legend>
+            <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">所需材料（多个 key 表示可替代）</legend>
               <div v-for="(row,i) in objItems" :key="i" class="flex gap-1 items-start mb-1">
-                <input class="input input-bordered input-xs flex-1" v-model="row.key" placeholder="key 或 key1,key2" />
+                <div class="flex-1 flex flex-wrap gap-1">
+                  <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
+                  <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
+                    <option value="" disabled>添加…</option>
+                    <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}</option>
+                  </select>
+                </div>
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" placeholder="数量" />
                 <button class="btn btn-xs btn-ghost text-error" @click="objItems.splice(i,1)">✕</button>
               </div>
-              <button class="btn btn-xs btn-ghost" @click="objItems.push({key:'',quantity:1})">＋ 添加</button>
+              <button class="btn btn-xs btn-ghost" @click="objItems.push({_keys:[],_input:'',key:'',quantity:1})">＋ 添加</button>
             </fieldset>
             <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">产物</legend>
               <div v-for="(row,i) in objProducts" :key="i" class="flex gap-1 items-start mb-1">
-                <input class="input input-bordered input-xs flex-1" v-model="row.key" placeholder="物品key" />
+                <select class="select select-bordered select-xs flex-1" v-model="row.key">
+                  <option value="" disabled>选择产物</option>
+                  <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
+                </select>
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.multiple" placeholder="倍率" />
                 <input class="input input-bordered input-xs w-20" v-model="row.required_chain_operation" placeholder="追加操作key" />
                 <button class="btn btn-xs btn-ghost text-error" @click="objProducts.splice(i,1)">✕</button>
@@ -163,6 +185,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch, nextTick } from 'vue'
+import { useAdminStore } from '@/stores/modules/admin'
 
 const props = defineProps<{
   type: string
@@ -174,6 +197,9 @@ const emit = defineEmits<{
   save: [data: any]
   close: []
 }>()
+
+const admin = useAdminStore()
+const refs = reactive<Record<string, any[]>>({ items: [], techs: [], maps: [], labs: [] })
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const form = reactive<any>({})
@@ -189,9 +215,25 @@ const titleMap: Record<string,string> = {
 
 const title = ref('编辑')
 
+async function fetchRefs() {
+  try {
+    const [ir, tr, mr, lr] = await Promise.all([
+      admin.apiFetch('/api/items'),
+      admin.apiFetch('/api/techs'),
+      admin.apiFetch('/api/maps'),
+      admin.apiFetch('/api/labs'),
+    ])
+    refs.items = await ir.json()
+    refs.techs = await tr.json()
+    refs.maps = await mr.json()
+    refs.labs = await lr.json()
+  } catch {}
+}
+
 watch(() => props.visible, async (v) => {
   if (v && props.item) {
     title.value = titleMap[props.type] || '编辑'
+    if (refs.items.length === 0) fetchRefs()
     resetForm()
     loadItem(props.item)
     await nextTick()
@@ -215,16 +257,16 @@ function loadItem(item: any) {
     formJson.attrs = item.attrs ? JSON.stringify(item.attrs, null, 2) : ''
   } else if (props.type === 'actions') {
     Object.assign(form, { key:item.key||'', name:item.name||'', category:item.category||'', description:item.description||'', time_required:item.time_required??10, techs:(item.required_techs||[]).join(', '), maps:(item.map||[]).join(', ') })
-    objItems.push(...(item.required_items||[]).map((x:any)=>({...x})))
-    objRewards.push(...(item.rewards||[]).map((x:any)=>({...x,quantity:x.quantity})))
+    objItems.push(...(item.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}}))
+    objRewards.push(...(item.rewards||[]).map((x:any)=>({...x,quantity:x.quantity,required_item:x.required_item||''})))
   } else if (props.type === 'techs') {
     Object.assign(form, { key:item.key||'', name:item.name||'', description:item.description||'', time_required:item.time_required??30, techs:(item.required_techs||[]).join(', ') })
-    objItems.push(...(item.required_items||[]).map((x:any)=>({...x})))
+    objItems.push(...(item.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}}))
   } else if (props.type === 'labs') {
     Object.assign(form, { key:item.key||'', name:item.name||'', description:item.description||'', time_required:item.time_required??20, requires_burning:item.requires_burning })
   } else if (props.type === 'formulas') {
     Object.assign(form, { key:item.key||'', name:item.name||'', description:item.description||'', time_required:item.time_required??30, container:item.required_container||'', action_key:item.required_actions?.key||'' })
-    objItems.push(...(item.required_items||[]).map((x:any)=>({...x})))
+    objItems.push(...(item.required_items||[]).map((x:any)=>{const keys=Array.isArray(x.key)?x.key:(x.key?[x.key]:[]);return{...x,_keys:[...keys],_input:''}}))
     objProducts.push(...(item.products||[]).map((x:any)=>({...x,required_chain_operation:x.required_chain_operation||''})))
   }
 }
@@ -234,6 +276,7 @@ function resetForm() {
 }
 
 function toggleType(t: string) { const i = form.type.indexOf(t); i >= 0 ? form.type.splice(i,1) : form.type.push(t) }
+function addItemKey(row: any) { const v = row._input; if (!v) return; if (!row._keys.includes(v)) row._keys.push(v); row._input = ''; row.key = row._keys.join(',') }
 
 function buildData(): any {
   const body: Record<string,any> = {}
@@ -250,13 +293,13 @@ function buildData(): any {
     if (formJson.attrs.trim()) { try { body.attrs = JSON.parse(formJson.attrs) } catch {} }
   } else if (props.type === 'actions') {
     Object.assign(body, { key:form.key, name:form.name, category:form.category, description:form.description, time_required:form.time_required })
-    if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o})
-    if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=r.quantity;if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;return o})
+    if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else if(r.key) o.key=r.key; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;if(r.use!==undefined&&r.use!=='')o.use=r.use;return o}).filter(Boolean)
+    if (objRewards.length) body.rewards = objRewards.map((r:any)=>{const o:any={};if(r.key)o.key=r.key;o.quantity=r.quantity;if(r.probability!==undefined&&r.probability!=='')o.probability=r.probability;if(r.required_item)o.required_item=r.required_item;return o})
     if (form.techs.trim()) body.required_techs = form.techs.split(',').map((s:string)=>s.trim()).filter(Boolean)
     if (form.maps.trim()) body.map = form.maps.split(',').map((s:string)=>s.trim()).filter(Boolean)
   } else if (props.type === 'techs') {
     Object.assign(body, { key:form.key, name:form.name, description:form.description, time_required:form.time_required })
-    if (objItems.length) body.required_items = [...objItems]
+    if (objItems.length) body.required_items = objItems.map((r:any)=>{const o:any={};if(r._keys.length===1) o.key=r._keys[0]; else if(r._keys.length>1) o.key=[...r._keys]; else if(r.key) o.key=r.key; else return null; if(r.quantity!==undefined&&r.quantity!=='')o.quantity=r.quantity;return o}).filter(Boolean)
     if (form.techs.trim()) body.required_techs = form.techs.split(',').map((s:string)=>s.trim()).filter(Boolean)
   } else if (props.type === 'labs') {
     Object.assign(body, { key:form.key, name:form.name, description:form.description, time_required:form.time_required })

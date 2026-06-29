@@ -178,5 +178,55 @@
       "high_temp_furnace"
     ],
     "time_required": 120
+  },
+  {
+    "name": "筛选技术",
+    "key": "sifting_technology",
+    "description": "掌握了用筛网分离不同粒度颗粒的技术。",
+    "required_items": [
+      {
+        "key": "fiber_cloth",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 4
+      }
+    ],
+    "required_techs": [
+      "wood_processing"
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "钴合金锻造",
+    "key": "cobalt_alloy_smithing",
+    "description": "掌握了将钴金属加工成工具和合金的技术。",
+    "required_items": [
+      {
+        "key": "cobalt",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace",
+      "iron_tool_crafting"
+    ],
+    "time_required": 300
+  },
+  {
+    "name": "镍合金锻造",
+    "key": "nickel_alloy_smithing",
+    "description": "掌握了镍金属的冶炼和锻造技术，能够制作镍制工具。",
+    "required_items": [
+      {
+        "key": "nickel",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 120
   }
 ]

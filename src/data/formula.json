@@ -440,5 +440,707 @@
         "multiple": 4
       }
     ]
+  },
+  {
+    "key": "roast_argentite",
+    "name": "焙烧辉银矿",
+    "description": "将辉银矿投入焙烧炉中，与空气反应生成银和二氧化硫。",
+    "time_required": 45,
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "argentite",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "silver",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧辉锑矿",
+    "key": "roast_stibnite",
+    "description": "将辉锑矿在窑炉中焙烧，生成三氧化二锑和二氧化硫。",
+    "required_items": [
+      {
+        "key": "stibnite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "antimony_trioxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "reduce_antimony_trioxide",
+    "name": "还原锑白",
+    "description": "用木炭还原三氧化二锑，得到金属锑和一氧化碳。",
+    "time_required": 30,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "antimony_trioxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "antimony",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "roast_arsenopyrite",
+    "name": "焙烧毒砂",
+    "description": "在窑炉中高温焙烧毒砂，生成三氧化二砷和二氧化硫，铁以炉渣形式排出。",
+    "time_required": 30,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "arsenopyrite",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "arsenic_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 2,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "hematite",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ]
+  },
+  {
+    "key": "roast_realgar",
+    "name": "焙烧雄黄",
+    "description": "在窑炉中高温焙烧雄黄，生成三氧化二砷和二氧化硫。",
+    "time_required": 20,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "realgar",
+        "quantity": 2
+      },
+      {
+        "key": "coal",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "arsenic_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ]
+  },
+  {
+    "key": "roast_orpiment",
+    "name": "焙烧雌黄",
+    "description": "在窑炉中高温焙烧雌黄，生成三氧化二砷和二氧化硫。",
+    "time_required": 20,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "orpiment",
+        "quantity": 2
+      },
+      {
+        "key": "coal",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "arsenic_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ]
+  },
+  {
+    "key": "reduce_arsenic_trioxide",
+    "name": "还原三氧化二砷",
+    "description": "用碳在高温下还原三氧化二砷，获得单质砷和一氧化碳。",
+    "time_required": 30,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "arsenic_trioxide",
+        "quantity": 1
+      },
+      {
+        "key": "coal",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "arsenic",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ]
+  },
+  {
+    "key": "dry_distill_arsenopyrite",
+    "name": "干馏毒砂",
+    "description": "将毒砂放入陶罐中隔绝空气加热，砷升华后冷凝得到砷单质，残留硫化亚铁。",
+    "time_required": 20,
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "arsenopyrite",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "arsenic",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "iron_sulfide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "生产磷",
+    "key": "phosphorus_production",
+    "description": "将磷矿石与硅砂、焦炭在高炉中高温还原，生成磷蒸汽，冷凝后得到白磷。",
+    "required_items": [
+      {
+        "key": "phosphorite",
+        "quantity": 2
+      },
+      {
+        "key": "silica_sand",
+        "quantity": 3
+      },
+      {
+        "key": "coke",
+        "quantity": 5
+      }
+    ],
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace",
+      "gas_collection"
+    ],
+    "time_required": 120,
+    "products": [
+      {
+        "key": "phosphorus",
+        "multiple": 2,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 5,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "slag",
+        "multiple": 3
+      }
+    ]
+  },
+  {
+    "name": "筛选硅砂",
+    "key": "sift_silica_sand",
+    "description": "将普通沙子过筛，得到较纯净的硅砂。",
+    "required_items": [
+      {
+        "key": "sand",
+        "quantity": 5
+      }
+    ],
+    "required_container": null,
+    "required_actions": {
+      "key": "sifting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "sifting_technology"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "silica_sand",
+        "multiple": 3
+      },
+      {
+        "key": "sand",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "焙烧辉钴矿",
+    "key": "roast_cobaltite",
+    "description": "在空气中焙烧辉钴矿，使其转化为氧化钴并释放二氧化硫。",
+    "required_items": [
+      {
+        "key": "cobaltite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "cobalt_alloy_smithing"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "cobalt_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原氧化钴",
+    "key": "reduce_cobalt_oxide",
+    "description": "用碳还原氧化钴，得到金属钴和一氧化碳。",
+    "required_items": [
+      {
+        "key": "cobalt_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "cobalt_alloy_smithing"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "cobalt",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "制作钴蓝",
+    "key": "make_cobalt_blue",
+    "description": "将氧化钴与硅砂和碱水混合焙烧，制成鲜艳的钴蓝颜料。",
+    "required_items": [
+      {
+        "key": "cobalt_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "silica_sand",
+        "quantity": 2
+      },
+      {
+        "key": "alkaline_solution",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "cobalt_alloy_smithing"
+    ],
+    "time_required": 45,
+    "products": [
+      {
+        "key": "cobalt_blue",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "key": "roast_sperrylite",
+    "name": "焙烧砷铂矿",
+    "description": "在窑炉中焙烧砷铂矿，砷以三氧化二砷形式挥发，残留铂金。",
+    "time_required": 30,
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "sperrylite",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "platinum_ingot",
+        "multiple": 1
+      },
+      {
+        "key": "arsenic_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      }
+    ],
+    "required_techs": [
+      "platinum_metallurgy"
+    ]
+  },
+  {
+    "name": "焙烧镍黄铁矿",
+    "key": "roast_pentlandite",
+    "description": "将镍黄铁矿在空气中高温焙烧，使硫化物转化为氧化物并释放二氧化硫。",
+    "required_items": [
+      {
+        "key": "pentlandite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "nickel_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "还原氧化镍",
+    "key": "reduce_nickel_oxide",
+    "description": "用碳（木炭或焦炭）在高温下还原氧化镍，得到金属镍。",
+    "required_items": [
+      {
+        "key": "nickel_oxide",
+        "quantity": 1
+      },
+      {
+        "key": [
+          "charcoal",
+          "coke"
+        ],
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 80,
+    "products": [
+      {
+        "key": "nickel",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "key": "roast_sulfur",
+    "name": "焙烧硫磺",
+    "description": "将硫磺在空气中燃烧，生成二氧化硫气体。",
+    "time_required": 20,
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "sulfur",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "sulfur_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "oxidation"
+      }
+    ]
+  },
+  {
+    "key": "absorb_sulfur_trioxide",
+    "name": "吸收三氧化硫",
+    "description": "将三氧化硫气体通入水中，生成稀硫酸。",
+    "time_required": 20,
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "sulfur_trioxide",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "dilute_sulfuric_acid",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "roast_green_vitriol",
+    "name": "焙烧绿矾",
+    "description": "将绿矾加热分解，得到赤铁矿和二氧化硫气体。",
+    "time_required": 30,
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "green_vitriol",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "hematite",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "multiple": 1,
+        "required_chain_operation": "dissolving"
+      },
+      {
+        "key": "sulfur_trioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "硫酸制氢",
+    "key": "sulfuric_acid_hydrogen",
+    "description": "将活泼金属加入稀硫酸中，发生置换反应生成氢气和相应的硫酸盐。",
+    "required_items": [
+      {
+        "key": [
+          "zinc",
+          "pig_iron",
+          "tin",
+          "lead",
+          "cobalt",
+          "nickel"
+        ],
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "gas_collection"
+    ],
+    "time_required": 10,
+    "products": [
+      {
+        "key": "hydrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "zinc_sulfate",
+        "multiple": 1,
+        "required_item": "zinc"
+      },
+      {
+        "key": "iron_sulfate",
+        "multiple": 1,
+        "required_item": "pig_iron"
+      },
+      {
+        "key": "tin_sulfate",
+        "multiple": 1,
+        "required_item": "tin"
+      },
+      {
+        "key": "lead_sulfate",
+        "multiple": 1,
+        "required_item": "lead"
+      },
+      {
+        "key": "cobalt_sulfate",
+        "multiple": 1,
+        "required_item": "cobalt"
+      },
+      {
+        "key": "nickel_sulfate",
+        "multiple": 1,
+        "required_item": "nickel"
+      }
+    ]
   }
 ]

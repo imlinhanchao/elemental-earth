@@ -70,8 +70,8 @@
     "time_required": 0
   },
   {
-    "name": "挖矿",
     "key": "mining",
+    "name": "挖矿",
     "category": "采集",
     "description": "使用镐类工具挖掘地面，根据工具的差异获取不同的矿物资源。",
     "time_required": 10,
@@ -117,24 +117,25 @@
         "key": "gold_sand",
         "quantity": 1,
         "probability": 10,
+        "required_item": "stone_pickaxe",
         "map": [
           "volcano"
-        ],
-        "required_item": "stone_pickaxe"
+        ]
       },
       {
         "key": "gold_sand",
         "quantity": 1,
         "probability": 1,
+        "required_item": "stone_pickaxe",
         "map": [
           "river_side"
-        ],
-        "required_item": "stone_pickaxe"
+        ]
       },
       {
         "key": "malachite",
         "quantity": 1,
         "probability": 100,
+        "required_item": "stone_pickaxe",
         "map": [
           {
             "key": "mountain",
@@ -148,100 +149,83 @@
             "key": "volcano",
             "probability": 10
           }
-        ],
-        "required_item": "stone_pickaxe"
+        ]
       },
       {
         "key": "sulfur",
         "quantity": 1,
         "probability": 50,
+        "required_item": "stone_pickaxe",
         "map": [
           "volcano"
-        ],
-        "required_item": "stone_pickaxe"
+        ]
       },
       {
         "key": "hematite",
         "quantity": 1,
         "probability": 800,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
         ]
       },
       {
         "key": "coal",
         "quantity": 1,
         "probability": 500,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
         ]
       },
       {
         "key": "limestone",
         "quantity": 1,
         "probability": 300,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
         ]
       },
       {
         "key": "cinnabar",
         "quantity": 1,
         "probability": 200,
-        "map": [
-          {
-            "key": "volcano"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "volcano"
         ]
       },
       {
         "key": "sphalerite",
         "quantity": 1,
         "probability": 200,
-        "map": [
-          {
-            "key": "mountain"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "mountain"
         ]
       },
       {
@@ -249,73 +233,170 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          {
-            "key": "mountain"
-          }
+          "mountain"
         ]
       },
       {
         "key": "galena",
         "quantity": 1,
         "probability": 200,
-        "map": [
-          {
-            "key": "cave"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "cave"
         ]
       },
       {
         "key": "flint",
         "quantity": 1,
         "probability": 200,
-        "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "river_side"
-          },
-          {
-            "key": "volcano"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "river_side",
+          "volcano"
         ]
       },
       {
         "key": "gold_sand",
         "quantity": 1,
         "probability": 50,
-        "map": [
-          {
-            "key": "river_side"
-          },
-          {
-            "key": "volcano"
-          }
-        ],
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe"
+        ],
+        "map": [
+          "river_side",
+          "volcano"
+        ]
+      },
+      {
+        "key": "argentite",
+        "quantity": 1,
+        "probability": 300,
+        "required_item": "iron_pickaxe",
+        "map": [
+          "cave",
+          "mountain",
+          {
+            "key": "volcano",
+            "probability": 100
+          }
+        ]
+      },
+      {
+        "key": "native_silver",
+        "quantity": 1,
+        "probability": 30,
+        "required_item": "iron_pickaxe",
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "stibnite",
+        "quantity": 1,
+        "probability": 200,
+        "required_item": "iron_pickaxe",
+        "map": [
+          "cave",
+          "volcano"
+        ]
+      },
+      {
+        "key": "arsenopyrite",
+        "quantity": 1,
+        "probability": 400,
+        "required_item": [
+          "iron_pickaxe",
+          "brass_pickaxe"
+        ],
+        "map": [
+          "volcano",
+          "cave"
+        ]
+      },
+      {
+        "key": "realgar",
+        "quantity": 1,
+        "probability": 300,
+        "required_item": [
+          "brass_pickaxe",
+          "iron_pickaxe"
+        ],
+        "map": [
+          "volcano",
+          "cave"
+        ]
+      },
+      {
+        "key": "orpiment",
+        "quantity": 1,
+        "probability": 250,
+        "required_item": [
+          "iron_pickaxe",
+          "brass_pickaxe"
+        ],
+        "map": [
+          "volcano",
+          "cave"
+        ]
+      },
+      {
+        "key": "phosphorite",
+        "quantity": 1,
+        "probability": 300,
+        "required_item": [
+          "iron_pickaxe",
+          "brass_pickaxe"
+        ],
+        "map": [
+          "island"
+        ]
+      },
+      {
+        "key": "cobaltite",
+        "quantity": 1,
+        "probability": 50,
+        "map": [
+          "volcano",
+          "cave"
+        ]
+      },
+      {
+        "key": "sperrylite",
+        "quantity": 1,
+        "probability": 5,
+        "map": [
+          "volcano"
+        ]
+      },
+      {
+        "key": "pentlandite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          "cave",
+          "volcano"
+        ]
+      },
+      {
+        "key": "green_vitriol",
+        "quantity": 1,
+        "probability": 200,
+        "required_item": "iron_pickaxe",
+        "map": [
+          "cave"
         ]
       }
-    ],
-    "required_techs": [],
-    "map": [
-      "mountain",
-      "cave",
-      "volcano",
-      "basin",
-      "river_side"
     ]
   },
   {
@@ -609,7 +690,6 @@
     ],
     "time_required": 30
   },
-  
   {
     "name": "烧制耐火砖",
     "key": "fire_brick_production",
@@ -866,5 +946,184 @@
       }
     ],
     "time_required": 45
+  },
+  {
+    "key": "dig_sand_on_beach",
+    "name": "挖沙",
+    "category": "采集",
+    "description": "在海滩上挖掘沙子，收集普通的砂粒。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": [
+          "wooden_bucket",
+          "clay_pot"
+        ],
+        "quantity": 1,
+        "use": 0.1
+      },
+      {
+        "key": "iron_shovel",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "sand",
+        "quantity": [
+          5,
+          10
+        ],
+        "probability": 900
+      }
+    ],
+    "map": [
+      "beach"
+    ]
+  },
+  {
+    "name": "制作筛子",
+    "key": "craft_sieve",
+    "category": "制作",
+    "description": "用木框和纤维布制作一个简易筛子。",
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 2,
+        "use": 0.05
+      },
+      {
+        "key": "fiber_cloth",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "required_techs": [
+      "sifting_technology"
+    ],
+    "rewards": [
+      {
+        "key": "sieve",
+        "quantity": 1
+      }
+    ],
+    "time_required": 20
+  },
+  {
+    "name": "打造钴镐",
+    "key": "craft_cobalt_pickaxe",
+    "category": "制作",
+    "description": "用钴金属打造一把坚固的镐。",
+    "required_items": [
+      {
+        "key": "cobalt",
+        "quantity": 3,
+        "use": 0.5
+      },
+      {
+        "key": "wood",
+        "quantity": 2,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "cobalt_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "cobalt_pickaxe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "打造钴斧",
+    "key": "craft_cobalt_axe",
+    "category": "制作",
+    "description": "用钴金属打造一把锋利的斧头。",
+    "required_items": [
+      {
+        "key": "cobalt",
+        "quantity": 3,
+        "use": 0.5
+      },
+      {
+        "key": "wood",
+        "quantity": 2,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "cobalt_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "cobalt_axe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "打造镍镐",
+    "key": "craft_nickel_pickaxe",
+    "category": "制作",
+    "description": "将镍金属加热锻打成镐头，装配木柄制成镍镐。",
+    "required_items": [
+      {
+        "key": "nickel",
+        "quantity": 3,
+        "use": 0.1
+      },
+      {
+        "key": "wood",
+        "quantity": 2,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "nickel_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "nickel_pickaxe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 120
+  },
+  {
+    "name": "打造镍斧",
+    "key": "craft_nickel_axe",
+    "category": "制作",
+    "description": "将镍金属锻造成斧刃，装配木柄制成镍斧。",
+    "required_items": [
+      {
+        "key": "nickel",
+        "quantity": 2,
+        "use": 0.1
+      },
+      {
+        "key": "wood",
+        "quantity": 2,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "nickel_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "nickel_axe",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 100
   }
 ]

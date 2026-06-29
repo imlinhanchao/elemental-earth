@@ -176,6 +176,12 @@ const formulaProducts = computed(() => {
       if (p.required_chain_operation) {
         return chainOps.has(p.required_chain_operation)
       }
+      // 需要特定反应物才产生的产物
+      if (p.required_item) {
+        const reqKeys = Array.isArray(p.required_item) ? p.required_item : [p.required_item]
+        const consumed = [...selectedMaterials.value.keys()]
+        return reqKeys.some(k => consumed.includes(k))
+      }
       // 气体：有追加操作时由追加操作决定
       if (itemDef.type.includes('gas')) {
         return chainOps.has('gas_collecting')

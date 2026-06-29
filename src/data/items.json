@@ -373,6 +373,16 @@
     "durable": 3
   },
   {
+    "key": "iron_shovel",
+    "name": "铁锹",
+    "category": "工具",
+    "description": "用铁打造的锹，可以用来挖掘土壤和沙子。",
+    "type": [
+      "tool"
+    ],
+    "durable": 3
+  },
+  {
     "key": "iron_axe",
     "name": "铁斧",
     "category": "工具",
@@ -602,5 +612,390 @@
       "container"
     ],
     "durable": 2
+  },
+  {
+    "name": "银",
+    "key": "silver",
+    "category": "材料",
+    "description": "银白色、光亮的金属块，表面闪着柔和的冷光，质地柔软但沉重。",
+    "type": [
+      "material"
+    ],
+    "elemental": 47
+  },
+  {
+    "key": "argentite",
+    "name": "辉银矿",
+    "category": "材料",
+    "description": "灰黑色、金属光泽的矿石碎块，断口呈参差状，重而脆。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "自然银",
+    "key": "native_silver",
+    "category": "材料",
+    "description": "银白色、树枝状或粒状的天然银块，闪烁着耀眼的金属光泽。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "stibnite",
+    "name": "辉锑矿",
+    "category": "材料",
+    "description": "铅灰色、针状晶体簇，金属光泽，质脆易碎。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "key": "antimony_trioxide",
+    "name": "锑白",
+    "category": "材料",
+    "description": "白色粉末，无味，遇热变黄。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锑",
+    "key": "antimony",
+    "category": "材料",
+    "description": "银白色、脆硬的金属，断面呈粗晶结构。",
+    "type": [
+      "material"
+    ],
+    "elemental": 51
+  },
+  {
+    "key": "arsenopyrite",
+    "name": "毒砂",
+    "category": "材料",
+    "description": "银白色或钢灰色块状矿物，表面常有黄褐色锖色，质地脆硬，断口参差状，有金属光泽。",
+    "type": [
+      "material"
+    ],
+    "durable": 1,
+    "is_discovery": true
+  },
+  {
+    "key": "orpiment",
+    "name": "雌黄",
+    "category": "材料",
+    "description": "柠檬黄色或橘黄色的片状或块状矿物，半透明，质地柔软，有油脂光泽。",
+    "type": [
+      "material"
+    ],
+    "durable": 1,
+    "is_discovery": true
+  },
+  {
+    "key": "realgar",
+    "name": "雄黄",
+    "category": "材料",
+    "description": "深红色或橙红色的晶体或块状矿物，半透明，断口贝壳状，有油脂光泽。",
+    "type": [
+      "material"
+    ],
+    "durable": 1,
+    "is_discovery": true
+  },
+  {
+    "key": "arsenic_trioxide",
+    "name": "砒霜",
+    "category": "材料",
+    "description": "白色无定形粉末或结晶，无臭无味，剧毒。",
+    "type": [
+      "material"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "砷",
+    "key": "arsenic",
+    "category": "材料",
+    "description": "银灰色脆性金属，表面暴露在空气中会迅速氧化变暗，无臭。",
+    "type": [
+      "material"
+    ],
+    "elemental": 33,
+    "durable": 1
+  },
+  {
+    "name": "硫化亚铁",
+    "key": "iron_sulfide",
+    "category": "材料",
+    "description": "黑褐色、具有金属光泽的固体碎块，质地较硬，是铁与硫的化合物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "phosphorite",
+    "name": "磷矿石",
+    "category": "材料",
+    "description": "灰白色或浅绿色块状矿物，表面粗糙，带有泥土气息。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "硅砂",
+    "key": "silica_sand",
+    "category": "材料",
+    "description": "洁白细腻的砂粒，主要成分为二氧化硅。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "磷",
+    "key": "phosphorus",
+    "category": "材料",
+    "description": "蜡状半透明固体，在空气中会自燃，通常需保存在水下。",
+    "type": [
+      "material"
+    ],
+    "elemental": 15
+  },
+  {
+    "name": "沙子",
+    "key": "sand",
+    "category": "材料",
+    "description": "浅黄色、细小的颗粒，握在手中会从指缝间滑落，夹杂着微小的贝壳碎屑。",
+    "type": [
+      "material"
+    ],
+    "elemental": 14
+  },
+  {
+    "name": "筛子",
+    "key": "sieve",
+    "category": "工具",
+    "description": "用木框和纤维布编织而成的筛网，可以用来筛选不同粒度的颗粒物。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "key": "cobaltite",
+    "name": "辉钴矿",
+    "category": "材料",
+    "description": "银白色或锡白色的金属光泽矿物，常呈立方体或八面体晶体，表面有时带有灰色调。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化钴",
+    "key": "cobalt_oxide",
+    "category": "材料",
+    "description": "灰黑色粉末，无味。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钴",
+    "key": "cobalt",
+    "category": "材料",
+    "description": "银灰色金属，有磁性，质地坚硬。",
+    "type": [
+      "material"
+    ],
+    "elemental": 27
+  },
+  {
+    "name": "钴蓝",
+    "key": "cobalt_blue",
+    "category": "材料",
+    "description": "鲜艳的蓝色粉末，常用于陶瓷和玻璃着色。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "cobalt_pickaxe",
+    "name": "钴镐",
+    "category": "工具",
+    "description": "用钴金属制成的镐头，坚硬耐磨，适合挖矿。",
+    "type": [
+      "tool"
+    ],
+    "durable": 3
+  },
+  {
+    "key": "cobalt_axe",
+    "name": "钴斧",
+    "category": "工具",
+    "description": "用钴金属制成的斧刃，锋利且坚固。",
+    "type": [
+      "tool"
+    ],
+    "durable": 3
+  },
+  {
+    "name": "砷铂矿",
+    "key": "sperrylite",
+    "category": "材料",
+    "description": "锡白色或钢灰色的金属光泽晶体，常呈立方体或八面体，质地坚硬，分量极重。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "铂金锭",
+    "key": "platinum_ingot",
+    "category": "材料",
+    "description": "银白色闪亮的金属块，表面如镜面般光滑，手感异常沉重，散发着高贵而冷冽的光泽。",
+    "type": [
+      "material"
+    ],
+    "elemental": 78
+  },
+  {
+    "name": "镍黄铁矿",
+    "key": "pentlandite",
+    "category": "材料",
+    "description": "暗铜黄色的块状矿石，表面有金属光泽，断面呈不规则粒状，手感沉重。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化镍",
+    "key": "nickel_oxide",
+    "category": "材料",
+    "description": "灰绿色的粉末，质地细腻，无气味。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "镍",
+    "key": "nickel",
+    "category": "材料",
+    "description": "银白色的金属块，表面略带浅黄色调，具有良好的延展性和磁性。",
+    "type": [
+      "material"
+    ],
+    "elemental": 28
+  },
+  {
+    "key": "nickel_pickaxe",
+    "name": "镍镐",
+    "category": "工具",
+    "description": "用镍合金打造的镐头，比铁镐更坚韧耐用，适合挖掘更坚硬的矿石。",
+    "type": [
+      "tool"
+    ],
+    "durable": 4
+  },
+  {
+    "key": "nickel_axe",
+    "name": "镍斧",
+    "category": "工具",
+    "description": "用镍合金打造的斧刃，锋利且耐腐蚀，适合砍伐硬木。",
+    "type": [
+      "tool"
+    ],
+    "durable": 4
+  },
+  {
+    "name": "三氧化硫",
+    "key": "sulfur_trioxide",
+    "category": "气体",
+    "description": "无色刺鼻的气体，在空气中会形成白色酸雾，吸入后对呼吸道有强烈刺激。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 16
+  },
+  {
+    "name": "稀硫酸",
+    "key": "dilute_sulfuric_acid",
+    "category": "液体",
+    "description": "无色油状液体，具有强酸性，能腐蚀多数金属，在工业中有广泛用途。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 16
+  },
+  {
+    "name": "绿矾",
+    "key": "green_vitriol",
+    "category": "材料",
+    "description": "翠绿色透明的晶体碎块，在光照下闪烁玻璃般的光泽，表面微微潮湿，散发着一股淡淡的金属酸味。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "硫酸锌",
+    "key": "zinc_sulfate",
+    "category": "材料",
+    "description": "白色结晶粉末，味涩，易溶于水，在空气中逐渐风化失水。",
+    "type": [
+      "material"
+    ],
+    "elemental": 30,
+    "is_discovery": true
+  },
+  {
+    "name": "硫酸亚铁",
+    "key": "iron_sulfate",
+    "category": "材料",
+    "description": "淡蓝绿色的晶体粉末，暴露在空气中会逐渐氧化变为黄褐色。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸亚锡",
+    "key": "tin_sulfate",
+    "category": "材料",
+    "description": "无色或白色的晶体，在潮湿空气中会缓慢水解。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸铅",
+    "key": "lead_sulfate",
+    "category": "材料",
+    "description": "白色重质粉末，几乎不溶于水，在稀硫酸中溶解度极低。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸钴",
+    "key": "cobalt_sulfate",
+    "category": "材料",
+    "description": "深红色的结晶粉末，溶于水后呈现玫瑰红色溶液。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸镍",
+    "key": "nickel_sulfate",
+    "category": "材料",
+    "description": "翠绿色的晶体，受热时失去结晶水变为黄绿色。",
+    "type": [
+      "material"
+    ]
   }
 ]
