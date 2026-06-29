@@ -147,7 +147,7 @@ async function loadRecords() { const r = await admin.apiFetch('/api/formulas'); 
 async function fetchRefs() { const [ir,tr,lr,cr] = await Promise.all([admin.apiFetch('/api/items'), admin.apiFetch('/api/techs'), admin.apiFetch('/api/labs'), admin.apiFetch('/api/items')]); itemOptions.value = await ir.json(); techOptions.value = await tr.json(); labOptions.value = await lr.json(); containerItems.value = (await cr.json()).filter((i:any)=>i.type?.includes('container')) }
 
 function addItemKey(row: any) { const v = row._input; if (!v) return; if (!row._keys.includes(v)) row._keys.push(v); row._input = ''; row.key = row._keys.join(',') }
-function removeItemKey(row: any, idx: number) { row._keys.splice(idx,1); row.key = row._keys.join(',') || '' }
+function removeItemKey(row: any, idx: number|string) { row._keys.splice(idx,1); row.key = row._keys.join(',') || '' }
 
 function resetForm() { Object.assign(form, { key:'', name:'', description:'', time_required:30, container:'', action_key:'', action_min:1, action_max:undefined, techs:[] }); objItems.splice(0); objProducts.splice(0); editing.value = null }
 function openNew() { resetForm(); modalRef.value?.showModal() }

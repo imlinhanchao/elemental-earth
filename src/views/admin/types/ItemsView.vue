@@ -115,10 +115,10 @@ function closeModal() { modalRef.value?.close() }
 async function save() {
   if (!form.key) { alert('标识符不能为空'); return }
   const body: Record<string,any> = {}
-  for (const k of ['key','name','category','description']) { if (form[k]) body[k] = form[k] }
+  for (const k of ['key','name','category','description']) { if ((form as any)[k]) body[k] = (form as any)[k] }
   if (form.type.length) body.type = [...form.type]
-  if (form.elemental !== undefined && form.elemental !== '' && !isNaN(Number(form.elemental))) body.elemental = Number(form.elemental)
-  if (form.durable !== undefined && form.durable !== '' && !isNaN(Number(form.durable))) body.durable = Number(form.durable)
+  if (form.elemental !== undefined && !isNaN(Number(form.elemental))) body.elemental = Number(form.elemental)
+  if (form.durable !== undefined && !isNaN(Number(form.durable))) body.durable = Number(form.durable)
   if (form.is_discovery) body.is_discovery = true
   if (formJson.attrs.trim()) { try { body.attrs = JSON.parse(formJson.attrs) } catch { alert('属性 JSON 格式错误'); return } }
   try {
