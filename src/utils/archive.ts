@@ -149,6 +149,93 @@ export function deleteSaveData(): void {
   lastSavedTime.value = null;
 }
 
+/** 导出存档为加密 + base64 字符串 */
+export function exportSaveData(): string | null {
+  try {
+    const fullKey = 'es_' + SAVE_KEY;
+    const encrypted = localStorage.getItem(fullKey);
+    if (!encrypted) { alert('没有存档数据可导出'); return null; }
+    return btoa(unescape(encodeURIComponent(encrypted)));
+  } catch (e) {
+    console.error('导出存档失败:', e);
+    alert('导出失败: ' + (e as Error).message);
+    return null;
+  }
+}
+
+/** 下载存档文件 */
+export function downloadSaveData(): void {
+  const data = exportSaveData();
+  if (!data) return;
+  const blob = new Blob([data], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `elemental-earth-save-${new Date().toISOString().slice(0, 10)}.sav`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/** 从 base64 字符串导入存档 */
+export function importSaveDataFromText(text: string): boolean {
+  try {
+    const raw = decodeURIComponent(escape(atob(text.trim())));
+    // 校验：AES 加密数据以 "U2FsdGVkX1" 的 base64 形式开头
+    if (!raw.startsWith('U2FsdGVkX1')) {
+      alert('无效的存档数据：格式不正确');
+      return false;
+    }
+    const fullKey = 'es_' + SAVE_KEY;
+    localStorage.setItem(fullKey, raw);
+    alert('存档已导入，页面将重新加载');
+    window.location.reload();
+    return true;
+  } catch (e) {
+    alert('导入失败: ' + (e as Error).message);
+    return false;
+  }
+}
+
+/** 从文件导入存档（支持 .sav 加密格式 和 .json 明文格式） */
+export function importSaveDataFromFile(): Promise<boolean> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.sav,.json';
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) { resolve(false); return; }
+      try {
+        const text = await file.text();
+        // 尝试作为加密 base64 导入
+        try {
+          const raw = decodeURIComponent(escape(atob(text.trim())));
+          if (raw.startsWith('U2FsdGVkX1')) {
+            localStorage.setItem('es_' + SAVE_KEY, raw);
+            alert('存档已导入，页面将重新加载');
+            window.location.reload();
+            resolve(true); return;
+          }
+        } catch {}
+        // 尝试作为明文 JSON（旧格式兼容）
+        const data = JSON.parse(text) as SaveData;
+        if (!data.version || !data.state || !Array.isArray(data.items)) {
+          alert('无效的存档文件');
+          resolve(false); return;
+        }
+        storage.setItem(SAVE_KEY, data);
+        alert('存档已导入，页面将重新加载');
+        window.location.reload();
+        resolve(true);
+      } catch (e) {
+        alert('导入失败: ' + (e as Error).message);
+        resolve(false);
+      }
+    };
+    input.click();
+  });
+}
+
 /** 获取格式化的上次保存描述（用于按钮 tooltip） */
 export function getLastSavedLabel(): string {
   if (lastSavedTime.value === null) return '尚未保存';

@@ -3,7 +3,9 @@
     <!-- 标题栏 -->
     <div class="flex items-center gap-3 mb-6">
       <button class="btn btn-ghost btn-sm" @click="$router.push('/admin/dashboard')">← 返回</button>
-      <h2 class="text-xl font-bold">🗺 地图管理</h2>
+      <h2 class="text-xl font-bold inline-flex items-center gap-1">
+        <Icon icon="tabler:map" class="inline-block align-middle mr-1" />地图管理
+      </h2>
       <span class="badge badge-ghost badge-sm">{{ records.length }} 条</span>
     </div>
 

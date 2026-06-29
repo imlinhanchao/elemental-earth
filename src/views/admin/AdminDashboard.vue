@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-screen">
     <header class="navbar bg-base-200 border-b border-base-300 px-4 flex-none">
-      <div class="flex-1"><span class="text-lg font-bold">⚙️ 数据管理后台</span></div>
+      <div class="flex-1"><span class="text-lg font-bold inline-flex items-center gap-1"><Icon icon="tabler:settings" class="inline-block align-middle mr-1" />数据管理后台</span></div>
       <div class="flex-none"><button class="btn btn-ghost btn-xs" @click="logout">退出</button></div>
     </header>
     <div class="flex-1 overflow-y-auto p-6">
@@ -23,7 +23,9 @@
           class="card bg-base-200 hover:bg-base-300 transition-colors cursor-pointer border border-primary/30"
         >
           <div class="card-body p-4">
-            <h3 class="font-bold text-base">🤖 AI 生成</h3>
+            <h3 class="font-bold text-base inline-flex items-center gap-1">
+              <Icon icon="humbleicons:ai" class="inline" /> AI 生成
+            </h3>
             <p class="text-xs text-base-content/40">通过 AI 自动生成游戏数据</p>
           </div>
         </router-link>

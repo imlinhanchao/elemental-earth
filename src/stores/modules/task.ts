@@ -8,6 +8,7 @@ import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { useLogStore } from './log';
 import { getItem } from '@/data/items';
+import { notifyTaskComplete } from '@/utils/notification';
 
 export interface ITask extends IAction {
   id: number;
@@ -78,8 +79,10 @@ export const useTaskStore = defineStore('task', () => {
             if (packStore.addItem(reward.key, quantity)) {
               logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
             }
+            notifyTaskComplete(task.name, `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
           } else {
             logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
+            notifyTaskComplete(task.name, '未获得奖励');
           }
         } else if (task.type === 'lab') {
           // lab 类型：给予所有产物
@@ -87,6 +90,7 @@ export const useTaskStore = defineStore('task', () => {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
             if (packStore.addItem(reward.key, quantity)) {
               logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+              notifyTaskComplete('实验室', `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
             }
           }
           // 发现新配方日志（任务完成时记录）
@@ -101,6 +105,7 @@ export const useTaskStore = defineStore('task', () => {
         } else {
           packStore.addTech(task.key);
           logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
+          notifyTaskComplete(task.name, '科技研究完成');
         }
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length > 0) {

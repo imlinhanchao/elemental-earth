@@ -22,7 +22,7 @@
         <button class="btn btn-success btn-sm" @click="saveAll">💾 保存已选 ({{ totalChecked }})</button>
         <button class="btn btn-ghost btn-xs" @click="toggleAll(true)">全选</button>
         <button class="btn btn-ghost btn-xs" @click="toggleAll(false)">全不选</button>
-        <button class="btn btn-ghost btn-sm" @click="result = null">🗑 清空</button>
+        <button class="btn btn-ghost btn-sm" @click="result = null"><Icon icon="tabler:trash" class="text-sm" />清空</button>
       </div>
 
       <ResultSection title="🧪 物品" :items="result.items" type="items" :checked="checkStates.items" @edit="openEditor" />

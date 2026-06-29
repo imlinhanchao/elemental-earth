@@ -510,8 +510,8 @@ function startExperiment() {
         </select>
         <p v-if="availableContainers.length === 0" class="text-xs text-base-content/60">背包中无可用容器</p>
         <div v-if="selectedContainerKey" class="mt-1 text-xs space-x-2">
-          <span v-if="containerCanHeat" class="text-success">✅ 可加热</span>
-          <span v-else class="text-error">❌ 不可加热</span>
+          <span v-if="containerCanHeat" class="text-success"><Icon icon="tabler:flame" class="text-sm inline-block align-middle" />可加热</span>
+          <span v-else class="text-error"><Icon icon="tabler:flame-off" class="text-sm inline-block align-middle" />不可加热</span>
         </div>
       </div>
     </div>
@@ -548,7 +548,7 @@ function startExperiment() {
         </div>
         <div v-if="selectedOperation" class="mt-2 text-xs text-base-content/70 space-y-0.5">
           <p>{{ selectedOperation.description }}</p>
-          <p v-if="selectedOperation.requires_burning" class="text-warning">🔥 需要火源</p>
+          <p v-if="selectedOperation.requires_burning" class="text-warning"><Icon icon="tabler:flame" class="text-sm inline-block align-middle" />需要火源</p>
           <p v-if="selectedOperation.required_item"
              :class="operationRequirementMet ? '' : 'text-error'">
             需要: {{ selectedOperation.required_item.map(r => {

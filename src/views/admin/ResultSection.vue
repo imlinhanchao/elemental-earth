@@ -17,7 +17,7 @@
           </div>
           <p class="text-xs text-base-content/60 truncate">{{ item.description }}</p>
         </div>
-        <button class="btn btn-xs btn-ghost shrink-0" @click="$emit('edit', type, idx)">✏️</button>
+        <button class="btn btn-xs btn-ghost shrink-0" @click="$emit('edit', type, idx)"><Icon icon="tabler:edit" class="text-xs" /></button>
       </div>
     </div>
   </div>

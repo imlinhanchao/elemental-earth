@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center min-h-screen bg-base-300">
     <div class="card bg-base-200 shadow-xl w-full max-w-sm">
       <div class="card-body">
-        <h2 class="card-title text-xl justify-center mb-2">⚙️ 数据管理后台</h2>
+        <h2 class="card-title text-xl justify-center mb-2"><Icon icon="tabler:settings" class="inline-block align-middle mr-1" />数据管理后台</h2>
         <p class="text-sm text-base-content/60 text-center mb-4">请输入管理员密码登录</p>
 
         <div class="form-control gap-1 mb-4">
