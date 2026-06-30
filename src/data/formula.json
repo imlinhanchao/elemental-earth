@@ -2193,8 +2193,7 @@
       }
     ],
     "required_container": "kiln",
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 10,
     "products": [
       {
@@ -2222,8 +2221,7 @@
       }
     ],
     "required_container": "crucible",
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 20,
     "products": [
       {
@@ -2232,6 +2230,266 @@
       },
       {
         "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解熔融钾石盐制钾",
+    "key": "potassium_electrolysis",
+    "description": "将钾石盐加热熔融后，通过电解得到金属钾和氯气。",
+    "required_items": [
+      {
+        "key": "sylvite",
+        "quantity": 2
+      },
+      {
+        "key": "battery",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "potassium",
+        "multiple": 2
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "草木灰制碳酸钾",
+    "key": "potash_from_wood_ash",
+    "description": "将草木灰溶于水，过滤后蒸发得到碳酸钾。",
+    "required_items": [
+      {
+        "key": "wood_ash",
+        "quantity": 5
+      },
+      {
+        "key": "water",
+        "quantity": 3
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "potassium_carbonate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "碳酸钾制氢氧化钾",
+    "key": "potassium_hydroxide_from_carbonate",
+    "description": "碳酸钾与熟石灰反应生成氢氧化钾和碳酸钙沉淀。",
+    "required_items": [
+      {
+        "key": "potassium_carbonate",
+        "quantity": 1
+      },
+      {
+        "key": "slaked_lime",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 2
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "potassium_hydroxide",
+        "multiple": 1
+      },
+      {
+        "key": "limestone",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解熔融岩盐制钠",
+    "key": "sodium_from_halite",
+    "description": "通过熔融电解将岩盐分解为金属钠和氯气。",
+    "required_items": [
+      {
+        "key": "rock_salt",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "sodium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "钠与水反应制氢氧化钠",
+    "key": "sodium_with_water",
+    "description": "将钠投入水中，剧烈反应生成氢氧化钠和氢气。",
+    "required_items": [
+      {
+        "key": "sodium",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "sodium_hydroxide",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "氢氧化钠与二氧化碳制碳酸钠",
+    "key": "sodium_carbonate_from_hydroxide",
+    "description": "氢氧化钠溶液吸收二氧化碳，生成碳酸钠和水。",
+    "required_items": [
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "sodium_carbonate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "石灰石制氯化钙",
+    "key": "calcium_chloride_from_limestone",
+    "description": "将石灰石与盐酸反应，生成氯化钙、二氧化碳和水。",
+    "required_items": [
+      {
+        "key": "limestone",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 2
+    },
+    "time_required": 5,
+    "products": [
+      {
+        "key": "calcium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解熔融氯化钙制钙",
+    "key": "calcium_electrolysis",
+    "description": "将熔融的氯化钙电解，在阴极得到金属钙，阳极产生氯气。",
+    "required_items": [
+      {
+        "key": "calcium_chloride",
+        "quantity": 3
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "calcium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
         "multiple": 1
       }
     ]

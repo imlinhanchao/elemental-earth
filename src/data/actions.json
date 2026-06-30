@@ -549,6 +549,74 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "sylvite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "map": [
+          "salt_lake"
+        ]
+      },
+      {
+        "key": "carnallite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 150,
+        "map": [
+          "salt_lake"
+        ]
+      },
+      {
+        "key": "mirabilite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "fluorite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 300,
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "calcite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 500,
+        "map": [
+          "cave",
+          "mountain"
+        ]
+      },
+      {
+        "key": "dolomite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 400,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       }
     ]
   },
@@ -1434,6 +1502,41 @@
         ],
         "probability": 100,
         "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "fluorite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 200,
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "calcite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 300,
+        "map": [
+          "cave",
+          "mountain"
+        ]
+      },
+      {
+        "key": "dolomite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 250,
+        "map": [
+          "mountain",
           "cave"
         ]
       }

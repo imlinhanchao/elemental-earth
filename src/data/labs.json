@@ -178,5 +178,29 @@
     ],
     "requires_burning": false,
     "is_chain": true
+  },
+  {
+    "key": "evaporation",
+    "name": "蒸发",
+    "description": "通过加热使液体蒸发，留下固体溶质。",
+    "time_required": 100,
+    "requires_burning": true
+  },
+  {
+    "name": "熔融电解",
+    "key": "molten_electrolysis",
+    "description": "在高温下将熔融态的化合物通电分解，获得单质。",
+    "time_required": 30,
+    "required_item": [
+      {
+        "key": "crucible",
+        "quantity": 1,
+        "use": 0.02
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "requires_burning": true
   }
 ]
