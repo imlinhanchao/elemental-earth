@@ -330,5 +330,23 @@
       "explosives"
     ],
     "time_required": 60
+  },
+  {
+    "name": "锂离子电池技术",
+    "key": "lithium_battery_tech",
+    "description": "掌握了锂离子电池的组装和电解质配方技术。",
+    "required_items": [
+      {
+        "key": "lithium",
+        "quantity": 2
+      },
+      {
+        "key": "copper",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+    ],
+    "time_required": 120
   }
 ]

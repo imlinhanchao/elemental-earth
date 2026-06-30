@@ -2933,5 +2933,353 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "焙烧菱镁矿",
+    "key": "roast_magnesite",
+    "description": "将菱镁矿在窑炉中高温焙烧，分解为氧化镁和二氧化碳。",
+    "required_items": [
+      {
+        "key": "magnesite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 120,
+    "products": [
+      {
+        "key": "magnesium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "菱镁矿制氯化镁",
+    "key": "magnesite_to_magnesium_chloride",
+    "description": "用盐酸溶解菱镁矿，生成氯化镁、水和二氧化碳。",
+    "required_items": [
+      {
+        "key": "magnesite",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "magnesium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解熔融氯化镁制镁",
+    "key": "electrolysis_magnesium_chloride",
+    "description": "在坩埚中熔融氯化镁，电解得到金属镁和氯气。",
+    "required_items": [
+      {
+        "key": "magnesium_chloride",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 180,
+    "products": [
+      {
+        "key": "magnesium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "钾还原硼酸",
+    "key": "potassium_reduction_of_boric_acid",
+    "description": "将钾与硼酸混合加热，发生的剧烈反应可制得硼单质。",
+    "required_items": [
+      {
+        "key": "potassium",
+        "quantity": 6
+      },
+      {
+        "key": "boric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [],
+    "time_required": 150,
+    "products": [
+      {
+        "key": "boron",
+        "multiple": 2
+      },
+      {
+        "key": "potassium_hydroxide",
+        "multiple": 6
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 3,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "干燥海藻",
+    "key": "dry_seaweed",
+    "description": "将新鲜海藻加热烘干，除去水分得到干海藻。",
+    "required_items": [
+      {
+        "key": "seaweed",
+        "quantity": 1
+      }
+    ],
+    "required_container": null,
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 15,
+    "products": [
+      {
+        "key": "dried_seaweed",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "烧制海藻灰",
+    "key": "ash_seaweed",
+    "description": "在窑炉中燃烧干海藻，得到海藻灰。",
+    "required_items": [
+      {
+        "key": "dried_seaweed",
+        "quantity": 2
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "sea_weed_ash",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "提取碘",
+    "key": "extract_iodine",
+    "description": "将海藻灰与稀硫酸、软锰矿混合加热，产生的碘蒸气通过冷凝收集。",
+    "required_items": [
+      {
+        "key": "sea_weed_ash",
+        "quantity": 3
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "pyrolusite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "iodine",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      }
+    ]
+  },
+  {
+    "name": "硫酸法提锂",
+    "key": "lithium_sulfate_from_spodumene",
+    "description": "将锂辉石与浓硫酸混合加热，生成可溶的硫酸锂和硅渣。",
+    "required_items": [
+      {
+        "key": "spodumene",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "lithium_sulfate",
+        "multiple": 1
+      },
+      {
+        "key": "silica_sand",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "碳酸锂制备",
+    "key": "lithium_carbonate_from_sulfate",
+    "description": "硫酸锂溶液与碳酸钠反应，生成碳酸锂沉淀和硫酸钠。",
+    "required_items": [
+      {
+        "key": "lithium_sulfate",
+        "quantity": 2
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "lithium_carbonate",
+        "multiple": 1
+      },
+      {
+        "key": "mirabilite",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "氢氧化锂制备",
+    "key": "lithium_hydroxide_from_carbonate",
+    "description": "碳酸锂与熟石灰在加热下反应，生成氢氧化锂和碳酸钙。",
+    "required_items": [
+      {
+        "key": "lithium_carbonate",
+        "quantity": 1
+      },
+      {
+        "key": "slaked_lime",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "lithium_hydroxide",
+        "multiple": 1
+      },
+      {
+        "key": "limestone",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "熔融电解氯化锂制锂",
+    "key": "lithium_from_chloride",
+    "description": "熔融氯化锂通过电解分解，在阴极得到金属锂，阳极产生氯气。",
+    "required_items": [
+      {
+        "key": "lithium_chloride",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 120,
+    "products": [
+      {
+        "key": "lithium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ]
   }
 ]
