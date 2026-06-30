@@ -649,6 +649,14 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "quartz",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200
       }
     ]
   },
@@ -1624,6 +1632,14 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "quartz",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300
       }
     ],
     "required_techs": [
@@ -1931,5 +1947,125 @@
       }
     ],
     "time_required": 120
+  },
+  {
+    "name": "吹制玻璃烧杯",
+    "key": "craft_beaker",
+    "category": "制作",
+    "description": "利用玻璃熔融状态吹制成烧杯形状。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "beaker",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 20,
+    "formula": null
+  },
+  {
+    "name": "拉制玻璃试管",
+    "key": "craft_test_tube",
+    "category": "制作",
+    "description": "将熔融玻璃拉制成细管并封闭一端。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "test_tube",
+        "quantity": 3,
+        "probability": 1000
+      }
+    ],
+    "time_required": 15,
+    "formula": null
+  },
+  {
+    "name": "制作玻璃蒸馏瓶",
+    "key": "craft_distilling_flask",
+    "category": "制作",
+    "description": "吹制带有侧管的蒸馏瓶。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "distilling_flask",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 25,
+    "formula": null
+  },
+  {
+    "name": "制作玻璃漏斗",
+    "key": "craft_glass_funnel",
+    "category": "制作",
+    "description": "将玻璃熔体压制成漏斗形状。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "glass_funnel",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 15,
+    "formula": null
+  },
+  {
+    "name": "拉制玻璃棒",
+    "key": "craft_glass_rod",
+    "category": "制作",
+    "description": "将熔融玻璃拉制成细棒。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "glass_rod",
+        "quantity": 2,
+        "probability": 1000
+      }
+    ],
+    "time_required": 10,
+    "formula": null
   }
 ]

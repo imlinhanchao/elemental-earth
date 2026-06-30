@@ -3172,8 +3172,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 60,
     "products": [
       {
@@ -3205,8 +3204,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 30,
     "products": [
       {
@@ -3238,8 +3236,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 40,
     "products": [
       {
@@ -3268,8 +3265,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 120,
     "products": [
       {
@@ -3278,6 +3274,106 @@
       },
       {
         "key": "chlorine",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "碳还原硅砂制粗硅",
+    "key": "reduce_silica",
+    "description": "将硅砂与木炭在高温下反应，生成粗硅和一氧化碳。",
+    "required_items": [
+      {
+        "key": "silica_sand",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "silicon",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "制作玻璃",
+    "key": "glass_making",
+    "description": "将硅砂与碳酸钠混合加热熔融，冷却后得到玻璃。",
+    "required_items": [
+      {
+        "key": "silica_sand",
+        "quantity": 2
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 90,
+    "products": [
+      {
+        "key": "glass",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "玻璃蒸馏浓缩稀硫酸",
+    "key": "concentrate_sulfuric_acid_glass",
+    "description": "利用玻璃蒸馏装置加热浓缩稀硫酸，得到浓硫酸。",
+    "required_items": [
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 3
+      }
+    ],
+    "required_container": "distilling_flask",
+    "required_actions": {
+      "key": "glass_distillation",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "glassworking"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "concentrated_sulfuric_acid",
+        "multiple": 1
+      },
+      {
+        "key": "water",
         "multiple": 1
       }
     ]

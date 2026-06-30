@@ -345,7 +345,21 @@
         "quantity": 3
       }
     ],
+    "required_techs": [],
+    "time_required": 120
+  },
+  {
+    "name": "玻璃加工技术",
+    "key": "glassworking",
+    "description": "掌握了高温下对玻璃进行吹制、拉制和压制的技术，能够制作各种玻璃器材。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 5
+      }
+    ],
     "required_techs": [
+      "high_temp_furnace"
     ],
     "time_required": 120
   }

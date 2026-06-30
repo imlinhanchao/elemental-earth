@@ -210,5 +210,28 @@
     "time_required": 10,
     "requires_burning": true,
     "is_chain": false
+  },
+  {
+    "name": "玻璃蒸馏",
+    "key": "glass_distillation",
+    "description": "使用玻璃蒸馏瓶进行蒸馏操作，配合冷凝管收集馏分。",
+    "time_required": 30,
+    "required_item": [
+      {
+        "key": "distilling_flask",
+        "quantity": 1,
+        "use": 0.1
+      },
+      {
+        "key": "brass_condenser",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "requires_burning": true,
+    "is_chain": false
   }
 ]

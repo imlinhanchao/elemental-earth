@@ -1905,5 +1905,84 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "石英",
+    "key": "quartz",
+    "category": "材料",
+    "description": "无色透明或乳白色的六方柱状晶体，断口呈油脂光泽，质地坚硬且脆。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "硅",
+    "key": "silicon",
+    "category": "材料",
+    "description": "灰黑色、具有金属光泽的脆性固体，断面呈粗糙的结晶状。",
+    "type": [
+      "material"
+    ],
+    "elemental": 14
+  },
+  {
+    "name": "玻璃",
+    "key": "glass",
+    "category": "材料",
+    "description": "透明或半透明的非晶态固体，表面光滑，质地坚硬但易碎。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "玻璃烧杯",
+    "key": "beaker",
+    "category": "容器",
+    "description": "透明、耐热的玻璃容器，杯壁轻薄，底部平坦，边缘有倒嘴，便于倾倒液体。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "玻璃试管",
+    "key": "test_tube",
+    "category": "容器",
+    "description": "细长透明的玻璃管，一端开口，底部呈圆形，壁薄而均匀。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "玻璃蒸馏瓶",
+    "key": "distilling_flask",
+    "category": "容器",
+    "description": "带有长颈和侧支管的玻璃瓶，瓶身圆润，玻璃质地均匀透明。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "玻璃漏斗",
+    "key": "glass_funnel",
+    "category": "工具",
+    "description": "圆锥形玻璃器具，内壁光滑，下端细长，常用于过滤和转移液体。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "玻璃棒",
+    "key": "glass_rod",
+    "category": "工具",
+    "description": "细长透明的实心玻璃棒，表面光滑均匀，两端圆润。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
   }
 ]
