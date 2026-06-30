@@ -717,8 +717,8 @@ function startExperiment() {
               </span>
             </div>
             <!-- 气体提示 -->
-            <div v-if="matchedFormula && hasGasProducts && !selectedChainOperationKey.has('gas_collecting')" class="text-xs text-warning mt-1">
-              ⚠️ 该配方会产生气体，但未追加「气体收集」操作，气体将逸散
+            <div v-if="matchedFormula && hasGasProducts" class="text-xs text-warning mt-1">
+              ⚠️ 该配方会产生气体，需追加对应集气操作才能收集
             </div>
           </template>
           <template v-else>

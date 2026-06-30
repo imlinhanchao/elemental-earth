@@ -1289,7 +1289,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -1349,7 +1350,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -1377,6 +1379,144 @@
     "products": [
       {
         "key": "cement",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解水",
+    "key": "water_electrolysis",
+    "description": "将直流电通入水中，水分解为氢气和氧气。",
+    "required_items": [
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "hydrogen",
+        "multiple": 2,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "oxygen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "电解食盐水",
+    "key": "electrolysis_brine",
+    "description": "通过电解饱和食盐水制取氯气、氢气和碱液。",
+    "required_items": [
+      {
+        "key": "rock_salt",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      },
+      {
+        "key": "battery",
+        "quantity": 1,
+        "use": 0.01
+      }
+    ],
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "halogen_chemistry"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "chlorine",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "alkaline_solution",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "合成盐酸",
+    "key": "hydrochloric_acid_synthesis",
+    "description": "将氯气和氢气混合点燃生成氯化氢，再溶于水得到盐酸。",
+    "required_items": [
+      {
+        "key": "chlorine",
+        "quantity": 1
+      },
+      {
+        "key": "hydrogen",
+        "quantity": 1
+      },
+      {
+        "key": "fire_seed",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "required_techs": [
+      "halogen_chemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "hydrochloric_acid",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "制备漂白粉",
+    "key": "bleaching_powder_production",
+    "description": "氯气与熟石灰反应生成漂白粉。",
+    "required_items": [
+      {
+        "key": "chlorine",
+        "quantity": 1
+      },
+      {
+        "key": "slaked_lime",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "halogen_chemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "bleaching_powder",
         "multiple": 1
       }
     ]

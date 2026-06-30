@@ -1288,5 +1288,58 @@
     "required_techs": [
       "explosives"
     ]
+  },
+  {
+    "name": "制作电池",
+    "key": "craft_battery",
+    "category": "制作",
+    "description": "将锌片和铜片插入稀硫酸中，用导线连接，制成简易电池。",
+    "required_items": [
+      {
+        "key": "zinc",
+        "quantity": 1
+      },
+      {
+        "key": "copper",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "rewards": [
+      {
+        "key": "battery",
+        "quantity": 1
+      }
+    ],
+    "time_required": 10,
+    "map": [
+      "laboratory"
+    ]
+  },
+  {
+    "name": "采盐",
+    "key": "extract_salt",
+    "category": "采集",
+    "description": "在盐湖边缘采集结晶的盐块。",
+    "time_required": 10,
+    "rewards": [
+      {
+        "key": "rock_salt",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 900
+      }
+    ],
+    "map": [
+      "salt_lake"
+    ]
   }
 ]

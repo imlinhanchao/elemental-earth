@@ -248,5 +248,28 @@
       }
     ],
     "time_required": 60
+  },
+  {
+    "name": "电化学",
+    "key": "electrochemistry",
+    "description": "掌握了利用化学反应产生电流的方法，以及电流对物质的作用。",
+    "required_items": [
+      {
+        "key": "zinc",
+        "quantity": 2
+      },
+      {
+        "key": "copper",
+        "quantity": 2
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "bronze_tool_crafting"
+    ],
+    "time_required": 60
   }
 ]

@@ -1098,5 +1098,66 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "氧气",
+    "key": "oxygen",
+    "category": "气体",
+    "description": "无色无味的气体，看不见摸不着，但能明显感受到它的活跃——让火星迸发、让火焰更旺。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 8
+  },
+  {
+    "name": "电池",
+    "key": "battery",
+    "category": "工具",
+    "description": "用锌片、铜片和稀硫酸制成的伏打电池，两根金属片浸在酸液中，能产生稳定的直流电。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "岩盐",
+    "key": "rock_salt",
+    "category": "材料",
+    "description": "白色或浅灰色的结晶块，表面有透明感，味咸。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氯气",
+    "key": "chlorine",
+    "category": "气体",
+    "description": "黄绿色的气体，具有强烈的刺激性气味，吸入会感到窒息。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 17
+  },
+  {
+    "name": "盐酸",
+    "key": "hydrochloric_acid",
+    "category": "液体",
+    "description": "无色透明液体，有刺鼻酸味，具有强腐蚀性。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "漂白粉",
+    "key": "bleaching_powder",
+    "category": "材料",
+    "description": "白色粉末，带有氯气的刺激性气味。",
+    "type": [
+      "material"
+    ]
   }
 ]

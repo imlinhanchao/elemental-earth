@@ -142,5 +142,41 @@
     "description": "将物体溶解在液体中，以促进化学反应或物理变化。",
     "time_required": 15,
     "requires_burning": false
+  },
+  {
+    "name": "电解",
+    "key": "electrolysis",
+    "description": "利用直流电使溶液中的离子发生氧化还原反应，分解化合物。",
+    "time_required": 20,
+    "required_item": [
+      {
+        "key": "battery",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "requires_burning": false,
+    "is_chain": false
+  },
+  {
+    "key": "gas_collecting_air",
+    "name": "排空气集气",
+    "description": "使用集气瓶在空气中收集密度比空气大的气体，适用于溶于水的气体。",
+    "time_required": 10,
+    "required_item": [
+      {
+        "key": "gas_bottle",
+        "quantity": 1,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "gas_collection"
+    ],
+    "requires_burning": false,
+    "is_chain": true
   }
 ]
