@@ -2288,5 +2288,180 @@
       "mountain",
       "volcano"
     ]
+  },
+  {
+    "key": "directional_blasting",
+    "name": "定向爆破",
+    "category": "采集",
+    "description": "使用定向爆破技术精确开采特定矿脉，有几率获得稀有矿物。",
+    "time_required": 45,
+    "cooldown": 900,
+    "required_items": [
+      {
+        "key": "detonator",
+        "quantity": 5
+      },
+      {
+        "key": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "stone",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 1000,
+        "guaranteed": true
+      },
+      {
+        "key": "cinnabar",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 500
+          },
+          {
+            "key": "mountain",
+            "probability": 200
+          }
+        ]
+      },
+      {
+        "key": "argentite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 250,
+        "map": [
+          {
+            "key": "cave",
+            "probability": 400
+          },
+          {
+            "key": "mountain",
+            "probability": 200
+          }
+        ]
+      },
+      {
+        "key": "stibnite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 250,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 400
+          }
+        ]
+      },
+      {
+        "key": "sperrylite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 30,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 50
+          }
+        ]
+      },
+      {
+        "key": "molybdenite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "scheelite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "realgar",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 350
+          }
+        ]
+      },
+      {
+        "key": "orpiment",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 250
+          }
+        ]
+      },
+      {
+        "key": "phosphorite",
+        "quantity": [
+          3,
+          6
+        ],
+        "probability": 300,
+        "map": [
+          "island"
+        ]
+      }
+    ],
+    "required_techs": [
+      "explosives"
+    ],
+    "map": [
+      "mountain",
+      "cave",
+      "volcano",
+      "island"
+    ]
   }
 ]
