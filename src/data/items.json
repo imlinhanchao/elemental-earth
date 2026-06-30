@@ -1984,5 +1984,72 @@
       "tool"
     ],
     "durable": 1
+  },
+  {
+    "name": "铝土矿",
+    "key": "bauxite",
+    "category": "材料",
+    "description": "红褐色或灰色的土状矿石，表面粗糙，常混杂着铁质斑点，手感沉重而黏腻。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "冰晶石",
+    "key": "cryolite",
+    "category": "材料",
+    "description": "无色至白色的透明矿物，玻璃光泽，质地较软，像冰糖般易碎。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氢氧化铝",
+    "key": "aluminum_hydroxide",
+    "category": "材料",
+    "description": "白色无定形粉末，质地细腻，略带滑腻感。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化铝",
+    "key": "alumina",
+    "category": "材料",
+    "description": "白色粉末，极细，手感干燥，有轻微吸湿性。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铝",
+    "key": "aluminum",
+    "category": "材料",
+    "description": "银白色金属锭，表面有光泽，质地轻盈而坚韧。",
+    "type": [
+      "material"
+    ],
+    "elemental": 13
+  },
+  {
+    "name": "雷酸汞",
+    "key": "mercury_fulminate",
+    "category": "材料",
+    "description": "白色或浅灰色的晶体粉末，对撞击和摩擦极其敏感，是常见的起爆药。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "雷管",
+    "key": "detonator",
+    "category": "工具",
+    "description": "金属管状装置，内部装有起爆药，用于安全引爆高能炸药。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
   }
 ]

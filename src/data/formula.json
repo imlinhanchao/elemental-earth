@@ -3377,5 +3377,139 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "拜耳法制氢氧化铝",
+    "key": "bayer_process",
+    "description": "将铝土矿与氢氧化钠溶液加热反应，通入二氧化碳后生成氢氧化铝沉淀。",
+    "required_items": [
+      {
+        "key": "bauxite",
+        "quantity": 1
+      },
+      {
+        "key": "sodium_hydroxide",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "aluminum_hydroxide",
+        "multiple": 1
+      },
+      {
+        "key": "sodium_carbonate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧氢氧化铝",
+    "key": "calcine_aluminum_hydroxide",
+    "description": "将氢氧化铝高温焙烧，分解为氧化铝和水。",
+    "required_items": [
+      {
+        "key": "aluminum_hydroxide",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 5,
+    "products": [
+      {
+        "key": "alumina",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "电解制铝",
+    "key": "electrolyze_alumina",
+    "description": "将氧化铝与冰晶石混合熔融后进行电解，得到铝和氧气。",
+    "required_items": [
+      {
+        "key": "alumina",
+        "quantity": 2
+      },
+      {
+        "key": "cryolite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "aluminum_electrolysis"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "aluminum",
+        "multiple": 1
+      },
+      {
+        "key": "oxygen",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "制备雷酸汞",
+    "key": "produce_mercury_fulminate",
+    "description": "将汞与硝酸反应，再经加热处理得到雷酸汞。",
+    "required_items": [
+      {
+        "key": "mercury",
+        "quantity": 1
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "detonation_tech"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "mercury_fulminate",
+        "multiple": 1
+      }
+    ]
   }
 ]

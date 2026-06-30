@@ -362,5 +362,14 @@
       "high_temp_furnace"
     ],
     "time_required": 120
+  },
+  {
+    "name": "起爆技术",
+    "key": "detonation_tech",
+    "description": "掌握了通过起爆药安全引爆高能炸药的技术。",
+    "required_techs": [
+      "explosives"
+    ],
+    "time_required": 30
   }
 ]
