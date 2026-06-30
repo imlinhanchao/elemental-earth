@@ -2108,5 +2108,25 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "鸟粪石",
+    "key": "struvite",
+    "category": "材料",
+    "description": "淡黄色至白色透明晶体，带有玻璃光泽，常形成鸟笼状或楔形晶体。质地较脆，富含磷、镁和氮。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "磷酸",
+    "key": "phosphoric_acid",
+    "category": "液体",
+    "description": "无色透明黏稠液体，无味，但具有酸涩感。有腐蚀性，是重要的工业酸。",
+    "type": [
+      "material",
+      "liquid"
+    ]
   }
 ]

@@ -718,6 +718,18 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "struvite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "map": [
+          "island",
+          "cave"
+        ]
       }
     ]
   },
@@ -1735,6 +1747,18 @@
         "map": [
           "mountain",
           "meteor_crater"
+        ]
+      },
+      {
+        "key": "struvite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 300,
+        "map": [
+          "island",
+          "cave"
         ]
       }
     ],

@@ -3618,8 +3618,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 30,
     "products": [
       {
@@ -3652,8 +3651,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 60,
     "products": [
       {
@@ -3663,6 +3661,74 @@
       {
         "key": "potassium_hydroxide",
         "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧鸟粪石",
+    "key": "roast_struvite",
+    "description": "加热分解鸟粪石，生成磷酸、氧化镁和氨气。",
+    "required_items": [
+      {
+        "key": "struvite",
+        "quantity": 5
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "phosphoric_acid",
+        "multiple": 2
+      },
+      {
+        "key": "magnesium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "ammonia",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "磷酸还原制磷",
+    "key": "phosphorus_from_phosphoric_acid",
+    "description": "将磷酸与焦炭混合，在高温下还原生成磷蒸气，冷凝后得到单质磷。",
+    "required_items": [
+      {
+        "key": "phosphoric_acid",
+        "quantity": 2
+      },
+      {
+        "key": "coke",
+        "quantity": 5
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "phosphorus",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 5
       }
     ]
   }
