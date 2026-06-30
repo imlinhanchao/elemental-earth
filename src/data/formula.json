@@ -1005,7 +1005,7 @@
       {
         "key": "sulfur_trioxide",
         "multiple": 1,
-        "required_chain_operation": "oxidation"
+        "required_chain_operation": "blowing"
       }
     ]
   },
@@ -1592,7 +1592,7 @@
     "time_required": 120,
     "required_container": "crucible",
     "required_actions": {
-      "key": "oxidation"
+      "key": "blowing"
     },
     "required_items": [
       {
@@ -1806,6 +1806,432 @@
       },
       {
         "key": "water",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧碲金矿",
+    "key": "roast_tellurium_gold_ore",
+    "description": "将碲金矿在窑炉中焙烧，金被还原为金属，碲转化为二氧化碲。",
+    "required_items": [
+      {
+        "key": "tellurium_gold_ore",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "gold",
+        "multiple": 1
+      },
+      {
+        "key": "tellurium_dioxide",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "还原二氧化碲",
+    "key": "reduce_tellurium_dioxide",
+    "description": "用碳还原二氧化碲，得到碲单质和一氧化碳。",
+    "required_items": [
+      {
+        "key": "tellurium_dioxide",
+        "quantity": 2
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "tellurium",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "焙烧锆石制氧化锆",
+    "key": "roast_zircon",
+    "description": "将锆石与石灰石混合，在高温下焙烧，使锆石分解为氧化锆和硅酸钙。",
+    "required_items": [
+      {
+        "key": "zircon",
+        "quantity": 2
+      },
+      {
+        "key": "limestone",
+        "quantity": 1
+      }
+    ],
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "zirconia",
+        "multiple": 1
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "碳还原氧化锆制锆",
+    "key": "reduce_zirconia",
+    "description": "将氧化锆与焦炭混合，在高温下还原生成金属锆和二氧化碳。",
+    "required_items": [
+      {
+        "key": "zirconia",
+        "quantity": 1
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 90,
+    "products": [
+      {
+        "key": "zirconium",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "焙烧沥青铀矿",
+    "key": "roast_pitchblende",
+    "description": "将沥青铀矿在窑炉中焙烧，使其中的铀转化为易溶的氧化物。",
+    "required_items": [
+      {
+        "key": "pitchblende",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 300,
+    "products": [
+      {
+        "key": "uranium_oxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铀",
+    "key": "reduce_uranium_oxide",
+    "description": "用碳在高温下还原氧化铀，得到金属铀。",
+    "required_items": [
+      {
+        "key": "uranium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 600,
+    "products": [
+      {
+        "key": "uranium",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧金红石制二氧化钛",
+    "key": "roast_rutile",
+    "description": "将金红石与焦炭混合后高温焙烧，得到纯净的二氧化钛。",
+    "required_items": [
+      {
+        "key": "rutile",
+        "quantity": 2
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "titanium_dioxide",
+        "multiple": 2
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原二氧化钛制钛",
+    "key": "reduce_titanium_dioxide",
+    "description": "在高温下用镁还原二氧化钛，得到海绵钛。",
+    "required_items": [
+      {
+        "key": "titanium_dioxide",
+        "quantity": 2
+      },
+      {
+        "key": "magnesium",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "titanium_alloy_smithing"
+    ],
+    "time_required": 120,
+    "products": [
+      {
+        "key": "titanium",
+        "multiple": 1
+      },
+      {
+        "key": "magnesium_oxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧铬铁矿",
+    "key": "roast_chromite",
+    "description": "将铬铁矿放入窑炉中高温焙烧，使其中的铬转化为氧化铬。",
+    "required_items": [
+      {
+        "key": "chromite",
+        "quantity": 3
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "chromium_oxide",
+        "multiple": 2
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铬",
+    "key": "reduce_chromium_oxide",
+    "description": "在高温下用焦炭还原氧化铬，得到金属铬。",
+    "required_items": [
+      {
+        "key": "chromium_oxide",
+        "quantity": 2
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "chromium",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "熔炼不锈钢",
+    "key": "smelt_stainless_steel",
+    "description": "将钢、铬和镍按比例在高温下熔炼，形成耐腐蚀的不锈钢合金。",
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 3
+      },
+      {
+        "key": "chromium",
+        "quantity": 1
+      },
+      {
+        "key": "nickel",
+        "quantity": 1
+      }
+    ],
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "chrome_alloy_smithing"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "stainless_steel",
+        "multiple": 3
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧绿柱石",
+    "key": "roast_beryl",
+    "description": "在窑炉中高温焙烧绿柱石，分解得到氧化铍和炉渣。",
+    "required_items": [
+      {
+        "key": "beryl",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_techs": [
+    ],
+    "time_required": 10,
+    "products": [
+      {
+        "key": "beryllium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "slag",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铍",
+    "key": "reduce_beryllium_oxide",
+    "description": "在坩埚中用碳高温还原氧化铍，得到金属铍和一氧化碳。",
+    "required_items": [
+      {
+        "key": "beryllium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_techs": [
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "beryllium",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
         "multiple": 1
       }
     ]

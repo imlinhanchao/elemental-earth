@@ -276,14 +276,14 @@
     "elemental": 26
   },
   {
-    "name": "钢",
     "key": "steel",
+    "name": "钢",
     "category": "材料",
     "description": "银灰色的金属条块，表面光洁致密，在光线下反射出冷冽的寒光，敲击声清脆悠长。",
     "type": [
       "material"
     ],
-    "elemental": 26
+    "elemental": 0
   },
   {
     "name": "炉渣",
@@ -822,26 +822,6 @@
     ]
   },
   {
-    "key": "cobalt_pickaxe",
-    "name": "钴镐",
-    "category": "工具",
-    "description": "用钴金属制成的镐头，坚硬耐磨，适合挖矿。",
-    "type": [
-      "tool"
-    ],
-    "durable": 3
-  },
-  {
-    "key": "cobalt_axe",
-    "name": "钴斧",
-    "category": "工具",
-    "description": "用钴金属制成的斧刃，锋利且坚固。",
-    "type": [
-      "tool"
-    ],
-    "durable": 3
-  },
-  {
     "name": "砷铂矿",
     "key": "sperrylite",
     "category": "材料",
@@ -891,46 +871,26 @@
     "elemental": 28
   },
   {
-    "key": "nickel_pickaxe",
-    "name": "镍镐",
-    "category": "工具",
-    "description": "用镍合金打造的镐头，比铁镐更坚韧耐用，适合挖掘更坚硬的矿石。",
-    "type": [
-      "tool"
-    ],
-    "durable": 4
-  },
-  {
-    "key": "nickel_axe",
-    "name": "镍斧",
-    "category": "工具",
-    "description": "用镍合金打造的斧刃，锋利且耐腐蚀，适合砍伐硬木。",
-    "type": [
-      "tool"
-    ],
-    "durable": 4
-  },
-  {
-    "name": "三氧化硫",
     "key": "sulfur_trioxide",
+    "name": "三氧化硫",
     "category": "气体",
     "description": "无色刺鼻的气体，在空气中会形成白色酸雾，吸入后对呼吸道有强烈刺激。",
     "type": [
       "material",
       "gas"
     ],
-    "elemental": 16
+    "elemental": 0
   },
   {
-    "name": "稀硫酸",
     "key": "dilute_sulfuric_acid",
+    "name": "稀硫酸",
     "category": "液体",
     "description": "无色油状液体，具有强酸性，能腐蚀多数金属，在工业中有广泛用途。",
     "type": [
       "material",
       "liquid"
     ],
-    "elemental": 16
+    "elemental": 0
   },
   {
     "name": "绿矾",
@@ -1200,16 +1160,6 @@
     "durable": 100
   },
   {
-    "name": "锰斧",
-    "key": "manganese_axe",
-    "category": "工具",
-    "description": "由锰钢制成的斧，锋利且耐用，适合砍伐各种树木。",
-    "type": [
-      "tool"
-    ],
-    "durable": 100
-  },
-  {
     "name": "氧化汞",
     "key": "mercury_oxide",
     "category": "材料",
@@ -1276,5 +1226,222 @@
       "material"
     ],
     "elemental": 74
+  },
+  {
+    "name": "碲金矿",
+    "key": "tellurium_gold_ore",
+    "category": "材料",
+    "description": "银灰色金属光泽的矿物，断口呈参差状，是提取金和碲的重要矿石。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "二氧化碲",
+    "key": "tellurium_dioxide",
+    "category": "材料",
+    "description": "白色结晶粉末，是碲的稳定氧化物，可通过还原得到碲。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "碲",
+    "key": "tellurium",
+    "category": "材料",
+    "description": "银白色半金属，性脆，有金属光泽，是稀散金属中的重要元素。",
+    "type": [
+      "material"
+    ],
+    "elemental": 52,
+    "is_discovery": true
+  },
+  {
+    "name": "金锭",
+    "key": "gold",
+    "category": "材料",
+    "description": "金黄色的贵金属，质地柔软，化学性质稳定，常用于货币和首饰。",
+    "type": [
+      "material"
+    ],
+    "elemental": 79,
+    "is_discovery": true
+  },
+  {
+    "name": "锆石",
+    "key": "zircon",
+    "category": "材料",
+    "description": "棕红色半透明的晶体碎块，断口呈玻璃光泽，质地坚硬，在光线下折射出明亮的火彩。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化锆",
+    "key": "zirconia",
+    "category": "材料",
+    "description": "细腻洁白的粉末，略带滑腻感，用手捻时感觉光滑。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锆",
+    "key": "zirconium",
+    "category": "材料",
+    "description": "银白色金属块，表面带有轻微的光泽，质地较硬，比钢铁更耐腐蚀。",
+    "type": [
+      "material"
+    ],
+    "elemental": 40
+  },
+  {
+    "name": "沥青铀矿",
+    "key": "pitchblende",
+    "category": "材料",
+    "description": "黑色沥青光泽的致密块状矿物，质地沉重，断口呈贝壳状。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化铀",
+    "key": "uranium_oxide",
+    "category": "材料",
+    "description": "亮黄色粉末，手感细腻，散发着微弱的荧光。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "铀",
+    "key": "uranium",
+    "category": "材料",
+    "description": "银白色金属，带有暗淡光泽，密度极大，表面可形成氧化膜。",
+    "type": [
+      "material"
+    ],
+    "elemental": 92,
+    "is_discovery": true
+  },
+  {
+    "name": "金红石",
+    "key": "rutile",
+    "category": "材料",
+    "description": "深红色至黑色的柱状晶体，带有金刚光泽，质地坚硬而脆。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "二氧化钛",
+    "key": "titanium_dioxide",
+    "category": "材料",
+    "description": "纯白色的粉末，质地细腻，手感滑润，没有气味。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钛",
+    "key": "titanium",
+    "category": "材料",
+    "description": "银灰色的金属块，表面有金属光泽，重量比想象中轻得多。",
+    "type": [
+      "material"
+    ],
+    "elemental": 22
+  },
+  {
+    "name": "钛镐",
+    "key": "titanium_pickaxe",
+    "category": "工具",
+    "description": "用钛金属打造的镐子，轻巧而坚固，能高效破碎坚硬的岩石。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "铬铁矿",
+    "key": "chromite",
+    "category": "材料",
+    "description": "黑色带有金属光泽的矿物碎块，断口参差，握在手中沉甸甸的，表面有时可见微细的晶面反光。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化铬",
+    "key": "chromium_oxide",
+    "category": "材料",
+    "description": "深绿色的细腻粉末，质地轻盈，沾染在手指上不易洗去，有一股金属的涩味。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铬",
+    "key": "chromium",
+    "category": "材料",
+    "description": "银白色的金属块，表面光洁如镜，坚硬而沉重，边缘锐利，在光照下闪烁着冷冽的蓝白色光泽。",
+    "type": [
+      "material"
+    ],
+    "elemental": 24
+  },
+  {
+    "name": "不锈钢",
+    "key": "stainless_steel",
+    "category": "材料",
+    "description": "银灰色金属合金，表面平滑致密，泛着柔和的哑光，手感坚实而冰凉，耐腐蚀性极佳。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铬镐",
+    "key": "chromium_pickaxe",
+    "category": "工具",
+    "description": "用铬合金锻造的镐头，镶嵌在硬木柄上，镐刃锋利坚硬，适合挖掘坚硬的岩石和矿物。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "绿柱石",
+    "key": "beryl",
+    "category": "材料",
+    "description": "淡绿色至翠绿色的透明晶体，六棱柱状，表面有玻璃光泽。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化铍",
+    "key": "beryllium_oxide",
+    "category": "材料",
+    "description": "白色粉末，手感细腻，无味但有剧毒。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铍",
+    "key": "beryllium",
+    "category": "材料",
+    "description": "银灰色的轻金属，质地坚硬而脆，常温下表面形成氧化膜。",
+    "type": [
+      "material"
+    ],
+    "elemental": 4
   }
 ]

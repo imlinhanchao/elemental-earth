@@ -123,9 +123,9 @@
     "is_chain": false
   },
   {
-    "name": "氧化",
-    "key": "oxidation",
-    "description": "在高温下通入空气，将气体中的低价元素氧化为高价。",
+    "name": "吹炼",
+    "key": "blowing",
+    "description": "向高温熔融或半熔融状态的物质中，主动通入某种气体，让气体与物质发生化学反应",
     "time_required": 30,
     "required_item": [
       {

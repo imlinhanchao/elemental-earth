@@ -82,8 +82,6 @@
           "iron_pickaxe",
           "bronze_pickaxe",
           "brass_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "quantity": 1,
@@ -235,12 +233,7 @@
         "key": "cassiterite",
         "quantity": 1,
         "probability": 200,
-        "required_item": [
-          "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
-        ],
+        "required_item": "iron_pickaxe",
         "map": [
           "mountain"
         ]
@@ -252,9 +245,7 @@
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
-          "brass_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "brass_pickaxe"
         ],
         "map": [
           "cave"
@@ -276,9 +267,9 @@
         "probability": 50,
         "required_item": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
         ],
         "map": [
           "river_side",
@@ -291,8 +282,6 @@
         "probability": 300,
         "required_item": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "map": [
@@ -310,8 +299,6 @@
         "probability": 30,
         "required_item": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "map": [
@@ -324,9 +311,7 @@
         "probability": 200,
         "required_item": [
           "iron_pickaxe",
-          "manganese_pickaxe",
-          "nickel_pickaxe",
-          "cobalt_pickaxe"
+          "manganese_pickaxe"
         ],
         "map": [
           "cave",
@@ -340,8 +325,6 @@
         "required_item": [
           "iron_pickaxe",
           "brass_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "map": [
@@ -355,10 +338,7 @@
         "probability": 300,
         "required_item": [
           "brass_pickaxe",
-          "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "iron_pickaxe"
         ],
         "map": [
           "volcano",
@@ -371,10 +351,7 @@
         "probability": 250,
         "required_item": [
           "iron_pickaxe",
-          "brass_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "brass_pickaxe"
         ],
         "map": [
           "volcano",
@@ -387,10 +364,7 @@
         "probability": 300,
         "required_item": [
           "iron_pickaxe",
-          "brass_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "brass_pickaxe"
         ],
         "map": [
           "island"
@@ -402,8 +376,6 @@
         "probability": 50,
         "required_item": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "map": [
@@ -416,9 +388,8 @@
         "quantity": 1,
         "probability": 5,
         "required_item": [
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "manganese_pickaxe",
+          "iron_pickaxe"
         ],
         "map": [
           "volcano"
@@ -429,9 +400,8 @@
         "quantity": 1,
         "probability": 200,
         "required_item": [
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "manganese_pickaxe",
+          "iron_pickaxe"
         ],
         "map": [
           "cave",
@@ -444,8 +414,6 @@
         "probability": 200,
         "required_item": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe"
         ],
         "map": [
@@ -462,8 +430,6 @@
         "required_item": [
           "bronze_pickaxe",
           "brass_pickaxe",
-          "cobalt_pickaxe",
-          "nickel_pickaxe",
           "manganese_pickaxe",
           "iron_pickaxe"
         ],
@@ -477,8 +443,8 @@
         "quantity": 1,
         "probability": 200,
         "required_item": [
-          "nickel_pickaxe",
-          "manganese_pickaxe"
+          "manganese_pickaxe",
+          "iron_pickaxe"
         ],
         "map": [
           "mountain",
@@ -489,6 +455,12 @@
         "key": "molybdenite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "manganese_pickaxe",
+          "iron_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano",
           "mountain"
@@ -501,6 +473,78 @@
           2
         ],
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "tellurium_gold_ore",
+        "quantity": 1,
+        "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "volcano"
+        ]
+      },
+      {
+        "key": "zircon",
+        "quantity": 1,
+        "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "volcano"
+        ]
+      },
+      {
+        "key": "pitchblende",
+        "quantity": 1,
+        "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "rutile",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "volcano",
+          "mountain"
+        ]
+      },
+      {
+        "key": "beryl",
+        "quantity": 1,
+        "probability": 50,
         "map": [
           "mountain",
           "cave"
@@ -823,10 +867,11 @@
     ]
   },
   {
-    "name": "制作高炉",
     "key": "craft_blast_furnace",
+    "name": "制作高炉",
     "category": "制作",
     "description": "使用耐火砖和粘土建造一座高炉，用于高温冶炼。",
+    "time_required": 100,
     "required_items": [
       {
         "key": "fire_brick",
@@ -837,16 +882,15 @@
         "quantity": 5
       }
     ],
-    "required_techs": [
-      "high_temp_furnace"
-    ],
     "rewards": [
       {
         "key": "blast_furnace",
         "quantity": 1
       }
     ],
-    "time_required": 300
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "name": "打造铁镐",
@@ -1120,122 +1164,6 @@
     "time_required": 20
   },
   {
-    "name": "打造钴镐",
-    "key": "craft_cobalt_pickaxe",
-    "category": "制作",
-    "description": "用钴金属打造一把坚固的镐。",
-    "required_items": [
-      {
-        "key": "cobalt",
-        "quantity": 3,
-        "use": 0.5
-      },
-      {
-        "key": "wood",
-        "quantity": 2,
-        "use": 0
-      }
-    ],
-    "required_techs": [
-      "cobalt_alloy_smithing"
-    ],
-    "rewards": [
-      {
-        "key": "cobalt_pickaxe",
-        "quantity": 1,
-        "probability": 1000
-      }
-    ],
-    "time_required": 60
-  },
-  {
-    "name": "打造钴斧",
-    "key": "craft_cobalt_axe",
-    "category": "制作",
-    "description": "用钴金属打造一把锋利的斧头。",
-    "required_items": [
-      {
-        "key": "cobalt",
-        "quantity": 3,
-        "use": 0.5
-      },
-      {
-        "key": "wood",
-        "quantity": 2,
-        "use": 0
-      }
-    ],
-    "required_techs": [
-      "cobalt_alloy_smithing"
-    ],
-    "rewards": [
-      {
-        "key": "cobalt_axe",
-        "quantity": 1,
-        "probability": 1000
-      }
-    ],
-    "time_required": 60
-  },
-  {
-    "name": "打造镍镐",
-    "key": "craft_nickel_pickaxe",
-    "category": "制作",
-    "description": "将镍金属加热锻打成镐头，装配木柄制成镍镐。",
-    "required_items": [
-      {
-        "key": "nickel",
-        "quantity": 3,
-        "use": 0.1
-      },
-      {
-        "key": "wood",
-        "quantity": 2,
-        "use": 0
-      }
-    ],
-    "required_techs": [
-      "nickel_alloy_smithing"
-    ],
-    "rewards": [
-      {
-        "key": "nickel_pickaxe",
-        "quantity": 1,
-        "probability": 1000
-      }
-    ],
-    "time_required": 120
-  },
-  {
-    "name": "打造镍斧",
-    "key": "craft_nickel_axe",
-    "category": "制作",
-    "description": "将镍金属锻造成斧刃，装配木柄制成镍斧。",
-    "required_items": [
-      {
-        "key": "nickel",
-        "quantity": 2,
-        "use": 0.1
-      },
-      {
-        "key": "wood",
-        "quantity": 2,
-        "use": 0
-      }
-    ],
-    "required_techs": [
-      "nickel_alloy_smithing"
-    ],
-    "rewards": [
-      {
-        "key": "nickel_axe",
-        "quantity": 1,
-        "probability": 1000
-      }
-    ],
-    "time_required": 100
-  },
-  {
     "key": "blasting",
     "name": "爆破",
     "category": "采集",
@@ -1259,26 +1187,6 @@
         "guaranteed": true
       },
       {
-        "key": "flint",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 100
-      },
-      {
-        "key": "hematite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 800,
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
         "key": "coal",
         "quantity": [
           2,
@@ -1291,17 +1199,6 @@
         ]
       },
       {
-        "key": "copper",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 400,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
         "key": "limestone",
         "quantity": [
           3,
@@ -1310,39 +1207,6 @@
         "probability": 700,
         "map": [
           "mountain"
-        ]
-      },
-      {
-        "key": "sulfur",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          "volcano"
-        ]
-      },
-      {
-        "key": "cassiterite",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 200,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "galena",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 200,
-        "map": [
-          "cave"
         ]
       },
       {
@@ -1376,42 +1240,6 @@
         "probability": 100,
         "map": [
           "mountain"
-        ]
-      },
-      {
-        "key": "malachite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "mountain",
-            "probability": 500
-          },
-          {
-            "key": "cave",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "cinnabar",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 100,
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 300
-          },
-          {
-            "key": "mountain",
-            "probability": 100
-          }
         ]
       },
       {
@@ -1465,20 +1293,6 @@
           {
             "key": "cave",
             "probability": 100
-          }
-        ]
-      },
-      {
-        "key": "realgar",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 60,
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 150
           }
         ]
       },
@@ -1562,6 +1376,65 @@
             "key": "mountain",
             "probability": 100
           }
+        ]
+      },
+      {
+        "key": "tellurium_gold_ore",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "map": [
+          "mountain",
+          "volcano"
+        ]
+      },
+      {
+        "key": "zircon",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          "mountain",
+          "volcano"
+        ]
+      },
+      {
+        "key": "rutile",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 150,
+        "map": [
+          "volcano",
+          "mountain"
+        ]
+      },
+      {
+        "key": "chromite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          "mountain",
+          "volcano"
+        ]
+      },
+      {
+        "key": "beryl",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 100,
+        "map": [
+          "cave"
         ]
       }
     ],
@@ -1697,29 +1570,56 @@
     "time_required": 60
   },
   {
-    "name": "打造锰斧",
-    "key": "craft_manganese_axe",
+    "key": "craft_titanium_pickaxe",
+    "name": "打造钛镐",
     "category": "制作",
-    "description": "用锰钢制作一把锋利的斧头，用于砍伐和战斗。",
+    "description": "将钛加热锻造，打磨成坚固的镐头，安装在木柄上。",
+    "time_required": 90,
     "required_items": [
       {
-        "key": "manganese_steel",
+        "key": "titanium",
+        "quantity": 2,
+        "use": 0.01
+      },
+      {
+        "key": "wood",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "titanium_pickaxe",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "titanium_alloy_smithing"
+    ]
+  },
+  {
+    "key": "craft_chromium_pickaxe",
+    "name": "打造铬镐",
+    "category": "制作",
+    "description": "将铬锭熔炼成型，锻造成坚固的镐头，再安装木柄，制成一把耐用的铬镐。",
+    "time_required": 100,
+    "required_items": [
+      {
+        "key": "chromium",
         "quantity": 2
       },
       {
         "key": "wood",
-        "quantity": 2
-      }
-    ],
-    "required_techs": [
-      "manganese_alloy_smithing"
-    ],
-    "rewards": [
-      {
-        "key": "manganese_axe",
         "quantity": 1
       }
     ],
-    "time_required": 60
+    "rewards": [
+      {
+        "key": "chromium_pickaxe",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "chrome_alloy_smithing"
+    ]
   }
 ]

@@ -199,37 +199,6 @@
     "time_required": 60
   },
   {
-    "name": "钴合金锻造",
-    "key": "cobalt_alloy_smithing",
-    "description": "掌握了将钴金属加工成工具和合金的技术。",
-    "required_items": [
-      {
-        "key": "cobalt",
-        "quantity": 1
-      }
-    ],
-    "required_techs": [
-      "high_temp_furnace",
-      "iron_tool_crafting"
-    ],
-    "time_required": 300
-  },
-  {
-    "name": "镍合金锻造",
-    "key": "nickel_alloy_smithing",
-    "description": "掌握了镍金属的冶炼和锻造技术，能够制作镍制工具。",
-    "required_items": [
-      {
-        "key": "nickel",
-        "quantity": 5
-      }
-    ],
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 120
-  },
-  {
     "name": "爆破技术",
     "key": "explosives",
     "description": "掌握了硝石和硫磺的混合配比，能够制造出具有强大破坏力的炸药。",
@@ -293,18 +262,35 @@
     "time_required": 120
   },
   {
-    "name": "钨合金锻造",
-    "key": "tungsten_alloy_smithing",
-    "description": "掌握了将钨粉与钢熔炼成钨钢的工艺，能够锻造超硬的工具。",
+    "name": "钛合金锻造",
+    "key": "titanium_alloy_smithing",
+    "description": "掌握了高温下锻造钛金属的技术，能够将钛加工成耐用的工具。",
     "required_items": [
       {
-        "key": "tungsten_powder",
-        "quantity": 5
+        "key": "titanium",
+        "quantity": 1
       }
     ],
     "required_techs": [
-      "high_temp_furnace"
+      "high_temp_furnace",
+      "iron_tool_crafting"
     ],
-    "time_required": 120
+    "time_required": 180
+  },
+  {
+    "name": "铬合金锻造",
+    "key": "chrome_alloy_smithing",
+    "description": "掌握了将铬与铁熔炼成坚韧合金的技术，能够制作铬制工具。",
+    "required_items": [
+      {
+        "key": "chromium",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace",
+      "iron_tool_crafting"
+    ],
+    "time_required": 60
   }
 ]
