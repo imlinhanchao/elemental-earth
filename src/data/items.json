@@ -1783,10 +1783,10 @@
     ]
   },
   {
-    "name": "硼酸",
-    "key": "boric_acid",
+    "name": "硼砂",
+    "key": "borax",
     "category": "材料",
-    "description": "白色结晶性粉末，有微弱酸味，易溶于水，触感滑腻。",
+    "description": "无色或白色半透明晶体，表面有玻璃光泽，触感滑腻，微带咸味，常伴有风化形成的白色粉末状皮壳。",
     "type": [
       "material"
     ]
@@ -2069,8 +2069,7 @@
     "description": "无色或白色结晶，立方晶系，易潮解，无臭，味咸。",
     "type": [
       "material"
-    ],
-    "elemental": 55
+    ]
   },
   {
     "name": "铯",
@@ -2099,6 +2098,15 @@
     "type": [
       "material",
       "liquid"
+    ]
+  },
+  {
+    "key": "boric_acid",
+    "name": "硼酸",
+    "category": "材料",
+    "description": "白色片状晶体，有珍珠光泽，略有滑腻感。",
+    "type": [
+      "material"
     ]
   }
 ]

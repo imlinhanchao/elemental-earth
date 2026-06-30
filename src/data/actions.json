@@ -1361,7 +1361,7 @@
           3,
           8
         ],
-        "probability": 800,
+        "probability": 700,
         "map": [
           "mountain",
           "cave",
@@ -1416,23 +1416,13 @@
         ]
       },
       {
-        "key": "copper",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 400,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
         "key": "magnesite",
         "quantity": [
           3,
           8
         ],
         "probability": 400,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
@@ -1445,6 +1435,7 @@
           8
         ],
         "probability": 400,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "mountain"
@@ -1457,6 +1448,7 @@
           5
         ],
         "probability": 300,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "volcano"
@@ -1469,6 +1461,7 @@
           5
         ],
         "probability": 200,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
@@ -1481,6 +1474,7 @@
           4
         ],
         "probability": 200,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
@@ -1493,6 +1487,7 @@
           8
         ],
         "probability": 300,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "mountain"
@@ -1505,6 +1500,7 @@
           8
         ],
         "probability": 300,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
@@ -1528,6 +1524,7 @@
           4
         ],
         "probability": 200,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
@@ -1540,6 +1537,7 @@
           4
         ],
         "probability": 200,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
@@ -1576,6 +1574,7 @@
           4
         ],
         "probability": 150,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
@@ -1644,6 +1643,7 @@
           4
         ],
         "probability": 150,
+        "required_item": "high_explosive",
         "map": [
           "volcano",
           "mountain"
@@ -1692,6 +1692,7 @@
           3
         ],
         "probability": 50,
+        "required_item": "high_explosive",
         "map": [
           "meteor_crater",
           "mountain"
@@ -1704,6 +1705,7 @@
           4
         ],
         "probability": 100,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
@@ -1716,6 +1718,7 @@
           4
         ],
         "probability": 100,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
@@ -1728,6 +1731,7 @@
           4
         ],
         "probability": 100,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
@@ -2526,7 +2530,21 @@
           2,
           5
         ],
-        "probability": 250
+        "probability": 250,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "pitchblende",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 150,
+        "map": [
+          "basin"
+        ]
       }
     ],
     "required_techs": [

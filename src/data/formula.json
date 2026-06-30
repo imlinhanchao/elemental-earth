@@ -3030,44 +3030,6 @@
     ]
   },
   {
-    "name": "钾还原硼酸",
-    "key": "potassium_reduction_of_boric_acid",
-    "description": "将钾与硼酸混合加热，发生的剧烈反应可制得硼单质。",
-    "required_items": [
-      {
-        "key": "potassium",
-        "quantity": 6
-      },
-      {
-        "key": "boric_acid",
-        "quantity": 2
-      }
-    ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [],
-    "time_required": 150,
-    "products": [
-      {
-        "key": "boron",
-        "multiple": 2
-      },
-      {
-        "key": "potassium_hydroxide",
-        "multiple": 6
-      },
-      {
-        "key": "hydrogen",
-        "multiple": 3,
-        "required_chain_operation": "gas_collecting"
-      }
-    ]
-  },
-  {
     "name": "干燥海藻",
     "key": "dry_seaweed",
     "description": "将新鲜海藻加热烘干，除去水分得到干海藻。",
@@ -3633,6 +3595,74 @@
       {
         "key": "hydrogen",
         "multiple": 0.5
+      }
+    ]
+  },
+  {
+    "name": "硼砂制硼酸",
+    "key": "borax_to_boric_acid",
+    "description": "将硼砂溶于水，加入盐酸，搅拌后析出硼酸晶体。",
+    "required_items": [
+      {
+        "key": "borax",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "boric_acid",
+        "multiple": 1
+      },
+      {
+        "key": "rock_salt",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "钾还原硼酸",
+    "key": "potassium_reduce_boric_acid",
+    "description": "利用钾的强还原性将硼酸还原为单质硼，同时生成氢氧化钾。",
+    "required_items": [
+      {
+        "key": "boric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "potassium",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "boron",
+        "multiple": 1
+      },
+      {
+        "key": "potassium_hydroxide",
+        "multiple": 1
       }
     ]
   }
