@@ -264,6 +264,7 @@ function buildSystemPrompt(contextData: ContextData): string {
 
 ### 修改规则
 - **采集类行动**：新矿石/材料应当在现有采集行动上添加奖励，而不是创建新的采集行动。例如新的矿物"方铅矿"应该在已有的「挖掘」或「采矿」行动中添加奖励项，通过 map 字段限定只在特定地图产出。
+- **爆破行动**（key: \`blasting\`）：生成的矿石/矿物类物品，若适合通过爆破获取，应同时添加到 \`blasting\` 行动的奖励中（使用 modifications 的 \`add_reward\` 操作）。例如生成了"方铅矿"，应在 blasting 的奖励中添加 \`{ "key": "galena", "quantity": [2, 5], "probability": 200, "map": ["cave"] }\`。
 - **行动奖励**：使用 \`modifications\` 中的 \`add_reward\` 在现有行动中追加奖励
 - **批量新增**：如果修改涉及 3 个以上的现有记录，优先创建新的行动而不是修改多个旧记录
 

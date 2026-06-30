@@ -484,6 +484,27 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "molybdenite",
+        "quantity": 1,
+        "probability": 200,
+        "map": [
+          "volcano",
+          "mountain"
+        ]
+      },
+      {
+        "key": "scheelite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       }
     ]
   },
@@ -1355,6 +1376,192 @@
         "probability": 100,
         "map": [
           "mountain"
+        ]
+      },
+      {
+        "key": "malachite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 500
+          },
+          {
+            "key": "cave",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "cinnabar",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 100,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 300
+          },
+          {
+            "key": "mountain",
+            "probability": 100
+          }
+        ]
+      },
+      {
+        "key": "sphalerite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 200,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 300
+          },
+          {
+            "key": "cave",
+            "probability": 200
+          }
+        ]
+      },
+      {
+        "key": "argentite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 80,
+        "map": [
+          {
+            "key": "cave",
+            "probability": 150
+          },
+          {
+            "key": "mountain",
+            "probability": 80
+          }
+        ]
+      },
+      {
+        "key": "stibnite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 100,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 200
+          },
+          {
+            "key": "cave",
+            "probability": 100
+          }
+        ]
+      },
+      {
+        "key": "realgar",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 60,
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 150
+          }
+        ]
+      },
+      {
+        "key": "phosphorite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 150,
+        "map": [
+          {
+            "key": "basin",
+            "probability": 300
+          },
+          {
+            "key": "cave",
+            "probability": 100
+          }
+        ]
+      },
+      {
+        "key": "molybdenite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 60,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 100
+          }
+        ]
+      },
+      {
+        "key": "scheelite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 50,
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 80
+          }
+        ]
+      },
+      {
+        "key": "niter",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 150,
+        "map": [
+          {
+            "key": "cave",
+            "probability": 200
+          },
+          {
+            "key": "basin",
+            "probability": 200
+          }
+        ]
+      },
+      {
+        "key": "rock_salt",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 200,
+        "map": [
+          {
+            "key": "basin",
+            "probability": 400
+          },
+          {
+            "key": "mountain",
+            "probability": 100
+          }
         ]
       }
     ],

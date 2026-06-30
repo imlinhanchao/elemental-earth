@@ -1218,5 +1218,63 @@
       "material"
     ],
     "is_discovery": true
+  },
+  {
+    "name": "辉钼矿",
+    "key": "molybdenite",
+    "category": "材料",
+    "description": "铅灰色、具金属光泽的片状晶体，质地柔软，可污手。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "三氧化钼",
+    "key": "molybdenum_trioxide",
+    "category": "材料",
+    "description": "白色或淡黄色粉末，加热时变黄，溶于碱。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钼",
+    "key": "molybdenum",
+    "category": "材料",
+    "description": "银灰色有光泽的金属，坚硬而坚韧。",
+    "type": [
+      "material"
+    ],
+    "elemental": 42
+  },
+  {
+    "name": "白钨矿",
+    "key": "scheelite",
+    "category": "材料",
+    "description": "无色至白色半透明的矿物，有时带浅黄色或浅绿色，呈四方双锥状晶体，在紫外光下发蓝白色荧光。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "三氧化钨",
+    "key": "tungsten_trioxide",
+    "category": "材料",
+    "description": "鲜艳的黄色粉末，细腻如尘，捻在指尖有轻微的滑腻感，无臭无味。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钨粉",
+    "key": "tungsten_powder",
+    "category": "材料",
+    "description": "深灰色微细粉末，金属光泽暗淡，手感沉重，轻吹会扬起细尘。",
+    "type": [
+      "material"
+    ],
+    "elemental": 74
   }
 ]

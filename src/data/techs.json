@@ -291,5 +291,20 @@
       "iron_tool_crafting"
     ],
     "time_required": 120
+  },
+  {
+    "name": "钨合金锻造",
+    "key": "tungsten_alloy_smithing",
+    "description": "掌握了将钨粉与钢熔炼成钨钢的工艺，能够锻造超硬的工具。",
+    "required_items": [
+      {
+        "key": "tungsten_powder",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 120
   }
 ]

@@ -1681,5 +1681,133 @@
         "required_chain_operation": "gas_collecting"
       }
     ]
+  },
+  {
+    "name": "焙烧辉钼矿",
+    "key": "roast_molybdenite",
+    "description": "在窑炉中焙烧辉钼矿，生成三氧化钼和二氧化硫。",
+    "required_items": [
+      {
+        "key": "molybdenite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "molybdenum_trioxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原三氧化钼",
+    "key": "reduce_molybdenum_trioxide",
+    "description": "用煤或木炭还原三氧化钼，制得金属钼。",
+    "required_items": [
+      {
+        "key": "molybdenum_trioxide",
+        "quantity": 1
+      },
+      {
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 40,
+    "products": [
+      {
+        "key": "molybdenum",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧白钨矿制三氧化钨",
+    "key": "roast_scheelite",
+    "description": "将白钨矿与盐酸反应，再经焙烧得到三氧化钨。",
+    "required_items": [
+      {
+        "key": "scheelite",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 90,
+    "products": [
+      {
+        "key": "tungsten_trioxide",
+        "multiple": 1
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原三氧化钨制钨粉",
+    "key": "reduce_tungsten_trioxide",
+    "description": "在高温下用氢气还原三氧化钨，得到灰色钨粉。",
+    "required_items": [
+      {
+        "key": "tungsten_trioxide",
+        "quantity": 1
+      },
+      {
+        "key": "hydrogen",
+        "quantity": 2
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 120,
+    "products": [
+      {
+        "key": "tungsten_powder",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
   }
 ]
