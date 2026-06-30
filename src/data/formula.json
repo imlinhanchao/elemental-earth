@@ -1623,5 +1623,63 @@
         "required_chain_operation": "gas_collecting_air"
       }
     ]
+  },
+  {
+    "name": "合成氧化汞",
+    "key": "produce_mercury_oxide",
+    "description": "将汞与氧气在加热条件下反应，生成红色粉末状的氧化汞。",
+    "required_items": [
+      {
+        "key": "mercury",
+        "quantity": 2
+      },
+      {
+        "key": "oxygen",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "mercury_oxide",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "加热分解氧化汞",
+    "key": "decompose_mercury_oxide",
+    "description": "将氧化汞加热至分解，收集产生的汞蒸气和氧气。",
+    "required_items": [
+      {
+        "key": "mercury_oxide",
+        "quantity": 2
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 40,
+    "products": [
+      {
+        "key": "mercury",
+        "multiple": 2,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "oxygen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
   }
 ]

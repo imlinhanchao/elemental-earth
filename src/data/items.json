@@ -1208,5 +1208,15 @@
       "tool"
     ],
     "durable": 100
+  },
+  {
+    "name": "氧化汞",
+    "key": "mercury_oxide",
+    "category": "材料",
+    "description": "红色或橙红色的粉末，质地细腻，带有轻微的光泽。手指捻过之后会留下一抹暗红，闻起来无味，但已知对神经系统有害。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
   }
 ]
