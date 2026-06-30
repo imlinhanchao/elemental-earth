@@ -182,6 +182,11 @@
         "key": "molybdenite",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -190,6 +195,11 @@
         "key": "scheelite",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -198,6 +208,11 @@
         "key": "beryl",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -206,6 +221,11 @@
         "key": "spodumene",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -214,6 +234,11 @@
         "key": "zircon",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -225,6 +250,11 @@
           3
         ],
         "probability": 200,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -236,6 +266,10 @@
           2
         ],
         "probability": 100,
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -244,6 +278,12 @@
         "key": "sphalerite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "mountain"
@@ -261,6 +301,12 @@
         "key": "stibnite",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -270,6 +316,11 @@
         "key": "cobaltite",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -279,6 +330,12 @@
         "key": "arsenopyrite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -291,6 +348,12 @@
           3
         ],
         "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave"
         ]
@@ -302,6 +365,12 @@
           3
         ],
         "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave"
         ]
@@ -313,6 +382,10 @@
           3
         ],
         "probability": 200,
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave"
         ]
@@ -324,6 +397,11 @@
           3
         ],
         "probability": 300,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "mountain"
@@ -333,6 +411,11 @@
         "key": "cryolite",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -358,6 +441,14 @@
         "key": "realgar",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "bronze_pickaxe",
+          "brass_pickaxe",
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano"
         ]
@@ -366,6 +457,12 @@
         "key": "orpiment",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "brass_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano"
         ]
@@ -374,6 +471,11 @@
         "key": "rutile",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano",
           "mountain"
@@ -386,6 +488,11 @@
           3
         ],
         "probability": 150,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano"
         ]
@@ -397,8 +504,15 @@
           3
         ],
         "probability": 300,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
-          "island"
+          "island",
+          "basin"
         ]
       },
       {
@@ -408,6 +522,12 @@
           3
         ],
         "probability": 300,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "island"
         ]
@@ -419,6 +539,12 @@
           3
         ],
         "probability": 300,
+        "required_item": [
+          "chromium_pickaxe",
+          "titanium_pickaxe",
+          "manganese_pickaxe",
+          "iron_pickaxe"
+        ],
         "map": [
           "salt_lake",
           "basin"
@@ -431,6 +557,11 @@
           3
         ],
         "probability": 200,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "salt_lake"
         ]
@@ -442,6 +573,11 @@
           3
         ],
         "probability": 150,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "salt_lake"
         ]
@@ -450,6 +586,11 @@
         "key": "celestine",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "salt_lake",
           "cave"
@@ -462,6 +603,12 @@
           3
         ],
         "probability": 300,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "basin"
         ]
@@ -473,43 +620,41 @@
           2
         ],
         "probability": 150,
+        "required_item": [
+          "brass_pickaxe",
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "basin",
           "cave"
         ]
       },
       {
-        "key": "phosphorite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 200,
-        "map": [
-          "basin"
-        ]
-      },
-      {
         "key": "strontianite",
         "quantity": 1,
         "probability": 100,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "basin",
           "salt_lake"
         ]
       },
       {
-        "key": "nickel_iron",
-        "quantity": 1,
-        "probability": 100,
-        "map": [
-          "meteor_crater"
-        ]
-      },
-      {
         "key": "sperrylite",
         "quantity": 1,
         "probability": 30,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "meteor_crater",
           "mountain"
@@ -519,6 +664,11 @@
         "key": "pentlandite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "meteor_crater",
           "volcano"
@@ -528,6 +678,12 @@
         "key": "gold_sand",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "beach",
           "river_side"
@@ -537,6 +693,11 @@
         "key": "zircon",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "beach",
           "mountain"
@@ -549,6 +710,10 @@
           3
         ],
         "probability": 80,
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain",
           "cave"
@@ -1198,15 +1363,9 @@
         ],
         "probability": 800,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          },
-          {
-            "key": "basin"
-          }
+          "mountain",
+          "cave",
+          "basin"
         ]
       },
       {
@@ -1217,12 +1376,8 @@
         ],
         "probability": 700,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "basin"
-          }
+          "mountain",
+          "basin"
         ]
       },
       {
@@ -1233,12 +1388,8 @@
         ],
         "probability": 800,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
+          "mountain",
+          "cave"
         ]
       },
       {
@@ -1249,9 +1400,7 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "mountain"
-          }
+          "mountain"
         ]
       },
       {
@@ -1262,12 +1411,8 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
+          "mountain",
+          "cave"
         ]
       },
       {
@@ -1278,9 +1423,7 @@
         ],
         "probability": 400,
         "map": [
-          {
-            "key": "mountain"
-          }
+          "mountain"
         ]
       },
       {
@@ -1291,12 +1434,8 @@
         ],
         "probability": 400,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
+          "mountain",
+          "cave"
         ]
       },
       {
@@ -1307,12 +1446,8 @@
         ],
         "probability": 400,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "mountain"
-          }
+          "cave",
+          "mountain"
         ]
       },
       {
@@ -1323,12 +1458,8 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "volcano"
-          }
+          "mountain",
+          "volcano"
         ]
       },
       {
@@ -1339,12 +1470,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
+          "mountain",
+          "cave"
         ]
       },
       {
@@ -1355,12 +1482,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "cave"
-          }
+          "mountain",
+          "cave"
         ]
       },
       {
@@ -1371,12 +1494,8 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "mountain"
-          }
+          "cave",
+          "mountain"
         ]
       },
       {
@@ -1399,9 +1518,7 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "cave"
-          }
+          "cave"
         ]
       },
       {
@@ -1412,12 +1529,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "volcano"
-          }
+          "cave",
+          "volcano"
         ]
       },
       {
@@ -1428,12 +1541,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "volcano"
-          }
+          "cave",
+          "volcano"
         ]
       },
       {
@@ -1444,12 +1553,8 @@
         ],
         "probability": 150,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "volcano"
-          }
+          "cave",
+          "volcano"
         ]
       },
       {
@@ -1460,12 +1565,8 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "volcano"
-          }
+          "cave",
+          "volcano"
         ]
       },
       {
@@ -1476,12 +1577,8 @@
         ],
         "probability": 150,
         "map": [
-          {
-            "key": "cave"
-          },
-          {
-            "key": "volcano"
-          }
+          "cave",
+          "volcano"
         ]
       },
       {
@@ -1492,9 +1589,7 @@
         ],
         "probability": 400,
         "map": [
-          {
-            "key": "volcano"
-          }
+          "volcano"
         ]
       },
       {
@@ -1505,12 +1600,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "volcano"
-          },
-          {
-            "key": "mountain"
-          }
+          "volcano",
+          "mountain"
         ]
       },
       {
@@ -1521,9 +1612,7 @@
         ],
         "probability": 150,
         "map": [
-          {
-            "key": "volcano"
-          }
+          "volcano"
         ]
       },
       {
@@ -1534,9 +1623,7 @@
         ],
         "probability": 150,
         "map": [
-          {
-            "key": "volcano"
-          }
+          "volcano"
         ]
       },
       {
@@ -1547,9 +1634,7 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "volcano"
-          }
+          "volcano"
         ]
       },
       {
@@ -1560,12 +1645,8 @@
         ],
         "probability": 150,
         "map": [
-          {
-            "key": "volcano"
-          },
-          {
-            "key": "mountain"
-          }
+          "volcano",
+          "mountain"
         ]
       },
       {
@@ -1576,12 +1657,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "basin"
-          },
-          {
-            "key": "cave"
-          }
+          "basin",
+          "cave"
         ]
       },
       {
@@ -1592,12 +1669,8 @@
         ],
         "probability": 300,
         "map": [
-          {
-            "key": "basin"
-          },
-          {
-            "key": "salt_lake"
-          }
+          "basin",
+          "salt_lake"
         ]
       },
       {
@@ -1608,25 +1681,8 @@
         ],
         "probability": 200,
         "map": [
-          {
-            "key": "basin"
-          },
-          {
-            "key": "island"
-          }
-        ]
-      },
-      {
-        "key": "nickel_iron",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 200,
-        "map": [
-          {
-            "key": "meteor_crater"
-          }
+          "basin",
+          "island"
         ]
       },
       {
@@ -1637,12 +1693,8 @@
         ],
         "probability": 50,
         "map": [
-          {
-            "key": "meteor_crater"
-          },
-          {
-            "key": "mountain"
-          }
+          "meteor_crater",
+          "mountain"
         ]
       },
       {
@@ -1653,12 +1705,8 @@
         ],
         "probability": 100,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "meteor_crater"
-          }
+          "mountain",
+          "meteor_crater"
         ]
       },
       {
@@ -1669,12 +1717,8 @@
         ],
         "probability": 100,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "meteor_crater"
-          }
+          "mountain",
+          "meteor_crater"
         ]
       },
       {
@@ -1685,12 +1729,8 @@
         ],
         "probability": 100,
         "map": [
-          {
-            "key": "mountain"
-          },
-          {
-            "key": "meteor_crater"
-          }
+          "mountain",
+          "meteor_crater"
         ]
       }
     ],
@@ -2156,100 +2196,6 @@
     "time_required": 10
   },
   {
-    "name": "定向爆破",
-    "key": "precision_blasting",
-    "category": "采集",
-    "description": "使用高爆炸药和雷管进行精确爆破，能够获取稀有的矿石。",
-    "required_items": [
-      {
-        "key": "high_explosive",
-        "quantity": 1
-      },
-      {
-        "key": "detonator",
-        "quantity": 1,
-        "use": 1
-      }
-    ],
-    "required_techs": [
-      "detonation_tech"
-    ],
-    "rewards": [
-      {
-        "key": "sperrylite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 150,
-        "map": [
-          "cave"
-        ]
-      },
-      {
-        "key": "pitchblende",
-        "quantity": [
-          1,
-          2
-        ],
-        "probability": 120,
-        "map": [
-          "cave"
-        ]
-      },
-      {
-        "key": "molybdenite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 200,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "scheelite",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 200,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "zircon",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 150,
-        "map": [
-          "volcano"
-        ]
-      },
-      {
-        "key": "rutile",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 200,
-        "map": [
-          "volcano"
-        ]
-      }
-    ],
-    "time_required": 30,
-    "map": [
-      "cave",
-      "mountain",
-      "volcano"
-    ]
-  },
-  {
     "key": "directional_blasting",
     "name": "定向爆破",
     "category": "采集",
@@ -2453,20 +2399,6 @@
           {
             "key": "volcano",
             "probability": 350
-          }
-        ]
-      },
-      {
-        "key": "nickel_iron",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "meteor_crater",
-            "probability": 500
           }
         ]
       },
