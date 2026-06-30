@@ -1550,5 +1550,198 @@
     ],
     "elemental": 20,
     "is_discovery": true
+  },
+  {
+    "name": "重晶石",
+    "key": "barite",
+    "category": "材料",
+    "description": "白色或无色透明的晶体，密度极大，手感沉重，表面有玻璃光泽。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "毒重石",
+    "key": "witherite",
+    "category": "材料",
+    "description": "乳白色或淡黄色的块状矿物，断口参差，质地较脆，用指甲可划出痕迹。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "硫化钡",
+    "key": "barium_sulfide",
+    "category": "材料",
+    "description": "黄绿色粉末，带有强烈的硫磺气味，有毒，遇水会释放臭气。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "碳酸钡",
+    "key": "barium_carbonate",
+    "category": "材料",
+    "description": "白色无定形粉末，无味，不溶于水。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化钡",
+    "key": "barium_oxide",
+    "category": "材料",
+    "description": "白色吸湿性粉末，置于空气中会逐渐转化为氢氧化钡。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化钡",
+    "key": "barium_chloride",
+    "category": "材料",
+    "description": "白色结晶性粉末，易溶于水，有咸味，有毒。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸钡",
+    "key": "barium_nitrate",
+    "category": "材料",
+    "description": "白色结晶，易溶于水，为绿色火焰的颜料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钡",
+    "key": "barium",
+    "category": "材料",
+    "description": "银白色有光泽的金属，质地较软，遇水剧烈反应。",
+    "type": [
+      "material"
+    ],
+    "elemental": 56
+  },
+  {
+    "name": "动物脂肪",
+    "key": "animal_fat",
+    "category": "材料",
+    "description": "乳白色、略带黄色、软绵绵的团块，摸起来油腻腻的，有一股淡淡的腥膻气味，握在掌心会慢慢渗出油光。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "甘油",
+    "key": "glycerol",
+    "category": "液体",
+    "description": "无色透明的粘稠液体，几乎没有气味，用手沾一点会感到滑腻而微甜，像油一样黏稠，但又完全溶于水。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "肥皂",
+    "key": "soap",
+    "category": "材料",
+    "description": "淡黄色、半透明的固体块，表面光滑，带着淡淡的油脂清香，摸起来有点滑腻，遇水会产生细腻的泡沫。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝化甘油",
+    "key": "nitroglycerin",
+    "category": "液体",
+    "description": "无色或淡黄色的油状液体，闻起来有甜味和灼热感，稍微加热或受到震动就会猛烈爆炸，是一种极不稳定的烈性炸药。",
+    "type": [
+      "material",
+      "liquid",
+      "fuel"
+    ],
+    "attrs": {
+      "burn_time": 60
+    }
+  },
+  {
+    "name": "硅藻土",
+    "key": "diatomaceous_earth",
+    "category": "材料",
+    "description": "白色或浅黄色粉末，质地轻盈多孔，有轻微的磨砂感，触摸时感觉干燥而细腻。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "高爆炸药",
+    "key": "high_explosive",
+    "category": "材料",
+    "description": "深褐色油灰状块体，散发着刺鼻的硝化甘油气味，威力巨大但相对稳定。",
+    "type": [
+      "material",
+      "fuel"
+    ]
+  },
+  {
+    "name": "天青石",
+    "key": "celestine",
+    "category": "材料",
+    "description": "浅蓝色或无色半透明的晶体碎块，断口呈玻璃光泽，握在手中感觉较沉，是锶的主要矿石。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "菱锶矿",
+    "key": "strontianite",
+    "category": "材料",
+    "description": "白色至浅黄色的块状矿物，表面有玻璃光泽，质地较脆，是另一种重要的锶矿石。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "锶",
+    "key": "strontium",
+    "category": "材料",
+    "description": "银白色金属块，表面迅速氧化形成淡黄色膜，质地较软，在空气中易燃烧。",
+    "type": [
+      "material"
+    ],
+    "elemental": 38
+  },
+  {
+    "name": "氧化锶",
+    "key": "strontium_oxide",
+    "category": "材料",
+    "description": "白色粉末状固体，无味，遇水反应放热，常用于制备其他锶化合物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氢氧化锶",
+    "key": "strontium_hydroxide",
+    "category": "材料",
+    "description": "白色结晶粉末，易潮解，水溶液呈强碱性。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸锶",
+    "key": "strontium_nitrate",
+    "category": "材料",
+    "description": "白色结晶粉末，易溶于水，燃烧时产生明亮的红色火焰。",
+    "type": [
+      "material"
+    ]
   }
 ]

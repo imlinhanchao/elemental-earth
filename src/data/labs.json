@@ -202,5 +202,13 @@
       "electrochemistry"
     ],
     "requires_burning": true
+  },
+  {
+    "name": "加热",
+    "key": "heating",
+    "description": "使用热源对物质进行加热，使其温度升高，可能引发分解、熔化或促进反应。",
+    "time_required": 10,
+    "requires_burning": true,
+    "is_chain": false
   }
 ]

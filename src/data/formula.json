@@ -2493,5 +2493,445 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "还原重晶石",
+    "key": "reduce_barite",
+    "description": "将重晶石与焦炭共同焙烧，还原得到硫化钡。",
+    "required_items": [
+      {
+        "key": "barite",
+        "quantity": 1
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "barium_sulfide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "碳酸化硫化钡",
+    "key": "carbonate_barium_sulfide",
+    "description": "将硫化钡与碳酸钠溶液混合，沉淀出碳酸钡。",
+    "required_items": [
+      {
+        "key": "barium_sulfide",
+        "quantity": 1
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "barium_carbonate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧碳酸钡",
+    "key": "roast_barium_carbonate",
+    "description": "高温焙烧碳酸钡，分解得到氧化钡和二氧化碳。",
+    "required_items": [
+      {
+        "key": "barium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "barium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "碳酸钡与盐酸反应",
+    "key": "barium_carbonate_hcl",
+    "description": "碳酸钡与盐酸反应生成氯化钡、水和二氧化碳。",
+    "required_items": [
+      {
+        "key": "barium_carbonate",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "barium_chloride",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "熔融电解制钡",
+    "key": "electrolysis_barium_chloride",
+    "description": "熔融电解无水氯化钡，在阴极得到金属钡，阳极产生氯气。",
+    "required_items": [
+      {
+        "key": "barium_chloride",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "barium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "碳酸钡与硝酸反应",
+    "key": "barium_carbonate_hno3",
+    "description": "碳酸钡与硝酸反应生成硝酸钡、水和二氧化碳。",
+    "required_items": [
+      {
+        "key": "barium_carbonate",
+        "quantity": 1
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "barium_nitrate",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "焙烧毒重石",
+    "key": "roast_witherite",
+    "description": "直接焙烧毒重石（碳酸钡矿物），分解得到氧化钡。",
+    "required_items": [
+      {
+        "key": "witherite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "barium_chemistry"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "barium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "saponification",
+    "name": "皂化反应",
+    "description": "将动物脂肪与碱水混合加热并搅拌，发生皂化反应生成甘油和肥皂。",
+    "time_required": 60,
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "animal_fat",
+        "quantity": 2
+      },
+      {
+        "key": "alkaline_solution",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "glycerol",
+        "multiple": 1,
+        "required_chain_operation": "heating"
+      },
+      {
+        "key": "soap",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝化甘油制备",
+    "key": "nitration",
+    "description": "在低温下将甘油缓慢滴入浓硝酸和浓硫酸的混合酸中，经硝化反应生成硝化甘油的粗品，再用水洗涤得到纯品。",
+    "required_items": [
+      {
+        "key": "glycerol",
+        "quantity": 1
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "nitroglycerin",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 2
+      }
+    ]
+  },
+  {
+    "name": "焙烧天青石制氧化锶",
+    "key": "roast_celestine",
+    "description": "将天青石与焦炭混合焙烧，还原生成硫化锶，再转化为氧化锶。",
+    "required_items": [
+      {
+        "key": "celestine",
+        "quantity": 1
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 120,
+    "products": [
+      {
+        "key": "strontium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "slag",
+        "multiple": 0.2
+      }
+    ]
+  },
+  {
+    "name": "焙烧菱锶矿制氧化锶",
+    "key": "roast_strontianite",
+    "description": "焙烧菱锶矿，分解生成氧化锶和二氧化碳。",
+    "required_items": [
+      {
+        "key": "strontianite",
+        "quantity": 1
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 100,
+    "products": [
+      {
+        "key": "strontium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "还原氧化锶制锶",
+    "key": "reduce_strontium_oxide",
+    "description": "用铝粉在高温下还原氧化锶，得到金属锶。",
+    "required_items": [
+      {
+        "key": "strontium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "aluminum_powder",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 180,
+    "products": [
+      {
+        "key": "strontium",
+        "multiple": 0.5
+      },
+      {
+        "key": "alumina",
+        "multiple": 0.5
+      }
+    ]
+  },
+  {
+    "name": "硝酸锶制备",
+    "key": "strontium_nitrate_production",
+    "description": "将氧化锶溶于硝酸，蒸发结晶得到硝酸锶。",
+    "required_items": [
+      {
+        "key": "strontium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 60,
+    "products": [
+      {
+        "key": "strontium_nitrate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
   }
 ]

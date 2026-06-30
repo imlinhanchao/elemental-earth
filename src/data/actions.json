@@ -71,7 +71,7 @@
   },
   {
     "key": "mining",
-    "name": "挖矿",
+    "name": "挖掘",
     "category": "采集",
     "description": "使用镐类工具挖掘地面，根据工具的差异获取不同的矿物资源。",
     "time_required": 10,
@@ -367,7 +367,8 @@
           "brass_pickaxe"
         ],
         "map": [
-          "island"
+          "island",
+          "mountain"
         ]
       },
       {
@@ -545,6 +546,11 @@
         "key": "beryl",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain",
           "cave"
@@ -584,38 +590,40 @@
         ]
       },
       {
-        "key": "fluorite",
-        "quantity": [
-          1,
-          3
+        "key": "diatomaceous_earth",
+        "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
         ],
-        "probability": 300,
         "map": [
-          "cave"
+          "island"
         ]
       },
       {
-        "key": "calcite",
+        "key": "celestine",
         "quantity": [
           1,
           2
         ],
-        "probability": 500,
+        "probability": 150,
         "map": [
-          "cave",
-          "mountain"
+          "salt_lake",
+          "cave"
         ]
       },
       {
-        "key": "dolomite",
+        "key": "strontianite",
         "quantity": [
           1,
-          3
+          2
         ],
-        "probability": 400,
+        "probability": 100,
         "map": [
-          "mountain",
-          "cave"
+          "cave",
+          "salt_lake"
         ]
       }
     ]
@@ -1465,6 +1473,7 @@
           4
         ],
         "probability": 150,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "volcano"
@@ -1477,6 +1486,7 @@
           5
         ],
         "probability": 150,
+        "required_item": "high_explosive",
         "map": [
           "volcano",
           "mountain"
@@ -1489,6 +1499,7 @@
           5
         ],
         "probability": 300,
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "volcano"
@@ -1501,43 +1512,58 @@
           3
         ],
         "probability": 100,
+        "required_item": "high_explosive",
         "map": [
           "cave"
         ]
       },
       {
-        "key": "fluorite",
+        "key": "barite",
         "quantity": [
           2,
           5
         ],
-        "probability": 200,
-        "map": [
-          "cave"
-        ]
-      },
-      {
-        "key": "calcite",
-        "quantity": [
-          2,
-          4
-        ],
         "probability": 300,
+        "required_item": "high_explosive",
         "map": [
           "cave",
           "mountain"
         ]
       },
       {
-        "key": "dolomite",
+        "key": "witherite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 100,
+        "required_item": "high_explosive",
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "celestine",
         "quantity": [
           2,
-          5
+          4
         ],
-        "probability": 250,
+        "probability": 200,
         "map": [
-          "mountain",
-          "cave"
+          "cave",
+          "salt_lake"
+        ]
+      },
+      {
+        "key": "strontianite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          "cave",
+          "salt_lake"
         ]
       }
     ],
@@ -1559,13 +1585,10 @@
     "required_items": [
       {
         "key": "gunpowder",
-        "quantity": 10
+        "quantity": 1
       },
       {
-        "key": [
-          "fiber_cloth",
-          "wood"
-        ],
+        "key": "nitroglycerin",
         "quantity": 1
       }
     ],
@@ -1724,5 +1747,75 @@
     "required_techs": [
       "chrome_alloy_smithing"
     ]
+  },
+  {
+    "name": "狩猎",
+    "key": "hunting",
+    "category": "采集",
+    "description": "在森林中使用工具捕猎动物，获取肉类和油脂。",
+    "required_items": [
+      {
+        "key": "stone_axe",
+        "quantity": 1,
+        "use": 0.05
+      },
+      {
+        "key": "iron_axe",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "rewards": [
+      {
+        "key": "animal_fat",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 800
+      },
+      {
+        "key": "wood",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 200
+      }
+    ],
+    "time_required": 30,
+    "map": [
+      "forest"
+    ]
+  },
+  {
+    "name": "制作高爆炸药",
+    "key": "craft_high_explosive",
+    "category": "制作",
+    "description": "将硝化甘油小心地混入硅藻土中，制成稳定的高爆炸药。",
+    "required_items": [
+      {
+        "key": "nitroglycerin",
+        "quantity": 1,
+        "use": 0
+      },
+      {
+        "key": "diatomaceous_earth",
+        "quantity": 2,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "high_explosive_tech"
+    ],
+    "rewards": [
+      {
+        "key": "high_explosive",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 30,
+    "formula": null
   }
 ]
