@@ -64,10 +64,7 @@
               <div v-for="(row,i) in objItems" :key="i" class="flex gap-1 items-start mb-1">
                 <div class="flex-1 flex flex-wrap gap-1">
                   <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
-                  <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
-                    <option value="" disabled>添加…</option>
-                    <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}</option>
-                  </select>
+                  <SearchableSelect :options="refs.items" :modelValue="row._input" @update:modelValue="v => { row._input = v; addItemKey(row) }" placeholder="添加…" />
                 </div>
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" placeholder="数量" />
                 <input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" placeholder="消耗" />
@@ -77,16 +74,10 @@
             </fieldset>
             <fieldset class="border border-base-300 rounded p-2"><legend class="text-xs opacity-60 px-1">奖励</legend>
               <div v-for="(row,i) in objRewards" :key="i" class="flex gap-1 items-start mb-1">
-                <select class="select select-bordered select-xs flex-1" v-model="row.key">
-                  <option value="" disabled>选择物品</option>
-                  <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
-                </select>
+                <SearchableSelect :options="refs.items" v-model="row.key" placeholder="选择物品" class="flex-1" />
                 <input class="input input-bordered input-xs w-14" v-model="row.quantity" placeholder="数量" />
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" placeholder="概率" />
-                <select class="select select-bordered select-xs" v-model="row.required_item">
-                  <option value="">不限</option>
-                  <option v-for="o in refs.items" :key="o.key" :value="o.key">需{{ o.name }}</option>
-                </select>
+                <SearchableSelect :options="[{name:'不限',key:''},...refs.items]" v-model="row.required_item" placeholder="不限" />
                 <button class="btn btn-xs btn-ghost text-error" @click="objRewards.splice(i,1)">✕</button>
               </div>
               <button class="btn btn-xs btn-ghost" @click="objRewards.push({key:'',quantity:'',probability:1000,required_item:''})">＋ 添加</button>
@@ -149,10 +140,7 @@
               <div v-for="(row,i) in objItems" :key="i" class="flex gap-1 items-start mb-1">
                 <div class="flex-1 flex flex-wrap gap-1">
                   <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
-                  <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
-                    <option value="" disabled>添加…</option>
-                    <option v-for="o in refs.items" :key="o.key" :value="o.key">{{ o.name }}</option>
-                  </select>
+                  <SearchableSelect :options="refs.items" :modelValue="row._input" @update:modelValue="v => { row._input = v; addItemKey(row) }" placeholder="添加…" />
                 </div>
                 <input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" placeholder="数量" />
                 <button class="btn btn-xs btn-ghost text-error" @click="objItems.splice(i,1)">✕</button>
@@ -186,6 +174,7 @@
 <script setup lang="ts">
 import { ref, reactive, watch, nextTick } from 'vue'
 import { useAdminStore } from '@/stores/modules/admin'
+import SearchableSelect from '@/components/SearchableSelect.vue'
 
 const props = defineProps<{
   type: string

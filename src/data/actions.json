@@ -81,7 +81,10 @@
           "stone_pickaxe",
           "iron_pickaxe",
           "bronze_pickaxe",
-          "brass_pickaxe"
+          "brass_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "quantity": 1,
         "use": 0.01
@@ -232,6 +235,12 @@
         "key": "cassiterite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -243,7 +252,9 @@
         "required_item": [
           "iron_pickaxe",
           "bronze_pickaxe",
-          "brass_pickaxe"
+          "brass_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "cave"
@@ -253,11 +264,6 @@
         "key": "flint",
         "quantity": 1,
         "probability": 200,
-        "required_item": [
-          "iron_pickaxe",
-          "bronze_pickaxe",
-          "brass_pickaxe"
-        ],
         "map": [
           "mountain",
           "river_side",
@@ -270,8 +276,9 @@
         "probability": 50,
         "required_item": [
           "iron_pickaxe",
-          "bronze_pickaxe",
-          "brass_pickaxe"
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "river_side",
@@ -282,7 +289,12 @@
         "key": "argentite",
         "quantity": 1,
         "probability": 300,
-        "required_item": "iron_pickaxe",
+        "required_item": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "cave",
           "mountain",
@@ -296,7 +308,12 @@
         "key": "native_silver",
         "quantity": 1,
         "probability": 30,
-        "required_item": "iron_pickaxe",
+        "required_item": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "mountain"
         ]
@@ -305,7 +322,12 @@
         "key": "stibnite",
         "quantity": 1,
         "probability": 200,
-        "required_item": "iron_pickaxe",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "nickel_pickaxe",
+          "cobalt_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -317,7 +339,10 @@
         "probability": 400,
         "required_item": [
           "iron_pickaxe",
-          "brass_pickaxe"
+          "brass_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "volcano",
@@ -330,7 +355,10 @@
         "probability": 300,
         "required_item": [
           "brass_pickaxe",
-          "iron_pickaxe"
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "volcano",
@@ -343,7 +371,10 @@
         "probability": 250,
         "required_item": [
           "iron_pickaxe",
-          "brass_pickaxe"
+          "brass_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "volcano",
@@ -356,7 +387,10 @@
         "probability": 300,
         "required_item": [
           "iron_pickaxe",
-          "brass_pickaxe"
+          "brass_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
         ],
         "map": [
           "island"
@@ -366,6 +400,12 @@
         "key": "cobaltite",
         "quantity": 1,
         "probability": 50,
+        "required_item": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "volcano",
           "cave"
@@ -375,6 +415,11 @@
         "key": "sperrylite",
         "quantity": 1,
         "probability": 5,
+        "required_item": [
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "volcano"
         ]
@@ -383,6 +428,11 @@
         "key": "pentlandite",
         "quantity": 1,
         "probability": 200,
+        "required_item": [
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -392,7 +442,12 @@
         "key": "green_vitriol",
         "quantity": 1,
         "probability": 200,
-        "required_item": "iron_pickaxe",
+        "required_item": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
         "map": [
           "cave"
         ]
@@ -404,9 +459,30 @@
           2
         ],
         "probability": 100,
+        "required_item": [
+          "bronze_pickaxe",
+          "brass_pickaxe",
+          "cobalt_pickaxe",
+          "nickel_pickaxe",
+          "manganese_pickaxe",
+          "iron_pickaxe"
+        ],
         "map": [
           "cave",
           "salt_lake"
+        ]
+      },
+      {
+        "key": "pyrolusite",
+        "quantity": 1,
+        "probability": 200,
+        "required_item": [
+          "nickel_pickaxe",
+          "manganese_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
         ]
       }
     ]
@@ -1144,6 +1220,7 @@
     "category": "采集",
     "description": "使用炸药炸开山体，获得大量矿石。",
     "time_required": 30,
+    "cooldown": 600,
     "required_items": [
       {
         "key": "dynamite",
@@ -1246,6 +1323,39 @@
         "map": [
           "cave"
         ]
+      },
+      {
+        "key": "cobaltite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 100,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "pentlandite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 100,
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "pyrolusite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 100,
+        "map": [
+          "mountain"
+        ]
       }
     ],
     "required_techs": [
@@ -1255,8 +1365,7 @@
       "mountain",
       "cave",
       "volcano"
-    ],
-    "cooldown": 600
+    ]
   },
   {
     "key": "craft_dynamite",
@@ -1323,11 +1432,23 @@
     ]
   },
   {
-    "name": "采盐",
     "key": "extract_salt",
+    "name": "采盐",
     "category": "采集",
     "description": "在盐湖边缘采集结晶的盐块。",
     "time_required": 10,
+    "required_items": [
+      {
+        "key": [
+          "iron_pickaxe",
+          "cobalt_pickaxe",
+          "manganese_pickaxe",
+          "nickel_pickaxe"
+        ],
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
     "rewards": [
       {
         "key": "rock_salt",
@@ -1341,5 +1462,57 @@
     "map": [
       "salt_lake"
     ]
+  },
+  {
+    "name": "打造锰镐",
+    "key": "craft_manganese_pickaxe",
+    "category": "制作",
+    "description": "用锰钢制作一把坚固的镐，适合高强度挖掘。",
+    "required_items": [
+      {
+        "key": "manganese_steel",
+        "quantity": 3
+      },
+      {
+        "key": "wood",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "manganese_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "manganese_pickaxe",
+        "quantity": 1
+      }
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "打造锰斧",
+    "key": "craft_manganese_axe",
+    "category": "制作",
+    "description": "用锰钢制作一把锋利的斧头，用于砍伐和战斗。",
+    "required_items": [
+      {
+        "key": "manganese_steel",
+        "quantity": 2
+      },
+      {
+        "key": "wood",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "manganese_alloy_smithing"
+    ],
+    "rewards": [
+      {
+        "key": "manganese_axe",
+        "quantity": 1
+      }
+    ],
+    "time_required": 60
   }
 ]

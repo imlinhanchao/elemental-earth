@@ -271,5 +271,25 @@
       "bronze_tool_crafting"
     ],
     "time_required": 60
+  },
+  {
+    "name": "锰合金锻造",
+    "key": "manganese_alloy_smithing",
+    "description": "掌握了将锰融入钢中形成高强度合金的技术。",
+    "required_items": [
+      {
+        "key": "manganese",
+        "quantity": 5
+      },
+      {
+        "key": "steel",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace",
+      "iron_tool_crafting"
+    ],
+    "time_required": 120
   }
 ]

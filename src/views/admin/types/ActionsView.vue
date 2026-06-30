@@ -65,11 +65,8 @@
             <div class="divider text-xs opacity-50 mt-0">所需材料</div>
             <div v-for="(row,i) in objItems" :key="i" class="flex gap-2 items-center mb-2 bg-base-200 rounded-box p-2">
               <div class="flex-1 flex flex-wrap gap-1 items-center">
-                <span v-for="(k,ki) in row._keys" :key="ki" class="badge badge-primary badge-xs gap-1 cursor-pointer" @click="row._keys.splice(ki,1); row.key=row._keys.join(',')">{{ k }} ✕</span>
-                <select class="select select-bordered select-xs" v-model="row._input" @change="addItemKey(row)">
-                  <option value="" disabled>添加…</option>
-                  <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
-                </select>
+                <LabelTag v-for="(k,ki) in row._keys" :key="ki" :options="itemOptions" :value="k" closeable @close="row._keys.splice(ki,1); row.key=row._keys.join(',')" />
+                <SearchableSelect :options="itemOptions" :modelValue="row._input" @update:modelValue="v => { row._input = v; addItemKey(row) }" placeholder="添加…" />
               </div>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">数量<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.quantity" /></label>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">消耗<input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" /></label>
@@ -80,11 +77,11 @@
             <!-- 奖励 -->
             <div class="divider text-xs opacity-50 mt-0">奖励物品</div>
             <div v-for="(row,i) in objRewards" :key="i" class="flex gap-2 items-start mb-2 bg-base-200 rounded-box p-2">
-              <select class="select select-bordered select-xs flex-1" v-model="row.key">
-                <option value="" disabled>选择物品</option>
-                <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}（{{ o.key }}）</option>
-              </select>
-              <input class="input input-bordered input-xs w-16" v-model="row.quantity" placeholder="数量" />
+              <label class="input input-xs w-32">
+                <SearchableSelect :options="itemOptions" v-model="row.key" placeholder="选择物品" :border="false" />
+                <span>✕</span>
+                <input v-model="row.quantity" placeholder="数量" class="text-right" />
+              </label>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">权重<input type="number" class="input input-bordered input-xs w-14" v-model.number="row.probability" :disabled="row.guaranteed" /></label>
               <label class="flex items-center gap-1 text-xs whitespace-nowrap">
                 <input type="checkbox" class="checkbox checkbox-xs" v-model="row.guaranteed" />
@@ -92,13 +89,10 @@
               </label>
               <div class="flex-1 min-w-[100px]">
                 <div class="flex flex-wrap gap-0.5 mb-0.5">
-                  <span v-for="(k,ki) in row._reqItemKeys" :key="ki" class="badge badge-ghost badge-xs gap-0.5 cursor-pointer" @click="row._reqItemKeys.splice(ki,1)">{{ k }} ✕</span>
+                  <LabelTag v-for="(k,ki) in row._reqItemKeys" :key="ki" :options="itemOptions" :value="k" closeable @close="row._reqItemKeys.splice(ki,1)"></LabelTag>
                   <span v-if="!row._reqItemKeys.length" class="text-[10px] opacity-40">不限</span>
                 </div>
-                <select class="select select-bordered select-xs" v-model="row._reqItemInput" @change="addReqItem(row)">
-                  <option value="" disabled>需消耗…</option>
-                  <option v-for="o in itemOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
-                </select>
+                <SearchableSelect :options="itemOptions" :modelValue="row._reqItemInput" @update:modelValue="v => { row._reqItemInput = v; addReqItem(row) }" placeholder="需消耗…" />
               </div>
               <div class="flex-1">
                 <div class="flex flex-wrap gap-1 mb-1">
@@ -109,10 +103,7 @@
                     <button class="text-xs leading-none hover:text-error" @click="row._mapEntries.splice(ti,1)">✕</button>
                   </div>
                 </div>
-                <select class="select select-bordered select-xs" v-model="row._mapInput" @change="addRewardMap(row)">
-                  <option value="" disabled>地图…</option>
-                  <option v-for="o in mapOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
-                </select>
+                <SearchableSelect :options="mapOptions" :modelValue="row._mapInput" @update:modelValue="v => { row._mapInput = v; addRewardMap(row) }" placeholder="地图…" />
               </div>
               <button class="btn btn-xs btn-ghost text-error shrink-0" @click="objRewards.splice(i,1)">✕</button>
             </div>
@@ -124,24 +115,18 @@
               <label class="form-control flex-1">
                 <span class="label-text mb-1">前置科技（点击移除）</span>
                 <div class="flex flex-wrap gap-1 mb-1">
-                  <span v-for="(t,i) in form.techs" :key="i" class="badge badge-ghost badge-sm gap-1 cursor-pointer" @click="form.techs.splice(i,1)">{{ t }} ✕</span>
+                  <LabelTag v-for="(t,i) in form.techs" :key="i" :options="techOptions" :value="t" closeable @close="form.techs.splice(i,1)" />
                 </div>
                 <div class="flex gap-1 flex-wrap">
-                  <select class="select select-bordered select-xs" v-model="techInput" @change="addTech">
-                    <option value="" disabled>添加科技…</option>
-                    <option v-for="o in techOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
-                  </select>
+                  <SearchableSelect :options="techOptions" :modelValue="techInput" @update:modelValue="v => { techInput = v; addTech() }" placeholder="添加科技…" />
                 </div>
               </label>
               <label class="form-control flex-1">
                 <span class="label-text mb-1">可用地图（点击移除）</span>
                 <div class="flex flex-wrap gap-1 mb-1">
-                  <span v-for="(t,i) in form.maps" :key="i" class="badge badge-ghost badge-sm gap-1 cursor-pointer" @click="form.maps.splice(i,1)">{{ t }} ✕</span>
+                  <LabelTag v-for="(t,i) in form.maps" :key="i" :options="mapOptions" :value="t" closeable @close="form.maps.splice(i,1)" />
                 </div>
-                <select class="select select-bordered select-xs" v-model="mapInput" @change="addMap">
-                  <option value="" disabled>添加地图…</option>
-                  <option v-for="o in mapOptions" :key="o.key" :value="o.key">{{ o.name }}</option>
-                </select>
+                <SearchableSelect :options="mapOptions" :modelValue="mapInput" @update:modelValue="v => { mapInput = v; addMap() }" placeholder="添加地图…" />
               </label>
             </div>
 
@@ -178,6 +163,9 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useAdminStore } from '@/stores/modules/admin'
+import SearchableSelect from '@/components/SearchableSelect.vue'
+import LabelTag from '@/components/LabelTag.vue'
+
 const admin = useAdminStore()
 const records = ref<any[]>([])
 const modalRef = ref<HTMLDialogElement | null>(null)

@@ -1520,5 +1520,108 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "还原软锰矿",
+    "key": "reduce_pyrolusite",
+    "description": "将软锰矿与碳一起干馏，还原得到金属锰。",
+    "required_items": [
+      {
+        "key": "pyrolusite",
+        "quantity": 3
+      },
+      {
+        "key": [
+          "charcoal",
+          "coke"
+        ],
+        "quantity": 6
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "manganese_alloy_smithing"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "manganese",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 3
+      }
+    ]
+  },
+  {
+    "key": "smelt_manganese_steel",
+    "name": "熔炼锰钢",
+    "description": "将锰与钢在坩埚中高温熔炼，得到锰钢。",
+    "time_required": 20,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_items": [
+      {
+        "key": "manganese",
+        "quantity": 1
+      },
+      {
+        "key": "steel",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "manganese_steel",
+        "multiple": 3
+      }
+    ]
+  },
+  {
+    "key": "steel_smelting",
+    "name": "炼钢",
+    "description": "在坩埚中，利用氧气将生铁中的碳氧化去除，加入石灰石造渣，得到钢。",
+    "time_required": 120,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "oxidation"
+    },
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 5
+      },
+      {
+        "key": "oxygen",
+        "quantity": 1
+      },
+      {
+        "key": "quicklime",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "steel",
+        "multiple": 3
+      },
+      {
+        "key": "slag",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ]
   }
 ]

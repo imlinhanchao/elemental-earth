@@ -1159,5 +1159,54 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "软锰矿",
+    "key": "pyrolusite",
+    "category": "材料",
+    "description": "黑色或深灰色的块状矿物，表面有金属光泽，质地较软，容易染手。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "锰",
+    "key": "manganese",
+    "category": "材料",
+    "description": "银白色金属，断面呈浅灰色，质地较脆，遇水缓慢反应。",
+    "type": [
+      "material"
+    ],
+    "elemental": 25
+  },
+  {
+    "name": "锰钢",
+    "key": "manganese_steel",
+    "category": "材料",
+    "description": "深灰色的合金，表面有金属光泽，质地坚硬而耐磨。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锰镐",
+    "key": "manganese_pickaxe",
+    "category": "工具",
+    "description": "由锰钢制成的镐，坚固耐用，适合挖掘各种矿石。",
+    "type": [
+      "tool"
+    ],
+    "durable": 100
+  },
+  {
+    "name": "锰斧",
+    "key": "manganese_axe",
+    "category": "工具",
+    "description": "由锰钢制成的斧，锋利且耐用，适合砍伐各种树木。",
+    "type": [
+      "tool"
+    ],
+    "durable": 100
   }
 ]
