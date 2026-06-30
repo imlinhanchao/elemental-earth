@@ -2051,5 +2051,54 @@
       "tool"
     ],
     "durable": 1
+  },
+  {
+    "name": "铯榴石",
+    "key": "pollucite",
+    "category": "材料",
+    "description": "无色或白色半透明晶体，玻璃光泽，常呈立方体或粒状，断面参差，手感沉重。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氯化铯",
+    "key": "cesium_chloride",
+    "category": "材料",
+    "description": "无色或白色结晶，立方晶系，易潮解，无臭，味咸。",
+    "type": [
+      "material"
+    ],
+    "elemental": 55
+  },
+  {
+    "name": "铯",
+    "key": "cesium",
+    "category": "材料",
+    "description": "金黄色柔软金属，在空气中迅速氧化，遇水剧烈反应，熔点仅28.5°C，手感温热如蜡。",
+    "type": [
+      "material"
+    ],
+    "elemental": 55
+  },
+  {
+    "name": "氢氧化铯",
+    "key": "cesium_hydroxide",
+    "category": "材料",
+    "description": "白色吸湿性晶体，强碱性，溶于水放出大量热，在空气中易潮解。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化铯溶液",
+    "key": "cesium_chloride_solution",
+    "category": "液体",
+    "description": "无色透明液体，无特殊气味，味咸微苦。",
+    "type": [
+      "material",
+      "liquid"
+    ]
   }
 ]

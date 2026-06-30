@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
@@ -12,6 +13,10 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(),
+    createSvgIconsPlugin({
+      iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
+      symbolId: 'icon-[dir]-[name]',
+    }),
   ],
   resolve: {
     alias: [

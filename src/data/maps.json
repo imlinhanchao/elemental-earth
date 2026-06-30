@@ -5,8 +5,8 @@
     "icon": "hugeicons:mountain",
     "description": "山地是一个地形复杂的地方，可以找到各种矿物和稀有资源。",
     "position": {
-      "x": 81,
-      "y": 48
+      "x": 34,
+      "y": 3
     }
   },
   {
@@ -47,6 +47,16 @@
     "position": {
       "x": 279,
       "y": 0
+    }
+  },
+  {
+    "key": "basin",
+    "name": "盆地",
+    "icon": "svg-icon:basin",
+    "description": "盆地是一个低洼的地方，可以找到各种各样的矿物和稀有资源。",
+    "position": {
+      "x": 150,
+      "y": 30
     }
   },
   {

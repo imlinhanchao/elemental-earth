@@ -3511,5 +3511,129 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "酸浸铯榴石制氯化铯溶液",
+    "key": "leach_pollucite",
+    "description": "将铯榴石与盐酸反应，生成氯化铯溶液和残渣。",
+    "required_items": [
+      {
+        "key": "pollucite",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "cesium_chloride_solution",
+        "multiple": 3
+      },
+      {
+        "key": "silica_sand",
+        "multiple": 0.5
+      }
+    ]
+  },
+  {
+    "name": "蒸发氯化铯溶液",
+    "key": "evaporate_cesium_chloride",
+    "description": "加热蒸发氯化铯溶液，得到固体氯化铯。",
+    "required_items": [
+      {
+        "key": "cesium_chloride_solution",
+        "quantity": 3
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "evaporation",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "cesium_chloride",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "熔融电解氯化铯制铯",
+    "key": "electrolyze_cesium_chloride",
+    "description": "将氯化铯熔融后电解，在阴极得到金属铯，阳极产生氯气。",
+    "required_items": [
+      {
+        "key": "cesium_chloride",
+        "quantity": 1
+      },
+      {
+        "key": "battery",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "cesium",
+        "multiple": 0.6
+      },
+      {
+        "key": "chlorine",
+        "multiple": 0.6
+      }
+    ]
+  },
+  {
+    "name": "铯与水反应制氢氧化铯",
+    "key": "cesium_water_reaction",
+    "description": "将金属铯投入水中，剧烈反应生成氢氧化铯和氢气。",
+    "required_items": [
+      {
+        "key": "cesium",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 3
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 10,
+    "products": [
+      {
+        "key": "cesium_hydroxide",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 0.5
+      }
+    ]
   }
 ]
