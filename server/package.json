@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node --env-file .env --import tsx/esm index.ts",
     "dev": "node --env-file .env --import tsx/esm index.ts",
+    "mcp": "node --env-file .env --import tsx/esm mcp-server.ts",
     "type-check": "tsc --noEmit",
     "build": "tsc"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "express": "^4.21.0",
     "openai": "^4.80.0"
   },
