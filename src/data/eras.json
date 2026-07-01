@@ -51,11 +51,21 @@
     "key": "rare_earth",
     "name": "稀土时代",
     "icon": "tabler:diamond",
-    "description": "镧系与锕系元素的分离技术，打开了元素周期表深处的大门。",
+    "description": "镧系元素的精密分离技术，打开了元素周期表深处的大门。",
     "order": 4,
     "milestones": [
-      { "key": "separate_rare_earth", "description": "完成第一次稀土分离" },
-      { "key": "first_transmutation", "description": "完成第一次元素嬗变" }
+      { "key": "separate_rare_earth", "description": "完成第一次稀土分离" }
+    ]
+  },
+  {
+    "key": "atomic_age",
+    "name": "原子能时代",
+    "icon": "tabler:atom",
+    "description": "跨越稳定核素的边界，掌握同位素与元素嬗变的终极奥秘。",
+    "order": 5,
+    "milestones": [
+      { "key": "first_transmutation", "description": "完成第一次元素嬗变" },
+      { "key": "isolate_radium", "description": "从数吨矿石中提取出纯镭" }
     ]
   }
 ]

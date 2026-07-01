@@ -132,10 +132,19 @@ server/                          # Express backend (TypeScript, tsx runner)
 - **Gas handling**: Gas-type items can only be collected with appropriate chain operation (`gas_collecting` for insoluble, `gas_collecting_air` for soluble).
 
 ### Era System
-- **5 eras**: Stone → Alchemy → Modern Chemistry → Electrochemistry → Rare Earth
-- **Milestones**: Configured directly on items (`item.milestone`), techs (`tech.milestone`), and lab operations (`lab.milestone`). Obtaining the item/researching the tech/completing a lab operation that matches a formula triggers the milestone.
+- **6 eras**: Stone (0) → Alchemy (1) → Modern Chemistry (2) → Electrochemistry (3) → Rare Earth (4) → Atomic Age (5)
+- **Milestones**: Configured directly on items (`item.milestone`), techs (`tech.milestone`), and lab operations (`lab.milestone`). Obtaining the item/researching the tech/completing a lab operation that matches a milestone triggers the advancement.
 - **Era advancement**: When all milestones of the current era are completed, the game advances to the next era with a full-screen transition animation.
 - **Admin**: `/admin/eras` to view all eras and their milestones.
+
+### Electricity System
+- **Durable consumption**: Items with `durable` properties (e.g., `battery`, `lead_acid_battery`) act as power sources.
+- **Formula Requirement**: Formulas can specify `requires_electricity: true`. If checked, the system searches inventory for a `durable` item with `type: ['tool']` and `battery` in its key to use as a power source.
+- **Depletion**: Power sources lose durability instead of quantity. When durability reaches 0, the item stack is reduced by 1.
+
+### Inventory Management
+- **Discarding**: Durable items with reduced durability can be explicitly discarded by the user via a trash icon (calls `packStore.discardItem`).
+- **Renaming**: Items with `is_discovery: true` trigger a naming dialog. All items support custom notes and nicknames via `RenameDialog`.
 
 ### Elements
 - **Discovery animation**: Full-screen animation: title → pause → 3D card flip → fly to periodic table → light up.
