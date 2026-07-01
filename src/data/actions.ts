@@ -27,6 +27,10 @@ export interface IReward {
    * 需要行动消耗了指定物品（或数组中的任一物品）时才可能出现此奖励
    */
   required_item?: string | string[];
+  /**
+   * 需要达到的时代
+   */
+  required_era?: string;
 }
 
 export interface IAction {

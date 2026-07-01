@@ -296,25 +296,6 @@
     "time_required": 60
   },
   {
-    "name": "钡化合物化学",
-    "key": "barium_chemistry",
-    "description": "掌握了从钡矿石中提取钡化合物的化学原理，能够制备钡的多种化合物。",
-    "required_items": [
-      {
-        "key": "barite",
-        "quantity": 1
-      },
-      {
-        "key": "witherite",
-        "quantity": 1
-      }
-    ],
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 60
-  },
-  {
     "name": "高能炸药",
     "key": "high_explosive_tech",
     "description": "掌握了将硝化甘油与硅藻土结合制成稳定高爆炸药的技术。",

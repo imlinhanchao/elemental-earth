@@ -6,6 +6,7 @@ import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
+import { Eras } from '@/data/eras';
 import { useLogStore } from './log';
 import { getItem } from '@/data/items';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
@@ -54,6 +55,15 @@ export const useTaskStore = defineStore('task', () => {
         return required.some(k => consumedKeys.includes(k));
       });
     }
+    // 过滤：时代限制
+    const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+    const currentEraOrder = currentEraObj?.order ?? 0;
+    rewardsList = rewardsList.filter(r => {
+      if (!r.required_era) return true;
+      const reqEra = Eras.find(e => e.key === r.required_era);
+      return reqEra ? currentEraOrder >= reqEra.order : true;
+    });
+
     if (rewardsList.length === 1) return rewardsList[0];
     rewardsList.sort((a, b) => a.probability - b.probability);
     const totalProbability = rewardsList.reduce((sum, r) => sum + r.probability, 0);

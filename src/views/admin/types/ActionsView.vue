@@ -289,6 +289,14 @@
                   placeholder="地图…"
                 />
               </div>
+              <div class="w-24">
+                <SearchableSelect
+                  :options="eraOptions"
+                  v-model="row.required_era"
+                  placeholder="时代限制…"
+                  :border="true"
+                />
+              </div>
               <button
                 class="btn btn-xs btn-ghost text-error shrink-0"
                 @click="objRewards.splice(i, 1)"
@@ -308,6 +316,7 @@
                   _mapInput: '',
                   _reqItemKeys: [],
                   _reqItemInput: '',
+                  required_era: '',
                 })
               "
             >
@@ -448,21 +457,24 @@ const techOptions = ref<any[]>([]);
 const mapOptions = ref<any[]>([]);
 const labOptions = ref<any[]>([]);
 const formulaOptions = ref<any[]>([]);
+const eraOptions = ref<any[]>([]);
 const mapNameMap = ref<Record<string, string>>({});
 
 async function fetchRefs() {
-  const [ir, tr, mr, lr, fr] = await Promise.all([
+  const [ir, tr, mr, lr, fr, er] = await Promise.all([
     admin.apiFetch("/api/items"),
     admin.apiFetch("/api/techs"),
     admin.apiFetch("/api/maps"),
     admin.apiFetch("/api/labs"),
     admin.apiFetch("/api/formulas"),
+    admin.apiFetch("/api/eras"),
   ]);
   itemOptions.value = await ir.json();
   techOptions.value = await tr.json();
   mapOptions.value = await mr.json();
   labOptions.value = await lr.json();
   formulaOptions.value = await fr.json();
+  eraOptions.value = await er.json();
   mapNameMap.value = {};
   for (const m of mapOptions.value) mapNameMap.value[m.key] = m.name;
 }
@@ -537,6 +549,7 @@ function openEdit(r: any) {
         _mapInput: "",
         _reqItemKeys: reqKeys,
         _reqItemInput: "",
+        required_era: x.required_era || "",
       };
     }),
   );
@@ -623,6 +636,7 @@ async function save() {
       if (r.probability !== undefined && r.probability !== "")
         o.probability = r.probability;
       if (r.guaranteed) o.guaranteed = true;
+      if (r.required_era) o.required_era = r.required_era;
       if (r._reqItemKeys?.length === 1) o.required_item = r._reqItemKeys[0];
       else if (r._reqItemKeys?.length > 1)
         o.required_item = [...r._reqItemKeys];

@@ -27,6 +27,7 @@ const MODELS: Record<string, ModelInfo> = {
   labs:     { file: 'labs.json',     keyField: 'key',    label: '实验操作' },
   formulas: { file: 'formula.json',  keyField: 'key',    label: '配方' },
   elements: { file: 'elements.json', keyField: 'number', label: '元素' },
+  eras:     { file: 'eras.json',     keyField: 'key',    label: '时代' },
 };
 
 // ============================================================

@@ -214,8 +214,7 @@
     ],
     "attrs": {
       "burn_time": 30
-    },
-    "is_discovery": true
+    }
   },
   {
     "name": "二氧化碳",
@@ -225,8 +224,7 @@
     "type": [
       "material",
       "gas"
-    ],
-    "is_discovery": true
+    ]
   },
   {
     "name": "孔雀石",
@@ -915,8 +913,7 @@
     "type": [
       "material"
     ],
-    "elemental": 30,
-    "is_discovery": true
+    "elemental": 30
   },
   {
     "name": "硫酸亚铁",
@@ -1172,8 +1169,7 @@
     "description": "红色或橙红色的粉末，质地细腻，带有轻微的光泽。手指捻过之后会留下一抹暗红，闻起来无味，但已知对神经系统有害。",
     "type": [
       "material"
-    ],
-    "is_discovery": true
+    ]
   },
   {
     "name": "辉钼矿",
@@ -1260,8 +1256,7 @@
     "type": [
       "material"
     ],
-    "elemental": 52,
-    "is_discovery": true
+    "elemental": 52
   },
   {
     "name": "金锭",
@@ -1271,8 +1266,7 @@
     "type": [
       "material"
     ],
-    "elemental": 79,
-    "is_discovery": true
+    "elemental": 79
   },
   {
     "name": "锆石",
@@ -1320,8 +1314,7 @@
     "description": "亮黄色粉末，手感细腻，散发着微弱的荧光。",
     "type": [
       "material"
-    ],
-    "is_discovery": true
+    ]
   },
   {
     "name": "铀",
@@ -1331,8 +1324,7 @@
     "type": [
       "material"
     ],
-    "elemental": 92,
-    "is_discovery": true
+    "elemental": 92
   },
   {
     "name": "金红石",
@@ -1457,8 +1449,7 @@
     "description": "无色透明或白色的立方晶体，味咸涩，表面有玻璃光泽。",
     "type": [
       "material"
-    ],
-    "is_discovery": true
+    ]
   },
   {
     "name": "光卤石",
@@ -1478,8 +1469,7 @@
     "type": [
       "material"
     ],
-    "elemental": 19,
-    "is_discovery": true
+    "elemental": 19
   },
   {
     "name": "氢氧化钾",
@@ -1554,8 +1544,7 @@
     "type": [
       "material"
     ],
-    "elemental": 20,
-    "is_discovery": true
+    "elemental": 20
   },
   {
     "name": "重晶石",
@@ -1843,8 +1832,7 @@
     "type": [
       "material"
     ],
-    "elemental": 53,
-    "is_discovery": true
+    "elemental": 53
   },
   {
     "name": "锂辉石",
@@ -1892,7 +1880,7 @@
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 10
   },
   {
     "name": "碳酸锂",

@@ -97,38 +97,20 @@
       {
         "key": "mud",
         "quantity": 1,
-        "probability": 1000
+        "probability": 300
       },
       {
         "key": "clay",
         "quantity": 1,
-        "probability": 500,
+        "probability": 200,
         "map": [
           "river_side"
         ]
       },
       {
-        "key": "gold_sand",
-        "quantity": [
-          1,
-          2
-        ],
-        "probability": 50,
-        "map": [
-          {
-            "key": "river_side",
-            "probability": 80
-          },
-          {
-            "key": "beach",
-            "probability": 30
-          }
-        ]
-      },
-      {
         "key": "flint",
         "quantity": 1,
-        "probability": 300,
+        "probability": 200,
         "map": [
           {
             "key": "river_side",
@@ -159,6 +141,14 @@
           3
         ],
         "probability": 800,
+        "required_era": "alchemy",
+        "required_item": [
+          "bronze_pickaxe",
+          "brass_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain",
           "cave"
@@ -171,6 +161,7 @@
           3
         ],
         "probability": 500,
+        "required_era": "alchemy",
         "map": [
           "mountain"
         ]
@@ -179,102 +170,7 @@
         "key": "cassiterite",
         "quantity": 1,
         "probability": 200,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "molybdenite",
-        "quantity": 1,
-        "probability": 50,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "scheelite",
-        "quantity": 1,
-        "probability": 50,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "beryl",
-        "quantity": 1,
-        "probability": 50,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "spodumene",
-        "quantity": 1,
-        "probability": 100,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "zircon",
-        "quantity": 1,
-        "probability": 50,
-        "required_item": [
-          "titanium_pickaxe",
-          "chromium_pickaxe",
-          "manganese_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "magnesite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 200,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "chromite",
-        "quantity": [
-          1,
-          2
-        ],
-        "probability": 100,
-        "required_item": [
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
+        "required_era": "alchemy",
         "map": [
           "mountain"
         ]
@@ -283,6 +179,7 @@
         "key": "sphalerite",
         "quantity": 1,
         "probability": 200,
+        "required_era": "alchemy",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -298,6 +195,7 @@
         "key": "galena",
         "quantity": 1,
         "probability": 200,
+        "required_era": "alchemy",
         "map": [
           "cave"
         ]
@@ -306,6 +204,7 @@
         "key": "stibnite",
         "quantity": 1,
         "probability": 100,
+        "required_era": "alchemy",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -321,6 +220,7 @@
         "key": "cobaltite",
         "quantity": 1,
         "probability": 100,
+        "required_era": "alchemy",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -335,6 +235,7 @@
         "key": "arsenopyrite",
         "quantity": 1,
         "probability": 200,
+        "required_era": "alchemy",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -353,6 +254,7 @@
           3
         ],
         "probability": 200,
+        "required_era": "alchemy",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -370,6 +272,7 @@
           3
         ],
         "probability": 200,
+        "required_era": "alchemy",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -381,63 +284,18 @@
         ]
       },
       {
-        "key": "barite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 200,
-        "required_item": [
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "cave"
-        ]
-      },
-      {
-        "key": "bauxite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 300,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "cave",
-          "mountain"
-        ]
-      },
-      {
-        "key": "cryolite",
-        "quantity": 1,
-        "probability": 100,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "cave",
-          "volcano"
-        ]
-      },
-      {
         "key": "sulfur",
         "quantity": 1,
         "probability": 300,
-        "map": [
-          "volcano"
-        ]
-      },
-      {
-        "key": "cinnabar",
-        "quantity": 1,
-        "probability": 100,
+        "required_era": "alchemy",
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "volcano"
         ]
@@ -446,6 +304,7 @@
         "key": "realgar",
         "quantity": 1,
         "probability": 100,
+        "required_era": "alchemy",
         "required_item": [
           "bronze_pickaxe",
           "brass_pickaxe",
@@ -462,12 +321,140 @@
         "key": "orpiment",
         "quantity": 1,
         "probability": 100,
+        "required_era": "alchemy",
         "required_item": [
           "brass_pickaxe",
           "manganese_pickaxe",
           "titanium_pickaxe",
+          "chromium_pickaxe",
+          "iron_pickaxe"
+        ],
+        "map": [
+          "volcano"
+        ]
+      },
+      {
+        "key": "rock_salt",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 300,
+        "required_era": "alchemy",
+        "required_item": [
+          "chromium_pickaxe",
+          "titanium_pickaxe",
+          "manganese_pickaxe",
+          "iron_pickaxe"
+        ],
+        "map": [
+          "salt_lake",
+          "basin"
+        ]
+      },
+      {
+        "key": "limestone",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 300,
+        "required_era": "alchemy",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
           "chromium_pickaxe"
         ],
+        "map": [
+          "basin"
+        ]
+      },
+      {
+        "key": "niter",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 150,
+        "required_era": "alchemy",
+        "required_item": [
+          "brass_pickaxe",
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "basin",
+          "cave"
+        ]
+      },
+      {
+        "key": "molybdenite",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "scheelite",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "chromite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "barite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "required_era": "modern_chem",
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "cinnabar",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "modern_chem",
         "map": [
           "volcano"
         ]
@@ -476,6 +463,7 @@
         "key": "rutile",
         "quantity": 1,
         "probability": 100,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -493,6 +481,7 @@
           3
         ],
         "probability": 150,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -509,6 +498,7 @@
           3
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -527,6 +517,7 @@
           3
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "required_item": [
           "iron_pickaxe",
           "manganese_pickaxe",
@@ -538,46 +529,13 @@
         ]
       },
       {
-        "key": "rock_salt",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 300,
-        "required_item": [
-          "chromium_pickaxe",
-          "titanium_pickaxe",
-          "manganese_pickaxe",
-          "iron_pickaxe"
-        ],
-        "map": [
-          "salt_lake",
-          "basin"
-        ]
-      },
-      {
         "key": "sylvite",
         "quantity": [
           1,
           3
         ],
         "probability": 200,
-        "required_item": [
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "salt_lake"
-        ]
-      },
-      {
-        "key": "carnallite",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 150,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -591,6 +549,7 @@
         "key": "celestine",
         "quantity": 1,
         "probability": 100,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -602,45 +561,10 @@
         ]
       },
       {
-        "key": "limestone",
-        "quantity": [
-          1,
-          3
-        ],
-        "probability": 300,
-        "required_item": [
-          "iron_pickaxe",
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "basin"
-        ]
-      },
-      {
-        "key": "niter",
-        "quantity": [
-          1,
-          2
-        ],
-        "probability": 150,
-        "required_item": [
-          "brass_pickaxe",
-          "iron_pickaxe",
-          "manganese_pickaxe",
-          "titanium_pickaxe",
-          "chromium_pickaxe"
-        ],
-        "map": [
-          "basin",
-          "cave"
-        ]
-      },
-      {
         "key": "strontianite",
         "quantity": 1,
         "probability": 100,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -655,6 +579,7 @@
         "key": "sperrylite",
         "quantity": 1,
         "probability": 30,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -669,6 +594,7 @@
         "key": "pentlandite",
         "quantity": 1,
         "probability": 200,
+        "required_era": "modern_chem",
         "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
@@ -680,24 +606,138 @@
         ]
       },
       {
-        "key": "gold_sand",
-        "quantity": 1,
-        "probability": 50,
+        "key": "struvite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "required_era": "modern_chem",
         "required_item": [
           "iron_pickaxe",
+          "manganese_pickaxe",
+          "chromium_pickaxe",
+          "titanium_pickaxe"
+        ],
+        "map": [
+          "island",
+          "cave"
+        ]
+      },
+      {
+        "key": "spodumene",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "electrochem",
+        "required_item": [
           "manganese_pickaxe",
           "titanium_pickaxe",
           "chromium_pickaxe"
         ],
         "map": [
-          "beach",
-          "river_side"
+          "mountain"
+        ]
+      },
+      {
+        "key": "bauxite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 300,
+        "required_era": "electrochem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave",
+          "mountain"
+        ]
+      },
+      {
+        "key": "cryolite",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "electrochem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave",
+          "volcano"
+        ]
+      },
+      {
+        "key": "carnallite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 150,
+        "required_era": "electrochem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "salt_lake"
+        ]
+      },
+      {
+        "key": "beryl",
+        "quantity": 1,
+        "probability": 50,
+        "required_era": "rare_earth",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
         ]
       },
       {
         "key": "zircon",
         "quantity": 1,
         "probability": 50,
+        "required_era": "rare_earth",
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe",
+          "manganese_pickaxe"
+        ],
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "magnesite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 200,
+        "required_era": "rare_earth",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
+        ]
+      },
+      {
+        "key": "zircon",
+        "quantity": 1,
+        "probability": 50,
+        "required_era": "rare_earth",
         "required_item": [
           "titanium_pickaxe",
           "chromium_pickaxe",
@@ -715,6 +755,7 @@
           3
         ],
         "probability": 80,
+        "required_era": "rare_earth",
         "required_item": [
           "titanium_pickaxe",
           "chromium_pickaxe"
@@ -725,14 +766,41 @@
         ]
       },
       {
-        "key": "struvite",
+        "key": "pyrolusite",
+        "probability": 200,
+        "required_era": "modern_chem",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "malachite",
         "quantity": [
           1,
-          3
+          2
         ],
         "probability": 200,
         "map": [
-          "island",
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "witherite",
+        "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
           "cave"
         ]
       }
@@ -1314,7 +1382,15 @@
           5,
           10
         ],
-        "probability": 900
+        "probability": 900,
+        "guaranteed": true
+      },
+      {
+        "key": "gold_sand",
+        "probability": 50,
+        "map": [
+          "beach"
+        ]
       }
     ],
     "map": [
@@ -1398,119 +1474,6 @@
         ]
       },
       {
-        "key": "hematite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 800,
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
-        "key": "cassiterite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          "mountain"
-        ]
-      },
-      {
-        "key": "sphalerite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
-        "key": "magnesite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 400,
-        "required_item": "high_explosive",
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
-        "key": "bauxite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 400,
-        "required_item": "high_explosive",
-        "map": [
-          "cave",
-          "mountain"
-        ]
-      },
-      {
-        "key": "chromite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "required_item": "high_explosive",
-        "map": [
-          "mountain",
-          "volcano"
-        ]
-      },
-      {
-        "key": "pyrolusite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 200,
-        "required_item": "high_explosive",
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
-        "key": "spodumene",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 200,
-        "required_item": "high_explosive",
-        "map": [
-          "mountain",
-          "cave"
-        ]
-      },
-      {
-        "key": "barite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 300,
-        "required_item": "high_explosive",
-        "map": [
-          "cave",
-          "mountain"
-        ]
-      },
-      {
         "key": "quartz",
         "quantity": [
           3,
@@ -1524,6 +1487,44 @@
         ]
       },
       {
+        "key": "hematite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 800,
+        "map": [
+          "mountain",
+          "cave"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "cassiterite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          "mountain"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "sphalerite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          "mountain",
+          "cave"
+        ],
+        "required_era": "alchemy"
+      },
+      {
         "key": "galena",
         "quantity": [
           2,
@@ -1532,7 +1533,8 @@
         "probability": 300,
         "map": [
           "cave"
-        ]
+        ],
+        "required_era": "alchemy"
       },
       {
         "key": "cobaltite",
@@ -1545,7 +1547,138 @@
         "map": [
           "cave",
           "volcano"
-        ]
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "stibnite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          "cave",
+          "volcano"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "arsenopyrite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "map": [
+          "cave",
+          "volcano"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "sulfur",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 400,
+        "map": [
+          "volcano"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "realgar",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          "volcano"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "orpiment",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "map": [
+          "volcano"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "niter",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 200,
+        "map": [
+          "basin",
+          "cave"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "rock_salt",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 300,
+        "map": [
+          "basin",
+          "salt_lake"
+        ],
+        "required_era": "alchemy"
+      },
+      {
+        "key": "chromite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 300,
+        "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "volcano"
+        ],
+        "required_era": "modern_chem"
+      },
+      {
+        "key": "pyrolusite",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 200,
+        "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "cave"
+        ],
+        "required_era": "modern_chem"
+      },
+      {
+        "key": "barite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 300,
+        "required_item": "high_explosive",
+        "map": [
+          "cave",
+          "mountain"
+        ],
+        "required_era": "modern_chem"
       },
       {
         "key": "pentlandite",
@@ -1558,55 +1691,8 @@
         "map": [
           "cave",
           "volcano"
-        ]
-      },
-      {
-        "key": "stibnite",
-        "quantity": [
-          2,
-          4
         ],
-        "probability": 150,
-        "map": [
-          "cave",
-          "volcano"
-        ]
-      },
-      {
-        "key": "arsenopyrite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          "cave",
-          "volcano"
-        ]
-      },
-      {
-        "key": "cryolite",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 150,
-        "required_item": "high_explosive",
-        "map": [
-          "cave",
-          "volcano"
-        ]
-      },
-      {
-        "key": "sulfur",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 400,
-        "map": [
-          "volcano"
-        ]
+        "required_era": "modern_chem"
       },
       {
         "key": "cinnabar",
@@ -1618,29 +1704,8 @@
         "map": [
           "volcano",
           "mountain"
-        ]
-      },
-      {
-        "key": "realgar",
-        "quantity": [
-          2,
-          4
         ],
-        "probability": 150,
-        "map": [
-          "volcano"
-        ]
-      },
-      {
-        "key": "orpiment",
-        "quantity": [
-          2,
-          4
-        ],
-        "probability": 150,
-        "map": [
-          "volcano"
-        ]
+        "required_era": "modern_chem"
       },
       {
         "key": "borax",
@@ -1651,7 +1716,8 @@
         "probability": 200,
         "map": [
           "volcano"
-        ]
+        ],
+        "required_era": "modern_chem"
       },
       {
         "key": "rutile",
@@ -1664,31 +1730,8 @@
         "map": [
           "volcano",
           "mountain"
-        ]
-      },
-      {
-        "key": "niter",
-        "quantity": [
-          2,
-          5
         ],
-        "probability": 200,
-        "map": [
-          "basin",
-          "cave"
-        ]
-      },
-      {
-        "key": "rock_salt",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 300,
-        "map": [
-          "basin",
-          "salt_lake"
-        ]
+        "required_era": "modern_chem"
       },
       {
         "key": "phosphorite",
@@ -1700,7 +1743,8 @@
         "map": [
           "basin",
           "island"
-        ]
+        ],
+        "required_era": "modern_chem"
       },
       {
         "key": "sperrylite",
@@ -1713,7 +1757,8 @@
         "map": [
           "meteor_crater",
           "mountain"
-        ]
+        ],
+        "required_era": "modern_chem"
       },
       {
         "key": "molybdenite",
@@ -1726,7 +1771,8 @@
         "map": [
           "mountain",
           "meteor_crater"
-        ]
+        ],
+        "required_era": "modern_chem"
       },
       {
         "key": "scheelite",
@@ -1739,7 +1785,77 @@
         "map": [
           "mountain",
           "meteor_crater"
-        ]
+        ],
+        "required_era": "modern_chem"
+      },
+      {
+        "key": "struvite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 300,
+        "map": [
+          "island",
+          "cave"
+        ],
+        "required_era": "modern_chem"
+      },
+      {
+        "key": "bauxite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 400,
+        "required_item": "high_explosive",
+        "map": [
+          "cave",
+          "mountain"
+        ],
+        "required_era": "electrochem"
+      },
+      {
+        "key": "spodumene",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "cave"
+        ],
+        "required_era": "electrochem"
+      },
+      {
+        "key": "cryolite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 150,
+        "required_item": "high_explosive",
+        "map": [
+          "cave",
+          "volcano"
+        ],
+        "required_era": "electrochem"
+      },
+      {
+        "key": "magnesite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 400,
+        "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "cave"
+        ],
+        "required_era": "rare_earth"
       },
       {
         "key": "beryl",
@@ -1752,19 +1868,8 @@
         "map": [
           "mountain",
           "meteor_crater"
-        ]
-      },
-      {
-        "key": "struvite",
-        "quantity": [
-          3,
-          8
         ],
-        "probability": 300,
-        "map": [
-          "island",
-          "cave"
-        ]
+        "required_era": "rare_earth"
       }
     ],
     "required_techs": [
@@ -2234,7 +2339,6 @@
     "category": "采集",
     "description": "使用定向爆破技术精确开采特定矿脉，有几率获得稀有矿物。",
     "time_required": 45,
-    "cooldown": 900,
     "required_items": [
       {
         "key": "detonator",
@@ -2262,12 +2366,134 @@
         "guaranteed": true
       },
       {
+        "key": "realgar",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 400
+          }
+        ]
+      },
+      {
+        "key": "orpiment",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 250,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 350
+          }
+        ]
+      },
+      {
+        "key": "stibnite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "cave",
+            "probability": 400
+          },
+          {
+            "key": "volcano",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "argentite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 350,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "cave",
+            "probability": 500
+          },
+          {
+            "key": "mountain",
+            "probability": 200
+          }
+        ]
+      },
+      {
+        "key": "cobaltite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "cave",
+            "probability": 400
+          },
+          {
+            "key": "volcano",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "galena",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 400,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "cave",
+            "probability": 500
+          }
+        ]
+      },
+      {
+        "key": "sphalerite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 400,
+        "required_era": "alchemy",
+        "map": [
+          {
+            "key": "cave",
+            "probability": 400
+          },
+          {
+            "key": "mountain",
+            "probability": 300
+          }
+        ]
+      },
+      {
         "key": "cinnabar",
         "quantity": [
           3,
           6
         ],
         "probability": 400,
+        "required_era": "modern_chem",
         "map": [
           {
             "key": "volcano",
@@ -2282,6 +2508,7 @@
           3
         ],
         "probability": 80,
+        "required_era": "modern_chem",
         "map": [
           {
             "key": "meteor_crater",
@@ -2300,6 +2527,7 @@
           5
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "map": [
           {
             "key": "mountain",
@@ -2314,10 +2542,60 @@
           5
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "map": [
           {
             "key": "mountain",
             "probability": 400
+          }
+        ]
+      },
+      {
+        "key": "chromite",
+        "quantity": [
+          3,
+          6
+        ],
+        "probability": 400,
+        "required_era": "modern_chem",
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 500
+          }
+        ]
+      },
+      {
+        "key": "rutile",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "modern_chem",
+        "map": [
+          {
+            "key": "volcano",
+            "probability": 400
+          },
+          {
+            "key": "mountain",
+            "probability": 300
+          }
+        ]
+      },
+      {
+        "key": "phosphorite",
+        "quantity": [
+          3,
+          8
+        ],
+        "probability": 400,
+        "required_era": "modern_chem",
+        "map": [
+          {
+            "key": "island",
+            "probability": 600
           }
         ]
       },
@@ -2328,6 +2606,7 @@
           5
         ],
         "probability": 250,
+        "required_era": "rare_earth",
         "map": [
           {
             "key": "mountain",
@@ -2340,26 +2619,13 @@
         ]
       },
       {
-        "key": "chromite",
-        "quantity": [
-          3,
-          6
-        ],
-        "probability": 400,
-        "map": [
-          {
-            "key": "mountain",
-            "probability": 500
-          }
-        ]
-      },
-      {
         "key": "tellurium_gold_ore",
         "quantity": [
           1,
           3
         ],
         "probability": 200,
+        "required_era": "rare_earth",
         "map": [
           {
             "key": "mountain",
@@ -2378,6 +2644,7 @@
           4
         ],
         "probability": 250,
+        "required_era": "rare_earth",
         "map": [
           {
             "key": "mountain",
@@ -2386,152 +2653,6 @@
           {
             "key": "volcano",
             "probability": 200
-          }
-        ]
-      },
-      {
-        "key": "rutile",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 400
-          },
-          {
-            "key": "mountain",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "realgar",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 400
-          }
-        ]
-      },
-      {
-        "key": "orpiment",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 250,
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 350
-          }
-        ]
-      },
-      {
-        "key": "stibnite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "cave",
-            "probability": 400
-          },
-          {
-            "key": "volcano",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "argentite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 350,
-        "map": [
-          {
-            "key": "cave",
-            "probability": 500
-          },
-          {
-            "key": "mountain",
-            "probability": 200
-          }
-        ]
-      },
-      {
-        "key": "cobaltite",
-        "quantity": [
-          2,
-          5
-        ],
-        "probability": 300,
-        "map": [
-          {
-            "key": "cave",
-            "probability": 400
-          },
-          {
-            "key": "volcano",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "galena",
-        "quantity": [
-          3,
-          6
-        ],
-        "probability": 400,
-        "map": [
-          {
-            "key": "cave",
-            "probability": 500
-          }
-        ]
-      },
-      {
-        "key": "sphalerite",
-        "quantity": [
-          3,
-          6
-        ],
-        "probability": 400,
-        "map": [
-          {
-            "key": "cave",
-            "probability": 400
-          },
-          {
-            "key": "mountain",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "phosphorite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 400,
-        "map": [
-          {
-            "key": "island",
-            "probability": 600
           }
         ]
       },
@@ -2542,6 +2663,7 @@
           8
         ],
         "probability": 500,
+        "required_era": "rare_earth",
         "map": [
           {
             "key": "cave",
@@ -2560,6 +2682,7 @@
           5
         ],
         "probability": 250,
+        "required_era": "rare_earth",
         "map": [
           "mountain"
         ]
@@ -2571,11 +2694,37 @@
           5
         ],
         "probability": 150,
+        "required_era": "rare_earth",
         "map": [
           "basin"
         ]
+      },
+      {
+        "key": "barite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "modern_chem",
+        "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "barite",
+        "quantity": [
+          5,
+          8
+        ],
+        "probability": 300,
+        "required_era": "modern_chem",
+        "map": [
+          "cave"
+        ]
       }
     ],
+    "cooldown": 900,
     "required_techs": [
       "explosives"
     ],
