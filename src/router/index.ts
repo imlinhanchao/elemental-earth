@@ -11,10 +11,9 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: DefaultLayout,
-    redirect: '/home',
     children: [
       {
-        path: 'home',
+        path: '',
         name: 'Home',
         component: () => import('../views/HomeView.vue'),
         meta: { tab: 'home', label: '行动', icon: 'entypo:tools' },
@@ -62,6 +61,7 @@ export const routes: RouteRecordRaw[] = [
       { path: 'labs',      name: 'AdminLabs',       component: () => import('../views/admin/types/LabsView.vue') },
       { path: 'formulas',  name: 'AdminFormulas',   component: () => import('../views/admin/types/FormulasView.vue') },
       { path: 'elements',  name: 'AdminElements',   component: () => import('../views/admin/types/ElementsView.vue') },
+      { path: 'eras',      name: 'AdminEras',       component: () => import('../views/admin/types/ErasView.vue') },
     ],
   },
 ]
