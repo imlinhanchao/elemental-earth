@@ -56,7 +56,9 @@ const groupedItems = computed(() => {
 <template>
   <aside
     class="bg-base-100 border-r border-base-300 flex-none overflow-y-auto transition-all duration-300"
-    :class="appStore.leftSidebarOpen ? 'w-60' : 'w-0 overflow-hidden'"
+    :class="[
+      appStore.leftSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-60') : 'w-0 overflow-hidden'
+    ]"
   >
     <section class="p-4">
       <header class="flex items-center justify-between mb-2 gap-2">

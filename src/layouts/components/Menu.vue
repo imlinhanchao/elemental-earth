@@ -8,16 +8,16 @@
 </script>
 
 <template>
-    <div class="tabs tabs-bordered tabs-lg border-b border-base-300 bg-base-200 flex-none px-4">
+    <div class="tabs tabs-bordered tabs-md lg:tabs-lg border-b border-base-300 bg-base-200 flex-none px-2 lg:px-4 flex justify-around lg:justify-start">
         <RouterLink
         v-for="tab in tabs"
         :key="tab.name"
         :to="tab.path"
-        class="tab gap-2"
+        class="tab gap-1 lg:gap-2 px-2 lg:px-4"
         active-class="tab-active"
         >
-        <Icon :icon="tab.icon" class="text-lg" v-if="tab.icon" />
-        {{ tab.label }}
+        <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
+        <span class="hidden sm:inline">{{ tab.label }}</span>
         </RouterLink>
     </div>
 </template>

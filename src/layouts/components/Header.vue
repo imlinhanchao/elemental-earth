@@ -47,15 +47,15 @@ function handleSelectMap(targetKey: string) {
       </div>
       <div class="flex-1 px-2 flex items-center gap-2">
         <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary" />
-        <span class="text-xl font-bold">元素纪元</span>
+        <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
       </div>
       <div class="flex-none gap-2 flex items-center">
 
         <!-- 当前地图 -->
         <div class="flex items-center gap-1 mr-2">
-          <button class="btn btn-ghost btn-sm gap-1" :disabled="stateStore.isSwitching || taskStore.tasks.length > 0" @click="openSwitchModal" title="点击切换地图">
+          <button class="btn btn-ghost btn-sm gap-1 pl-1" :disabled="stateStore.isSwitching || taskStore.tasks.length > 0" @click="openSwitchModal" title="点击切换地图">
             <Icon :icon="stateStore.getMap?.icon || 'tabler:map-filled'" class="text-xl" />
-            <span>{{ stateStore.getMap?.name }}</span>
+            <span :class="{ 'hidden': appStore.isMobile }">{{ stateStore.getMap?.name }}</span>
             <Icon icon="tabler:chevron-down" class="text-sm opacity-60" />
           </button>
         </div>

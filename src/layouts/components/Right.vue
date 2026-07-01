@@ -68,7 +68,9 @@ const typeEntries = computed(() =>
 <template>
     <aside
         class="bg-base-100 border-l border-base-300 flex-none transition-all duration-300 p-2 flex flex-col"
-        :class="appStore.rightSidebarOpen ? 'w-72' : 'w-0 overflow-hidden'"
+        :class="[
+            appStore.rightSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-72') : 'w-0 overflow-hidden'
+        ]"
     >
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">

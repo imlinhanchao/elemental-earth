@@ -20,8 +20,15 @@ export const useAppStore = defineStore('app', () => {
   const storage = new Storage();
   const config = getConfig()
   const theme = ref<Theme>(config?.theme ?? lightTheme)
-  const leftSidebarOpen = ref<boolean>(config?.left ?? true)
-  const rightSidebarOpen = ref<boolean>(config?.right ?? true)
+
+  // 移动端默认关闭侧边栏
+  const isMobile = ref(window.innerWidth < 768)
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth < 768
+  })
+
+  const leftSidebarOpen = ref<boolean>(isMobile.value ? false : (config?.left ?? true))
+  const rightSidebarOpen = ref<boolean>(isMobile.value ? false : (config?.right ?? true))
   const taskNotifyMode = ref<'each' | 'all'>(config?.taskNotifyMode ?? 'all')
   const desktopPush = ref<boolean>(config?.desktopPush ?? false)
   const notifyOnlyHidden = ref<boolean>(config?.notifyOnlyHidden ?? true)
@@ -79,7 +86,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   return {
-    theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen,
+    theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile,
     taskNotifyMode, desktopPush, notifyOnlyHidden,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden,

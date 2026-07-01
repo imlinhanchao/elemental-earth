@@ -4,15 +4,22 @@
     <Header />
 
     <!-- Body: three-column layout -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden relative">
+      <!-- 移动端遮罩 -->
+      <div 
+        v-if="appStore.isMobile && (appStore.leftSidebarOpen || appStore.rightSidebarOpen)" 
+        class="absolute inset-0 bg-black/50 z-20"
+        @click="closeSidebars"
+      ></div>
+
       <!-- Left Sidebar -->
-      <Left />
+      <Left :class="{ 'absolute inset-y-0 left-0 z-30 shadow-2xl': appStore.isMobile }" />
 
       <!-- Main / Center Column -->
       <Content />
 
       <!-- Right Sidebar -->
-      <Right />
+      <Right :class="{ 'absolute inset-y-0 right-0 z-30 shadow-2xl': appStore.isMobile }" />
     </div>
   </div>
 </template>
@@ -28,6 +35,11 @@ import Right from './components/Right.vue'
 
 const appStore = useAppStore()
 const loading = ref(true);
+
+function closeSidebars() {
+  appStore.leftSidebarOpen = false
+  appStore.rightSidebarOpen = false
+}
 
 onMounted(() => {
   initAutoSave()

@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { Items } from '@/data/items';
+  import { useAppStore } from '@/stores/modules/app';
   import { usePackStore, type IPackItem } from '@/stores/modules/pack';
   import { computed, ref } from 'vue';
   import InlineTooltip from '@/components/InlineTooltip.vue';
@@ -10,6 +11,7 @@ import { Icon } from '@iconify/vue';
     data: IPackItem;
   }>();
 
+  const appStore = useAppStore();
   const packStore = usePackStore();
   const itemData = computed(() => {
     return Items.find(item => item.key === props.data.key);
@@ -36,7 +38,8 @@ import { Icon } from '@iconify/vue';
       </InlineTooltip>
       <div class="flex items-center gap-1 shrink-0">
         <button
-          class="btn btn-xs btn-ghost opacity-0 group-hover:opacity-60 hover:opacity-100! transition-opacity px-1"
+          class="btn btn-xs btn-ghost transition-opacity px-1"
+          :class="{ 'opacity-0 lg:group-hover:opacity-60 lg:hover:opacity-100!': !appStore.isMobile, 'opacity-60': appStore.isMobile }"
           title="修改命名"
           @click.stop="showRename = true"
         >
