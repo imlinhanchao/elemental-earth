@@ -21,6 +21,18 @@ import { Icon } from '@iconify/vue';
   const description = computed(() => itemData.value?.description || '');
   const note = computed(() => packStore.getItemNote(props.data.key));
 
+  const isDamaged = computed(() => {
+    if (!itemData.value?.durable) return false;
+    return props.data.durable < itemData.value.durable;
+  });
+
+  function discardItem() {
+    if (confirm(`确定要丢弃损坏的 ${displayName.value} 吗？`)) {
+      // 这里的逻辑：消耗掉当前物品剩余的所有耐久，从而扣除 1 个数量并重置耐久
+      packStore.removeItem(props.data.key, 1, props.data.durable);
+    }
+  }
+
   const showRename = ref(false);
 </script>
 <template>
@@ -37,6 +49,15 @@ import { Icon } from '@iconify/vue';
         <span class="truncate block">{{ displayName }}</span>
       </InlineTooltip>
       <div class="flex items-center gap-1 shrink-0">
+        <button
+          v-if="isDamaged"
+          class="btn btn-xs btn-ghost text-error transition-opacity px-1"
+          :class="{ 'opacity-0 lg:group-hover:opacity-60 lg:hover:opacity-100!': !appStore.isMobile, 'opacity-60': appStore.isMobile }"
+          title="丢弃损坏物品"
+          @click.stop="discardItem"
+        >
+          <Icon icon="tabler:trash" class="text-base" />
+        </button>
         <button
           class="btn btn-xs btn-ghost transition-opacity px-1"
           :class="{ 'opacity-0 lg:group-hover:opacity-60 lg:hover:opacity-100!': !appStore.isMobile, 'opacity-60': appStore.isMobile }"

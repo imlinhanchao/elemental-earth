@@ -105,7 +105,8 @@ export const usePackStore = defineStore('pack', () => {
         existingItem.durable -= use;
         if (existingItem.durable <= 0) {
           existingItem.quantity -= quantity;
-          existingItem.durable = 1; // 重置耐久度为 1，避免负数
+          // 重置耐久度为该物品的最大耐久值
+          existingItem.durable = itemDef?.durable ?? 1;
         }
       } else {
         existingItem.quantity -= quantity;
