@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/icon.svg" width="128" height="128" alt="Elemental Earth Logo">
+  <img src="public/icons.svg" width="128" height="128" alt="Elemental Earth Logo">
 </p>
 
 <h1 align="center">元素纪元 ⚗️</h1>
