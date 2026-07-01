@@ -2153,5 +2153,37 @@
     ],
     "elemental": 83,
     "is_discovery": true
+  },
+  {
+    "name": "海水",
+    "key": "brine",
+    "category": "液体",
+    "description": "清澈的咸水，带着海洋的气息，尝起来又咸又苦。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "浓缩卤水",
+    "key": "bittern",
+    "category": "液体",
+    "description": "黄褐色的浓缩卤水，味苦，富含溴化物和其他矿物质。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "溴",
+    "key": "bromine",
+    "category": "液体",
+    "description": "暗红棕色的液体，不断挥发出刺鼻的红色烟雾，具有强烈的腐蚀性。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "elemental": 35,
+    "is_discovery": true
   }
 ]

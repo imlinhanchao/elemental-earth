@@ -2510,8 +2510,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 30,
     "products": [
       {
@@ -2544,8 +2543,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 20,
     "products": [
       {
@@ -2570,8 +2568,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 30,
     "products": [
       {
@@ -2604,8 +2601,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 15,
     "products": [
       {
@@ -2634,8 +2630,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 60,
     "products": [
       {
@@ -2669,8 +2664,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 15,
     "products": [
       {
@@ -2699,8 +2693,7 @@
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-    ],
+    "required_techs": [],
     "time_required": 30,
     "products": [
       {
@@ -3784,6 +3777,62 @@
         "key": "carbon_dioxide",
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "蒸发海水",
+    "key": "evaporate_brine",
+    "description": "将海水加热蒸发，水分蒸干后得到盐和浓缩卤水。",
+    "required_actions": {
+      "key": "evaporation",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "clay_pot",
+    "required_items": [
+      {
+        "key": "brine",
+        "quantity": 5
+      }
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "rock_salt",
+        "multiple": 4
+      },
+      {
+        "key": "bittern",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "氯气置换溴",
+    "key": "extract_bromine",
+    "description": "向浓缩卤水中通入氯气，氯气将溴离子氧化为溴单质。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "bittern",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 1
+      }
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "bromine",
+        "multiple": 1
       }
     ]
   }

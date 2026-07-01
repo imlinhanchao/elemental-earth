@@ -2762,5 +2762,29 @@
       "volcano",
       "island"
     ]
+  },
+  {
+    "name": "打海水",
+    "key": "fetch_seawater",
+    "category": "采集",
+    "description": "用容器从海里舀取海水。",
+    "required_items": [
+      {
+        "key": "wooden_bucket",
+        "quantity": 1,
+        "use": 0.01
+      }
+    ],
+    "rewards": [
+      {
+        "key": "brine",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 5,
+    "map": [
+      "beach"
+    ]
   }
 ]
