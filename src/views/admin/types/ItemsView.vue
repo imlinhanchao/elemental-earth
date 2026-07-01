@@ -30,6 +30,7 @@
             <th>分类</th>
             <th>类型标签</th>
             <th>元素</th>
+            <th>描述</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -47,6 +48,7 @@
               >
             </td>
             <td>{{ r.elemental ?? "—" }}</td>
+            <td class="text-xs opacity-70">{{ r.description }}</td>
             <td>
               <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
                 编辑</button
@@ -174,6 +176,10 @@
               </div>
             </label>
             <label class="form-control w-full">
+              <span class="label-text mb-1">时代里程碑</span>
+              <SearchableSelect :options="milestoneOptions" v-model="form.milestone" placeholder="无" />
+            </label>
+            <label class="form-control w-full">
               <span class="label-text mb-1">额外属性（JSON）</span>
               <textarea
                 class="textarea textarea-bordered textarea-sm w-full font-mono"
@@ -201,6 +207,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 import { useAdminStore } from "@/stores/modules/admin";
+import SearchableSelect from "@/components/SearchableSelect.vue";
+import type { IItem } from "@/data/items";
 
 const admin = useAdminStore();
 const records = ref<any[]>([]);
@@ -216,7 +224,7 @@ const typeOptions = [
   "liquid",
   "fire_source",
 ];
-const form = reactive({
+const form = reactive<IItem>({
   key: "",
   name: "",
   category: "",
@@ -227,7 +235,15 @@ const form = reactive({
   is_discovery: false,
 });
 const formJson = reactive({ attrs: "" });
-onMounted(loadRecords);
+const milestoneOptions = ref<{ key: string; label: string }[]>([]);
+
+onMounted(async () => {
+  await loadRecords();
+  const { Eras } = await import("@/data/eras");
+  milestoneOptions.value = Eras.flatMap((e) =>
+    e.milestones.map((m) => ({ key: m.key, label: `${e.name} → ${m.description}` }))
+  );
+});
 async function loadRecords() {
   const r = await admin.apiFetch("/api/items");
   records.value = await r.json();
@@ -266,6 +282,7 @@ function openEdit(r: any) {
     elemental: r.elemental,
     durable: r.durable,
     is_discovery: !!r.is_discovery,
+    milestone: r.milestone || "",
   });
   formJson.attrs = r.attrs ? JSON.stringify(r.attrs, null, 2) : "";
   modalRef.value?.showModal();
@@ -288,6 +305,7 @@ async function save() {
   if (form.durable !== undefined && !isNaN(Number(form.durable)))
     body.durable = Number(form.durable);
   if (form.is_discovery) body.is_discovery = true;
+  if (form.milestone) body.milestone = form.milestone;
   if (formJson.attrs.trim()) {
     try {
       body.attrs = JSON.parse(formJson.attrs);

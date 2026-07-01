@@ -25,6 +25,10 @@ export interface ITech {
    * 所需时间（秒）
    */
   time_required: number; // in seconds
+  /**
+   * 研究此科技时触发的时代里程碑 key
+   */
+  milestone?: string;
 }
 
 export const Techs: ITech[] = data as ITech[];

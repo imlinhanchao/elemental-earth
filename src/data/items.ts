@@ -37,6 +37,10 @@ export interface IItem {
    * 是否为重大发现物品，首次获得时触发命名弹窗
    */
   is_discovery?: boolean;
+  /**
+   * 获得此物品时触发的时代里程碑 key
+   */
+  milestone?: string;
 }
 
 export const Items: IItem[] = data as IItem[];

@@ -1,9 +1,10 @@
 [
   {
-    "name": "捡石头",
     "key": "pick_stone",
+    "name": "捡石头",
     "category": "采集",
     "description": "在地上捡起石头，可以用来建造和制作工具。",
+    "time_required": 0,
     "required_items": [],
     "rewards": [
       {
@@ -21,9 +22,8 @@
         "quantity": 1,
         "probability": 200,
         "map": [
-          {
-            "key": "volcano"
-          }
+          "volcano",
+          "river_side"
         ]
       },
       {
@@ -31,13 +31,10 @@
         "quantity": 1,
         "probability": 100,
         "map": [
-          {
-            "key": "river_side"
-          }
+          "river_side"
         ]
       }
-    ],
-    "time_required": 0
+    ]
   },
   {
     "name": "捡树枝",
@@ -133,8 +130,16 @@
         "quantity": 1,
         "probability": 300,
         "map": [
-          "river_side",
-          "forest"
+          {
+            "key": "river_side",
+            "probability": 400
+          },
+          "forest",
+          {
+            "key": "volcano",
+            "probability": 400
+          },
+          "mountain"
         ]
       },
       {

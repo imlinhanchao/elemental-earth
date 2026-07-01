@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
+import { useStateStore } from '@/stores/modules/state'
 import { useLogStore } from '@/stores/modules/log'
 import { getItem } from '@/data/items'
 import { LabActions, type ILabAction } from '@/data/labs'
@@ -9,6 +10,7 @@ import { Formulas, type IFormula } from '@/data/formula'
 
 const packStore = usePackStore()
 const taskStore = useTaskStore()
+const stateStore = useStateStore()
 const logStore = useLogStore()
 
 /** 将配方物品 key 统一为数组（单个字符串也视为数组） */
@@ -463,6 +465,11 @@ function startExperiment() {
       }
     }
     packStore.addProvenFormula(matchedFormula.value.key)
+    // 实验室里程碑（从操作数据读取）
+    const opMilestone = selectedOperation.value?.milestone
+    if (opMilestone) stateStore.checkMilestone(opMilestone)
+    const chainMilestone = selectedChainOperations.value.find(o => o.milestone)
+    if (chainMilestone) stateStore.checkMilestone(chainMilestone.milestone!)
   }
 
   if (burningNeeded.value) {
@@ -544,7 +551,7 @@ function startExperiment() {
             :key="op.key"
             class="btn btn-outline btn-sm gap-1"
             :class="selectedOperationKey === op.key ? 'btn-primary' : ''"
-            :disabled="op.required_techs && !op.required_techs.every(t => packStore.hasTech(t))"
+            v-show="!op.required_techs || op.required_techs.every(t => packStore.hasTech(t))"
             @click="selectedOperationKey = op.key"
           >
             <Icon v-if="op.requires_burning" icon="tabler:flame" class="text-sm" />

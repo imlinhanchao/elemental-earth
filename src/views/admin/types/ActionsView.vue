@@ -597,6 +597,8 @@ async function save() {
     category: form.category,
     description: form.description,
     time_required: form.time_required,
+    required_items: [],
+    rewards: [],
   };
   if (form.cooldown > 0) body.cooldown = form.cooldown;
   if (objItems.length)
@@ -612,7 +614,7 @@ async function save() {
         if (r.use !== undefined && r.use !== "") o.use = r.use;
         return o;
       })
-      .filter(Boolean);
+      .filter(Boolean) || [];
   if (objRewards.length)
     body.rewards = objRewards.map((r: any) => {
       const o: any = {};

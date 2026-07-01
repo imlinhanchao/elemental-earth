@@ -111,7 +111,8 @@
     "durable": 1,
     "type": [
       "fire_source"
-    ]
+    ],
+    "milestone": "craft_fire_seed"
   },
   {
     "name": "砂金",
@@ -141,7 +142,8 @@
     "durable": 1,
     "type": [
       "tool"
-    ]
+    ],
+    "milestone": "craft_stone_pickaxe"
   },
   {
     "name": "木桶",
@@ -178,7 +180,8 @@
     ],
     "attrs": {
       "can_heat": true
-    }
+    },
+    "milestone": "build_kiln"
   },
   {
     "name": "纤维布",
@@ -400,7 +403,8 @@
     "type": [
       "container"
     ],
-    "durable": 1
+    "durable": 1,
+    "milestone": "craft_crucible"
   },
   {
     "name": "硝石",
@@ -423,7 +427,8 @@
     "durable": 1,
     "attrs": {
       "save_gas": true
-    }
+    },
+    "milestone": "craft_gas_bottle"
   },
   {
     "name": "氢气",
@@ -1078,7 +1083,8 @@
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 1,
+    "milestone": "craft_battery"
   },
   {
     "name": "岩盐",
@@ -2031,7 +2037,8 @@
     "type": [
       "material"
     ],
-    "elemental": 13
+    "elemental": 13,
+    "milestone": "produce_aluminum"
   },
   {
     "name": "雷酸汞",

@@ -95,6 +95,9 @@ export function loadGame(): boolean {
       stateStore.state.switchDuration = data.state.switchDuration;
     }
     stateStore.state.elements = data.state.elements || [];
+    // 恢复时代（旧存档可能没有此字段）
+    if (data.state.currentEra) stateStore.state.currentEra = data.state.currentEra;
+    if (Array.isArray(data.state.completedMilestones)) stateStore.state.completedMilestones = data.state.completedMilestones;
 
     // 恢复背包物品
     packStore.items.splice(0, packStore.items.length, ...data.items);
@@ -193,6 +196,7 @@ export function importSaveDataFromText(text: string): boolean {
       alert('无效的存档数据：格式不正确');
       return false;
     }
+    stopAutoSave();
     const fullKey = 'es_' + SAVE_KEY;
     localStorage.setItem(fullKey, raw);
     alert('存档已导入，页面将重新加载');
@@ -219,6 +223,7 @@ export function importSaveDataFromFile(): Promise<boolean> {
         try {
           const raw = decodeURIComponent(escape(atob(text.trim())));
           if (raw.startsWith('U2FsdGVkX1')) {
+            stopAutoSave();
             localStorage.setItem('es_' + SAVE_KEY, raw);
             alert('存档已导入，页面将重新加载');
             window.location.reload();

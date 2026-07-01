@@ -36,6 +36,10 @@ export interface ILabAction {
      * 是否作为追加操作（不消耗额外材料）
      */
     is_chain?: boolean;
+    /**
+     * 成功匹配配方时触发的时代里程碑 key
+     */
+    milestone?: string;
 }
 
 export const LabActions: ILabAction[] = data as ILabAction[];

@@ -5,6 +5,11 @@
     :elementNumber="discoveryElement"
     @done="onElementDiscoveryDone"
   />
+  <EraTransition
+    :visible="showEraTransition"
+    :eraKey="transitionEra"
+    @done="onEraTransitionDone"
+  />
   <DiscoveryDialog
     :visible="showDiscoveryDialog"
     :itemKey="discoveryItemKey"
@@ -17,6 +22,7 @@ import { ref, watch } from 'vue'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
 import ElementDiscovery from '@/components/ElementDiscovery.vue'
+import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
 
 const stateStore = useStateStore()
@@ -37,6 +43,23 @@ function onElementDiscoveryDone() {
   showElementDiscovery.value = false
   discoveryElement.value = null
   stateStore.clearPendingDiscovery()
+}
+
+// ─── 时代晋级动画 ────────────────────────────────────────────────
+const showEraTransition = ref(false)
+const transitionEra = ref<string | null>(null)
+
+watch(() => stateStore.pendingEraTransition, (val) => {
+  if (val !== null) {
+    transitionEra.value = val
+    showEraTransition.value = true
+  }
+})
+
+function onEraTransitionDone() {
+  showEraTransition.value = false
+  transitionEra.value = null
+  stateStore.clearEraTransition()
 }
 
 // ─── 物品发现命名弹窗 ────────────────────────────────────────────

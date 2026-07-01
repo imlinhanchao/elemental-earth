@@ -53,7 +53,8 @@
         "quantity": 20
       }
     ],
-    "time_required": 12
+    "time_required": 12,
+    "milestone": "research_pottery"
   },
   {
     "name": "树皮揉制",
@@ -146,7 +147,8 @@
     "required_techs": [
       "pottery",
       "iron_tool_crafting"
-    ]
+    ],
+    "milestone": "research_gas_collection"
   },
   {
     "key": "bronze_tool_crafting",

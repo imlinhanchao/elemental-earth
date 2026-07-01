@@ -6,6 +6,7 @@ import { Maps } from '@/data/maps';
 import { useLogStore } from '@/stores/modules/log';
 import { useTaskStore } from '@/stores/modules/task';
 import { getElementById } from '@/data/elements';
+import { Eras, type IEra } from '@/data/eras';
 
 export interface IGameState {
   map: string;
@@ -13,6 +14,8 @@ export interface IGameState {
   switchStartTime: number;
   switchDuration: number;
   elements?: number[]; // 已点亮的元素列表，元素编号对应周期表
+  currentEra: string; // 当前时代 key
+  completedMilestones: string[]; // 已完成的里程碑 key 列表
 }
 
 /** 曼哈顿距离 -> 耗时毫秒的倍率 */
@@ -25,7 +28,9 @@ export const useStateStore = defineStore('state', () => {
     switchingTarget: null,
     switchStartTime: 0,
     switchDuration: 0,
-    elements: [], // 已点亮的元素列表，元素编号对应周期表
+    elements: [],
+    currentEra: 'stone',
+    completedMilestones: [],
   });
 
   const getState = computed(() => state);
@@ -118,11 +123,64 @@ export const useStateStore = defineStore('state', () => {
     pendingDiscovery.value = null;
   }
 
+  // ─── 时代系统 ────────────────────────────────────────────────
+
+  /** 当前时代数据 */
+  const currentEra = computed<IEra | undefined>(() => Eras.find(e => e.key === state.currentEra))
+
+  /** 下一个时代 */
+  const nextEra = computed<IEra | undefined>(() => {
+    const cur = currentEra.value
+    if (!cur) return undefined
+    return Eras.find(e => e.order === cur.order + 1)
+  })
+
+  /** 当前时代已完成的里程碑数（只统计属于当前时代的） */
+  const completedMilestoneCount = computed(() => {
+    const eraKeys = currentEra.value?.milestones.map(m => m.key) || []
+    return state.completedMilestones.filter(k => eraKeys.includes(k)).length
+  })
+
+  /** 当前时代总里程碑数 */
+  const totalMilestoneCount = computed(() => currentEra.value?.milestones.length || 1)
+
+  /** 晋级进度（0-1） */
+  const eraProgress = computed(() => completedMilestoneCount.value / totalMilestoneCount.value)
+
+  /** 完成一个里程碑 */
+  function completeMilestone(key: string) {
+    if (state.completedMilestones.includes(key)) return
+    state.completedMilestones.push(key)
+    logStore.addLog(`里程碑达成: ${currentEra.value?.milestones.find(m => m.key === key)?.description || key}`, 'reward')
+    // 检查是否可以晋级
+    if (currentEra.value && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
+      pendingEraTransition.value = currentEra.value.key
+      logStore.addLog(`✨ 你的文明进入了「${currentEra.value.name}」`, 'elements')
+      if (nextEra.value) state.currentEra = nextEra.value.key
+    }
+  }
+
+  /** 等待播放的时代晋级动画 */
+  const pendingEraTransition = ref<string | null>(null)
+
+  function clearEraTransition() {
+    pendingEraTransition.value = null
+  }
+
+  /** 检查并完成里程碑（外部调用：物品获得、科技研究等） */
+  function checkMilestone(milestoneKey: string) {
+    if (!state.completedMilestones.includes(milestoneKey)) {
+      completeMilestone(milestoneKey)
+    }
+  }
+
   return {
     state, getState, getMap, setMap, now,
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
     getElements, addElement, pendingDiscovery, clearPendingDiscovery,
+    currentEra, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
+    pendingEraTransition, clearEraTransition, checkMilestone,
   }
 })
 

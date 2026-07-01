@@ -36,7 +36,7 @@ import { ref, computed, watch, nextTick } from 'vue'
 
 const props = withDefaults(defineProps<{
   options: { key?: string; name?: string; label?: string; value?: string }[] | string[]
-  modelValue: string
+  modelValue?: string
   placeholder?: string;
   border?: boolean;
   size?: string;

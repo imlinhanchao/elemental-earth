@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { Items } from '@/data/items';
+import { Techs } from '@/data/techs';
 import { useStateStore } from './state';
 import { useLogStore } from './log';
 export interface IPackItem {
@@ -48,6 +49,11 @@ export const usePackStore = defineStore('pack', () => {
     if (itemData?.type.includes('gas') && !hasGasContainer()) {
       //logStore.addLog(`⚠️ 气体 ${getDisplayName(itemKey)} 无法收集——需要具备储气功能的容器`, 'warning');
       return false;
+    }
+    // 物品获得里程碑
+    if (itemData?.milestone) {
+      const stateStore = useStateStore();
+      stateStore.checkMilestone(itemData.milestone)
     }
     const existingItem = items.find(i => i.key === itemKey);
     if (existingItem) {
@@ -125,6 +131,12 @@ export const usePackStore = defineStore('pack', () => {
   const addTech = (techKey: string) => {
     if (!techs.includes(techKey)) {
       techs.push(techKey);
+    }
+    // 科技研究里程碑
+    const techData = Techs.find(t => t.key === techKey)
+    if (techData?.milestone) {
+      const stateStore = useStateStore();
+      stateStore.checkMilestone(techData.milestone)
     }
   }
   const hasTech = (techKey: string) => techs.includes(techKey);

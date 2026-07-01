@@ -227,6 +227,10 @@
                 placeholder="添加科技…"
               />
             </label>
+            <label class="form-control w-full">
+              <span class="label-text mb-1">时代里程碑</span>
+              <SearchableSelect :options="milestoneOptions" v-model="form.milestone" placeholder="无" />
+            </label>
           </div>
           <div class="modal-action mt-6">
             <button class="btn btn-ghost btn-sm" @click="closeModal">
@@ -248,6 +252,7 @@ import { ref, reactive, onMounted } from "vue";
 import { useAdminStore } from "@/stores/modules/admin";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import LabelTag from "@/components/LabelTag.vue";
+import { Eras } from "@/data/eras";
 
 const admin = useAdminStore();
 const records = ref<any[]>([]);
@@ -259,15 +264,21 @@ const form = reactive({
   description: "",
   time_required: 20,
   requires_burning: undefined as boolean | undefined,
+  milestone: "",
   techs: [] as string[],
 });
 const techInput = ref("");
 const objReq = reactive<any[]>([]);
 const itemOptions = ref<any[]>([]);
 const techOptions = ref<any[]>([]);
+const milestoneOptions = ref<{ key: string; label: string }[]>([]);
+
 onMounted(() => {
   loadRecords();
   fetchRefs();
+  milestoneOptions.value = Eras.flatMap((e) =>
+    e.milestones.map((m) => ({ key: m.key, label: `${e.name} → ${m.description}` }))
+  );
 });
 async function loadRecords() {
   const r = await admin.apiFetch("/api/labs");
@@ -288,6 +299,7 @@ function resetForm() {
     description: "",
     time_required: 20,
     requires_burning: undefined,
+    milestone: "",
     techs: [],
   });
   objReq.splice(0);
@@ -306,6 +318,7 @@ function openEdit(r: any) {
     description: r.description || "",
     time_required: r.time_required ?? 20,
     requires_burning: r.requires_burning,
+    milestone: r.milestone || "",
     techs: [...(r.required_techs || [])],
   });
   objReq.push(
@@ -341,6 +354,7 @@ async function save() {
     name: form.name,
     description: form.description,
     time_required: form.time_required,
+    milestone: form.milestone || undefined,
   };
   if (form.requires_burning !== undefined)
     body.requires_burning = form.requires_burning;

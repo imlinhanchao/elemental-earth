@@ -28,7 +28,8 @@
         "use": 0.1
       }
     ],
-    "requires_burning": true
+    "requires_burning": true,
+    "milestone": "first_smelt"
   },
   {
     "name": "搅拌",
@@ -102,7 +103,8 @@
     "required_techs": [
       "gas_collection"
     ],
-    "is_chain": true
+    "is_chain": true,
+    "milestone": "collect_gas"
   },
   {
     "name": "过筛",
@@ -159,7 +161,8 @@
       "electrochemistry"
     ],
     "requires_burning": false,
-    "is_chain": false
+    "is_chain": false,
+    "milestone": "first_electrolysis"
   },
   {
     "key": "gas_collecting_air",
