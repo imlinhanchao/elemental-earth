@@ -1,0 +1,61 @@
+[
+  {
+    "key": "stone",
+    "name": "石器时代",
+    "icon": "tabler:pick",
+    "description": "人类第一次将石块打磨成工具，用燧石点燃火焰。",
+    "order": 0,
+    "milestones": [
+      { "key": "craft_stone_pickaxe", "description": "制作第一把石镐" },
+      { "key": "craft_fire_seed", "description": "制作第一个火种" }
+    ]
+  },
+  {
+    "key": "alchemy",
+    "name": "炼金术时代",
+    "icon": "tabler:flask",
+    "description": "火焰被用于改造物质，矿石在窑炉中化为金属。",
+    "order": 1,
+    "milestones": [
+      { "key": "build_kiln", "description": "建造第一个窑炉" },
+      { "key": "first_smelt", "description": "完成第一次焙烧" },
+      { "key": "research_pottery", "description": "研究陶器制作科技" }
+    ]
+  },
+  {
+    "key": "modern_chem",
+    "name": "近代化学",
+    "icon": "tabler:flask-2",
+    "description": "气体的收集与定量研究，开启了系统化的化学探索。",
+    "order": 2,
+    "milestones": [
+      { "key": "craft_gas_bottle", "description": "制作第一个集气瓶" },
+      { "key": "collect_gas", "description": "完成第一次气体收集" },
+      { "key": "craft_crucible", "description": "制作第一个坩埚" },
+      { "key": "research_gas_collection", "description": "研究气体收集科技" }
+    ]
+  },
+  {
+    "key": "electrochem",
+    "name": "电化学时代",
+    "icon": "tabler:battery",
+    "description": "电力的应用使人类能够分离最顽固的化合物。",
+    "order": 3,
+    "milestones": [
+      { "key": "craft_battery", "description": "制作第一个电池" },
+      { "key": "first_electrolysis", "description": "完成第一次电解" },
+      { "key": "produce_aluminum", "description": "提取出铝" }
+    ]
+  },
+  {
+    "key": "rare_earth",
+    "name": "稀土时代",
+    "icon": "tabler:diamond",
+    "description": "镧系与锕系元素的分离技术，打开了元素周期表深处的大门。",
+    "order": 4,
+    "milestones": [
+      { "key": "separate_rare_earth", "description": "完成第一次稀土分离" },
+      { "key": "first_transmutation", "description": "完成第一次元素嬗变" }
+    ]
+  }
+]
