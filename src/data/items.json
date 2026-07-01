@@ -2123,5 +2123,35 @@
       "material",
       "liquid"
     ]
+  },
+  {
+    "name": "辉铋矿",
+    "key": "bismuthite",
+    "category": "材料",
+    "description": "银灰色金属光泽的矿物，常呈柱状或针状集合体，断口参差不齐，质地较脆。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化铋",
+    "key": "bismuth_oxide",
+    "category": "材料",
+    "description": "淡黄色粉末，无味，遇热变黄棕色，冷却后恢复原色。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铋锭",
+    "key": "bismuth",
+    "category": "材料",
+    "description": "银白色金属，表面略带粉红色调，质地软而脆，断口呈银白色光泽。",
+    "type": [
+      "material"
+    ],
+    "elemental": 83,
+    "is_discovery": true
   }
 ]

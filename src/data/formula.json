@@ -3720,5 +3720,71 @@
         "multiple": 5
       }
     ]
+  },
+  {
+    "name": "焙烧辉铋矿",
+    "key": "roast_bismuthite",
+    "description": "将辉铋矿在空气中焙烧，生成氧化铋和二氧化硫。",
+    "required_items": [
+      {
+        "key": "bismuthite",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "bismuth_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铋",
+    "key": "reduce_bismuth_oxide",
+    "description": "用木炭还原氧化铋，得到金属铋和二氧化碳。",
+    "required_items": [
+      {
+        "key": "bismuth_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "bismuth",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
   }
 ]

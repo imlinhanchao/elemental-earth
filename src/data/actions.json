@@ -232,6 +232,22 @@
         ]
       },
       {
+        "key": "bismuthite",
+        "quantity": 1,
+        "probability": 150,
+        "required_era": "alchemy",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave",
+          "mountain"
+        ]
+      },
+      {
         "key": "arsenopyrite",
         "quantity": 1,
         "probability": 200,
@@ -2431,6 +2447,18 @@
             "key": "mountain",
             "probability": 200
           }
+        ]
+      },
+      {
+        "key": "bismuthite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 200,
+        "required_era": "alchemy",
+        "map": [
+          "cave"
         ]
       },
       {
