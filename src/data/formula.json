@@ -1414,7 +1414,8 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ]
+    ],
+    "power_consumption": 0.1
   },
   {
     "name": "电解食盐水",
@@ -1428,11 +1429,6 @@
       {
         "key": "water",
         "quantity": 1
-      },
-      {
-        "key": "battery",
-        "quantity": 1,
-        "use": 0.01
       }
     ],
     "required_actions": {
@@ -1459,7 +1455,8 @@
         "key": "alkaline_solution",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.1
   },
   {
     "name": "合成盐酸",
@@ -2242,10 +2239,6 @@
       {
         "key": "sylvite",
         "quantity": 2
-      },
-      {
-        "key": "battery",
-        "quantity": 1
       }
     ],
     "required_container": "crucible",
@@ -2268,7 +2261,8 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ]
+    ],
+    "power_consumption": 0.2
   },
   {
     "name": "草木灰制碳酸钾",
@@ -2363,7 +2357,8 @@
         "key": "chlorine",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.2
   },
   {
     "name": "钠与水反应制氢氧化钠",
@@ -2492,7 +2487,8 @@
         "key": "chlorine",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.2
   },
   {
     "name": "还原重晶石",
@@ -2515,7 +2511,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 30,
     "products": [
@@ -2550,7 +2545,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 20,
     "products": [
@@ -2577,7 +2571,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 30,
     "products": [
@@ -2612,7 +2605,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 15,
     "products": [
@@ -2643,7 +2635,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 60,
     "products": [
@@ -2655,7 +2646,8 @@
         "key": "chlorine",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.5
   },
   {
     "name": "碳酸钡与硝酸反应",
@@ -2678,7 +2670,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 15,
     "products": [
@@ -2709,7 +2700,6 @@
       "max": 1
     },
     "required_techs": [
-      "barium_chemistry"
     ],
     "time_required": 30,
     "products": [
@@ -3027,7 +3017,8 @@
         "key": "chlorine",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.5
   },
   {
     "name": "干燥海藻",
@@ -3238,7 +3229,8 @@
         "key": "chlorine",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 0.5
   },
   {
     "name": "碳还原硅砂制粗硅",
@@ -3441,7 +3433,8 @@
         "key": "oxygen",
         "multiple": 1
       }
-    ]
+    ],
+    "power_consumption": 1
   },
   {
     "name": "制备雷酸汞",
@@ -3538,11 +3531,6 @@
       {
         "key": "cesium_chloride",
         "quantity": 1
-      },
-      {
-        "key": "battery",
-        "quantity": 1,
-        "use": 0.1
       }
     ],
     "required_container": "crucible",
@@ -3564,7 +3552,8 @@
         "key": "chlorine",
         "multiple": 0.6
       }
-    ]
+    ],
+    "power_consumption": 1
   },
   {
     "name": "铯与水反应制氢氧化铯",

@@ -126,6 +126,20 @@
                   <option :value="false">无需燃烧</option>
                 </select>
               </label>
+
+              <label class="form-control w-full">
+                <div class="label pt-0">
+                  <span class="label-text">电力需求</span>
+                </div>
+                <select
+                  class="select select-bordered select-sm w-full"
+                  v-model="form.requires_electricity"
+                >
+                  <option :value="undefined">不确定</option>
+                  <option :value="true">需要电力</option>
+                  <option :value="false">无需电力</option>
+                </select>
+              </label>
             </div>
 
             <!-- 所需设备 -->
@@ -264,6 +278,7 @@ const form = reactive({
   description: "",
   time_required: 20,
   requires_burning: undefined as boolean | undefined,
+  requires_electricity: undefined as boolean | undefined,
   milestone: "",
   techs: [] as string[],
 });
@@ -299,6 +314,7 @@ function resetForm() {
     description: "",
     time_required: 20,
     requires_burning: undefined,
+    requires_electricity: undefined,
     milestone: "",
     techs: [],
   });
@@ -318,6 +334,7 @@ function openEdit(r: any) {
     description: r.description || "",
     time_required: r.time_required ?? 20,
     requires_burning: r.requires_burning,
+    requires_electricity: r.requires_electricity,
     milestone: r.milestone || "",
     techs: [...(r.required_techs || [])],
   });
@@ -358,6 +375,8 @@ async function save() {
   };
   if (form.requires_burning !== undefined)
     body.requires_burning = form.requires_burning;
+  if (form.requires_electricity !== undefined)
+    body.requires_electricity = form.requires_electricity;
   if (objReq.length)
     body.required_item = objReq
       .map((r: any) => {

@@ -41,6 +41,10 @@ export interface IFormula {
      * 产物
      */
     products: { key: string; multiple: number; required_chain_operation?: string; required_item?: string | string[] }[];
+    /**
+     * 电力消耗 (耐久消耗值)
+     */
+    power_consumption?: number;
 }
 
 export const Formulas: IFormula[] = data as IFormula[];

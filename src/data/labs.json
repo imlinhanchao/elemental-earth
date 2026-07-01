@@ -150,17 +150,11 @@
     "key": "electrolysis",
     "description": "利用直流电使溶液中的离子发生氧化还原反应，分解化合物。",
     "time_required": 20,
-    "required_item": [
-      {
-        "key": "battery",
-        "quantity": 1,
-        "use": 0.1
-      }
-    ],
     "required_techs": [
       "electrochemistry"
     ],
     "requires_burning": false,
+    "requires_electricity": true,
     "is_chain": false,
     "milestone": "first_electrolysis"
   },
@@ -204,7 +198,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "requires_burning": true
+    "requires_burning": true,
+    "requires_electricity": true
   },
   {
     "name": "加热",

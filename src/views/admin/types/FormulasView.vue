@@ -97,13 +97,22 @@
                 rows="2"
               ></textarea>
             </label>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-4 gap-4">
               <label class="form-control w-full">
                 <span class="label-text mb-1">耗时（秒）</span>
                 <input
                   type="number"
                   class="input input-bordered input-sm w-full"
                   v-model.number="form.time_required"
+                />
+              </label>
+              <label class="form-control w-full">
+                <span class="label-text mb-1">电力消耗 (耐久)</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  class="input input-bordered input-sm w-full"
+                  v-model.number="form.power_consumption"
                 />
               </label>
               <label class="form-control w-full">
@@ -319,6 +328,7 @@ const form = reactive({
   action_key: "",
   action_min: 1,
   action_max: undefined as number | undefined,
+  power_consumption: undefined as number | undefined,
   techs: [] as string[],
 });
 const techInput = ref("");
@@ -374,6 +384,7 @@ function resetForm() {
     action_key: "",
     action_min: 1,
     action_max: undefined,
+    power_consumption: undefined,
     techs: [],
   });
   objItems.splice(0);
@@ -396,6 +407,7 @@ function openEdit(r: any) {
     action_key: r.required_actions?.key || "",
     action_min: r.required_actions?.min ?? 1,
     action_max: r.required_actions?.max,
+    power_consumption: r.power_consumption,
     techs: [...(r.required_techs || [])],
   });
   objItems.push(
@@ -425,6 +437,7 @@ async function save() {
     name: form.name,
     description: form.description,
     time_required: form.time_required,
+    power_consumption: form.power_consumption || undefined,
   };
   if (form.container) body.required_container = form.container;
   if (form.action_key) {

@@ -29,6 +29,10 @@ export interface ILabAction {
      */
     requires_burning?: boolean;
     /**
+     * 是否需要电力
+     */
+    requires_electricity?: boolean;
+    /**
      * 可追加的操作 chain（构成实验链条）
      */
     chain_operations?: string[];

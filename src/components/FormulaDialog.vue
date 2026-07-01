@@ -84,6 +84,23 @@
             </div>
           </template>
 
+          <!-- 电力相关 -->
+          <template v-if="operation?.requires_electricity">
+            <div class="divider text-xs opacity-50">电力配置</div>
+            <div class="form-row">
+              <label>电源</label>
+              <select v-model="selectedPowerSource" class="select select-bordered select-sm w-full">
+                <option :value="null" disabled>-- 请选择 --</option>
+                <option v-for="ps in powerSourceOptions" :key="ps.key" :value="ps.key">
+                  {{ ps.name }} (耐久/电量: {{ Math.round(ps.durable * 100) / 100 }})
+                </option>
+              </select>
+              <div v-if="selectedPowerSourcePack" class="text-xs text-base-content/50 mt-1 pl-1">
+                可用 {{ maxCyclesByPower }} 次 (每次消耗 {{ formula?.power_consumption ?? 0.1 }} 耐久)
+              </div>
+            </div>
+          </template>
+
           <!-- 追加操作（可选） -->
           <div v-if="neededChainOperations.length > 0" class="form-row">
             <label>追加操作（可收集额外产物）</label>
@@ -193,6 +210,7 @@ watch(() => props.visible, (v) => {
     })
     selectedContainer.value = null
     selectedFireSource.value = null
+    selectedPowerSource.value = null
     selectedChainOperations.value = new Set()
     fuelMap.value = new Map()
   }
@@ -212,6 +230,7 @@ function materialOptions(req: IFormula['required_items'][number]) {
 
 // ─── 容器选择 ──────────────────────────────────────────────────
 const selectedContainer = ref<string | null>(null)
+const selectedPowerSource = ref<string | null>(null)
 
 /** 从操作和设备要求中获取可接受的容器 key 列表 */
 function acceptedContainerKeys(): string[] {
@@ -238,6 +257,24 @@ const containerOptions = computed(() => {
 
 // ─── 火种选择 ──────────────────────────────────────────────────
 const selectedFireSource = ref<string | null>(null)
+
+const selectedPowerSourcePack = computed(() => {
+  if (!selectedPowerSource.value) return null
+  return packStore.items.find(i => i.key === selectedPowerSource.value) || null
+})
+
+const powerSourceOptions = computed(() => {
+  return packStore.items.filter(pItem => {
+    const def = getItem(pItem.key)
+    return def && (def.key.includes('battery') || def.type.includes('tool')) && pItem.durable > 0
+  })
+})
+
+const maxCyclesByPower = computed(() => {
+  if (!selectedPowerSourcePack.value) return 0
+  const consumption = formula.value?.power_consumption ?? 0.1
+  return Math.floor(selectedPowerSourcePack.value.durable / consumption)
+})
 
 const fireSourceOptions = computed(() => {
   return packStore.items
@@ -362,6 +399,14 @@ const canConfirm = computed(() => {
     if (neededBurnTime.value > totalBurnTime.value) return false
   }
 
+  // 需要电力时检查
+  if (operation.value?.requires_electricity) {
+    if (!selectedPowerSource.value) return false
+    const consumption = formula.value?.power_consumption ?? 0.1
+    const ps = selectedPowerSourcePack.value
+    if (!ps || ps.durable < consumption * batches.value) return false
+  }
+
   if (taskStore.tasks.length >= 100) return false
   return true
 })
@@ -403,12 +448,18 @@ function confirm() {
     }
   }
 
-  // 4. 执行消耗
+  // 4. 消耗电源耐久
+  if (operation.value?.requires_electricity) {
+    const consumption = formula.value?.power_consumption ?? 0.1
+    consumedItems.push({ key: selectedPowerSource.value!, quantity: 0, use: consumption * batches.value })
+  }
+
+  // 5. 执行消耗
   for (const item of consumedItems) {
     packStore.removeItem(item.key, item.quantity, item.use)
   }
 
-  // 5. 构建奖励
+  // 6. 构建奖励
   const chainOps = selectedChainOperations.value
   const rewards = formula.value.products
     .filter(p => {
@@ -421,7 +472,7 @@ function confirm() {
     probability: 1,
   }))
 
-  // 6. 推送任务
+  // 7. 推送任务
   taskStore.pushLabTask({
     name: `${formula.value.name}${[...selectedChainOperations.value].map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
     key: `action_formula_${formula.value.key}_${Date.now()}`,

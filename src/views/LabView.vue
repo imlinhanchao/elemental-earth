@@ -29,6 +29,7 @@ const selectedMaterials = ref<Map<string, number>>(new Map())
 const selectedOperationKey = ref<string | null>(null)
 const selectedChainOperationKey = ref<Set<string>>(new Set())
 const selectedFireSourceKey = ref<string | null>(null)
+const selectedPowerSourceKey = ref<string | null>(null)
 const selectedFuels = ref<Map<string, number>>(new Map())
 const cycles = ref(1)
 const materialModalOpen = ref(false)
@@ -36,6 +37,7 @@ const materialModalOpen = ref(false)
 // 切换操作时重置引火/燃料/chain选择
 watch(selectedOperationKey, () => {
   selectedFireSourceKey.value = null
+  selectedPowerSourceKey.value = null
   selectedFuels.value = new Map()
   selectedChainOperationKey.value = new Set()
   cycles.value = 1
@@ -247,6 +249,29 @@ const selectedFireSourcePack = computed(() => {
   return packStore.items.find(i => i.key === selectedFireSourceKey.value) || null
 })
 
+// ---- 电力系统 ----
+const electricityNeeded = computed(() => selectedOperation.value?.requires_electricity ?? false)
+
+const powerSourceItems = computed(() => {
+  return packStore.items.filter(pItem => {
+    const def = getItem(pItem.key)
+    return def && (def.key.includes('battery') || def.type.includes('tool')) && pItem.durable > 0
+  })
+})
+
+const selectedPowerSourcePack = computed(() => {
+  if (!selectedPowerSourceKey.value) return null
+  return packStore.items.find(i => i.key === selectedPowerSourceKey.value) || null
+})
+
+// 最大周期：电源耐久限制
+const maxCyclesByPower = computed(() => {
+  if (!electricityNeeded.value || !selectedPowerSourcePack.value) return 0
+  // 如果配方没有定义消耗，则假设默认消耗 0.1
+  const consumption = matchedFormula.value?.power_consumption ?? 0.1
+  return Math.floor(selectedPowerSourcePack.value.durable / consumption)
+})
+
 // 最大周期：引火物耐久限制
 const maxCyclesByFire = computed(() => {
   if (!burningNeeded.value || !selectedFireSourcePack.value) return 0
@@ -295,6 +320,9 @@ const globalMaxCycles = computed(() => {
     limits.push(maxCyclesByFire.value > 0 ? maxCyclesByFire.value : null)
     if (maxCyclesByFuel.value !== Infinity) limits.push(maxCyclesByFuel.value)
   }
+  if (electricityNeeded.value) {
+    limits.push(maxCyclesByPower.value > 0 ? maxCyclesByPower.value : null)
+  }
   // 只有已验证的配方才应用容器和配方限制（未验证时属于自由探索，不应限制次数）
   if (matchedFormula.value && formulaProven.value) {
     limits.push(maxByContainer.value)
@@ -318,6 +346,9 @@ const limitLabel = computed(() => {
   if (burningNeeded.value) {
     if (maxCyclesByFire.value > 0) parts.push(`引火物 ${maxCyclesByFire.value}次`)
     if (maxCyclesByFuel.value !== Infinity) parts.push(`燃料 ${maxCyclesByFuel.value}次`)
+  }
+  if (electricityNeeded.value) {
+    if (maxCyclesByPower.value > 0) parts.push(`电源 ${maxCyclesByPower.value}次`)
   }
   if (matchedFormula.value && formulaProven.value) {
     if (maxByContainer.value !== null) parts.push(`容器 ${maxByContainer.value}次`)
@@ -374,6 +405,13 @@ const fireSourceAvailable = computed(() => {
   return selectedFireSourcePack.value.durable >= 0.01 * cycles.value
 })
 
+const hasEnoughPower = computed(() => {
+  if (!electricityNeeded.value) return true
+  if (!selectedPowerSourcePack.value) return false
+  const consumption = matchedFormula.value?.power_consumption ?? 0.1
+  return selectedPowerSourcePack.value.durable >= consumption * cycles.value
+})
+
 // ---- 总耗时 ----
 const totalTime = computed(() => {
   if (!selectedOperation.value) return 0
@@ -418,6 +456,11 @@ const canStart = computed(() => {
     if (!fireSourceAvailable.value) return false
     if (selectedFuels.value.size === 0) return false
     if (!hasEnoughFuel.value) return false
+  }
+
+  if (electricityNeeded.value) {
+    if (!selectedPowerSourceKey.value) return false
+    if (!hasEnoughPower.value) return false
   }
 
   // 批次数必须至少为 1（仅当有配方时）
@@ -478,6 +521,13 @@ function startExperiment() {
     }
     if (selectedFireSourcePack.value) {
       consumedItems.push({ key: selectedFireSourcePack.value.key, quantity: 0, use: 0.01 * cycles.value })
+    }
+  }
+
+  if (electricityNeeded.value) {
+    if (selectedPowerSourcePack.value) {
+      const consumption = matchedFormula.value?.power_consumption ?? 0.1
+      consumedItems.push({ key: selectedPowerSourcePack.value.key, quantity: 0, use: consumption * cycles.value })
     }
   }
 
@@ -666,10 +716,32 @@ function startExperiment() {
       </div>
     </div>
 
+    <!-- 5 电源选择（仅需电力的操作） -->
+    <div v-if="electricityNeeded" class="card bg-base-200">
+      <div class="card-body p-4">
+        <h3 class="card-title text-sm">{{ burningNeeded ? 5 : 4 }}. 选择电源</h3>
+
+        <!-- 电源选择 -->
+        <div class="mb-3">
+          <span class="text-xs font-medium mb-1 block">电源</span>
+          <select v-model="selectedPowerSourceKey" class="select select-bordered w-full select-sm">
+            <option :value="null" disabled>-- 请选择电源 --</option>
+            <option v-for="ps in powerSourceItems" :key="ps.key" :value="ps.key">
+              {{ ps.name }} (耐久/电量: {{ Math.round(ps.durable * 100) / 100 }})
+            </option>
+          </select>
+          <p v-if="powerSourceItems.length === 0" class="text-xs text-error mt-1">背包中无可用电源（电池等）</p>
+          <div v-if="selectedPowerSourcePack" class="text-xs text-base-content/50 mt-0.5">
+            可用 {{ maxCyclesByPower }} 次（每次消耗 {{ matchedFormula?.power_consumption ?? 0.1 }} 耐久）
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 5. 执行实验 -->
     <div class="card bg-base-200">
       <div class="card-body p-4">
-        <h3 class="card-title text-sm">{{ burningNeeded ? '6' : '5' }}. 执行实验</h3>
+        <h3 class="card-title text-sm">{{ burningNeeded && electricityNeeded ? '6' : ( burningNeeded || electricityNeeded ? '5' : '4') }}. 执行实验</h3>
 
         <!-- 周期选择 -->
         <div class="flex flex-wrap items-center gap-2 mb-3">
