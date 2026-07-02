@@ -4651,9 +4651,17 @@
     ]
   },
   {
-    "name": "莫瓦桑电解法制氟",
     "key": "electrolyze_fluorine",
+    "name": "莫瓦桑电解法制氟",
     "description": "在无水氢氟酸中溶解氟化钾增加导电性，分步电解产生氟气和氢气。注意：氟气具有极强腐蚀性，需在特殊的铂-铱或铜质容器内进行。",
+    "time_required": 30,
+    "power_consumption": 2,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
         "key": "hydrofluoric_acid",
@@ -4664,30 +4672,24 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "electrolysis",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "modern_chem"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "fluorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "hydrogen",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       },
       {
         "key": "potassium_fluoride",
         "multiple": 1
       }
     ],
-    "power_consumption": 2
+    "required_techs": [
+      "modern_chem"
+    ]
   }
 ]
