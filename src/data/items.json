@@ -2125,6 +2125,26 @@
     ]
   },
   {
+    "name": "氢氟酸",
+    "key": "hydrofluoric_acid",
+    "category": "液体",
+    "description": "无色透明的发烟液体，具有极强的腐蚀性和毒性，能腐蚀玻璃。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "萤石",
+    "key": "fluorite",
+    "category": "材料",
+    "description": "又称氟石，玻璃光泽，颜色多样，是自然界中最主要的含氟矿物。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
     "name": "辉铋矿",
     "key": "bismuthite",
     "category": "材料",
@@ -2332,10 +2352,19 @@
     ]
   },
   {
-    "name": "铝土矿残液",
+    "name": "赤泥 (铝土矿残渣)",
     "key": "bauxite_residue",
     "category": "材料",
-    "description": "拜耳法生产氧化铝过程中，从循环母液里留下的残液。",
+    "description": "拜耳法生产氧化铝过程中产生的固体废渣，呈强碱性，富含铁、钛及微量稀土元素（如钪）。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "拜耳法母液",
+    "key": "bayer_liquor",
+    "category": "材料",
+    "description": "拜耳法生产过程中循环使用的强碱性溶液，含有铝酸钠，并富集了矿石中的微量镓。",
     "type": [
       "material"
     ]
@@ -2396,5 +2425,62 @@
       "material"
     ],
     "elemental": 32
+  },
+  {
+    "name": "氧化钪",
+    "key": "scandium_oxide",
+    "category": "材料",
+    "description": "白色粉末状固体，是提炼金属钪及其合金的主要中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氟化钪",
+    "key": "scandium_fluoride",
+    "category": "材料",
+    "description": "白色晶体，难溶于水，是生产金属钪的关键原料之一。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钪",
+    "key": "scandium",
+    "category": "材料",
+    "description": "银白色过渡金属，质地柔软。它常被归类为稀土元素，能显著提高铝合金的强度和耐热性。",
+    "type": [
+      "material"
+    ],
+    "elemental": 21
+  },
+  {
+    "name": "硫酸钙",
+    "key": "calcium_sulfate",
+    "category": "材料",
+    "description": "白色单斜结晶或结晶性粉末，在自然界中常以石膏形式存在。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氟化钾",
+    "key": "potassium_fluoride",
+    "category": "材料",
+    "description": "无色晶体，易潮解，溶于水。在电解制取氟气中作为电解质。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氟",
+    "key": "fluorine",
+    "category": "材料",
+    "description": "淡黄色气体，具有极强的氧化性和毒性，是电负性最强的元素，能与几乎所有元素发生反应。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 9
   }
 ]

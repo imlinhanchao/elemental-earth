@@ -854,6 +854,21 @@
           "cave",
           "volcano"
         ]
+      },
+      {
+        "key": "fluorite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": [
+          "iron_pickaxe",
+          "bronze_pickaxe",
+          "brass_pickaxe",
+          "manganese_pickaxe"
+        ]
       }
     ]
   },

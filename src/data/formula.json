@@ -3362,8 +3362,8 @@
         "multiple": 1
       },
       {
-        "key": "sodium_carbonate",
-        "multiple": 5
+        "key": "bayer_liquor",
+        "multiple": 2
       },
       {
         "key": "bauxite_residue",
@@ -4344,10 +4344,10 @@
   {
     "name": "电解法提镓",
     "key": "extract_gallium",
-    "description": "通过特殊的汞阴极电解或树脂吸附，从铝土矿残液中提取金属镓。",
+    "description": "通过混汞法电解或树脂吸附，从拜耳法母液中提取微量的金属镓。",
     "required_items": [
       {
-        "key": "bauxite_residue",
+        "key": "bayer_liquor",
         "quantity": 1
       }
     ],
@@ -4488,5 +4488,206 @@
     "required_techs": [
       "modern_chem"
     ]
+  },
+  {
+    "name": "提炼氧化钪",
+    "key": "extract_scandium_oxide",
+    "description": "从拜耳法处理铝土矿后的赤泥残渣中，通过强酸浸出和溶剂萃取，分离出高纯度的氧化钪。",
+    "required_items": [
+      {
+        "key": "bauxite_residue",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 80,
+    "products": [
+      {
+        "key": "scandium_oxide",
+        "multiple": 0.2
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "氟化法制氟化钪",
+    "key": "scandium_fluorination",
+    "description": "将氧化钪与氢氟酸反应，转化为氟化钪，为后续的金属还原做准备。",
+    "required_items": [
+      {
+        "key": "scandium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 40,
+    "products": [
+      {
+        "key": "scandium_fluoride",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "镁还原提钪",
+    "key": "scandium_reduction",
+    "description": "在惰性气体保护和高温环境下，用金属镁还原氟化钪，得到高纯度的金属钪。",
+    "required_items": [
+      {
+        "key": "scandium_fluoride",
+        "quantity": 1
+      },
+      {
+        "key": "magnesium",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 120,
+    "products": [
+      {
+        "key": "scandium",
+        "multiple": 1
+      },
+      {
+        "key": "magnesium_fluoride",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "rare_earth"
+    ]
+  },
+  {
+    "key": "produce_hydrofluoric_acid",
+    "name": "制备氢氟酸",
+    "description": "将萤石精矿与浓硫酸反应，加热产生氟化氢气体，经水吸收得到氢氟酸。",
+    "time_required": 15,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "fluorite",
+        "quantity": 1
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "hydrofluoric_acid",
+        "multiple": 1,
+        "required_chain_operation": "dissolving"
+      },
+      {
+        "key": "calcium_sulfate",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "制备氟化钾",
+    "key": "produce_potassium_fluoride",
+    "description": "氢氧化钾与氢氟酸进行中和反应，生成氟化钾溶液，经结晶获得固体。",
+    "required_items": [
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 1
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "time_required": 10,
+    "products": [
+      {
+        "key": "potassium_fluoride",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "莫瓦桑电解法制氟",
+    "key": "electrolyze_fluorine",
+    "description": "在无水氢氟酸中溶解氟化钾增加导电性，分步电解产生氟气和氢气。注意：氟气具有极强腐蚀性，需在特殊的铂-铱或铜质容器内进行。",
+    "required_items": [
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      },
+      {
+        "key": "potassium_fluoride",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "modern_chem"
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "fluorine",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 1
+      },
+      {
+        "key": "potassium_fluoride",
+        "multiple": 1
+      }
+    ],
+    "power_consumption": 2
   }
 ]
