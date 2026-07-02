@@ -4029,9 +4029,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "硫酸浸出锌焙砂",
@@ -4064,9 +4062,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "湿法置换提镉",
@@ -4099,9 +4095,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "锂云母酸解",
@@ -4138,9 +4132,7 @@
         "multiple": 2
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "rubidium_reduction",
@@ -4174,9 +4166,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "rubidium_electrolysis",
@@ -4237,9 +4227,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "置换沉铊",
@@ -4272,9 +4260,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "电解硫酸铊制铊",
@@ -4338,9 +4324,7 @@
         "multiple": 0.5
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "extract_gallium",
@@ -4393,9 +4377,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "氯化法提锗",
@@ -4425,9 +4407,7 @@
         "required_chain_operation": "condensation"
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "四氯化锗水解",
@@ -4456,9 +4436,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "氢还原提锗",
@@ -4487,9 +4465,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "提炼氧化钪",
@@ -4518,9 +4494,7 @@
         "multiple": 0.2
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "氟化法制氟化钪",
@@ -4549,9 +4523,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "镁还原提钪",
@@ -4690,9 +4662,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "name": "配置王水",
@@ -4781,9 +4751,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "produce_ferrous_sulfate",
@@ -4810,9 +4778,7 @@
         "multiple": 2
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "produce_ammonium_chloride",
@@ -4839,9 +4805,7 @@
         "multiple": 2
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "refine_gold_step",
@@ -4872,9 +4836,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "refine_platinum_step",
@@ -4901,9 +4863,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-      "modern_chem"
-    ]
+    "required_techs": []
   },
   {
     "key": "refine_pd_rh_step",
@@ -4930,8 +4890,99 @@
         "multiple": 0.2
       }
     ],
-    "required_techs": [
-      "modern_chem"
+    "required_techs": []
+  },
+  {
+    "key": "tantalum_niobium_separation",
+    "name": "钽铌氟化分离",
+    "description": "将钽铌铁矿溶解于氢氟酸与硫酸的混合液中，加入钾盐，利用氟钽酸钾和氟铌酸钾的溶解度差异进行分步结晶分离。",
+    "time_required": 60,
+    "required_container": "iron_tank",
+    "required_actions": {
+      "key": "fractional_crystallization",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "tantalite_columbite",
+        "quantity": 1
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "potassium_fluoride",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "potassium_fluotantalate",
+        "multiple": 1
+      },
+      {
+        "key": "potassium_fluoniobate",
+        "multiple": 1
+      }
     ]
+  },
+  {
+    "key": "refine_tantalum_step",
+    "name": "钠还原提炼钽",
+    "description": "在高温下用金属钠还原氟钽酸钾，得到高纯度的金属钽粉。",
+    "time_required": 40,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_items": [
+      {
+        "key": "potassium_fluotantalate",
+        "quantity": 1
+      },
+      {
+        "key": "sodium",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "tantalum",
+        "multiple": 1
+      }
+    ],
+    "required_techs": []
+  },
+  {
+    "key": "refine_niobium_step",
+    "name": "钠还原提炼铌",
+    "description": "在高温下用金属钠还原氟铌酸钾，制取金属铌。",
+    "time_required": 40,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_items": [
+      {
+        "key": "potassium_fluoniobate",
+        "quantity": 1
+      },
+      {
+        "key": "sodium",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "niobium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": []
   }
 ]

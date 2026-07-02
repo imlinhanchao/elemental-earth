@@ -869,6 +869,14 @@
           "brass_pickaxe",
           "manganese_pickaxe"
         ]
+      },
+      {
+        "key": "tantalite_columbite",
+        "quantity": 1,
+        "probability": 50,
+        "map": {
+          "mountain": 80
+        }
       }
     ]
   },
@@ -1399,18 +1407,19 @@
     "time_required": 30
   },
   {
-    "name": "制作黄铜冷凝管",
     "key": "craft_brass_condenser",
+    "name": "制作冷凝管",
     "category": "制作",
     "description": "将黄铜锻造成螺旋冷凝管，用于实验室蒸馏。",
+    "time_required": 45,
     "required_items": [
       {
-        "key": "brass",
+        "key": [
+          "brass",
+          "glass"
+        ],
         "quantity": 3
       }
-    ],
-    "required_techs": [
-      "brass_tool_crafting"
     ],
     "rewards": [
       {
@@ -1418,7 +1427,9 @@
         "quantity": 1
       }
     ],
-    "time_required": 45
+    "required_techs": [
+      "brass_tool_crafting"
+    ]
   },
   {
     "key": "dig_sand_on_beach",

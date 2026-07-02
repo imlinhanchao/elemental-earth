@@ -608,9 +608,9 @@
   },
   {
     "key": "brass_condenser",
-    "name": "黄铜冷凝管",
+    "name": "冷凝管",
     "category": "容器",
-    "description": "黄铜制成的螺旋冷凝管，可高效冷却蒸汽，用于蒸馏操作。",
+    "description": "螺旋冷凝管，可高效冷却蒸汽，用于蒸馏操作。",
     "type": [
       "container"
     ],
@@ -2616,5 +2616,53 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "钽铌铁矿",
+    "key": "tantalite_columbite",
+    "category": "材料",
+    "description": "一种深褐色的重矿石，是提取钽和铌的主要矿物来源。通常产于花岗伟晶岩中。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氟钽酸钾",
+    "key": "potassium_fluotantalate",
+    "category": "材料",
+    "description": "白色针状晶体，通过钽铌铁矿的氢氟酸浸出与分步控制沉淀获得，是提炼金属钽的重要中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氟铌酸钾",
+    "key": "potassium_fluoniobate",
+    "category": "材料",
+    "description": "白色晶体，在钽铌分离流程中通过溶解度差异与氟钽酸钾分离，用于提炼金属铌。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钽",
+    "key": "tantalum",
+    "category": "材料",
+    "description": "钢灰色金属，极耐腐蚀，熔点高，具有优异的延展性。主要用于制造高性能电容器和耐酸设备。",
+    "type": [
+      "material"
+    ],
+    "elemental": 73
+  },
+  {
+    "name": "铌",
+    "key": "niobium",
+    "category": "材料",
+    "description": "银灰色金属，具有超导性能和良好的抗强腐蚀性。广泛用于高温合金钢和超导磁体。",
+    "type": [
+      "material"
+    ],
+    "elemental": 41
   }
 ]
