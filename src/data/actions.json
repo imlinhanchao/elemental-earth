@@ -844,6 +844,16 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "lorandite",
+        "quantity": 1,
+        "probability": 80,
+        "required_era": "modern_chemistry",
+        "map": [
+          "cave",
+          "volcano"
+        ]
       }
     ]
   },

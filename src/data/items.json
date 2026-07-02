@@ -2292,5 +2292,34 @@
       "material"
     ],
     "elemental": 37
+  },
+  {
+    "name": "红铊矿",
+    "key": "lorandite",
+    "category": "材料",
+    "description": "一种深红色至胭脂红色的矿物，金属光泽，常以细小板状或粒状集合体产出。晶体完好时可见四方晶系的板状或短柱状形态，但多数情况下呈致密块状或细粒浸染状附着在围岩表面。用指甲可以刻动，条痕为暗红色，比重大，手感沉甸甸的。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "硫酸铊",
+    "key": "thallium_sulfate",
+    "category": "材料",
+    "description": "无色无味的结晶固体，极剧毒，曾被用作灭鼠药，现主要用于铊的提取和工业用途。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铊",
+    "key": "thallium",
+    "category": "材料",
+    "description": "银白色偏蓝的柔软金属，质地如铅，暴露在空气中会迅速变色并生成氧化膜。剧毒，接触需极度小心。",
+    "type": [
+      "material"
+    ],
+    "elemental": 81
   }
 ]

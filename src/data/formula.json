@@ -4196,5 +4196,106 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "提炼硫酸铊",
+    "key": "extract_thallium_sulfate",
+    "description": "用稀硫酸溶解红铊矿或工业烟尘中的铊，生成可溶的硫酸铊溶液。",
+    "required_items": [
+      {
+        "key": "lorandite",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 50,
+    "products": [
+      {
+        "key": "thallium_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "置换沉铊",
+    "key": "thallium_displacement",
+    "description": "在硫酸铊溶液中加入锌片，利用置换反应将金属铊析出。注意：铊及其盐类具有剧毒。",
+    "required_items": [
+      {
+        "key": "thallium_sulfate",
+        "quantity": 1
+      },
+      {
+        "key": "zinc",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 40,
+    "products": [
+      {
+        "key": "thallium",
+        "multiple": 1
+      },
+      {
+        "key": "zinc_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "电解硫酸铊制铊",
+    "key": "thallium_electrolysis",
+    "description": "通过电解硫酸铊的水溶液，在阴极获得纯净的金属铊。",
+    "required_items": [
+      {
+        "key": "thallium_sulfate",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "thallium",
+        "multiple": 1
+      },
+      {
+        "key": "oxygen",
+        "multiple": 0.5
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ]
   }
 ]
