@@ -63,6 +63,15 @@ const note = ref('')
 
 const itemData = computed(() => props.itemKey ? getItem(props.itemKey) : null)
 
+watch(() => props.itemKey, async (v) => {
+  if (v) {
+    name.value = ''
+    note.value = ''
+    await nextTick()
+    nameInput.value?.focus()
+  }
+})
+
 watch(() => props.visible, async (v) => {
   if (v) {
     name.value = ''

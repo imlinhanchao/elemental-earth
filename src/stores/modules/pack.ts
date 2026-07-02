@@ -26,8 +26,8 @@ export const usePackStore = defineStore('pack', () => {
   const discoveredItems = reactive<Set<string>>(new Set())
   /** 玩家对物品的自定义命名和备注 key → { customName, note } */
   const itemRenames = reactive<Record<string, ItemCustomization>>({})
-  /** 等待命名的发现物品 key（由 AddItem 触发，UI 消费后清除） */
-  const pendingDiscovery = ref<string | null>(null)
+  /** 等待命名的发现物品队列（由 AddItem 触发，UI 消费后清除） */
+  const discoveryQueue = reactive<string[]>([])
   /** 行动冷却结束时间戳 actionKey → timestamp */
   const cooldowns = reactive<Record<string, number>>({})
 
@@ -80,7 +80,9 @@ export const usePackStore = defineStore('pack', () => {
         discoveredItems.add(itemKey);
         // 重大发现物品：触发命名弹窗
         if (itemData.is_discovery && !itemRenames[itemKey]) {
-          pendingDiscovery.value = itemKey;
+          if (!discoveryQueue.includes(itemKey)) {
+            discoveryQueue.push(itemKey);
+          }
           ret = false; // 阻止添加 log，等待命名
         }
         if (itemData.elemental) {
@@ -181,9 +183,9 @@ export const usePackStore = defineStore('pack', () => {
     itemRenames[itemKey].note = note;
   }
 
-  /** 清除等待命名的发现 */
+  /** 清除等待命名的发现（弹出下一个） */
   function clearPendingDiscovery() {
-    pendingDiscovery.value = null;
+    discoveryQueue.shift();
   }
 
   /** 设置行动冷却 */
@@ -209,7 +211,7 @@ export const usePackStore = defineStore('pack', () => {
   }
 
   return { 
-    items, techs, provenFormulas, discoveredItems, itemRenames, pendingDiscovery, cooldowns,
+    items, techs, provenFormulas, discoveredItems, itemRenames, discoveryQueue, cooldowns,
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,

@@ -66,15 +66,17 @@ function onEraTransitionDone() {
 const showDiscoveryDialog = ref(false)
 const discoveryItemKey = ref<string | null>(null)
 
-watch(() => packStore.pendingDiscovery, (val) => {
-  if (val !== null) {
+watch(() => packStore.discoveryQueue[0], (val) => {
+  if (val) {
     discoveryItemKey.value = val
     showDiscoveryDialog.value = true
+  } else {
+    showDiscoveryDialog.value = false
+    discoveryItemKey.value = null
   }
 })
 
 function onDiscoveryDialogDone() {
-  showDiscoveryDialog.value = false
-  discoveryItemKey.value = null
+  // packStore.clearPendingDiscovery() 已在 DiscoveryDialog.vue 中调用
 }
 </script>
