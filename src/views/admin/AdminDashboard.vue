@@ -29,15 +29,6 @@
             <p class="text-xs text-base-content/40">通过 AI 自动生成游戏数据</p>
           </div>
         </router-link>
-
-        <router-link to="/admin/eras"
-          class="card bg-base-200 hover:bg-base-300 transition-colors cursor-pointer"
-        >
-          <div class="card-body p-4">
-            <h3 class="font-bold text-base">⏳ 时代</h3>
-            <p class="text-xs text-base-content/40">时代配置与里程碑管理</p>
-          </div>
-        </router-link>
       </div>
     </div>
   </div>
