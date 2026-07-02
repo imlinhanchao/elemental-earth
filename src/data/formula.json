@@ -4090,5 +4090,111 @@
     "required_techs": [
       "modern_chem"
     ]
+  },
+  {
+    "name": "锂云母酸解",
+    "key": "lepidolite_digestion",
+    "description": "将锂云母与浓硫酸混合加热，分解出锂和铷的盐分。",
+    "required_items": [
+      {
+        "key": "lepidolite",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 80,
+    "products": [
+      {
+        "key": "lithium_sulfate",
+        "multiple": 1
+      },
+      {
+        "key": "rubidium_chloride",
+        "multiple": 0.5
+      },
+      {
+        "key": "silica_sand",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "rubidium_reduction",
+    "name": "金属铷还原",
+    "description": "在真空和高温条件下，用金属钙还原氯化铷，获得高纯度的金属铷。",
+    "time_required": 120,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "rubidium_chloride",
+        "quantity": 1
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "rubidium",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "calcium_chloride",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "电解熔融氯化铷",
+    "key": "rubidium_electrolysis",
+    "description": "类似于电解钾的方法，将氯化铷熔融并加入适量助熔剂后电解，在阴极析出金属铷。",
+    "required_items": [
+      {
+        "key": "rubidium_chloride",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "rubidium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ]
   }
 ]

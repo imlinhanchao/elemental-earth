@@ -2263,5 +2263,34 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "锂云母",
+    "key": "lepidolite",
+    "category": "材料",
+    "description": "紫红色或粉红色的鳞片状矿物，具有珍珠光泽，常与锂辉石共生，是提取锂、铷、铯的重要原料。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氯化铷",
+    "key": "rubidium_chloride",
+    "category": "材料",
+    "description": "无色立方晶体，易溶于水，是生产金属铷的关键中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铷",
+    "key": "rubidium",
+    "category": "材料",
+    "description": "银白色蜡状金属，化学性质极其活泼，能在空气中自燃，遇水发生剧烈爆炸。",
+    "type": [
+      "material"
+    ],
+    "elemental": 37
   }
 ]
