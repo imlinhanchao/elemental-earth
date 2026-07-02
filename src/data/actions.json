@@ -2885,5 +2885,85 @@
     "map": [
       "beach"
     ]
+  },
+  {
+    "key": "panning",
+    "name": "淘洗",
+    "category": "采集",
+    "description": "在河边或特定地带使用淘洗盘，利用比重差异分离出重矿物颗粒。",
+    "time_required": 15,
+    "required_items": [
+      {
+        "key": "panning_dish",
+        "quantity": 1,
+        "use": 0.02
+      }
+    ],
+    "rewards": [
+      {
+        "key": "gold_sand",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "required_era": "modern_chem",
+        "map": [
+          "river_side"
+        ]
+      },
+      {
+        "key": "crude_platinum_sand",
+        "quantity": 1,
+        "probability": 50,
+        "required_era": "modern_chem",
+        "map": [
+          "river_side",
+          "mountain"
+        ]
+      },
+      {
+        "key": "sand",
+        "quantity": [
+          2,
+          5
+        ],
+        "probability": 800
+      }
+    ],
+    "required_techs": [
+      "sifting_technology"
+    ],
+    "map": [
+      "river_side",
+      "mountain"
+    ]
+  },
+  {
+    "key": "craft_panning_dish",
+    "name": "制作淘洗盘",
+    "category": "制作",
+    "description": "使用木材或硬质材料制作简易的淘洗盘，用于在水中分离重矿砂。",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 5
+      },
+      {
+        "key": "sieve",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "panning_dish",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "sifting_technology"
+    ]
   }
 ]

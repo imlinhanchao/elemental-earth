@@ -3901,15 +3901,17 @@
     ]
   },
   {
-    "name": "电解精炼粗铜",
     "key": "copper_refining_electrolytic",
+    "name": "电解精炼粗铜",
     "description": "以粗铜为阳极进行电解，高纯度铜析出到阴极，而硒、金、银等杂质则沉入底部形成阳极泥。",
+    "time_required": 120,
+    "power_consumption": 1,
+    "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
       "min": 1,
       "max": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "blister_copper",
@@ -3920,7 +3922,6 @@
         "quantity": 1
       }
     ],
-    "time_required": 120,
     "products": [
       {
         "key": "copper",
@@ -3931,7 +3932,6 @@
         "multiple": 1
       }
     ],
-    "requires_electricity": true,
     "required_techs": [
       "electricity"
     ]
@@ -4179,25 +4179,23 @@
     ]
   },
   {
-    "name": "电解熔融氯化铷",
     "key": "rubidium_electrolysis",
+    "name": "电解熔融氯化铷",
     "description": "类似于电解钾的方法，将氯化铷熔融并加入适量助熔剂后电解，在阴极析出金属铷。",
-    "required_items": [
-      {
-        "key": "rubidium_chloride",
-        "quantity": 1
-      }
-    ],
+    "time_required": 40,
+    "power_consumption": 1,
     "required_container": "crucible",
     "required_actions": {
       "key": "electrolysis",
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-      "electrochemistry"
+    "required_items": [
+      {
+        "key": "rubidium_chloride",
+        "quantity": 1
+      }
     ],
-    "time_required": 40,
     "products": [
       {
         "key": "rubidium",
@@ -4207,6 +4205,9 @@
         "key": "chlorine",
         "multiple": 1
       }
+    ],
+    "required_techs": [
+      "electrochemistry"
     ]
   },
   {
@@ -4342,22 +4343,23 @@
     ]
   },
   {
-    "name": "电解法提镓",
     "key": "extract_gallium",
+    "name": "电解法提镓",
     "description": "通过混汞法电解或树脂吸附，从拜耳法母液中提取微量的金属镓。",
-    "required_items": [
-      {
-        "key": "bayer_liquor",
-        "quantity": 1
-      }
-    ],
+    "time_required": 50,
+    "power_consumption": 1,
     "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
       "min": 1,
       "max": 1
     },
-    "time_required": 50,
+    "required_items": [
+      {
+        "key": "bayer_liquor",
+        "quantity": 1
+      }
+    ],
     "products": [
       {
         "key": "gallium",
@@ -4686,6 +4688,246 @@
       {
         "key": "potassium_fluoride",
         "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "配置王水",
+    "key": "mix_aqua_regia",
+    "description": "将浓盐酸与浓硝酸按3:1的比例小心混合。产生的溶液具有极强的氧化能力。",
+    "required_items": [
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 3
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "time_required": 5,
+    "products": [
+      {
+        "key": "aqua_regia",
+        "multiple": 4
+      }
+    ]
+  },
+  {
+    "key": "dissolve_platinum_sand",
+    "name": "王水溶解粗铂砂",
+    "description": "利用王水溶解粗铂砂，将其中的贵金属转化为可溶性氯化物，是分离铂族金属的第一步。",
+    "time_required": 30,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "crude_platinum_sand",
+        "quantity": 2
+      },
+      {
+        "key": "aqua_regia",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "precious_metal_solution",
+        "multiple": 1
+      },
+      {
+        "key": "platinum_sand_residue",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "extract_os_ir",
+    "name": "从铂砂残渣提取锇铱钌",
+    "description": "从王水处理后的铂砂残渣中，通过高温焙烧与进一步化学手段提取锇、铱与钌。",
+    "time_required": 60,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "platinum_sand_residue",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "iridium",
+        "multiple": 1
+      },
+      {
+        "key": "osmium",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      },
+      {
+        "key": "ruthenium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "produce_ferrous_sulfate",
+    "name": "生产硫酸亚铁",
+    "description": "利用铁屑与稀硫酸反应制备硫酸亚铁。",
+    "time_required": 20,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring"
+    },
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "ferrous_sulfate",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "produce_ammonium_chloride",
+    "name": "生产氯化铵",
+    "description": "氨水与盐酸反应制备氯化铵。",
+    "time_required": 15,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring"
+    },
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "ammonium_chloride",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "refine_gold_step",
+    "name": "还原沉淀金",
+    "description": "向贵金属溶液中加入硫酸亚铁，将金离子还原为金属金粉。",
+    "time_required": 30,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating"
+    },
+    "required_items": [
+      {
+        "key": "precious_metal_solution",
+        "quantity": 1
+      },
+      {
+        "key": "ferrous_sulfate",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "gold",
+        "multiple": 0.5
+      },
+      {
+        "key": "platinum_group_solution",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "refine_platinum_step",
+    "name": "沉淀分离铂",
+    "description": "向铂族母液中加入氯化铵，生成黄色氯铂酸铵沉淀，随后经煅烧得到金属铂。",
+    "time_required": 40,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating"
+    },
+    "required_items": [
+      {
+        "key": "platinum_group_solution",
+        "quantity": 1
+      },
+      {
+        "key": "ammonium_chloride",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "platinum_ingot",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "key": "refine_pd_rh_step",
+    "name": "提取钯与铑",
+    "description": "利用分步沉淀或置换法从剩余母液中提取钯与铑。",
+    "time_required": 50,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating"
+    },
+    "required_items": [
+      {
+        "key": "platinum_group_solution",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "palladium",
+        "multiple": 0.5
+      },
+      {
+        "key": "rhodium",
+        "multiple": 0.2
       }
     ],
     "required_techs": [

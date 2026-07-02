@@ -2482,5 +2482,130 @@
       "gas"
     ],
     "elemental": 9
+  },
+  {
+    "name": "王水",
+    "key": "aqua_regia",
+    "category": "液体",
+    "description": "由浓盐酸和浓硝酸按3:1混合而成的强酸性液体，具有极强的氧化性，能溶解金和铂等贵金属。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "钌",
+    "key": "ruthenium",
+    "category": "材料",
+    "description": "银白色过渡金属，质地坚硬且脆，性状极稳定。常用于电子工业和催化剂，也是多种合金的重要强化添加剂。",
+    "type": [
+      "material"
+    ],
+    "elemental": 44
+  },
+  {
+    "name": "铑",
+    "key": "rhodium",
+    "category": "材料",
+    "description": "银白色金属，极其坚硬，耐腐蚀且具有极高的反射率。主要用于汽车尾气净化催化剂和高级饰品镀层。",
+    "type": [
+      "material"
+    ],
+    "elemental": 45
+  },
+  {
+    "name": "钯",
+    "key": "palladium",
+    "category": "材料",
+    "description": "银白色过渡金属，质柔软，具有极强的吸氢能力。常用于催化剂和电子工业。",
+    "type": [
+      "material"
+    ],
+    "elemental": 46
+  },
+  {
+    "name": "锇",
+    "key": "osmium",
+    "category": "材料",
+    "description": "蓝灰色金属，具有极高的密度（自然界密度最大的单质）和硬度。其粉末在空气中易形成剧毒的四氧化锇。",
+    "type": [
+      "material"
+    ],
+    "elemental": 76
+  },
+  {
+    "name": "铱",
+    "key": "iridium",
+    "category": "材料",
+    "description": "银白色金属，硬且脆，是已知最耐腐蚀的金属。常用于航空发动机和精密仪器。",
+    "type": [
+      "material"
+    ],
+    "elemental": 77
+  },
+  {
+    "name": "淘洗盘",
+    "key": "panning_dish",
+    "category": "工具",
+    "description": "浅底的广口盘，用于在河滩或沙地中淘洗重矿物，是寻找砂金和铂砂的必备工具。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "粗铂砂",
+    "key": "crude_platinum_sand",
+    "category": "材料",
+    "description": "从河床或矿床中淘出的重砂，富含天然铂及其他铂族金属（钯、锇、铱等）。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "铂砂残渣",
+    "key": "platinum_sand_residue",
+    "category": "材料",
+    "description": "粗铂砂经王水溶解后的不溶性残渣，含有锇、铱、钌等极难溶解的铂族金属。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "贵金属溶液",
+    "key": "precious_metal_solution",
+    "category": "材料",
+    "description": "粗铂砂经王水溶解后的初级溶液，含有金及各种铂族金属的氯络合物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铂族母液",
+    "key": "platinum_group_solution",
+    "category": "材料",
+    "description": "从贵金属溶液中还原金之后得到的母液，富含铂、钯、铑等金属。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫酸亚铁",
+    "key": "ferrous_sulfate",
+    "category": "材料",
+    "description": "青绿色晶体，工业上常作为还原剂，在湿法冶金中用于从溶液中沉淀金属金。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氯化铵",
+    "key": "ammonium_chloride",
+    "category": "材料",
+    "description": "白色晶体，在铂族金属精炼中用于沉淀铂（生成氯铂酸铵）。",
+    "type": [
+      "material"
+    ]
   }
 ]
