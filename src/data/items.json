@@ -471,8 +471,8 @@
     ]
   },
   {
-    "key": "sphalerite",
     "name": "闪锌矿",
+    "key": "sphalerite",
     "category": "材料",
     "description": "深色带有金属光泽的块状矿物，表面常有条纹，在阳光下闪烁，手感沉重。",
     "type": [
@@ -481,8 +481,8 @@
     "is_discovery": true
   },
   {
+    "name": "锌焙砂",
     "key": "zinc_oxide",
-    "name": "氧化锌",
     "category": "材料",
     "description": "白色微细粉末，无味，接触皮肤时有滑腻感。",
     "type": [
@@ -2321,5 +2321,43 @@
       "material"
     ],
     "elemental": 81
+  },
+  {
+    "name": "铝土矿残液",
+    "key": "bauxite_residue",
+    "category": "材料",
+    "description": "拜耳法生产氧化铝过程中，从循环母液里留下的残液。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "铟",
+    "key": "indium",
+    "category": "材料",
+    "description": "银白色重金属，质地极软，比铅还软，具有很好的可塑性和延展性，断面呈金属光泽。",
+    "type": [
+      "material"
+    ],
+    "elemental": 49
+  },
+  {
+    "name": "镓",
+    "key": "gallium",
+    "category": "材料",
+    "description": "银白色金属，熔点极低（约29.7°C），放在手心就会熔化成液态银滴。",
+    "type": [
+      "material"
+    ],
+    "elemental": 31
+  },
+  {
+    "name": "锌酸浸出液",
+    "key": "zinc_leaching_solution",
+    "category": "材料",
+    "description": "氧化锌经硫酸浸出后得到的酸性溶液，含有大量的硫酸锌以及镉、铟等杂质，呈浅黄色透明状。",
+    "type": [
+      "material"
+    ]
   }
 ]

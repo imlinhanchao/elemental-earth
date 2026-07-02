@@ -249,8 +249,8 @@
   },
   {
     "key": "reduce_zinc_oxide",
-    "name": "还原氧化锌",
-    "description": "在坩埚中用木炭加热还原氧化锌，得到锌蒸气并冷凝收集。",
+    "name": "还原锌焙砂",
+    "description": "在坩埚中用木炭加热还原锌焙砂，得到锌蒸气并冷凝收集。",
     "time_required": 20,
     "required_container": "kiln",
     "required_actions": {
@@ -3363,6 +3363,10 @@
       },
       {
         "key": "sodium_carbonate",
+        "multiple": 5
+      },
+      {
+        "key": "bauxite_residue",
         "multiple": 1
       }
     ]
@@ -4030,9 +4034,9 @@
     ]
   },
   {
-    "name": "硫酸浸出氧化锌",
+    "name": "硫酸浸出锌焙砂",
     "key": "leaching_zinc_oxide",
-    "description": "用稀硫酸浸出焙烧后的氧化锌（锌焙砂），得到含有硫酸锌及镉杂质的溶液。",
+    "description": "用稀硫酸浸出焙烧后的锌焙砂，得到含有硫酸锌及杂质的溶液。",
     "required_actions": {
       "key": "stirring",
       "min": 1,
@@ -4052,7 +4056,7 @@
     "time_required": 30,
     "products": [
       {
-        "key": "zinc_sulfate",
+        "key": "zinc_leaching_solution",
         "multiple": 1
       }
     ],
@@ -4063,7 +4067,7 @@
   {
     "name": "湿法置换提镉",
     "key": "cadmium_wet_displacement",
-    "description": "向含有镉杂质的硫酸锌溶液中加入锌粉，利用金属活动性差异将镉置换析出。",
+    "description": "向含有镉杂质的锌酸浸出液中加入锌粉，利用金属活动性差异将镉置换析出，并获得纯净的硫酸锌溶液。",
     "required_actions": {
       "key": "stirring",
       "min": 1,
@@ -4072,7 +4076,7 @@
     "required_container": "beaker",
     "required_items": [
       {
-        "key": "zinc_sulfate",
+        "key": "zinc_leaching_solution",
         "quantity": 2
       },
       {
@@ -4084,6 +4088,10 @@
     "products": [
       {
         "key": "cadmium",
+        "multiple": 1
+      },
+      {
+        "key": "zinc_sulfate",
         "multiple": 1
       }
     ],
@@ -4296,6 +4304,91 @@
     ],
     "required_techs": [
       "electrochemistry"
+    ]
+  },
+  {
+    "name": "从溶液提铟",
+    "key": "extract_indium",
+    "description": "向锌酸浸出液中加入还原铁粉或利用萃取法，将溶解在溶液中的铟离子分离提纯。",
+    "required_items": [
+      {
+        "key": "zinc_leaching_solution",
+        "quantity": 1
+      },
+      {
+        "key": "iron",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "indium",
+        "multiple": 0.5
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "电解法提镓",
+    "key": "extract_gallium",
+    "description": "通过特殊的汞阴极电解或树脂吸附，从铝土矿残液中提取金属镓。",
+    "required_items": [
+      {
+        "key": "bauxite_residue",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 50,
+    "products": [
+      {
+        "key": "gallium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ]
+  },
+  {
+    "name": "结晶硫酸锌",
+    "key": "crystalize_zinc_sulfate",
+    "description": "通过蒸发浓缩锌酸浸出液，析出白色结晶的硫酸锌。",
+    "required_items": [
+      {
+        "key": "zinc_leaching_solution",
+        "quantity": 1
+      }
+    ],
+    "required_container": "evaporating_dish",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "zinc_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
     ]
   }
 ]
