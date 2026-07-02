@@ -2300,6 +2300,26 @@
     "formula": null
   },
   {
+    "key": "craft_iron_tank",
+    "name": "制作铁罐",
+    "category": "制作",
+    "description": "通过焊接和锻造制作坚固的铁罐，用于储存具有腐蚀性的化学品。",
+    "time_required": 20,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 2
+      }
+    ],
+    "rewards": [
+      {
+        "key": "iron_tank",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ]
+  },
+  {
     "name": "拉制玻璃试管",
     "key": "craft_test_tube",
     "category": "制作",

@@ -1940,6 +1940,15 @@
     "durable": 1
   },
   {
+    "name": "铁罐",
+    "key": "iron_tank",
+    "category": "容器",
+    "description": "加厚的铁制容器。由于其表面能形成紧密的氟化物钝化膜，常用于制备与储存氢氟酸等腐蚀性物质。",
+    "type": [
+      "container"
+    ]
+  },
+  {
     "name": "玻璃试管",
     "key": "test_tube",
     "category": "容器",

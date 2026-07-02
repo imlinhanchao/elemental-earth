@@ -354,5 +354,29 @@
       "explosives"
     ],
     "time_required": 30
+  },
+  {
+    "name": "结晶工艺",
+    "key": "crystallization_tech",
+    "description": "掌握了利用物质溶解度差异进行分离提纯的技术，能够通过反复结晶获得高纯度物质。",
+    "required_items": [
+      {
+        "key": "niter",
+        "quantity": 5
+      },
+      {
+        "key": "copper",
+        "quantity": 3
+      },
+      {
+        "key": "water",
+        "quantity": 10
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "time_required": 60,
+    "milestone": "crystallization_tech"
   }
 ]

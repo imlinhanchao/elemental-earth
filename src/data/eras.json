@@ -6,8 +6,14 @@
     "description": "人类第一次将石块打磨成工具，用燧石点燃火焰。",
     "order": 0,
     "milestones": [
-      { "key": "craft_stone_pickaxe", "description": "制作第一把石镐" },
-      { "key": "craft_fire_seed", "description": "制作第一个火种" }
+      {
+        "key": "craft_stone_pickaxe",
+        "description": "制作第一把石镐"
+      },
+      {
+        "key": "craft_fire_seed",
+        "description": "制作第一个火种"
+      }
     ]
   },
   {
@@ -17,9 +23,18 @@
     "description": "火焰被用于改造物质，矿石在窑炉中化为金属。",
     "order": 1,
     "milestones": [
-      { "key": "build_kiln", "description": "建造第一个窑炉" },
-      { "key": "first_smelt", "description": "完成第一次焙烧" },
-      { "key": "research_pottery", "description": "研究陶器制作科技" }
+      {
+        "key": "build_kiln",
+        "description": "建造第一个窑炉"
+      },
+      {
+        "key": "first_smelt",
+        "description": "完成第一次焙烧"
+      },
+      {
+        "key": "research_pottery",
+        "description": "研究陶器制作科技"
+      }
     ]
   },
   {
@@ -29,10 +44,26 @@
     "description": "气体的收集与定量研究，开启了系统化的化学探索。",
     "order": 2,
     "milestones": [
-      { "key": "craft_gas_bottle", "description": "制作第一个集气瓶" },
-      { "key": "collect_gas", "description": "完成第一次气体收集" },
-      { "key": "craft_crucible", "description": "制作第一个坩埚" },
-      { "key": "research_gas_collection", "description": "研究气体收集科技" }
+      {
+        "key": "craft_gas_bottle",
+        "description": "制作第一个集气瓶"
+      },
+      {
+        "key": "collect_gas",
+        "description": "完成第一次气体收集"
+      },
+      {
+        "key": "craft_crucible",
+        "description": "制作第一个坩埚"
+      },
+      {
+        "key": "research_gas_collection",
+        "description": "研究气体收集科技"
+      },
+      {
+        "key": "crystallization_tech",
+        "description": "研究结晶工艺科技"
+      }
     ]
   },
   {
@@ -42,9 +73,18 @@
     "description": "电力的应用使人类能够分离最顽固的化合物。",
     "order": 3,
     "milestones": [
-      { "key": "craft_battery", "description": "制作第一个电池" },
-      { "key": "first_electrolysis", "description": "完成第一次电解" },
-      { "key": "produce_aluminum", "description": "提取出铝" }
+      {
+        "key": "craft_battery",
+        "description": "制作第一个电池"
+      },
+      {
+        "key": "first_electrolysis",
+        "description": "完成第一次电解"
+      },
+      {
+        "key": "produce_aluminum",
+        "description": "提取出铝"
+      }
     ]
   },
   {
@@ -54,7 +94,10 @@
     "description": "镧系元素的精密分离技术，打开了元素周期表深处的大门。",
     "order": 4,
     "milestones": [
-      { "key": "separate_rare_earth", "description": "完成第一次稀土分离" }
+      {
+        "key": "separate_rare_earth",
+        "description": "完成第一次稀土分离"
+      }
     ]
   },
   {
@@ -64,8 +107,14 @@
     "description": "跨越稳定核素的边界，掌握同位素与元素嬗变的终极奥秘。",
     "order": 5,
     "milestones": [
-      { "key": "first_transmutation", "description": "完成第一次元素嬗变" },
-      { "key": "isolate_radium", "description": "从数吨矿石中提取出纯镭" }
+      {
+        "key": "first_transmutation",
+        "description": "完成第一次元素嬗变"
+      },
+      {
+        "key": "isolate_radium",
+        "description": "从数吨矿石中提取出纯镭"
+      }
     ]
   }
 ]

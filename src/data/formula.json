@@ -4536,7 +4536,7 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
+    "required_container": "iron_tank",
     "required_actions": {
       "key": "stirring",
       "min": 1,
@@ -4593,7 +4593,7 @@
     "name": "制备氢氟酸",
     "description": "将萤石精矿与浓硫酸反应，加热产生氟化氢气体，经水吸收得到氢氟酸。",
     "time_required": 15,
-    "required_container": "beaker",
+    "required_container": "iron_tank",
     "required_actions": {
       "key": "heating",
       "min": 1,
@@ -4639,7 +4639,7 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
+    "required_container": "iron_tank",
     "time_required": 10,
     "products": [
       {
@@ -4658,7 +4658,7 @@
     "description": "在无水氢氟酸中溶解氟化钾增加导电性，分步电解产生氟气和氢气。注意：氟气具有极强腐蚀性，需在特殊的铂-铱或铜质容器内进行。",
     "time_required": 30,
     "power_consumption": 2,
-    "required_container": "crucible",
+    "required_container": "iron_tank",
     "required_actions": {
       "key": "electrolysis",
       "min": 1,
