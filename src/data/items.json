@@ -2185,5 +2185,63 @@
     ],
     "elemental": 35,
     "is_discovery": true
+  },
+  {
+    "name": "硒",
+    "key": "selenium",
+    "category": "材料",
+    "description": "一种具有金属光泽的灰色准金属，对光敏感，在化学实验中有多种用途。",
+    "type": [
+      "material"
+    ],
+    "elemental": 34,
+    "is_discovery": true
+  },
+  {
+    "name": "阳极泥",
+    "key": "anode_slime",
+    "category": "材料",
+    "description": "电解精炼金属（如铜）时沉积在电解槽底部的废泥，虽然看起来不起眼，但富含硒、碲及金银等稀有金属。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "黄铜矿",
+    "key": "chalcopyrite",
+    "category": "材料",
+    "description": "最主要的铜矿石，呈鲜艳的金黄色，表面带有金属光泽及彩色锖色。它是提取铜及其副产物（如硒）的重要来源。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "粗铜",
+    "key": "blister_copper",
+    "category": "材料",
+    "description": "工业冶炼产出的不纯铜，表面粗糙且气孔多。含有金、银、硒、碲等杂质，通常作为电解精炼的原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钒铅矿",
+    "key": "vanadinite",
+    "category": "材料",
+    "description": "呈六方晶系的鲜红色或橘红色晶体，含铅且富含钒元素。不仅是提炼钒的主要矿石，也常被收藏者视为美丽的矿物标本。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钒",
+    "key": "vanadium",
+    "category": "材料",
+    "description": "一种银灰色的硬金属，具有良好的延展性和耐腐蚀性。它是制造高强度合金钢（如钒钢）的关键元素。",
+    "type": [
+      "material"
+    ],
+    "elemental": 23,
+    "is_discovery": true
   }
 ]

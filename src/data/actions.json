@@ -819,6 +819,21 @@
         "map": [
           "cave"
         ]
+      },
+      {
+        "key": "chalcopyrite",
+        "probability": 100,
+        "map": [
+          "mountain",
+          {
+            "key": "cave",
+            "probability": 300
+          },
+          {
+            "key": "volcano",
+            "probability": 20
+          }
+        ]
       }
     ]
   },
@@ -1886,6 +1901,30 @@
           "meteor_crater"
         ],
         "required_era": "rare_earth"
+      },
+      {
+        "key": "chalcopyrite",
+        "quantity": [
+          2,
+          6
+        ],
+        "probability": 400,
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "vanadinite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 100,
+        "map": [
+          "mountain",
+          "cave"
+        ]
       }
     ],
     "required_techs": [
@@ -2748,6 +2787,31 @@
         "probability": 300,
         "required_era": "modern_chem",
         "map": [
+          "cave"
+        ]
+      },
+      {
+        "key": "chalcopyrite",
+        "quantity": [
+          2,
+          6
+        ],
+        "probability": 400,
+        "required_era": "modern_chem",
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "vanadinite",
+        "quantity": [
+          2,
+          4
+        ],
+        "probability": 200,
+        "map": [
+          "mountain",
           "cave"
         ]
       }

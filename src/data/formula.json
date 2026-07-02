@@ -3835,5 +3835,196 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "从阳极泥提取硒",
+    "key": "extract_selenium_from_slime",
+    "description": "将阳极泥与苏打混匀并在空气中焙烧，使硒转化为二氧化硒蒸发并捕集，之后还原得到硒单质。",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "anode_slime",
+        "quantity": 2
+      }
+    ],
+    "time_required": 45,
+    "products": [
+      {
+        "key": "selenium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ]
+  },
+  {
+    "name": "冶炼黄铜矿",
+    "key": "smelting_chalcopyrite",
+    "description": "将黄铜矿与木炭混合进行高温反应，初步分离出铜，得到含有杂质的粗铜。",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2,
+      "max": 2
+    },
+    "required_container": "kiln",
+    "required_items": [
+      {
+        "key": "chalcopyrite",
+        "quantity": 1
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      }
+    ],
+    "time_required": 80,
+    "products": [
+      {
+        "key": "blister_copper",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "smelting"
+    ]
+  },
+  {
+    "name": "电解精炼粗铜",
+    "key": "copper_refining_electrolytic",
+    "description": "以粗铜为阳极进行电解，高纯度铜析出到阴极，而硒、金、银等杂质则沉入底部形成阳极泥。",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "blister_copper",
+        "quantity": 2
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "time_required": 120,
+    "products": [
+      {
+        "key": "copper",
+        "multiple": 1
+      },
+      {
+        "key": "anode_slime",
+        "multiple": 1
+      }
+    ],
+    "requires_electricity": true,
+    "required_techs": [
+      "electricity"
+    ]
+  },
+  {
+    "name": "从阳极泥提取碲",
+    "key": "extract_tellurium_from_slime",
+    "description": "阳极泥在提取硒之后，残留的滤渣中仍富含碲，通过碱浸和还原工艺可以回收金属碲。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "anode_slime",
+        "quantity": 2
+      },
+      {
+        "key": "alkaline_solution",
+        "quantity": 1
+      }
+    ],
+    "time_required": 50,
+    "products": [
+      {
+        "key": "tellurium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "electrochemistry"
+    ]
+  },
+  {
+    "name": "阳极泥贵金属回收",
+    "key": "extract_precious_metals_from_slime",
+    "description": "阳极泥经过多步处理后，最后的稀贵金属富集物可通过高温熔炼和化学分离得到金和银。",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2,
+      "max": 2
+    },
+    "required_container": "kiln",
+    "required_items": [
+      {
+        "key": "anode_slime",
+        "quantity": 5
+      }
+    ],
+    "time_required": 180,
+    "products": [
+      {
+        "key": "silver",
+        "multiple": 2
+      },
+      {
+        "key": "gold",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "smelting"
+    ]
+  },
+  {
+    "name": "初步处理钒铅矿",
+    "key": "process_vanadinite",
+    "description": "利用酸处理钒铅矿，初步分离出其中的铅并回收含钒的中间产物。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "vanadinite",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "lead_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "vanadium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
   }
 ]
