@@ -2323,6 +2323,15 @@
     "elemental": 81
   },
   {
+    "name": "硫酸锌残渣",
+    "key": "zinc_leaching_residue",
+    "category": "材料",
+    "description": "硫酸浸出锌焙砂后留下的残渣，富含铁、铅、银等金属，是回收这些金属的重要原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
     "name": "铝土矿残液",
     "key": "bauxite_residue",
     "category": "材料",
@@ -2359,5 +2368,33 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "氧化锗",
+    "key": "germanium_oxide",
+    "category": "材料",
+    "description": "白色粉末状固体，是提炼金属锗的主要原料，通常通过四氯化锗水解获得。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "四氯化锗",
+    "key": "germanium_tetrachloride",
+    "category": "材料",
+    "description": "无色发烟液体，具有强烈的酸味，沸点极低（约84°C），极易挥发。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "锗",
+    "key": "germanium",
+    "category": "材料",
+    "description": "灰白色准金属，具有金属光泽，质硬且脆。它是重要的半导体材料，电子工业的基石之一。",
+    "type": [
+      "material"
+    ],
+    "elemental": 32
   }
 ]

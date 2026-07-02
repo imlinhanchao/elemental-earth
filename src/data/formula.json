@@ -4046,17 +4046,21 @@
     "required_items": [
       {
         "key": "zinc_oxide",
-        "quantity": 2
+        "quantity": 4
       },
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 1
+        "quantity": 2
       }
     ],
     "time_required": 30,
     "products": [
       {
         "key": "zinc_leaching_solution",
+        "multiple": 2
+      },
+      {
+        "key": "zinc_leaching_residue",
         "multiple": 1
       }
     ],
@@ -4384,6 +4388,100 @@
     "products": [
       {
         "key": "zinc_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "氯化法提锗",
+    "key": "germanium_chlorination",
+    "description": "向锌浸出渣或含锗烟尘中加入浓盐酸并加热蒸馏，由于四氯化锗沸点低，可将其转化为气体蒸出分离。",
+    "required_items": [
+      {
+        "key": "zinc_leaching_residue",
+        "quantity": 1
+      },
+      {
+        "key": "concentrated_hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "distillation_flask",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 60,
+    "products": [
+      {
+        "key": "germanium_tetrachloride",
+        "multiple": 1,
+        "required_chain_operation": "condensation"
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "四氯化锗水解",
+    "key": "germanium_hydrolysis",
+    "description": "将四氯化锗液体加入水中进行水解反应，生成高纯度的二氧化锗沉淀。",
+    "required_items": [
+      {
+        "key": "germanium_tetrachloride",
+        "quantity": 1
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "germanium_oxide",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "氢还原提锗",
+    "key": "germanium_hydrogen_reduction",
+    "description": "在高温下用氢气还原二氧化锗，得到高纯度的金属锗颗粒。",
+    "required_items": [
+      {
+        "key": "germanium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "hydrogen",
+        "quantity": 1
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "time_required": 90,
+    "products": [
+      {
+        "key": "germanium",
         "multiple": 1
       }
     ],
