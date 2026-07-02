@@ -107,20 +107,22 @@ export const useStateStore = defineStore('state', () => {
 
   const getElements = computed(() => state.elements);
 
-  /** 新发现的元素（播放动画用），动画播放完后由 UI 清除 */
-  const pendingDiscovery = ref<number | null>(null);
+  /** 等待命名的元素发现队列（由 addElement 触发，UI 消费后清除） */
+  const discoveryQueue = reactive<number[]>([])
 
   function addElement(element: number) {
     if (!state.elements) state.elements = [];
     if (!state.elements.includes(element)) {
       state.elements.push(element);
-      pendingDiscovery.value = element;
+      if (!discoveryQueue.includes(element)) {
+        discoveryQueue.push(element);
+      }
       logStore.addLog(`元素 ${getElementById(element)?.name || element} 已点亮！`, 'elements');
     }
   }
 
   function clearPendingDiscovery() {
-    pendingDiscovery.value = null;
+    discoveryQueue.shift();
   }
 
   // ─── 时代系统 ────────────────────────────────────────────────
@@ -178,7 +180,7 @@ export const useStateStore = defineStore('state', () => {
     state, getState, getMap, setMap, now,
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
-    getElements, addElement, pendingDiscovery, clearPendingDiscovery,
+    getElements, addElement, discoveryQueue, clearPendingDiscovery,
     currentEra, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
     pendingEraTransition, clearEraTransition, checkMilestone,
   }

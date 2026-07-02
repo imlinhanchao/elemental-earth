@@ -32,8 +32,8 @@ const packStore = usePackStore()
 const showElementDiscovery = ref(false)
 const discoveryElement = ref<number | null>(null)
 
-watch(() => stateStore.pendingDiscovery, (val) => {
-  if (val !== null) {
+watch(() => stateStore.discoveryQueue[0], (val) => {
+  if (val !== undefined && val !== null) {
     discoveryElement.value = val
     showElementDiscovery.value = true
   }
