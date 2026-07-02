@@ -4026,5 +4026,67 @@
     "required_techs": [
       "modern_chem"
     ]
+  },
+  {
+    "name": "硫酸浸出氧化锌",
+    "key": "leaching_zinc_oxide",
+    "description": "用稀硫酸浸出焙烧后的氧化锌（锌焙砂），得到含有硫酸锌及镉杂质的溶液。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "zinc_oxide",
+        "quantity": 2
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30,
+    "products": [
+      {
+        "key": "zinc_sulfate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
+  },
+  {
+    "name": "湿法置换提镉",
+    "key": "cadmium_wet_displacement",
+    "description": "向含有镉杂质的硫酸锌溶液中加入锌粉，利用金属活动性差异将镉置换析出。",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "zinc_sulfate",
+        "quantity": 2
+      },
+      {
+        "key": "zinc",
+        "quantity": 1
+      }
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "cadmium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "modern_chem"
+    ]
   }
 ]

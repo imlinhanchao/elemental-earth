@@ -2243,5 +2243,16 @@
     ],
     "elemental": 23,
     "is_discovery": true
+  },
+  {
+    "name": "镉",
+    "key": "cadmium",
+    "category": "材料",
+    "description": "一种银白色的软金属，带有浅蓝色光泽。它通常作为锌冶炼的副产品提取，广泛用于电池和防腐镀层。",
+    "type": [
+      "material"
+    ],
+    "elemental": 48,
+    "is_discovery": true
   }
 ]
