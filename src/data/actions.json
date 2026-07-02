@@ -839,7 +839,13 @@
         "key": "lepidolite",
         "quantity": 1,
         "probability": 120,
-        "required_era": "modern_chemistry",
+        "required_era": "modern_chem",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "mountain",
           "cave"
@@ -849,7 +855,12 @@
         "key": "lorandite",
         "quantity": 1,
         "probability": 80,
-        "required_era": "modern_chemistry",
+        "required_era": "electrochem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
         "map": [
           "cave",
           "volcano"
@@ -864,19 +875,30 @@
         "probability": 100,
         "required_era": "modern_chem",
         "required_item": [
-          "iron_pickaxe",
-          "bronze_pickaxe",
-          "brass_pickaxe",
-          "manganese_pickaxe"
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain"
         ]
       },
       {
         "key": "tantalite_columbite",
         "quantity": 1,
         "probability": 50,
-        "map": {
-          "mountain": 80
-        }
+        "required_era": "modern_chem",
+        "required_item": [
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          {
+            "key": "mountain",
+            "probability": 80
+          }
+        ]
       }
     ]
   },
@@ -1508,7 +1530,6 @@
     "category": "采集",
     "description": "使用炸药炸开山体，获得大量矿石。",
     "time_required": 30,
-    "cooldown": 600,
     "required_items": [
       {
         "key": "dynamite",
@@ -1570,11 +1591,11 @@
           8
         ],
         "probability": 800,
+        "required_era": "alchemy",
         "map": [
           "mountain",
           "cave"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "cassiterite",
@@ -1583,10 +1604,10 @@
           5
         ],
         "probability": 300,
+        "required_era": "alchemy",
         "map": [
           "mountain"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "sphalerite",
@@ -1595,11 +1616,11 @@
           5
         ],
         "probability": 300,
+        "required_era": "alchemy",
         "map": [
           "mountain",
           "cave"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "galena",
@@ -1608,10 +1629,10 @@
           5
         ],
         "probability": 300,
+        "required_era": "alchemy",
         "map": [
           "cave"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "cobaltite",
@@ -1620,12 +1641,12 @@
           4
         ],
         "probability": 200,
+        "required_era": "alchemy",
         "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "stibnite",
@@ -1634,11 +1655,11 @@
           4
         ],
         "probability": 150,
+        "required_era": "alchemy",
         "map": [
           "cave",
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "arsenopyrite",
@@ -1647,11 +1668,11 @@
           5
         ],
         "probability": 300,
+        "required_era": "alchemy",
         "map": [
           "cave",
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "sulfur",
@@ -1660,10 +1681,10 @@
           8
         ],
         "probability": 400,
+        "required_era": "alchemy",
         "map": [
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "realgar",
@@ -1672,10 +1693,10 @@
           4
         ],
         "probability": 150,
+        "required_era": "alchemy",
         "map": [
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "orpiment",
@@ -1684,10 +1705,10 @@
           4
         ],
         "probability": 150,
+        "required_era": "alchemy",
         "map": [
           "volcano"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "niter",
@@ -1696,11 +1717,11 @@
           5
         ],
         "probability": 200,
+        "required_era": "alchemy",
         "map": [
           "basin",
           "cave"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "rock_salt",
@@ -1709,11 +1730,11 @@
           8
         ],
         "probability": 300,
+        "required_era": "alchemy",
         "map": [
           "basin",
           "salt_lake"
-        ],
-        "required_era": "alchemy"
+        ]
       },
       {
         "key": "chromite",
@@ -1722,12 +1743,12 @@
           5
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "volcano"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "pyrolusite",
@@ -1736,12 +1757,12 @@
           5
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "barite",
@@ -1750,12 +1771,12 @@
           8
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "cave",
           "mountain"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "pentlandite",
@@ -1764,12 +1785,12 @@
           4
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "cinnabar",
@@ -1778,11 +1799,11 @@
           5
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "map": [
           "volcano",
           "mountain"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "borax",
@@ -1791,10 +1812,10 @@
           5
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "map": [
           "volcano"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "rutile",
@@ -1803,12 +1824,12 @@
           4
         ],
         "probability": 150,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "volcano",
           "mountain"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "phosphorite",
@@ -1817,11 +1838,11 @@
           6
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "map": [
           "basin",
           "island"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "sperrylite",
@@ -1830,12 +1851,12 @@
           3
         ],
         "probability": 50,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "meteor_crater",
           "mountain"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "molybdenite",
@@ -1844,12 +1865,12 @@
           4
         ],
         "probability": 100,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "scheelite",
@@ -1858,12 +1879,12 @@
           4
         ],
         "probability": 100,
+        "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "struvite",
@@ -1872,11 +1893,11 @@
           8
         ],
         "probability": 300,
+        "required_era": "modern_chem",
         "map": [
           "island",
           "cave"
-        ],
-        "required_era": "modern_chem"
+        ]
       },
       {
         "key": "bauxite",
@@ -1885,12 +1906,12 @@
           8
         ],
         "probability": 400,
+        "required_era": "electrochem",
         "required_item": "high_explosive",
         "map": [
           "cave",
           "mountain"
-        ],
-        "required_era": "electrochem"
+        ]
       },
       {
         "key": "spodumene",
@@ -1899,12 +1920,12 @@
           4
         ],
         "probability": 200,
+        "required_era": "electrochem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
-        ],
-        "required_era": "electrochem"
+        ]
       },
       {
         "key": "cryolite",
@@ -1913,12 +1934,12 @@
           4
         ],
         "probability": 150,
+        "required_era": "electrochem",
         "required_item": "high_explosive",
         "map": [
           "cave",
           "volcano"
-        ],
-        "required_era": "electrochem"
+        ]
       },
       {
         "key": "magnesite",
@@ -1927,12 +1948,12 @@
           8
         ],
         "probability": 400,
+        "required_era": "rare_earth",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
-        ],
-        "required_era": "rare_earth"
+        ]
       },
       {
         "key": "beryl",
@@ -1941,12 +1962,12 @@
           4
         ],
         "probability": 100,
+        "required_era": "rare_earth",
         "required_item": "high_explosive",
         "map": [
           "mountain",
           "meteor_crater"
-        ],
-        "required_era": "rare_earth"
+        ]
       },
       {
         "key": "chalcopyrite",
@@ -1967,12 +1988,15 @@
           2
         ],
         "probability": 100,
+        "required_era": "modern_chem",
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"
         ]
       }
     ],
+    "cooldown": 600,
     "required_techs": [
       "explosives"
     ],
@@ -2876,6 +2900,7 @@
           4
         ],
         "probability": 200,
+        "required_era": "modern_chem",
         "map": [
           "mountain",
           "cave"
