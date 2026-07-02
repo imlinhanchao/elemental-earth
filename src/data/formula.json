@@ -1704,6 +1704,10 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1
+      },
+      {
+        "key": "molybdenum_roaster_dust",
+        "multiple": 0.5
       }
     ]
   },
@@ -1868,9 +1872,16 @@
     ]
   },
   {
-    "name": "焙烧锆石制氧化锆",
     "key": "roast_zircon",
+    "name": "焙烧锆石制氧化锆",
     "description": "将锆石与石灰石混合，在高温下焙烧，使锆石分解为氧化锆和硅酸钙。",
+    "time_required": 60,
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
         "key": "zircon",
@@ -1881,23 +1892,9 @@
         "quantity": 1
       }
     ],
-    "required_container": "blast_furnace",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 60,
     "products": [
       {
-        "key": "zirconia",
-        "multiple": 1
-      },
-      {
-        "key": "slag",
+        "key": "unrefined_zirconia",
         "multiple": 1
       },
       {
@@ -1905,15 +1902,28 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
     ]
   },
   {
-    "name": "碳还原氧化锆制锆",
     "key": "reduce_zirconia",
+    "name": "碳还原氧化锆制锆",
     "description": "将氧化锆与焦炭混合，在高温下还原生成金属锆和二氧化碳。",
+    "time_required": 90,
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
-        "key": "zirconia",
+        "key": [
+          "zirconia",
+          "unrefined_zirconia"
+        ],
         "quantity": 1
       },
       {
@@ -1921,16 +1931,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "blast_furnace",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 90,
     "products": [
       {
         "key": "zirconium",
@@ -1941,6 +1941,9 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
     ]
   },
   {
@@ -4984,5 +4987,92 @@
       }
     ],
     "required_techs": []
+  },
+  {
+    "key": "extract_rhenium_step",
+    "name": "从烟灰提取铼",
+    "description": "将钼烟道灰溶于水或碱液中，随后通过加入氯化铵等试剂精制出高铼酸铵。",
+    "time_required": 40,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating"
+    },
+    "required_items": [
+      {
+        "key": "molybdenum_roaster_dust",
+        "quantity": 1
+      },
+      {
+        "key": "ammonia",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "ammonium_perrhenate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "refine_rhenium_step",
+    "name": "氢还原提炼铼",
+    "description": "在氢气或还原性气氛下还原高铼酸铵，得到金属铼粉。",
+    "time_required": 30,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting"
+    },
+    "required_items": [
+      {
+        "key": "ammonium_perrhenate",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "rhenium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "zirconium_hafnium_separation",
+    "name": "锆铪萃取分离",
+    "description": "利用化学性质极度相近的锆与铪在不同溶剂中的分配系数差异，通过多级萃取分离出氧化铪。",
+    "time_required": 80,
+    "required_container": "iron_tank",
+    "required_actions": {
+      "key": "fractional_crystallization",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "unrefined_zirconia",
+        "quantity": 2
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "potassium_fluoride",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "zirconia",
+        "multiple": 1.5
+      },
+      {
+        "key": "hafnium",
+        "multiple": 0.2
+      }
+    ]
   }
 ]

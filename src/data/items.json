@@ -1279,10 +1279,19 @@
     "is_discovery": true
   },
   {
-    "name": "氧化锆",
+    "name": "锆砂熔块",
+    "key": "unrefined_zirconia",
+    "category": "材料",
+    "description": "从锆石焙烧直接获得的混合氧化物，含有高比例的氧化锆及其他成分，需进一步分离。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "精制氧化锆",
     "key": "zirconia",
     "category": "材料",
-    "description": "细腻洁白的粉末，略带滑腻感，用手捻时感觉光滑。",
+    "description": "经萃取分离去除了铪组分的高纯度氧化锆，是获得核能级金属锆的前驱体。",
     "type": [
       "material"
     ]
@@ -2664,5 +2673,43 @@
       "material"
     ],
     "elemental": 41
+  },
+  {
+    "name": "铪",
+    "key": "hafnium",
+    "category": "材料",
+    "description": "银灰色金属，具有高熔点和极强的中子吸收能力，常用于核反应堆控制棒。",
+    "type": [
+      "material"
+    ],
+    "elemental": 72
+  },
+  {
+    "name": "铼",
+    "key": "rhenium",
+    "category": "材料",
+    "description": "极罕见的过渡金属，具有极高的熔点（位列第三）和优异的抗蠕变性，是制造喷气发动机高温合金的关键。",
+    "type": [
+      "material"
+    ],
+    "elemental": 75
+  },
+  {
+    "name": "钼烟道灰",
+    "key": "molybdenum_roaster_dust",
+    "category": "材料",
+    "description": "辉钼矿焙烧过程中收集的烟道粉尘，其中含有微量的铼。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "高铼酸铵",
+    "key": "ammonium_perrhenate",
+    "category": "材料",
+    "description": "白色晶体，是提取高纯度铼的主要中间体。",
+    "type": [
+      "material"
+    ]
   }
 ]
