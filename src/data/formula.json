@@ -3226,39 +3226,41 @@
     "power_consumption": 0.5
   },
   {
-    "name": "碳还原硅砂制粗硅",
     "key": "reduce_silica",
+    "name": "钾还原硅砂制硅",
     "description": "将硅砂与木炭在高温下反应，生成粗硅和一氧化碳。",
-    "required_items": [
-      {
-        "key": "silica_sand",
-        "quantity": 1
-      },
-      {
-        "key": "charcoal",
-        "quantity": 1
-      }
-    ],
+    "time_required": 60,
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-      "high_temp_furnace"
+    "required_items": [
+      {
+        "key": [
+          "silica_sand",
+          "quartz"
+        ],
+        "quantity": 1
+      },
+      {
+        "key": "potassium",
+        "quantity": 4
+      }
     ],
-    "time_required": 60,
     "products": [
       {
         "key": "silicon",
         "multiple": 1
       },
       {
-        "key": "carbon_monoxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "key": "potassium_oxide",
+        "multiple": 2
       }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
     ]
   },
   {

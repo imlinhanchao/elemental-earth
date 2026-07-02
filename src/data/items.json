@@ -2254,5 +2254,14 @@
     ],
     "elemental": 48,
     "is_discovery": true
+  },
+  {
+    "name": "氧化钾",
+    "key": "potassium_oxide",
+    "category": "材料",
+    "description": "白色粉末，强碱性，易吸湿，与水反应生成氢氧化钾。",
+    "type": [
+      "material"
+    ]
   }
 ]
