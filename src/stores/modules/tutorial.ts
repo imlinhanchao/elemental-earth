@@ -21,6 +21,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
 
   const isTutorialActive = ref(false)
   const currentStep = ref(0)
+  const maxReachedStep = ref(storage.getItem<number>('tutorial_max_step') || 0)
   const showIntroPanel = ref(false)
   const currentPath = ref('/')
 
@@ -33,6 +34,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
     } else if (tutorialStatus.value === 'active') {
       isTutorialActive.value = true
       currentStep.value = storage.getItem<number>('tutorial_step') || 1
+      maxReachedStep.value = storage.getItem<number>('tutorial_max_step') || currentStep.value
       stateStore.state.allowedMapKeys = currentStep.value < 8 ? ['river_side', 'mountain', 'forest'] : null
     }
   }
@@ -41,9 +43,11 @@ export const useTutorialStore = defineStore('tutorial', () => {
     showIntroPanel.value = false
     isTutorialActive.value = true
     currentStep.value = 1
+    maxReachedStep.value = 1
     tutorialStatus.value = 'active'
     storage.setItem('tutorial_status', 'active')
     storage.setItem('tutorial_step', 1)
+    storage.setItem('tutorial_max_step', 1)
     
     // Initial tutorial setup
     stateStore.setMap('mountain')
@@ -196,6 +200,9 @@ export const useTutorialStore = defineStore('tutorial', () => {
     if (!isTutorialActive.value) return true
     
     const s = currentStep.value
+    // If the user has already reached a further step once, allow going forward regardless of current state
+    if (s < maxReachedStep.value) return false
+
     const getQty = (key: string) => packStore.items.find(i => i.key === key)?.quantity || 0
     const hasTech = (key: string) => packStore.techs.includes(key)
     const hasItem = (key: string) => packStore.items.some(i => i.key === key)
@@ -216,7 +223,9 @@ export const useTutorialStore = defineStore('tutorial', () => {
       return !(hasTech('wood_processing') && hasItem('wooden_bucket'))
     }
     if (s === 6) {
-      return !hasItem('clay')
+      // Step 6 (Lab) condition is handled manually via the "Next" button in the overlay
+      // It's always enabled if we reached here
+      return false
     }
     if (s === 7) {
       return !(getQty('flint') >= 7)
@@ -232,6 +241,13 @@ export const useTutorialStore = defineStore('tutorial', () => {
   watch(currentStep, (val) => {
     if (isTutorialActive.value && val > 0) {
       storage.setItem('tutorial_step', val)
+
+      // Update max reached step
+      if (val > maxReachedStep.value) {
+        maxReachedStep.value = val
+        storage.setItem('tutorial_max_step', val)
+      }
+
       // On step 7 or above, allow all maps
       if (val >= 7) {
         stateStore.state.allowedMapKeys = null
@@ -273,10 +289,8 @@ export const useTutorialStore = defineStore('tutorial', () => {
         currentStep.value = 6
       }
     } else if (currentStep.value === 6) {
-      // Must have clay
-      if (hasItem('clay')) {
-        currentStep.value = 7
-      }
+      // Step 6 (Lab) is mandatory even if clay exists. 
+      // User must manually click "Next".
     } else if (currentStep.value === 7) {
       if (getQty('flint') >= 7) {
         currentStep.value = 8
@@ -293,6 +307,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
   return {
     isTutorialActive,
     currentStep,
+    maxReachedStep,
     showIntroPanel,
     tutorialStatus,
     currentStepData,
