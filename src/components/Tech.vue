@@ -30,7 +30,11 @@
   }
 </script>
 <template>
-  <ActionTip v-if="isVisible" :description="data.description" :required_items="data.required_items.map(req => ({
+  <ActionTip
+    v-if="isVisible"
+    :id="`tech-${data.key}`"
+    :description="data.description"
+    :required_items="data.required_items.map(req => ({
     key: Array.isArray(req.key) ? req.key[0] : req.key,
     quantity: req.quantity,
   }))" :required_techs="data.required_techs">

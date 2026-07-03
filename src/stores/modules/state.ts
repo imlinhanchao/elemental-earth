@@ -16,6 +16,7 @@ export interface IGameState {
   elements?: number[]; // 已点亮的元素列表，元素编号对应周期表
   currentEra: string; // 当前时代 key
   completedMilestones: string[]; // 已完成的里程碑 key 列表
+  allowedMapKeys: string[] | null; // 允许显示的地图 key 列表（用于教程引导）
 }
 
 /** 曼哈顿距离 -> 耗时毫秒的倍率 */
@@ -24,16 +25,25 @@ const TIME_PER_DISTANCE = 100;
 export const useStateStore = defineStore('state', () => {
   const logStore = useLogStore()
   const state = reactive<IGameState>({
-    map: Maps[Math.floor(Math.random() * Maps.length)].key,
+    map: 'mountain',
     switchingTarget: null,
     switchStartTime: 0,
     switchDuration: 0,
     elements: [],
     currentEra: 'stone',
     completedMilestones: [],
+    allowedMapKeys: null,
   });
 
   const getState = computed(() => state);
+
+  /** 可见地图列表（支持教程引导过滤） */
+  const availableMaps = computed(() => {
+    if (state.allowedMapKeys) {
+      return Maps.filter(m => state.allowedMapKeys!.includes(m.key))
+    }
+    return Maps
+  })
 
   const getMap = computed(() => Maps.find(m => m.key === state.map) || null);
 
@@ -178,6 +188,7 @@ export const useStateStore = defineStore('state', () => {
 
   return {
     state, getState, getMap, setMap, now,
+    availableMaps,
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
     getElements, addElement, discoveryQueue, clearPendingDiscovery,

@@ -223,6 +223,6 @@ function resetSave() {
   stopAutoSave()
   deleteSaveData()
   alert('存档已重置，页面将重新加载')
-  window.location.replace(window.location.origin + window.location.pathname)
+  window.location.href = window.location.origin + window.location.pathname
 }
 </script>

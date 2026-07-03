@@ -52,7 +52,7 @@ function formatDuration(ms: number): string {
 
       <div class="space-y-2 max-h-96 overflow-y-auto pr-1">
         <button
-          v-for="map in Maps"
+          v-for="map in stateStore.availableMaps"
           :key="map.key"
           class="w-full text-left p-3 rounded-lg border border-base-300 hover:border-primary hover:bg-base-200 transition-colors flex items-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed"
           :class="{ 'border-primary bg-primary/5': map.key === stateStore.state.map }"

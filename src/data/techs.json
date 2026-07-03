@@ -22,7 +22,7 @@
     "required_items": [
       {
         "key": "wood",
-        "quantity": 50
+        "quantity": 15
       }
     ],
     "time_required": 15

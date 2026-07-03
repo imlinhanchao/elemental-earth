@@ -96,6 +96,7 @@
           <ActionTip
             v-for="f in provenFormulas"
             :key="f.key"
+            :id="`action-${f.key}`"
             :description="f.description"
             :required_items="f.required_items.map(req => ({
               key: Array.isArray(req.key) ? req.key[0] : req.key,
@@ -127,6 +128,7 @@
       v-for="group in groupedActions"
       :key="group.category"
       class="collapse collapse-arrow bg-base-200/40 shadow overflow-visible isolation-auto"
+      :id="group.category === '采集' ? 'home-actions-collect' : group.category === '制作' ? 'home-actions-craft' : undefined"
       open
     >
       <summary class="collapse-title font-bold text-lg">

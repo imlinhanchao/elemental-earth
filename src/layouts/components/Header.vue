@@ -52,7 +52,7 @@ function handleSelectMap(targetKey: string) {
       <div class="flex-none gap-2 flex items-center">
 
         <!-- 当前地图 -->
-        <div class="flex items-center gap-1 mr-2">
+        <div id="header-map-switch" class="flex items-center gap-1 mr-2">
           <button class="btn btn-ghost btn-sm gap-1 pl-1" :disabled="stateStore.isSwitching || taskStore.tasks.length > 0" @click="openSwitchModal" title="点击切换地图">
             <Icon :icon="stateStore.getMap?.icon || 'tabler:map-filled'" class="text-xl" />
             <span :class="{ 'hidden': appStore.isMobile }">{{ stateStore.getMap?.name }}</span>

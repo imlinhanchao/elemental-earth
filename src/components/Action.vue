@@ -189,6 +189,7 @@
 </script>
 <template>
   <ActionTip v-if="isVisible"
+    :id="`action-${data.key}`"
     :description="data.description"
     :required_items="resolveMaterials().map(r => ({ key: r.key, quantity: r.quantity }))"
     :required_techs="data.required_techs"

@@ -13,6 +13,7 @@
             v-for="tab in tabs"
             :key="tab.name"
             :to="tab.path"
+            :id="`tab-${tab.name?.toString().toLowerCase()}`"
             class="tab gap-1 lg:gap-2 px-2 lg:px-4"
             :class="{'tab-active': $route.name === tab.name}"
         >

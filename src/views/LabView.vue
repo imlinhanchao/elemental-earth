@@ -4,6 +4,7 @@ import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
 import { useStateStore } from '@/stores/modules/state'
 import { useLogStore } from '@/stores/modules/log'
+import { useLabStore } from '@/stores/modules/lab'
 import { getItem } from '@/data/items'
 import { LabActions, type ILabAction } from '@/data/labs'
 import { Formulas, type IFormula } from '@/data/formula'
@@ -12,6 +13,7 @@ const packStore = usePackStore()
 const taskStore = useTaskStore()
 const stateStore = useStateStore()
 const logStore = useLogStore()
+const labStore = useLabStore()
 
 /** 将配方物品 key 统一为数组（单个字符串也视为数组） */
 function reqKeys(key: string | string[]): string[] {
@@ -20,13 +22,22 @@ function reqKeys(key: string | string[]): string[] {
 
 /** 在 selectedMaterials 中查找满足某一项配方需求的物品 key */
 function findMatchingMaterial(keys: string[], needQty: number): string | null {
-  return keys.find(k => (selectedMaterials.value.get(k) || 0) >= needQty) || null
+  return keys.find(k => (labStore.selectedMaterials.get(k) || 0) >= needQty) || null
 }
 
 // ---- 用户选择 ----
-const selectedContainerKey = ref<string | null>(null)
-const selectedMaterials = ref<Map<string, number>>(new Map())
-const selectedOperationKey = ref<string | null>(null)
+const selectedContainerKey = computed({
+  get: () => labStore.selectedContainerKey,
+  set: (val) => labStore.selectedContainerKey = val
+})
+const selectedMaterials = computed({
+  get: () => labStore.selectedMaterials,
+  set: (val) => labStore.selectedMaterials = val
+})
+const selectedOperationKey = computed({
+  get: () => labStore.selectedOperationKey,
+  set: (val) => labStore.selectedOperationKey = val
+})
 const selectedChainOperationKey = ref<Set<string>>(new Set())
 const selectedFireSourceKey = ref<string | null>(null)
 const selectedPowerSourceKey = ref<string | null>(null)
@@ -562,7 +573,7 @@ function startExperiment() {
     </h2>
 
     <!-- 1. 容器选择 -->
-    <div class="card bg-base-200">
+    <div id="lab-step-1" class="card bg-base-200">
       <div class="card-body p-4">
         <h3 class="card-title text-sm">1. 选择容器</h3>
         <select v-model="selectedContainerKey" class="select select-bordered w-full">
@@ -580,7 +591,7 @@ function startExperiment() {
     </div>
 
     <!-- 2. 材料选择 -->
-    <div class="card bg-base-200">
+    <div id="lab-step-2" class="card bg-base-200">
       <div class="card-body p-4">
         <h3 class="card-title text-sm">2. 选择材料</h3>
         <button class="btn btn-outline btn-sm w-full justify-start gap-2" @click="openMaterialModal">
@@ -592,7 +603,7 @@ function startExperiment() {
     </div>
 
     <!-- 3. 操作选择 -->
-    <div class="card bg-base-200">
+    <div id="lab-step-3" class="card bg-base-200">
       <div class="card-body p-4">
         <h3 class="card-title text-sm">3. 选择操作</h3>
         <div class="flex flex-wrap gap-2">
@@ -631,7 +642,7 @@ function startExperiment() {
     </div>
 
     <!-- 3.5 追加操作（可选） -->
-    <div v-if="availableChainOperations.length > 0" class="card bg-base-200">
+    <div id="lab-step-3-5" v-if="availableChainOperations.length > 0" class="card bg-base-200">
       <div class="card-body p-4">
         <h3 class="card-title text-sm">3.5 追加操作（可选）</h3>
         <p class="text-xs text-base-content/50 mb-2">在主操作完成后追加额外操作（仅增加耗时，不消耗额外材料）</p>
@@ -821,7 +832,7 @@ function startExperiment() {
         </div>
 
         <!-- 开始按钮 -->
-        <button class="btn btn-primary w-full gap-2" :disabled="!canStart" @click="startExperiment">
+        <button id="lab-execute-btn" class="btn btn-primary w-full gap-2" :disabled="!canStart" @click="startExperiment">
           <Icon icon="tabler:flask" class="text-lg" />
           开始实验
         </button>

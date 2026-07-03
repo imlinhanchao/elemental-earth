@@ -15,18 +15,26 @@
     :itemKey="discoveryItemKey"
     @done="onDiscoveryDialogDone"
   />
+  <TutorialOverlay />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
+import { useTutorialStore } from '@/stores/modules/tutorial'
 import ElementDiscovery from '@/components/ElementDiscovery.vue'
 import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
+import TutorialOverlay from '@/components/TutorialOverlay.vue'
 
 const stateStore = useStateStore()
 const packStore = usePackStore()
+const tutorialStore = useTutorialStore()
+
+onMounted(() => {
+  tutorialStore.initTutorial()
+})
 
 // ─── 元素发现动画 ────────────────────────────────────────────────
 const showElementDiscovery = ref(false)

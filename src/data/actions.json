@@ -15,11 +15,6 @@
       {
         "key": "flint",
         "quantity": 1,
-        "probability": 50
-      },
-      {
-        "key": "flint",
-        "quantity": 1,
         "probability": 200,
         "map": [
           "volcano",
@@ -102,8 +97,8 @@
         "map": [
           "forest",
           "river_side",
-          "salt_lake",
-          "island"
+          "island",
+          "mountain"
         ]
       },
       {
@@ -129,16 +124,6 @@
             "probability": 400
           },
           "mountain"
-        ]
-      },
-      {
-        "key": "flint",
-        "quantity": 1,
-        "probability": 200,
-        "map": [
-          "forest",
-          "mountain",
-          "river_side"
         ]
       },
       {
