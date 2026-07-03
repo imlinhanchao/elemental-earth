@@ -1,12 +1,12 @@
 <template>
   <div class="fixed inset-0 flex flex-col items-center justify-center z-[9999] bg-base-100 transition-opacity duration-500">
     <div class="atom-container text-primary">
-      <div class="nucleus bg-primary shadow-[0_0_15px_oklch(var(--p))]"></div>
+      <div class="nucleus bg-primary shadow-[0_0_15px_var(--base-primary)]"></div>
       <div class="orbit border-primary/20"><div class="electron bg-primary"></div></div>
       <div class="orbit border-primary/20"><div class="electron bg-primary"></div></div>
       <div class="orbit border-primary/20"><div class="electron bg-primary"></div></div>
     </div>
-    <div class="loading-text mt-8 text-lg font-medium tracking-widest text-base-content/70 animate-pulse">
+    <div class="loading-text text-lg font-medium tracking-widest text-base-content/70 animate-pulse">
       元素重构中...
     </div>
   </div>

@@ -74,7 +74,7 @@ const typeEntries = computed(() =>
     >
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
-            <header class="sticky top-0 z-10 flex items-center justify-between">
+            <header class="bg-base-100 sticky top-0 z-10 flex items-center justify-between">
               <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1">任务队列</div>
               <!-- 添加清空按钮 -->
               <div v-if="tasks.length > 0" class="flex justify-end mb-1 px-1">
@@ -89,7 +89,7 @@ const typeEntries = computed(() =>
 
         <!-- 下半：日志 -->
         <section class="flex-1 min-h-0 overflow-y-auto border-t border-base-300/50 relative">
-            <header class="sticky top-0 z-10 p-2">
+            <header class="bg-base-100 sticky top-0 z-10 p-2">
                 <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-2 flex items-center justify-between">
                     <span>日志</span>
                     <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-1 mb-1">
