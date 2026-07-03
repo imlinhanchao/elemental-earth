@@ -3,14 +3,22 @@ import { ref } from 'vue'
 import { useAppStore } from '@/stores/modules/app'
 import { useStateStore } from '@/stores/modules/state'
 import { useTaskStore } from '@/stores/modules/task'
+import { Eras } from '@/data/eras'
 import { saveGame, getLastSavedLabel } from '@/utils/archive'
 import MapSwitchModal from './MapSwitch/MapSwitchModal.vue'
 import MapSwitchOverlay from './MapSwitch/MapSwitchOverlay.vue'
 import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
 
 const appStore = useAppStore()
 const stateStore = useStateStore()
 const taskStore = useTaskStore()
+
+const enteredEra = computed(() => {
+  const current = stateStore.currentEra
+  if (!current) return null
+  return Eras.find(e => e.order === current.order - 1)
+})
 
 const saving = ref(false)
 const modalVisible = ref(false)
@@ -46,8 +54,12 @@ function handleSelectMap(targetKey: string) {
         </button>
       </div>
       <div class="flex-1 px-2 flex items-center gap-2">
-        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary" />
+        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary" :class="{ 'hidden': appStore.isMobile }"></Icon>
         <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
+        <div v-if="enteredEra" class="badge badge-soft badge-primary gap-1 ml-2">
+          <Icon :icon="enteredEra.icon" class="text-sm" />
+          {{ enteredEra.name }}
+        </div>
       </div>
       <div class="flex-none gap-2 flex items-center">
 

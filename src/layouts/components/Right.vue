@@ -67,9 +67,9 @@ const typeEntries = computed(() =>
 
 <template>
     <aside
-        class="bg-base-100 border-l border-base-300 flex-none transition-all duration-300 p-2 flex flex-col"
+        class="bg-base-100 border-l border-base-300 flex-none transition-all duration-300 flex flex-col"
         :class="[
-            appStore.rightSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-72') : 'w-0 overflow-hidden'
+            appStore.rightSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-72 p-2') : 'w-0 overflow-hidden'
         ]"
     >
         <!-- 上半：任务队列 -->

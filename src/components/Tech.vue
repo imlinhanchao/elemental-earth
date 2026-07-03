@@ -14,6 +14,8 @@
 
   const isEnabled = computed(() => {
     if (taskStore.tasks.length >= 10) return false; // 只能同时进行10个任务
+    // 如果科技已经在任务队列中，则禁止再次点击
+    if (taskStore.tasks.some(t => t.key === props.data.key && t.type === 'tech')) return false;
     return props.data.required_items.every((item) => packStore.hasItem(item.key, item.quantity)) &&
       (!props.data.required_techs || props.data.required_techs.every((tech) => packStore.hasTech(tech)));
   });
