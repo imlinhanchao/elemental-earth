@@ -38,6 +38,20 @@
            :style="{ top: `${spotlightRect.y - 4}px`, right: 0, width: `calc(100% - ${spotlightRect.x + spotlightRect.width + 4}px)`, height: `${spotlightRect.height + 8}px` }"></div>
       <div class="absolute bg-base-300/50 pointer-events-auto transition-all duration-300" 
            :style="{ top: `${spotlightRect.y + spotlightRect.height + 4}px`, left: 0, right: 0, bottom: 0 }"></div>
+
+      <!-- 高亮边框 -->
+      <div class="absolute border-2 border-primary rounded-lg transition-all duration-300 pointer-events-none shadow-[0_0_15px_oklch(var(--p)/.4)]"
+           :style="{ 
+             top: `${spotlightRect.y - 4}px`, 
+             left: `${spotlightRect.x - 4}px`, 
+             width: `${spotlightRect.width + 8}px`, 
+             height: `${spotlightRect.height + 8}px` 
+           }">
+        <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-primary rounded-tl-sm animate-pulse"></div>
+        <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-primary rounded-tr-sm animate-pulse"></div>
+        <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-primary rounded-bl-sm animate-pulse"></div>
+        <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-primary rounded-br-sm animate-pulse"></div>
+      </div>
     </template>
     <div v-else class="absolute inset-0 bg-base-300/50 pointer-events-none"></div>
 
