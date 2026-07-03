@@ -90,9 +90,9 @@ const typeEntries = computed(() =>
         <!-- 下半：日志 -->
         <section class="flex-1 min-h-0 overflow-y-auto border-t border-base-300/50 relative">
             <header class="bg-base-100 sticky top-0 z-10 p-2">
-                <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider flex items-center justify-between">
                     <span>日志</span>
-                    <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-1 mb-1">
+                    <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-1">
                         <button
                             v-for="[type, style] in typeEntries"
                             :key="type"
@@ -108,8 +108,6 @@ const typeEntries = computed(() =>
                     </div>
                     <button v-if="logStore.logs.length > 0" class="text-[10px] text-base-content/30 hover:text-base-content/60 transition-colors" @click="logStore.clearLogs()">清空</button>
                 </div>
-    
-                <!-- 过滤按钮 -->
             </header>
 
             <div v-if="collapsedLogs.length === 0" class="text-[11px] text-base-content/20 px-1">暂无日志</div>
