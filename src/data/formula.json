@@ -5013,8 +5013,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-    ]
+    "required_techs": []
   },
   {
     "key": "refine_rhenium_step",
@@ -5037,8 +5036,7 @@
         "multiple": 1
       }
     ],
-    "required_techs": [
-    ]
+    "required_techs": []
   },
   {
     "key": "zirconium_hafnium_separation",
@@ -5052,7 +5050,7 @@
     },
     "required_items": [
       {
-        "key": "unrefined_zirconia",
+        "key": "unpurified_zirconia",
         "quantity": 2
       },
       {
@@ -5070,9 +5068,177 @@
         "multiple": 1.5
       },
       {
-        "key": "hafnium",
+        "key": "hafnium_oxide",
         "multiple": 0.2
       }
     ]
+  },
+  {
+    "key": "digest_xenotime",
+    "name": "酸解磷钇矿",
+    "description": "使用浓硫酸在加热条件下处理磷钇矿，使其中的稀土元素转化为可溶性的硫酸盐。",
+    "time_required": 40,
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "xenotime",
+        "quantity": 1
+      },
+      {
+        "key": "sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium_solution",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "precipitate_yttrium",
+    "name": "沉淀草酸钇",
+    "description": "向钇富集液中加入草酸，使钇离子以草酸盐的形式沉淀析出，从而实现初步纯化。",
+    "time_required": 30,
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "yttrium_solution",
+        "quantity": 1
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium_oxalate",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "calcine_yttrium",
+    "name": "灼烧草酸钇制氧化钇",
+    "description": "在空气中灼烧草酸钇，使其分解生成氧化钇粉末。",
+    "time_required": 50,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "yttrium_oxalate",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium_oxide",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "reduce_yttrium",
+    "name": "金属热还原提炼钇",
+    "description": "在高温下使用金属钙还原氧化钇，获得高纯度的金属钇。",
+    "time_required": 60,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "yttrium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "calcium",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium",
+        "multiple": 1
+      },
+      {
+        "key": "quicklime",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "leach_zircon_frit",
+    "name": "浸出锆砂熔块",
+    "description": "使用盐酸浸出焙烧后的锆砂熔块，经过滤与沉淀获得初级氧化锆（含铪）。",
+    "time_required": 40,
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "unrefined_zirconia",
+        "quantity": 1
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "unpurified_zirconia",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+    ]
+  },
+  {
+    "key": "reduce_hafnium",
+    "name": "提炼金属铪",
+    "description": "使用金属钙还原氧化铪，获得高纯度的金属铪。",
+    "time_required": 60,
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "hafnium_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "calcium",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "hafnium",
+        "multiple": 1
+      },
+      {
+        "key": "quicklime",
+        "multiple": 2
+      }
+    ],
+    "required_techs": []
   }
 ]

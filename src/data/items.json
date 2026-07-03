@@ -2711,5 +2711,90 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "磷钇矿",
+    "key": "xenotime",
+    "category": "材料",
+    "description": "主要的钇矿石，化学成分为磷酸钇（YPO4），常含有钍、铀及各种稀土元素。是提炼钇及重稀土元素的重要原料。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "独居石",
+    "key": "monazite",
+    "category": "材料",
+    "description": "一种磷酸盐矿物，富含铈、镧等轻稀土元素，也含有一定量的钇和钍。通常呈红褐色或棕黄色。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "氧化钇",
+    "key": "yttrium_oxide",
+    "category": "材料",
+    "description": "白色粉末状固体，不溶于水，是生产金属钇和钇铝石榴石等材料的基础原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "钇",
+    "key": "yttrium",
+    "category": "材料",
+    "description": "银白色过渡金属，质地柔软，在空气中较稳定。它是第一个被发现的稀土元素，广泛应用于超导体、激光器及荧光粉。",
+    "type": [
+      "material"
+    ],
+    "elemental": 39
+  },
+  {
+    "name": "钇富集液",
+    "key": "yttrium_solution",
+    "category": "材料",
+    "description": "磷钇矿经酸处理后得到的酸性溶液，含有高浓度的钇离子及部分重稀土离子。",
+    "type": [
+      "material",
+      "liquid"
+    ]
+  },
+  {
+    "name": "草酸钇",
+    "key": "yttrium_oxalate",
+    "category": "材料",
+    "description": "白色沉淀，由钇溶液与草酸反应生成，是提取高纯度氧化钇的重要中间体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "草酸",
+    "key": "oxalic_acid",
+    "category": "材料",
+    "description": "无色透明结晶，由自然界物质氧化制得。在工业上主要用于金属清洗和提炼稀土元素。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "未精制氧化锆",
+    "key": "unpurified_zirconia",
+    "category": "材料",
+    "description": "含有约2%铪杂质的氧化锆。在大多数工业用途中可以直接使用，但若要用于核工业，必须进行深度脱铪。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化铪",
+    "key": "hafnium_oxide",
+    "category": "材料",
+    "description": "白色固体，是获得金属铪的主要前驱体。其化学性质与氧化锆高度相似。",
+    "type": [
+      "material"
+    ]
   }
 ]

@@ -1494,6 +1494,15 @@
         "map": [
           "beach"
         ]
+      },
+      {
+        "key": "monazite",
+        "quantity": 1,
+        "probability": 20,
+        "required_era": "rare_earth",
+        "map": [
+          "beach"
+        ]
       }
     ],
     "map": [
@@ -1994,6 +2003,33 @@
         "probability": 100,
         "required_era": "modern_chem",
         "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "xenotime",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 80,
+        "required_era": "rare_earth",
+        "required_item": "high_explosive",
+        "map": [
+          "mountain",
+          "cave"
+        ]
+      },
+      {
+        "key": "monazite",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 100,
+        "required_era": "rare_earth",
         "map": [
           "mountain",
           "cave"
