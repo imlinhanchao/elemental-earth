@@ -14,6 +14,7 @@ export interface AppConfig {
   taskNotifyMode: 'each' | 'all';
   desktopPush: boolean;
   notifyOnlyHidden: boolean;
+  hardMode: boolean;
 }
 
 export const useAppStore = defineStore('app', () => {
@@ -32,6 +33,7 @@ export const useAppStore = defineStore('app', () => {
   const taskNotifyMode = ref<'each' | 'all'>(config?.taskNotifyMode ?? 'all')
   const desktopPush = ref<boolean>(config?.desktopPush ?? false)
   const notifyOnlyHidden = ref<boolean>(config?.notifyOnlyHidden ?? true)
+  const hardMode = ref<boolean>(config?.hardMode ?? false)
 
   function toggleTheme(): void {
     theme.value = theme.value === lightTheme ? darkTheme : lightTheme
@@ -71,6 +73,11 @@ export const useAppStore = defineStore('app', () => {
     saveConfig()
   }
 
+  function toggleHardMode(): void {
+    hardMode.value = !hardMode.value
+    saveConfig()
+  }
+
   function saveConfig() {
     storage.setItem('config', {
       theme: theme.value,
@@ -79,6 +86,7 @@ export const useAppStore = defineStore('app', () => {
       taskNotifyMode: taskNotifyMode.value,
       desktopPush: desktopPush.value,
       notifyOnlyHidden: notifyOnlyHidden.value,
+      hardMode: hardMode.value,
     } satisfies AppConfig)
   }
   function getConfig() {
@@ -87,8 +95,8 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile,
-    taskNotifyMode, desktopPush, notifyOnlyHidden,
+    taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar,
-    toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden,
+    toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,
   }
 })

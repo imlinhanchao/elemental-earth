@@ -70,6 +70,22 @@
       </div>
     </div>
 
+    <!-- Game Experience -->
+    <div class="card bg-base-200 shadow">
+      <div class="card-body">
+        <h2 class="card-title text-base">游戏体验</h2>
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <div>
+              <span class="label-text block">硬核命名模式</span>
+              <span class="label-text-alt text-base-content/60">发现新物质时强制要求手动命名（默认关闭）</span>
+            </div>
+            <input type="checkbox" class="toggle toggle-primary" :checked="appStore.hardMode" @change="appStore.toggleHardMode" />
+          </label>
+        </div>
+      </div>
+    </div>
+
     <!-- 存档管理 -->
     <div class="card bg-base-200 shadow border border-error/20">
       <div class="card-body">

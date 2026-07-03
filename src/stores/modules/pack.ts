@@ -6,6 +6,7 @@ import { Items } from '@/data/items';
 import { Techs } from '@/data/techs';
 import { useStateStore } from './state';
 import { useLogStore } from './log';
+import { useAppStore } from './app';
 export interface IPackItem {
   name: string;
   key: string;
@@ -43,6 +44,7 @@ export const usePackStore = defineStore('pack', () => {
 
   const getItems = computed(() => items);
   const addItem = (itemKey: string, quantity: number, use: number = 0) => {
+    const appStore = useAppStore();
     // 气体物品检查：没有 save_gas 容器则无法收集
     const itemData = Items.find(i => i.key === itemKey);
     let ret = true;
@@ -78,12 +80,14 @@ export const usePackStore = defineStore('pack', () => {
       if (itemData) {
         items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
         discoveredItems.add(itemKey);
-        // 重大发现物品：触发命名弹窗
+        // 重大发现物品：触发命名弹窗（仅硬核模式开启时触发）
         if (itemData.is_discovery && !itemRenames[itemKey]) {
-          if (!discoveryQueue.includes(itemKey)) {
-            discoveryQueue.push(itemKey);
+          if (appStore.hardMode) {
+            if (!discoveryQueue.includes(itemKey)) {
+              discoveryQueue.push(itemKey);
+            }
+            ret = false; // 阻止添加 log，等待命名
           }
-          ret = false; // 阻止添加 log，等待命名
         }
         if (itemData.elemental) {
           const stateStore = useStateStore();
