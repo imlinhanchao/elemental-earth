@@ -97,7 +97,14 @@
       {
         "key": "mud",
         "quantity": 1,
-        "probability": 300
+        "probability": 300,
+        "guaranteed": true,
+        "map": [
+          "forest",
+          "river_side",
+          "salt_lake",
+          "island"
+        ]
       },
       {
         "key": "clay",
@@ -899,6 +906,18 @@
             "probability": 80
           }
         ]
+      },
+      {
+        "key": "stone",
+        "quantity": 1,
+        "probability": 1000,
+        "guaranteed": true,
+        "map": [
+          "mountain",
+          "cave",
+          "volcano",
+          "meteor_crater"
+        ]
       }
     ]
   },
@@ -1059,7 +1078,7 @@
       },
       {
         "key": "wood",
-        "quantity": 10
+        "quantity": 5
       }
     ],
     "required_techs": [

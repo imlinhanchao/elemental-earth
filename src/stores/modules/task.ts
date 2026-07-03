@@ -86,7 +86,35 @@ export const useTaskStore = defineStore('task', () => {
       if (now - task.begin_time >= task.time_required * 1000) {
         if (task.type === 'action') {
           // 必定掉落的奖励（并行，不受随机抽选影响）
-          for (const gr of task.rewards.filter(r => r.guaranteed)) {
+          const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);
+          const currentMap = stateStore.getMap?.key || '';
+          const guaranteedRewards = task.rewards.filter(r => {
+            if (!r.guaranteed) return false;
+            // 地图限制
+            if (r.map) {
+              const onMap = r.map.some(m => {
+                const mapKey = typeof m === 'string' ? m : m.key;
+                return mapKey === currentMap;
+              });
+              if (!onMap) return false;
+            }
+            // 消耗品限制
+            if (r.required_item) {
+              const required = Array.isArray(r.required_item) ? r.required_item : [r.required_item];
+              const met = required.some(k => consumedKeys.includes(k));
+              if (!met) return false;
+            }
+            // 时代限制
+            if (r.required_era) {
+              const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+              const currentEraOrder = currentEraObj?.order ?? 0;
+              const reqEra = Eras.find(e => e.key === r.required_era);
+              if (reqEra && currentEraOrder < reqEra.order) return false;
+            }
+            return true;
+          });
+
+          for (const gr of guaranteedRewards) {
             const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity;
             if (packStore.addItem(gr.key, qty)) {
               logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
@@ -96,7 +124,7 @@ export const useTaskStore = defineStore('task', () => {
           if (task.cooldown) {
             packStore.setCooldown(task.key, task.cooldown)
           }
-          const reward = getReward(task.rewards.filter(r => !r.guaranteed), task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key));
+          const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
           if (reward) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
             if (packStore.addItem(reward.key, quantity)) {

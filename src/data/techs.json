@@ -16,6 +16,18 @@
     "time_required": 10
   },
   {
+    "name": "木材加工",
+    "key": "wood_processing",
+    "description": "学会了如何将原木分解加工为更规整的材料。",
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 50
+      }
+    ],
+    "time_required": 15
+  },
+  {
     "name": "火种制作",
     "key": "fire_starting",
     "description": "领悟了摩擦生火的原理，能够制作火种随时随地点燃火焰。",
@@ -30,18 +42,6 @@
       }
     ],
     "time_required": 8
-  },
-  {
-    "name": "木材加工",
-    "key": "wood_processing",
-    "description": "学会了如何将原木分解加工为更规整的材料。",
-    "required_items": [
-      {
-        "key": "wood",
-        "quantity": 50
-      }
-    ],
-    "time_required": 15
   },
   {
     "name": "陶器制作",
