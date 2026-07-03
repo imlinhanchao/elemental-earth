@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import LZString from 'lz-string';
 
 /**
  * 加密存储类 - 基于 crypto-js 的 localStorage 加密解密方案
@@ -32,7 +33,10 @@ class EncryptedStorage {
    */
   private encrypt(data: string): string {
     try {
-      return CryptoJS.AES.encrypt(data, this.secretKey).toString();
+      // 1. 压缩数据以减小体积
+      const compressed = LZString.compressToUTF16(data);
+      // 2. 加密压缩后的数据
+      return CryptoJS.AES.encrypt(compressed, this.secretKey).toString();
     } catch (error) {
       console.error('Encryption error:', error);
       throw new Error('Failed to encrypt data');
@@ -44,11 +48,21 @@ class EncryptedStorage {
    */
   private decrypt(encryptedData: string): string {
     try {
+      // 1. 解密数据
       const bytes = CryptoJS.AES.decrypt(encryptedData, this.secretKey);
       const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
       
       if (!decryptedData) {
         throw new Error('Decryption resulted in empty string');
+      }
+
+      // 2. 尝试解压缩数据
+      const decompressed = LZString.decompressFromUTF16(decryptedData);
+      
+      // 如果解压缩成功且不为空，返回解压后的数据
+      // 否则返回原始解密数据以保持对旧版非压缩存档的向下兼容
+      if (decompressed !== null && decompressed !== '') {
+        return decompressed;
       }
       
       return decryptedData;
