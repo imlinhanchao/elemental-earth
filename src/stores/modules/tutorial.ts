@@ -192,6 +192,42 @@ export const useTutorialStore = defineStore('tutorial', () => {
     return step
   })
 
+  const isNextStepDisabled = computed(() => {
+    if (!isTutorialActive.value) return true
+    
+    const s = currentStep.value
+    const getQty = (key: string) => packStore.items.find(i => i.key === key)?.quantity || 0
+    const hasTech = (key: string) => packStore.techs.includes(key)
+    const hasItem = (key: string) => packStore.items.some(i => i.key === key)
+
+    if (s === 1) {
+      return !(getQty('stone') >= 30 && getQty('wood') >= 15)
+    }
+    if (s === 2) {
+      return !hasTech('stone_tool_crafting')
+    }
+    if (s === 3) {
+      return !(hasItem('stone_pickaxe') && hasItem('stone_axe') && getQty('mud') >= 1)
+    }
+    if (s === 4) {
+      return !(stateStore.state.map === 'forest' && getQty('wood') >= 50)
+    }
+    if (s === 5) {
+      return !(hasTech('wood_processing') && hasItem('wooden_bucket'))
+    }
+    if (s === 6) {
+      return !hasItem('clay')
+    }
+    if (s === 7) {
+      return !(getQty('flint') >= 7)
+    }
+    if (s === 8) {
+      return !(hasTech('fire_starting') && hasItem('fire_seed'))
+    }
+    
+    return false
+  })
+
   // Persist step changes
   watch(currentStep, (val) => {
     if (isTutorialActive.value && val > 0) {
@@ -260,6 +296,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
     showIntroPanel,
     tutorialStatus,
     currentStepData,
+    isNextStepDisabled,
     stepsCount: steps.length,
     currentPath,
     initTutorial,

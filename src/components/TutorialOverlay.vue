@@ -64,7 +64,7 @@
             </button>
             <button 
               class="btn btn-xs btn-outline" 
-              :disabled="tutorialStore.currentStep >= tutorialStore.stepsCount"
+              :disabled="tutorialStore.currentStep >= tutorialStore.stepsCount || tutorialStore.isNextStepDisabled"
               @click="tutorialStore.currentStep++"
             >
               下一步
