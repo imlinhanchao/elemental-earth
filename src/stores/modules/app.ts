@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Storage from '@/utils/storage';
 
 const lightTheme = 'corporate'
@@ -20,7 +20,15 @@ export interface AppConfig {
 export const useAppStore = defineStore('app', () => {
   const storage = new Storage();
   const config = getConfig()
-  const theme = ref<Theme>(config?.theme ?? lightTheme)
+  
+  // 默认根据浏览器模式选择主题
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const theme = ref<Theme>(config?.theme ?? (systemDark ? darkTheme : lightTheme))
+  
+  // 监听主题变化并应用到 body
+  watch(theme, (newTheme) => {
+    document.body.dataset.theme = newTheme
+  }, { immediate: true })
 
   // 移动端默认关闭侧边栏
   const isMobile = ref(window.innerWidth < 768)

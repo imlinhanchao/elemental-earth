@@ -7,7 +7,7 @@
             <Icon icon="pinhead:bohr-atomic-model" size="40px" />
           </div>
           <h2 class="card-title text-2xl font-bold">欢迎来到《元素纪元》</h2>
-          <p class="text-base-content/70">这是一个关于化学元素、炼金术与文明进步的挂机游戏。你将从蛮荒走向现代。</p>
+          <p class="text-base-content/70">这是一个关于化学元素、炼金术与文明进步的放置游戏。<br />你将从蛮荒走向现代。</p>
         </div>
         
         <div class="divider">新手引导</div>
