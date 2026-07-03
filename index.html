@@ -5,9 +5,126 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>元素纪元</title>
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --atom-color: #3b82f6;
+        --orbit-color: rgba(59, 130, 246, 0.2);
+        --text-color: #1f2937;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-color: #1d232a;
+          --atom-color: #641ae6;
+          --orbit-color: rgba(100, 26, 230, 0.2);
+          --text-color: #a6adbb;
+        }
+      }
+      body {
+        margin: 0;
+        background-color: var(--bg-color);
+        transition: background-color 0.3s ease;
+      }
+      #app-loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      .atom-container {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 2rem;
+      }
+      .nucleus {
+        position: absolute;
+        top: 35%;
+        left: 35%;
+        width: 30%;
+        height: 30%;
+        background: var(--atom-color);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--atom-color);
+        animation: pulse 1.5s infinite ease-in-out;
+      }
+      .orbit {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--orbit-color);
+        border-radius: 50%;
+      }
+      .orbit:nth-child(2) { transform: rotateX(70deg) rotateY(20deg); }
+      .orbit:nth-child(3) { transform: rotateX(70deg) rotateY(-20deg); }
+      .orbit:nth-child(4) { transform: rotateY(70deg) rotateX(20deg); }
+
+      .electron {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: var(--atom-color);
+        border-radius: 50%;
+        offset-path: border-box;
+        animation: orbit-move 2s infinite linear;
+      }
+      .orbit:nth-child(2) .electron { animation-delay: -0.5s; }
+      .orbit:nth-child(3) .electron { animation-delay: -1s; }
+      .orbit:nth-child(4) .electron { animation-delay: -1.5s; }
+
+      @keyframes orbit-move {
+        from { offset-distance: 0%; }
+        to { offset-distance: 100%; }
+        /* 兼容性降级 */
+        0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.1); opacity: 1; }
+      }
+      .loading-text {
+        color: var(--text-color);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        animation: fade 1.5s infinite;
+      }
+      @keyframes fade {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="app-loading">
+        <div class="atom-container">
+          <div class="nucleus"></div>
+          <div class="orbit"><div class="electron"></div></div>
+          <div class="orbit"><div class="electron"></div></div>
+          <div class="orbit"><div class="electron"></div></div>
+        </div>
+        <div class="loading-text">元素重构中...</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      // 简单脚本：当页面内容加载完成后移除 loading
+      window.addEventListener('load', () => {
+        const loading = document.getElementById('app-loading');
+        if (loading) {
+          loading.style.opacity = '0';
+          loading.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => loading.remove(), 500);
+        }
+      });
+    </script>
   </body>
 </html>
