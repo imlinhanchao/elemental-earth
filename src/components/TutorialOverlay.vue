@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tutorialStore.showIntroPanel" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-base-300/60 backdrop-blur-sm">
+  <div v-if="appStore.isReady && tutorialStore.showIntroPanel" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-base-300/60 backdrop-blur-sm">
     <div class="card w-full max-w-md bg-base-100 shadow-xl border border-primary/20 animate-in fade-in zoom-in duration-300">
       <div class="card-body gap-4 text-center">
         <div class="flex flex-col items-center gap-2">
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div v-else-if="tutorialStore.isTutorialActive && tutorialStore.currentStepData" 
+  <div v-else-if="appStore.isReady && tutorialStore.isTutorialActive && tutorialStore.currentStepData" 
     class="fixed inset-0 z-[90] pointer-events-none overflow-hidden">
     
     <!-- 全屏镂空遮罩 (四块拼接，确保中间洞口可点击) -->
@@ -97,11 +97,13 @@
 
 <script setup lang="ts">
 import { useTutorialStore } from '@/stores/modules/tutorial'
+import { useAppStore } from '@/stores/modules/app'
 import Icon from '@/components/Icon.vue'
 import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
 const tutorialStore = useTutorialStore()
+const appStore = useAppStore()
 const route = useRoute()
 
 const spotlightRect = ref<DOMRect | null>(null)

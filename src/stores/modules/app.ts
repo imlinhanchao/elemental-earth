@@ -19,7 +19,8 @@ export interface AppConfig {
 
 export const useAppStore = defineStore('app', () => {
   const storage = new Storage();
-  const config = getConfig()
+  const config = getConfig();
+  const isReady = ref(false);
   
   // 默认根据浏览器模式选择主题
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -102,7 +103,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   return {
-    theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile,
+    theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile, isReady,
     taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,

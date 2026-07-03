@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen" v-if="!loading" :data-theme="appStore.theme">
+  <div class="flex flex-col h-screen" v-if="appStore.isReady" :data-theme="appStore.theme">
     <!-- Header Toolbar -->
     <Header />
 
@@ -34,7 +34,6 @@ import Left from './components/Left.vue'
 import Right from './components/Right.vue'
 
 const appStore = useAppStore()
-const loading = ref(true);
 
 function closeSidebars() {
   appStore.leftSidebarOpen = false
@@ -43,7 +42,10 @@ function closeSidebars() {
 
 onMounted(() => {
   initAutoSave()
-  loading.value = false
+  // Ensure the layout has a frame to render before signaling ready
+  setTimeout(() => {
+    appStore.isReady = true
+  }, 100)
 })
 
 interface Tab {

@@ -16,6 +16,7 @@
     @done="onDiscoveryDialogDone"
   />
   <TutorialOverlay />
+  <LoadingOverlay v-if="!appStore.isReady" />
 </template>
 
 <script setup lang="ts">
@@ -23,14 +24,17 @@ import { ref, watch, onMounted } from 'vue'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTutorialStore } from '@/stores/modules/tutorial'
+import { useAppStore } from '@/stores/modules/app'
 import ElementDiscovery from '@/components/ElementDiscovery.vue'
 import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
 import TutorialOverlay from '@/components/TutorialOverlay.vue'
+import LoadingOverlay from '@/components/LoadingOverlay.vue'
 
 const stateStore = useStateStore()
 const packStore = usePackStore()
 const tutorialStore = useTutorialStore()
+const appStore = useAppStore()
 
 onMounted(() => {
   tutorialStore.initTutorial()
