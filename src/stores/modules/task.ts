@@ -115,7 +115,7 @@ export const useTaskStore = defineStore('task', () => {
           });
 
           for (const gr of guaranteedRewards) {
-            const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity;
+            const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity || 1;
             if (packStore.addItem(gr.key, qty)) {
               logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
             }
@@ -126,9 +126,9 @@ export const useTaskStore = defineStore('task', () => {
           }
           const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
           if (reward) {
-            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
+            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
             if (packStore.addItem(reward.key, quantity)) {
-              logStore.addLog(`任务 ${task.name} 完成，获得奖励: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+              logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
             }
             notifyTaskComplete(task.name, `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
           } else {
@@ -138,7 +138,7 @@ export const useTaskStore = defineStore('task', () => {
         } else if (task.type === 'lab') {
           // lab 类型：给予所有产物
           for (const reward of task.rewards) {
-            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity;
+            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
             if (packStore.addItem(reward.key, quantity)) {
               logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
               notifyTaskComplete('实验室', `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);

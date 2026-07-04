@@ -17,6 +17,7 @@
   />
   <TutorialOverlay />
   <LoadingOverlay v-if="!appStore.isReady" />
+  <Toast />
 </template>
 
 <script setup lang="ts">
@@ -30,6 +31,7 @@ import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
 import TutorialOverlay from '@/components/TutorialOverlay.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
+import Toast from '@/components/Toast.vue'
 
 const stateStore = useStateStore()
 const packStore = usePackStore()

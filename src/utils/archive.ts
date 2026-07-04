@@ -160,6 +160,13 @@ export function deleteSaveData(): void {
   lastSavedTime.value = null;
 }
 
+/** 删除新手引导相关存档数据 */
+export function deleteTutorialData(): void {
+  storage.removeItem('tutorial_status');
+  storage.removeItem('tutorial_step');
+  storage.removeItem('tutorial_max_step');
+}
+
 /** 导出存档为加密 + base64 字符串 */
 export function exportSaveData(): string | null {
   try {

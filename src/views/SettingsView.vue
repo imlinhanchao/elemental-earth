@@ -152,7 +152,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useAppStore } from '../stores/modules/app'
-import { deleteSaveData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave } from '@/utils/archive'
+import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave } from '@/utils/archive'
 
 const appStore = useAppStore()
 
@@ -222,6 +222,7 @@ function resetSave() {
   if (!confirm('再次确认：真的要删除所有存档数据吗？')) return
   stopAutoSave()
   deleteSaveData()
+  deleteTutorialData()
   alert('存档已重置，页面将重新加载')
   window.location.href = window.location.origin + window.location.pathname
 }
