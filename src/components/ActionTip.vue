@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { Items } from '@/data/items';
   import { usePackStore } from '@/stores/modules/pack';
-  import { computed } from 'vue';
+  import { useAppStore } from '@/stores/modules/app';
+  import { computed, ref } from 'vue';
 
   const props = defineProps<{
     description: string;
@@ -10,6 +11,7 @@
   }>();
 
   const packStore = usePackStore();
+  const appStore = useAppStore();
 
   const items = computed(() => {
     return props.required_items.map(item => {
@@ -25,14 +27,30 @@
     });
   });
 
+  // 移动端点击显示
+  const mobileShow = ref(false);
+  function toggleMobile(e: Event) {
+    if (!appStore.isMobile) return;
+    mobileShow.value = !mobileShow.value;
+    if (mobileShow.value) {
+      // 3秒后自动关闭，避免遮挡
+      setTimeout(() => { mobileShow.value = false }, 3000);
+    }
+  }
+
 </script>
 <template>
-  <section class="inline-flex relative group">
+  <section class="inline-flex relative group" @click="toggleMobile">
     <slot></slot>
-    <section class="w-full absolute content p-2 bg-base-200/80 hidden group-hover:block rounded border border-base-300 z-100 shadow-xl">
-      <div>{{ description }}</div>
-      <div v-if="items.length" class="divider"></div>
-      <div v-for="item in items" :key="item.key" :class="{ 'text-error': item.insufficient }">
+    <section 
+      class="w-full absolute content p-2 bg-base-200/80 rounded border border-base-300 z-100 shadow-xl backdrop-blur-sm transition-all"
+      :class="[
+        appStore.isMobile ? (mobileShow ? 'block animate-in fade-in zoom-in duration-200' : 'hidden') : 'hidden group-hover:block'
+      ]"
+    >
+      <div class="text-xs font-bold mb-1">{{ description }}</div>
+      <div v-if="items.length" class="divider my-1 h-px"></div>
+      <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed" :class="{ 'text-error': item.insufficient }">
         {{ item.quantity }}x {{ item.name }}
       </div>
     </section>

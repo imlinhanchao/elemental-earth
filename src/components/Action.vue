@@ -239,7 +239,7 @@
         ><span class="text-[12px]"><Icon icon="tdesign:setting-1-filled" /></span></button>
         <!-- 材料选择面板 -->
         <div v-if="showMaterialPicker"
-          class="absolute top-0 right-0 z-20 bg-base-100 border border-base-300 rounded-lg shadow-lg p-2 min-w-[140px]"
+          class="absolute top-0 right-0 z-20 bg-base-100 border border-base-300 rounded-lg shadow-lg p-2 min-w-35"
           @click.stop
         >
           <div v-for="r in data.required_items" :key="Array.isArray(r.key) ? r.key.join(',') : r.key">

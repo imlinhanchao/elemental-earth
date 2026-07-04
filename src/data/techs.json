@@ -111,9 +111,10 @@
     "time_required": 180
   },
   {
-    "name": "铁器制作",
     "key": "iron_tool_crafting",
+    "name": "铁器制作",
     "description": "掌握了将铁锻造成形的方法。",
+    "time_required": 200,
     "required_items": [
       {
         "key": "pig_iron",
@@ -126,8 +127,7 @@
     ],
     "required_techs": [
       "refractory_materials"
-    ],
-    "time_required": 3600
+    ]
   },
   {
     "key": "gas_collection",
@@ -182,9 +182,10 @@
     "time_required": 120
   },
   {
-    "name": "筛选技术",
     "key": "sifting_technology",
+    "name": "筛选技术",
     "description": "掌握了用筛网分离不同粒度颗粒的技术。",
+    "time_required": 60,
     "required_items": [
       {
         "key": "fiber_cloth",
@@ -196,29 +197,28 @@
       }
     ],
     "required_techs": [
-      "wood_processing"
-    ],
-    "time_required": 60
+      "wood_processing",
+      "bark_processing"
+    ]
   },
   {
-    "name": "爆破技术",
     "key": "explosives",
+    "name": "爆破技术",
     "description": "掌握了硝石和硫磺的混合配比，能够制造出具有强大破坏力的炸药。",
+    "time_required": 60,
     "required_items": [
       {
-        "key": "niter",
+        "key": "gunpowder",
         "quantity": 10
       },
       {
-        "key": "sulfur",
-        "quantity": 5
-      },
-      {
-        "key": "charcoal",
+        "key": "wood",
         "quantity": 5
       }
     ],
-    "time_required": 60
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "name": "电化学",
@@ -315,9 +315,10 @@
     "time_required": 60
   },
   {
-    "name": "锂离子电池技术",
     "key": "lithium_battery_tech",
+    "name": "锂离子电池技术",
     "description": "掌握了锂离子电池的组装和电解质配方技术。",
+    "time_required": 120,
     "required_items": [
       {
         "key": "lithium",
@@ -328,8 +329,10 @@
         "quantity": 3
       }
     ],
-    "required_techs": [],
-    "time_required": 120
+    "required_techs": [
+      "electrochemistry",
+      "high_explosive_tech"
+    ]
   },
   {
     "name": "玻璃加工技术",

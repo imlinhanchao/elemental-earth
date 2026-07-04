@@ -10,20 +10,42 @@ export interface IToast {
 export const useToastStore = defineStore('toast', () => {
   const toasts = ref<IToast[]>([])
   let nextId = 0
+  const queue: IToast[] = []
+  let isProcessing = false
 
   const addToast = (message: string, type: string = 'info') => {
     const id = nextId++
-    toasts.value.push({ id, message, type })
+    queue.push({ id, message, type })
     
-    // Limit to latest 2 toasts
+    // 如果队列过长，丢弃过旧的，保持及时性
+    if (queue.length > 10) {
+        queue.shift()
+    }
+
+    processQueue()
+  }
+
+  const processQueue = () => {
+    if (isProcessing || queue.length === 0) return
+    isProcessing = true
+
+    const toast = queue.shift()!
+    toasts.value.push(toast)
+    
     if (toasts.value.length > 2) {
       toasts.value.shift()
     }
-    
-    // Auto remove after 3 seconds
+
+    // 自动移除
     setTimeout(() => {
-      removeToast(id)
+      removeToast(toast.id)
     }, 3000)
+
+    // 控制每条 Toast 出现的间隔，避免快速连续更新导致的 UI 闪烁 (略大于 CSS 过渡时间)
+    setTimeout(() => {
+      isProcessing = false
+      processQueue()
+    }, 350)
   }
 
   const removeToast = (id: number) => {
@@ -35,3 +57,4 @@ export const useToastStore = defineStore('toast', () => {
 
   return { toasts, addToast, removeToast }
 })
+
