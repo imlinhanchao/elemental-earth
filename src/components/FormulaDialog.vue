@@ -16,8 +16,14 @@
           <div class="form-row">
             <label>执行次数</label>
             <div class="batch-selector">
-              <button class="btn btn-sm" :disabled="batches <= 1" @click="batches--">−</button>
-              <span class="batch-value">{{ batches }}</span>
+              <button class="btn btn-sm" :disabled="batches <= 1" @click="batches = Math.max(1, batches - 1)">−</button>
+              <input 
+                type="number" 
+                v-model.number="batches" 
+                class="input input-sm input-bordered batch-input" 
+                min="1"
+                @blur="!batches || batches < 1 ? batches = 1 : null"
+              />
               <button class="btn btn-sm" @click="batches++">+</button>
             </div>
           </div>
@@ -585,11 +591,20 @@ function cancel() {
   align-items: center;
   gap: 8px;
 }
-.batch-value {
-  font-size: 18px;
-  font-weight: 700;
-  min-width: 32px;
+.batch-input {
+  width: 60px;
   text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 0;
+}
+.batch-input::-webkit-outer-spin-button,
+.batch-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.batch-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .material-select-row {
