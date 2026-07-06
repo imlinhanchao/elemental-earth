@@ -5,7 +5,6 @@
 
   const props = defineProps<{
     task: ITask;
-    preTasks: ITask[];
     ids?: number[];
     count?: number;
   }>();
@@ -22,18 +21,18 @@
   });
 
   const cost = computed(() => {
-    const timeToFirstFinish = props.preTasks.reduce((total, preTask) => {
-      if (preTask.begin_time > 0) {
-        return total + (preTask.time_required * 1000 + preTask.begin_time - now.value) / 1000;
-      }
-      return total + preTask.time_required;
-    }, 0) + (props.task.time_required * 1000 + props.task.begin_time - (props.task.begin_time > 0 ? now.value : 0)) / 1000;
+    if (!props.task) return 0;
+    
+    // 任务预计完成时间 = 开始时间 + 持续时间
+    const finishTime = props.task.begin_time + (props.task.time_required * 1000);
+    let timeToFinish = (finishTime - now.value) / 1000;
 
-    // 如果是折叠任务，加上组内剩余任务的总时间
+    // 如果是折叠任务，加上组内剩余相同任务的总时间
     if (props.count && props.count > 1) {
-      return timeToFirstFinish + (props.count - 1) * props.task.time_required;
+      timeToFinish += (props.count - 1) * props.task.time_required;
     }
-    return timeToFirstFinish;
+    
+    return Math.max(0, timeToFinish);
   });
 
   function remove() {

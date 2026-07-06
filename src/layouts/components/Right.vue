@@ -63,14 +63,6 @@ const displayTasks = computed(() => {
   return groups
 })
 
-/** 获得该任务前的所有任务，用于计算时间 */
-function getPreTasksBefore(taskId: number) {
-  const allTasks = taskStore.getTasks
-  const idx = allTasks.findIndex(t => t.id === taskId)
-  if (idx <= 0) return []
-  return allTasks.slice(0, idx)
-}
-
 /** 连续相同内容折叠为一条 */
 const collapsedLogs = computed(() => {
   const result: { content: string; type: string; count: number }[] = []
@@ -127,7 +119,6 @@ const typeEntries = computed(() =>
                     :task="item.task" 
                     :ids="item.ids"
                     :count="item.count"
-                    :preTasks="getPreTasksBefore(item.task.id)" 
                 />
             </div>
         </section>

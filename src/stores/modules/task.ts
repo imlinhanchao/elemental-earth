@@ -79,6 +79,21 @@ export const useTaskStore = defineStore('task', () => {
     return null;
   }
 
+  /** 重新计算任务队列中所有任务的预计开始时间 */
+  const recalculateStartTimes = () => {
+    if (tasks.length === 0) return;
+    const now = Date.now();
+    // 第一个任务：如果还没开始，或者被提前到首位（开始时间在未来），则从现在开始算起
+    if (tasks[0].begin_time <= 0 || tasks[0].begin_time > now) {
+      tasks[0].begin_time = now;
+    }
+    let lastFinishTime = tasks[0].begin_time + (tasks[0].time_required * 1000);
+    for (let i = 1; i < tasks.length; i++) {
+      tasks[i].begin_time = lastFinishTime;
+      lastFinishTime += (tasks[i].time_required * 1000);
+    }
+  };
+
   function taskLoop() {
     setInterval(async () => {
       const now = Date.now();
@@ -196,7 +211,7 @@ export const useTaskStore = defineStore('task', () => {
         }
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length > 0) {
-          tasks[0].begin_time = Date.now(); // 重置下一个任务的开始时间
+          recalculateStartTimes();
         } else {
           notifyAllTasksDone();
         }
@@ -219,7 +234,8 @@ export const useTaskStore = defineStore('task', () => {
         packStore.removeItem(k, req.quantity, req.use);
       }
     }
-    tasks.push({ ...task, begin_time: tasks.length > 0 ? 0 : Date.now(), id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined });
+    tasks.push({ ...task, begin_time: 0, id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined });
+    recalculateStartTimes();
   }
   const removeTask = (id: number) => {
     const index = tasks.findIndex(task => task.id === id);
@@ -232,6 +248,7 @@ export const useTaskStore = defineStore('task', () => {
           packStore.addItem(k, req.quantity, req.use);
         }
       }
+      recalculateStartTimes();
     }
   }
   /** 实验室专用：直接推入任务（物品已在 UI 层扣除，存入 required_items 用于取消时退还） */
@@ -246,10 +263,11 @@ export const useTaskStore = defineStore('task', () => {
   }) {
     tasks.push({
       ...labTask,
-      begin_time: tasks.length > 0 ? 0 : Date.now(),
+      begin_time: 0,
       id: Date.now(),
       type: 'lab',
     } as ITask);
+    recalculateStartTimes();
   }
 
   function clearTasks() {
