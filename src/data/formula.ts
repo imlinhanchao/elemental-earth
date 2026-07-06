@@ -42,6 +42,10 @@ export interface IFormula {
      */
     products: { key: string; multiple: number; required_chain_operation?: string; required_item?: string | string[] }[];
     /**
+     * 碎片描述 (用于挖掘掉落显示，使用 #材料Key# 和 $操作key$ 占位)
+     */
+    fragment_description?: string;
+    /**
      * 电力消耗 (耐久消耗值)
      */
     power_consumption?: number;

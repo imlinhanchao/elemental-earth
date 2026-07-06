@@ -189,6 +189,7 @@ function buildSystemPrompt(contextData: ContextData): string {
   "required_actions": { "key": "操作key", "min": 最少次数, "max": 最多次数 },
   "required_techs": ["前置科技key"],
   "time_required": 时间秒,
+  "fragment_description": "碎片描述（使用 #材料Key# 和 $操作key$ 占位）",
   "products": [
     { "key": "产物物品key", "multiple": 数量倍率 },
     { "key": "产物key", "multiple": 1, "required_chain_operation": "操作key" }  // 需追加操作才能收集
@@ -251,6 +252,10 @@ function buildSystemPrompt(contextData: ContextData): string {
 - 某些产物可以通过追加操作才能收集：products 中设置 required_chain_operation 指向操作 key
   - 例如：焙烧菱锌矿后追加「冷凝」操作才能收集锌
   - 例如：焙烧/干馏后追加「气体收集」操作才能收集气体
+- **碎片描述规范**：\`fragment_description\` 必须包含配方关键步骤的描述。
+  - 必须使用 **#材料Key#** (加粗) 引用参与反应的主要原材料。
+  - 必须使用 **$操作Key$** (倾斜或特定格式) 引用实验操作或容器。
+  - 描述应像实验记录的一块碎片，如：「在 #kiln# 中对 #malachite# 进行 $roasting$，绿色粉末逐渐转黑...」；「将 #sulfuric_acid# 滴入 #zinc#，通过 $gas_collecting$ 收集产生的气体。」
 
 ### 引用规则
 - 引用已有数据时，使用 key 值（不是名称）

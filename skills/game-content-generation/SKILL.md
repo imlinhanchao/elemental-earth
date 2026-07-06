@@ -41,5 +41,6 @@ Instead, **generate and run a one-time Node.js script** to:
 - **Mining Integration**: New minerals MUST be added to the `mining` and `directional_blasting` actions via `modifications`.
 - **Atomic Numbers**: Pure elements must have the `elemental` property set to their correct atomic number.
 - **Discovery**: Minerals and pure elements should have `is_discovery: true`.
+- **Formulas**: Recipes must include a `fragment_description` using `#item_key#` and `$lab_key$` placeholders for dynamic UI replacement.
 - **Avoid Duplicates**: Always check the context before generating to avoid creating an item/tech that already exists.
 

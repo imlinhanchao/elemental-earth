@@ -97,6 +97,16 @@
                 rows="2"
               ></textarea>
             </label>
+            <label class="form-control w-full">
+              <span class="label-text mb-1"
+                >碎片描述 (使用 #材料Key# 和 $操作key$ 占位)</span
+              >
+              <textarea
+                class="textarea textarea-bordered textarea-sm w-full font-mono"
+                v-model="form.fragment_description"
+                rows="2"
+              ></textarea>
+            </label>
             <div class="grid grid-cols-4 gap-4">
               <label class="form-control w-full">
                 <span class="label-text mb-1">耗时（秒）</span>
@@ -328,6 +338,7 @@ const form = reactive({
   action_key: "",
   action_min: 1,
   action_max: undefined as number | undefined,
+  fragment_description: "",
   power_consumption: undefined as number | undefined,
   techs: [] as string[],
 });
@@ -384,6 +395,7 @@ function resetForm() {
     action_key: "",
     action_min: 1,
     action_max: undefined,
+    fragment_description: "",
     power_consumption: undefined,
     techs: [],
   });
@@ -407,6 +419,7 @@ function openEdit(r: any) {
     action_key: r.required_actions?.key || "",
     action_min: r.required_actions?.min ?? 1,
     action_max: r.required_actions?.max,
+    fragment_description: r.fragment_description || "",
     power_consumption: r.power_consumption,
     techs: [...(r.required_techs || [])],
   });
@@ -436,6 +449,7 @@ async function save() {
     key: form.key,
     name: form.name,
     description: form.description,
+    fragment_description: form.fragment_description || undefined,
     time_required: form.time_required,
     power_consumption: form.power_consumption || undefined,
   };
