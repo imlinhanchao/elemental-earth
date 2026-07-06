@@ -31,6 +31,7 @@
             <th>容器</th>
             <th>操作</th>
             <th>时代</th>
+            <th>科技</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -45,6 +46,18 @@
             <td class="text-xs">{{ r.required_container || "—" }}</td>
             <td class="text-xs">{{ r.required_actions?.key || "—" }}</td>
             <td class="text-xs">{{ eraOptions.find(e => e.key == r.required_era)?.name || "—" }}</td>
+            <td class="text-xs">
+              <span v-if="r.required_techs?.length">
+                <span
+                  v-for="(t, i) in r.required_techs"
+                  :key="t"
+                  class="badge badge-ghost badge-sm mr-1 mb-1"
+                >
+                  {{ techOptions.find(x => x.key == t)?.name || t }}
+                </span>
+              </span>
+              <span v-else>—</span>
+            </td>
             <td>
               <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
                 编辑</button

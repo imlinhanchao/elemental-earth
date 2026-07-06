@@ -275,7 +275,9 @@
     "key": "reduce_zinc_oxide",
     "name": "还原锌焙砂",
     "description": "在坩埚中用木炭加热还原锌焙砂，得到锌蒸气并冷凝收集。",
+    "fragment_description": "以#charcoal#为还原剂对#zinc_oxide#进行$roasting$，通过碳热还原提取#zinc#并产生#carbon_monoxide#。",
     "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -306,12 +308,7 @@
         "key": "carbon_monoxide",
         "multiple": 1
       }
-    ],
-    "required_techs": [
-      "zinc_smelting"
-    ],
-    "fragment_description": "以#charcoal#为还原剂对#zinc_oxide#进行$roasting$，通过碳热还原提取#zinc#并产生#carbon_monoxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "smelt_brass",
@@ -882,9 +879,17 @@
     ]
   },
   {
-    "name": "焙烧辉钴矿",
     "key": "roast_cobaltite",
+    "name": "焙烧辉钴矿",
     "description": "在空气中焙烧辉钴矿，使其转化为氧化钴并释放二氧化硫。",
+    "fragment_description": "通过对#cobaltite#的$roasting$氧化，将其转化为#cobalt_oxide#并释放#sulfur_dioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cobaltite",
@@ -892,15 +897,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "cobalt_alloy_smithing"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "cobalt_oxide",
@@ -910,14 +906,20 @@
         "key": "sulfur_dioxide",
         "multiple": 1
       }
-    ],
-    "fragment_description": "通过对#cobaltite#的$roasting$氧化，将其转化为#cobalt_oxide#并释放#sulfur_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
-    "name": "还原氧化钴",
     "key": "reduce_cobalt_oxide",
+    "name": "还原氧化钴",
     "description": "用碳还原氧化钴，得到金属钴和一氧化碳。",
+    "fragment_description": "使用#charcoal#对#cobalt_oxide#进行$roasting$还原，制取金属#cobalt#并释放#carbon_monoxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cobalt_oxide",
@@ -933,15 +935,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "cobalt_alloy_smithing"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "cobalt",
@@ -951,14 +944,20 @@
         "key": "carbon_monoxide",
         "multiple": 1
       }
-    ],
-    "fragment_description": "使用#charcoal#对#cobalt_oxide#进行$roasting$还原，制取金属#cobalt#并释放#carbon_monoxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
-    "name": "制作钴蓝",
     "key": "make_cobalt_blue",
+    "name": "制作钴蓝",
     "description": "将氧化钴与硅砂和碱水混合焙烧，制成鲜艳的钴蓝颜料。",
+    "fragment_description": "将#cobalt_oxide#与#silica_sand#及#alkaline_solution#混合进行$roasting$熔制，得到#cobalt_blue#颜料。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cobalt_oxide",
@@ -974,29 +973,20 @@
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "cobalt_alloy_smithing"
-    ],
-    "time_required": 45,
     "products": [
       {
         "key": "cobalt_blue",
         "multiple": 2
       }
-    ],
-    "fragment_description": "将#cobalt_oxide#与#silica_sand#及#alkaline_solution#混合进行$roasting$熔制，得到#cobalt_blue#颜料。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "roast_sperrylite",
     "name": "焙烧砷铂矿",
     "description": "在窑炉中焙烧砷铂矿，砷以三氧化二砷形式挥发，残留铂金。",
-    "time_required": 30,
+    "fragment_description": "对#sperrylite#进行$roasting$，使其中的砷转化为#arsenic_trioxide#挥发，富集得到#platinum_ingot#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -1019,12 +1009,7 @@
         "multiple": 1,
         "required_chain_operation": "condensation"
       }
-    ],
-    "required_techs": [
-      "platinum_metallurgy"
-    ],
-    "fragment_description": "对#sperrylite#进行$roasting$，使其中的砷转化为#arsenic_trioxide#挥发，富集得到#platinum_ingot#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "焙烧镍黄铁矿",
@@ -1582,7 +1567,6 @@
       "min": 1
     },
     "required_techs": [
-      "halogen_chemistry"
     ],
     "time_required": 60,
     "products": [
@@ -1627,7 +1611,6 @@
       }
     ],
     "required_techs": [
-      "halogen_chemistry"
     ],
     "time_required": 30,
     "products": [
@@ -1660,7 +1643,6 @@
       "min": 1
     },
     "required_techs": [
-      "halogen_chemistry"
     ],
     "time_required": 30,
     "products": [
@@ -3736,7 +3718,6 @@
       "min": 1
     },
     "required_techs": [
-      "aluminum_electrolysis"
     ],
     "time_required": 15,
     "products": [
@@ -4292,7 +4273,6 @@
       }
     ],
     "required_techs": [
-      "electricity"
     ],
     "fragment_description": "以#blister_copper#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "required_era": "electrochem"
@@ -4359,7 +4339,6 @@
       }
     ],
     "required_techs": [
-      "smelting"
     ],
     "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "required_era": "alchemy"
@@ -4957,7 +4936,6 @@
       }
     ],
     "required_techs": [
-      "rare_earth"
     ],
     "fragment_description": "以#scandium_fluoride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "required_era": "alchemy"
