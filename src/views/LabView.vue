@@ -662,6 +662,7 @@ function startExperiment() {
             class="btn btn-outline btn-sm gap-1"
             :class="selectedChainOperationKey.has(op.key) ? 'btn-secondary' : ''"
             @click="selectedChainOperationKey.has(op.key) ? selectedChainOperationKey.delete(op.key) : selectedChainOperationKey.add(op.key); selectedChainOperationKey = new Set(selectedChainOperationKey)"
+            v-show="!op.required_techs || op.required_techs.every(t => packStore.hasTech(t))"
           >
             {{ op.name }}
             <span class="text-xs opacity-60">{{ op.time_required }}秒</span>
