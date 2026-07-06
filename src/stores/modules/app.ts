@@ -15,6 +15,7 @@ export interface AppConfig {
   desktopPush: boolean;
   notifyOnlyHidden: boolean;
   hardMode: boolean;
+  foldTasks: boolean;
 }
 
 export const useAppStore = defineStore('app', () => {
@@ -43,9 +44,15 @@ export const useAppStore = defineStore('app', () => {
   const desktopPush = ref<boolean>(config?.desktopPush ?? false)
   const notifyOnlyHidden = ref<boolean>(config?.notifyOnlyHidden ?? true)
   const hardMode = ref<boolean>(config?.hardMode ?? false)
+  const foldTasks = ref<boolean>(config?.foldTasks ?? false)
 
   function toggleTheme(): void {
     theme.value = theme.value === lightTheme ? darkTheme : lightTheme
+    saveConfig();
+  }
+
+  function toggleFoldTasks(): void {
+    foldTasks.value = !foldTasks.value
     saveConfig();
   }
 
@@ -96,6 +103,7 @@ export const useAppStore = defineStore('app', () => {
       desktopPush: desktopPush.value,
       notifyOnlyHidden: notifyOnlyHidden.value,
       hardMode: hardMode.value,
+      foldTasks: foldTasks.value,
     } satisfies AppConfig)
   }
   function getConfig() {
@@ -104,8 +112,8 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile, isReady,
-    taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode,
-    toggleTheme, toggleLeftSidebar, toggleRightSidebar,
+    taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode, foldTasks,
+    toggleTheme, toggleLeftSidebar, toggleRightSidebar, toggleFoldTasks,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,
   }
 })

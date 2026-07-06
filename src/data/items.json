@@ -341,6 +341,9 @@
     "type": [
       "container"
     ],
+    "attrs": {
+      "can_heat": true
+    },
     "durable": 1
   },
   {
@@ -401,6 +404,9 @@
     "type": [
       "container"
     ],
+    "attrs": {
+      "can_heat": true
+    },
     "durable": 1,
     "milestone": "craft_crucible"
   },
@@ -1946,6 +1952,9 @@
     "type": [
       "container"
     ],
+    "attrs": {
+      "can_heat": true
+    },
     "durable": 1
   },
   {
@@ -1955,7 +1964,10 @@
     "description": "加厚的铁制容器。由于其表面能形成紧密的氟化物钝化膜，常用于制备与储存氢氟酸等腐蚀性物质。",
     "type": [
       "container"
-    ]
+    ],
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "name": "玻璃试管",
@@ -1965,6 +1977,9 @@
     "type": [
       "container"
     ],
+    "attrs": {
+      "can_heat": true
+    },
     "durable": 1
   },
   {
@@ -1975,6 +1990,9 @@
     "type": [
       "container"
     ],
+    "attrs": {
+      "can_heat": true
+    },
     "durable": 1
   },
   {

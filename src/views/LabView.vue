@@ -142,6 +142,15 @@ function getDraftQty(itemKey: string): number {
   return draftMaterials.value.get(itemKey) || 0
 }
 
+function onDraftInput(e: Event, key: string, max: number) {
+  const val = parseInt((e.target as HTMLInputElement).value) || 0
+  const m = new Map(draftMaterials.value)
+  const safeVal = Math.max(0, Math.min(val, max))
+  if (safeVal === 0) m.delete(key)
+  else m.set(key, safeVal)
+  draftMaterials.value = m
+}
+
 const materialSummary = computed(() => {
   const entries = [...selectedMaterials.value.entries()]
   if (entries.length === 0) return '未选择'
@@ -870,9 +879,17 @@ function startExperiment() {
             <span class="text-xs text-base-content/50">背包: {{ item.quantity }}</span>
           </div>
           <div class="flex items-center gap-1">
-            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) <= 0" @click="draftDecrement(item.key)">−</button>
-            <span class="w-6 text-center font-mono text-sm">{{ getDraftQty(item.key) }}</span>
-            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) >= item.quantity" @click="draftIncrement(item.key)">+</button>
+            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) <= 0" @click.stop="draftDecrement(item.key)">−</button>
+            <input
+              type="number"
+              class="w-12 text-center font-mono text-sm p-0 input input-xs input-bordered"
+              min="0"
+              :max="item.quantity"
+              :value="getDraftQty(item.key) || ''"
+              @input="onDraftInput($event, item.key, item.quantity)"
+              @click.stop
+            />
+            <button class="btn btn-xs btn-circle btn-ghost" :disabled="getDraftQty(item.key) >= item.quantity" @click.stop="draftIncrement(item.key)">+</button>
           </div>
         </div>
       </div>

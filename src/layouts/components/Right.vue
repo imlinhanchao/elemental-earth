@@ -2,12 +2,14 @@
 import { ref, computed } from 'vue'
 import Task from '@/components/Task.vue';
 import { useAppStore } from '@/stores/modules/app'
-import { useTaskStore } from '@/stores/modules/task'
+import { useTaskStore, type ITask } from '@/stores/modules/task'
 import { useLogStore } from '@/stores/modules/log'
+import { useTutorialStore } from '@/stores/modules/tutorial'
 
 const appStore = useAppStore()
 const taskStore = useTaskStore()
 const logStore = useLogStore()
+const tutorialStore = useTutorialStore()
 const tasks = taskStore.getTasks
 
 const logStyles: Record<string, { icon: string; iconColor: string }> = {
@@ -44,6 +46,31 @@ const visibleLogs = computed(() => {
   return [...logStore.logs].reverse().filter(l => isTypeVisible(l.type))
 })
 
+const displayTasks = computed(() => {
+  const allTasks = taskStore.getTasks
+  if (!appStore.foldTasks) return allTasks.map(t => ({ task: t, ids: [t.id], count: 1 }))
+  
+  const groups: { task: ITask; ids: number[]; count: number }[] = []
+  for (const t of allTasks) {
+    const last = groups[groups.length - 1]
+    if (last && last.task.name === t.name && last.task.type === t.type && last.task.key === t.key) {
+      last.ids.push(t.id)
+      last.count++
+    } else {
+      groups.push({ task: t, ids: [t.id], count: 1 })
+    }
+  }
+  return groups
+})
+
+/** 获得该任务前的所有任务，用于计算时间 */
+function getPreTasksBefore(taskId: number) {
+  const allTasks = taskStore.getTasks
+  const idx = allTasks.findIndex(t => t.id === taskId)
+  if (idx <= 0) return []
+  return allTasks.slice(0, idx)
+}
+
 /** 连续相同内容折叠为一条 */
 const collapsedLogs = computed(() => {
   const result: { content: string; type: string; count: number }[] = []
@@ -69,13 +96,24 @@ const typeEntries = computed(() =>
     <aside
         class="bg-base-100 border-l border-base-300 flex-none transition-all duration-300 flex flex-col"
         :class="[
-            appStore.rightSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-72 p-2') : 'w-0 overflow-hidden'
+            appStore.rightSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-72 p-2') : 'w-0 overflow-hidden',
+            tutorialStore.isTutorialActive ? 'z-[100]' : ''
         ]"
     >
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
             <header class="bg-base-100 sticky top-0 z-10 flex items-center justify-between">
-              <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1">任务队列</div>
+              <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1 flex items-center gap-1">
+                <span>任务队列</span>
+                <button 
+                  class="btn btn-ghost btn-xs p-0 h-4 min-h-0" 
+                  :class="appStore.foldTasks ? 'text-primary' : 'text-base-content/30'"
+                  @click="appStore.toggleFoldTasks()"
+                  title="折叠相同任务"
+                >
+                  <Icon icon="tabler:fold" class="text-xs" />
+                </button>
+              </div>
               <!-- 添加清空按钮 -->
               <div v-if="tasks.length > 0" class="flex justify-end mb-1 px-1">
                 <button class="btn btn-ghost btn-xs text-base-content/30 hover:text-base-content/60 transition-colors" @click="taskStore.clearTasks()">清空</button>
@@ -83,7 +121,14 @@ const typeEntries = computed(() =>
             </header>
             <div v-if="tasks.length === 0" class="text-[11px] text-base-content/20 px-1">空闲中</div>
             <div v-else class="flex gap-1 flex-wrap">
-                <Task v-for="(task, i) in tasks" :key="task.id" :task="task" :preTasks="i > 0 ? tasks.slice(0, i) : []" />
+                <Task 
+                    v-for="item in displayTasks" 
+                    :key="item.task.id" 
+                    :task="item.task" 
+                    :ids="item.ids"
+                    :count="item.count"
+                    :preTasks="getPreTasksBefore(item.task.id)" 
+                />
             </div>
         </section>
 
