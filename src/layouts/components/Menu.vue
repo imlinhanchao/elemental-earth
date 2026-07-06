@@ -17,11 +17,13 @@
             :to="tab.path"
             :id="`tab-${tab.name?.toString().toLowerCase()}`"
             class="tab gap-1 lg:gap-2 px-2 lg:px-4 relative"
-            :class="{'tab-active': $route.name === tab.name}"
+            :class="{'tab-active': $route.name === tab.name }"
         >
-        <div v-if="tab.name === 'Manuscripts' && fragmentStore.hasUnread" class="badge badge-error badge-xs absolute top-1 right-1"></div>
-        <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
-        <span class="hidden sm:inline">{{ tab.label }}</span>
+            <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
+            <span class="indicator">
+                <span v-if="tab.name === 'Manuscripts' && fragmentStore.hasUnread" class="indicator-item status status-error"></span>
+                <span class="hidden sm:inline">{{ tab.label }}</span>
+            </span>
         </RouterLink>
     </div>
 </template>
