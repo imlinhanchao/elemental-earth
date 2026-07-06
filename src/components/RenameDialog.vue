@@ -2,7 +2,7 @@
   <Teleport to="body">
     <Transition name="overlay-fade">
       <div v-if="visible" class="rename-overlay" @click.self="cancel">
-        <div class="rename-card">
+        <div class="rename-card bg-base-100">
           <h3 class="rename-title flex items-center gap-2">
             <Icon icon="icon-park-outline:edit" class="text-base" /> 修改命名
           </h3>
@@ -73,7 +73,6 @@ function cancel() {
 .overlay-fade-leave-active { transition: opacity 0.15s; }
 .overlay-fade-enter-from,.overlay-fade-leave-to { opacity: 0; }
 .rename-card {
-  background: oklch(var(--b1)); border: 1px solid oklch(var(--b3));
   border-radius: 12px; padding: 24px; width: 100%; max-width: 360px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
