@@ -37,6 +37,12 @@ export const routes: RouteRecordRaw[] = [
         meta: { tab: 'explore', label: '图鉴', icon: 'si:book-duotone' },
       },
       {
+        path: 'manuscripts',
+        name: 'Manuscripts',
+        component: () => import('../views/ManuscriptsView.vue'),
+        meta: { tab: 'manuscripts', label: '手稿', icon: 'mingcute:document-fill' },
+      },
+      {
         path: 'settings',
         name: 'Settings',
         component: () => import('../views/SettingsView.vue'),

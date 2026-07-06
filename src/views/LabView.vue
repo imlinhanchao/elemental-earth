@@ -863,6 +863,7 @@ function startExperiment() {
           :key="item.key"
           class="flex items-center justify-between px-3 py-2 rounded-lg border text-sm transition-colors"
           :class="getDraftQty(item.key) > 0 ? 'border-primary bg-primary/5' : 'border-base-300'"
+          @click="getDraftQty(item.key) >= item.quantity ? null : draftIncrement(item.key)"
         >
           <div class="flex items-center gap-2">
             <span>{{ item.name }}</span>

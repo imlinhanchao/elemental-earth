@@ -3,6 +3,7 @@ import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
 import { useTaskStore } from '@/stores/modules/task';
 import { useLogStore } from '@/stores/modules/log';
+import { useFragmentStore } from '@/stores/modules/fragment';
 import type { IPackItem } from '@/stores/modules/pack';
 import type { IGameState } from '@/stores/modules/state';
 import type { ITask } from '@/stores/modules/task';
@@ -30,6 +31,10 @@ export interface SaveData {
   renames: Record<string, { customName: string; note: string }>;
   /** 行动冷却时间戳（v3 新增） */
   cooldowns: Record<string, number>;
+  /** 玩家收集的手稿（碎片） key 列表 */
+  fragments: string[];
+  /** 未读手稿列表 */
+  unreadFragments: string[];
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -44,6 +49,7 @@ export function saveGame(): boolean {
     const stateStore = useStateStore();
     const taskStore = useTaskStore();
     const logStore = useLogStore();
+    const fragmentStore = useFragmentStore();
 
     const data: SaveData = {
       version: SAVE_VERSION,
@@ -57,6 +63,8 @@ export function saveGame(): boolean {
       discovered: Array.from(packStore.discoveredItems),
       renames: JSON.parse(JSON.stringify(packStore.itemRenames)),
       cooldowns: JSON.parse(JSON.stringify(packStore.cooldowns)),
+      fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
+      unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -84,6 +92,7 @@ export function loadGame(): boolean {
     const stateStore = useStateStore();
     const taskStore = useTaskStore();
     const logStore = useLogStore();
+    const fragmentStore = useFragmentStore();
 
     // 恢复地图状态
     stateStore.state.map = data.state.map;
@@ -98,6 +107,10 @@ export function loadGame(): boolean {
     // 恢复时代（旧存档可能没有此字段）
     if (data.state.currentEra) stateStore.state.currentEra = data.state.currentEra;
     if (Array.isArray(data.state.completedMilestones)) stateStore.state.completedMilestones = data.state.completedMilestones;
+
+    // 恢复手稿（碎片）
+    fragmentStore.fragments = data.fragments || [];
+    fragmentStore.unreadFragments = data.unreadFragments || [];
 
     // 恢复背包物品
     packStore.items.splice(0, packStore.items.length, ...data.items);

@@ -1,7 +1,9 @@
 <script setup lang="ts">
     import { routes } from '@/router';
     import { computed } from 'vue';
+    import { useFragmentStore } from '@/stores/modules/fragment';
 
+    const fragmentStore = useFragmentStore();
     const tabs = computed(() => routes[0].children?.map(r => ({
         name: r.name, path: r.path || '/', label: r.meta?.label, icon: r.meta?.icon
     })))
@@ -14,9 +16,10 @@
             :key="tab.name"
             :to="tab.path"
             :id="`tab-${tab.name?.toString().toLowerCase()}`"
-            class="tab gap-1 lg:gap-2 px-2 lg:px-4"
+            class="tab gap-1 lg:gap-2 px-2 lg:px-4 relative"
             :class="{'tab-active': $route.name === tab.name}"
         >
+        <div v-if="tab.name === 'Manuscripts' && fragmentStore.hasUnread" class="badge badge-error badge-xs absolute top-1 right-1"></div>
         <Icon :icon="tab.icon" class="text-xl lg:text-lg" v-if="tab.icon" />
         <span class="hidden sm:inline">{{ tab.label }}</span>
         </RouterLink>

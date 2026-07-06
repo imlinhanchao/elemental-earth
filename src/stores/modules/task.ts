@@ -4,6 +4,7 @@ import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
+import { useFragmentStore } from '@/stores/modules/fragment';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { Eras } from '@/data/eras';
@@ -134,6 +135,30 @@ export const useTaskStore = defineStore('task', () => {
           } else {
             logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
             notifyTaskComplete(task.name, '未获得奖励');
+          }
+
+          // 手稿（碎片）掉落逻辑
+          if (stateStore.state.currentEra !== 'stone' && ['挖掘', '爆破', '定向爆破'].includes(task.name)) {
+            const chance = 0.1 + Math.random() * 0.05; // 10%-15%
+            if (Math.random() < chance) {
+              const fragmentStore = useFragmentStore();
+              const { Formulas } = await import('@/data/formula');
+              const eligibleFormulas = Formulas.filter(f =>
+                !packStore.hasProvenFormula(f.key) &&
+                !fragmentStore.hasFragment(f.key) &&
+                (f.required_items || []).some(req => {
+                  const keys = Array.isArray(req.key) ? req.key : [req.key];
+                  return keys.some(k => packStore.hasEverHad(k));
+                })
+              );
+              if (eligibleFormulas.length > 0) {
+                const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];
+                if (fragmentStore.unlockFragment(picked.key)) {
+                  logStore.addLog(`在${task.name}过程中意外发现了一份「手稿」：${picked.name} 的残片`, 'reward');
+                  notifyTaskComplete('获得手稿', `${picked.name} 的残片`);
+                }
+              }
+            }
           }
         } else if (task.type === 'lab') {
           // lab 类型：给予所有产物
