@@ -183,7 +183,7 @@
                 <button
                   class="btn btn-xs btn-ghost"
                   @click="
-                    objItems.push({ _keys: [], _input: '', key: '', quantity: 1 })
+                    objItems.push({ _keys: [], _input: '', key: '', quantity: 1, isMain: false })
                   "
                 >
                   <Icon icon="material-symbols:add" />
@@ -223,6 +223,14 @@
                   class="input input-bordered input-xs w-14"
                   v-model.number="row.quantity"
                 />
+              </label>
+              <label class="flex items-center gap-1 text-xs cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  class="checkbox checkbox-primary checkbox-xs"
+                  v-model="row.isMain"
+                />
+                <span :class="row.isMain ? 'text-primary font-bold' : 'opacity-40'">主材料</span>
               </label>
               <button
                 class="btn btn-xs btn-ghost text-error"
@@ -442,7 +450,7 @@ function openEdit(r: any) {
   objItems.push(
     ...(r.required_items || []).map((x: any) => {
       const keys = Array.isArray(x.key) ? x.key : x.key ? [x.key] : [];
-      return { ...x, _keys: [...keys], _input: "" };
+      return { ...x, _keys: [...keys], _input: "", isMain: !!x.isMain };
     }),
   );
   objProducts.push(...(r.products || []).map((x: any) => ({ ...x })));
@@ -485,6 +493,7 @@ async function save() {
         else return null;
         if (r.quantity !== undefined && r.quantity !== "")
           o.quantity = r.quantity;
+        if (r.isMain) o.isMain = true;
         return o;
       })
       .filter(Boolean);

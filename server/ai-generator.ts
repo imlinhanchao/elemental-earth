@@ -184,7 +184,10 @@ function buildSystemPrompt(contextData: ContextData): string {
   "name": "配方名称",
   "key": "唯一标识符",
   "description": "描述",
-  "required_items": [{ "key": "所需物品key 或 ['key1','key2']表示可替代", "quantity": 数量 }],
+  "required_items": [
+    { "key": "原料key", "quantity": 数量, "isMain": true }, // 核心反应物设为 isMain: true
+    { "key": "辅助key", "quantity": 数量 }
+  ],
   "required_container": "要求容器items的key（如 kiln, clay_pot）",
   "required_actions": { "key": "操作key", "min": 最少次数, "max": 最多次数 },
   "required_techs": ["前置科技key"],
@@ -253,24 +256,25 @@ function buildSystemPrompt(contextData: ContextData): string {
 
 ### 配方生成规则
 - 用途：定义如何通过实验室操作生成新材料（非工具的制作，工具制作由行动完成）
+- **核心材料标记**：配方中的主要反应物（例如冶炼时的矿石、合成时的底物）必须设置 \`"isMain": true\`。这决定了玩家在接触到这些材料前不会掉落该配方碎片。
 - required_container 用于需要特定容器的反应（窑炉、烧杯、蒸馏瓶等）
 - required_actions 对应实验室操作（搅拌、焙烧、加热、蒸馏、过滤等）
 - 多个输入可以用逗号分隔 key 表示可替代材料
 - 化学反应要符合真实化学方程式（虽简化但不要造出违背科学原理的反应）
 - 副产物也应该考虑在内
 - 某些产物可以通过追加操作才能收集：products 中设置 required_chain_operation 指向操作 key
-  - 例如：焙烧菱锌矿后追加「冷凝」操作才能收集锌
-  - 例如：焙烧/干馏后追加「气体收集」操作才能收集气体
 - **碎片描述规范**：\`fragment_description\` 必须包含配方关键步骤的描述。
   - 必须使用 **#材料Key#** (加粗) 引用参与反应的主要原材料。
   - 必须使用 **$操作Key$** (倾斜或特定格式) 引用实验操作或容器。
   - 描述应像实验记录的一块碎片，如：「在 #kiln# 中对 #malachite# 进行 $roasting$，绿色粉末逐渐转黑...」；「将 #sulfuric_acid# 滴入 #zinc#，通过 $gas_collecting$ 收集产生的气体。」
-
-### 引用规则
-- 引用已有数据时，使用 key 值（不是名称）
-- 物品 key 引用已有的 items，科技 key 引用已有的 techs
-- 操作 key 引用已有的 labs，地图 key 引用已有的 maps
-- \`\`\` 如果生成的配方需要新的操作，请同步生成该操作\`\`\`
+- **时代锁**：必须分配合理的 \`required_era\`。默认分配规则：
+    - \`stone\`: 基础手工制作
+    - \`alchemy\`: 窑炉焙烧、简单金属提取
+    - \`modern_chem\`: 近代化学，酸碱、复杂冶金
+    - \`electrochem\`: 电化学（如电解铝、电池生产）
+    - \`rare_earth\`: 稀土提取（如独居石分解）
+    - \`atomic_age\`: 核能、锕系元素关联
+- **引力引导**：如果生成的配方需要新的操作，请同步生成该操作。
 
 ## 修改已有数据
 

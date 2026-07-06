@@ -42,5 +42,7 @@ Instead, **generate and run a one-time Node.js script** to:
 - **Atomic Numbers**: Pure elements must have the `elemental` property set to their correct atomic number.
 - **Discovery**: Minerals and pure elements should have `is_discovery: true`.
 - **Formulas**: Recipes must include a `fragment_description` using `#item_key#` and `$lab_key$` placeholders for dynamic UI replacement.
+- **Main Materials**: Mark the primary reactant(s) in a recipe (e.g., the ore being smelted) as `isMain: true`. This ensures recipe fragments only drop after the player has encountered the core materials needed to use them.
+- **Era Locking**: Assign a logical `required_era` (stone, alchemy, modern_chem, electrochem, rare_earth, atomic_age) to all new formulas.
 - **Avoid Duplicates**: Always check the context before generating to avoid creating an item/tech that already exists.
 

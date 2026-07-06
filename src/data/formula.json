@@ -508,8 +508,7 @@
     "time_required": 45,
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -545,8 +544,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -570,8 +568,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -609,8 +606,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -649,8 +645,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -693,8 +688,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -739,8 +733,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -781,8 +774,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "dry_distillation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -815,8 +807,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -867,8 +858,7 @@
     "required_era": "modern_chem",
     "required_actions": {
       "key": "sifting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -905,8 +895,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "cobalt_alloy_smithing"
@@ -947,8 +936,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "cobalt_alloy_smithing"
@@ -989,8 +977,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "cobalt_alloy_smithing"
@@ -1013,8 +1000,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -1054,8 +1040,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -1093,8 +1078,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 80,
     "products": [
@@ -1118,8 +1102,7 @@
     "time_required": 20,
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -1150,8 +1133,7 @@
     "time_required": 20,
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -1180,8 +1162,7 @@
     "time_required": 30,
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -1239,8 +1220,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "gas_collection"
@@ -1308,8 +1288,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "gas_collection"
@@ -1343,8 +1322,7 @@
     "required_container": "brass_condenser",
     "required_actions": {
       "key": "distillation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -1374,8 +1352,7 @@
     "required_container": "brass_condenser",
     "required_actions": {
       "key": "distillation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "gas_collection"
@@ -1411,8 +1388,7 @@
     ],
     "required_actions": {
       "key": "grinding",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -1438,8 +1414,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -1474,8 +1449,7 @@
     "required_container": null,
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 10,
     "products": [
@@ -1506,8 +1480,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 15,
     "products": [
@@ -1542,8 +1515,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 40,
     "products": [
@@ -1568,8 +1540,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -1608,8 +1579,7 @@
     ],
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "halogen_chemistry"
@@ -1687,8 +1657,7 @@
     ],
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "halogen_chemistry"
@@ -1724,8 +1693,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "dry_distillation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "manganese_alloy_smithing"
@@ -1825,8 +1793,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -1852,8 +1819,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 40,
     "products": [
@@ -1885,8 +1851,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -1928,8 +1893,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 40,
     "products": [
@@ -1963,8 +1927,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 90,
     "products": [
@@ -1998,8 +1961,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 120,
     "products": [
@@ -2029,8 +1991,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -2068,8 +2029,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -2093,8 +2053,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -2132,8 +2091,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -2184,8 +2142,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 300,
     "products": [
@@ -2219,8 +2176,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 600,
     "products": [
@@ -2258,8 +2214,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -2296,8 +2251,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "titanium_alloy_smithing"
@@ -2330,8 +2284,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -2372,8 +2325,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -2420,8 +2372,7 @@
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "blowing",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "chrome_alloy_smithing"
@@ -2516,8 +2467,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -2556,8 +2506,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 20,
     "products": [
@@ -2579,8 +2528,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -2622,8 +2570,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -2660,8 +2607,7 @@
     ],
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 10,
     "products": [
@@ -2694,8 +2640,7 @@
     ],
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 15,
     "products": [
@@ -2729,8 +2674,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 2
+      "min": 1
     },
     "time_required": 5,
     "products": [
@@ -2764,8 +2708,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -2807,8 +2750,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 30,
@@ -2843,8 +2785,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 20,
@@ -2871,8 +2812,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 30,
@@ -2907,8 +2847,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 15,
@@ -2939,8 +2878,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 60,
@@ -2976,8 +2914,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 15,
@@ -3008,8 +2945,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 30,
@@ -3034,8 +2970,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -3086,8 +3021,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -3125,8 +3059,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -3164,8 +3097,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -3203,8 +3135,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -3241,8 +3172,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -3275,8 +3205,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 120,
     "products": [
@@ -3310,8 +3239,7 @@
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -3345,8 +3273,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -3380,8 +3307,7 @@
     "required_container": null,
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 15,
     "products": [
@@ -3407,8 +3333,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 20,
     "products": [
@@ -3434,8 +3359,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -3487,8 +3411,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 60,
@@ -3522,8 +3445,7 @@
     ],
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 30,
@@ -3557,8 +3479,7 @@
     ],
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 40,
@@ -3589,8 +3510,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 120,
@@ -3616,8 +3536,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -3669,8 +3588,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 90,
     "products": [
@@ -3701,8 +3619,7 @@
     "required_container": "distilling_flask",
     "required_actions": {
       "key": "glass_distillation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "glassworking"
@@ -3747,8 +3664,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 10,
     "products": [
@@ -3782,8 +3698,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 5,
     "products": [
@@ -3818,8 +3733,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "aluminum_electrolysis"
@@ -3858,8 +3772,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "detonation_tech"
@@ -3892,8 +3805,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -3923,8 +3835,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "evaporation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 20,
     "products": [
@@ -3950,8 +3861,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "molten_electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "electrochemistry"
@@ -3989,8 +3899,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 10,
     "products": [
@@ -4024,8 +3933,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 30,
@@ -4060,8 +3968,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [],
     "time_required": 60,
@@ -4092,8 +3999,7 @@
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -4135,8 +4041,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -4169,8 +4074,7 @@
     ],
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -4211,8 +4115,7 @@
     ],
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "high_temp_furnace"
@@ -4238,8 +4141,7 @@
     "description": "将海水加热蒸发，水分蒸干后得到盐和浓缩卤水。",
     "required_actions": {
       "key": "evaporation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "clay_pot",
     "required_items": [
@@ -4269,8 +4171,7 @@
     "description": "向浓缩卤水中通入氯气，氯气将溴离子氧化为溴单质。",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4301,8 +4202,7 @@
     "description": "将阳极泥与苏打混匀并在空气中焙烧，使硒转化为二氧化硒蒸发并捕集，之后还原得到硒单质。",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4326,20 +4226,22 @@
     "required_era": "electrochem"
   },
   {
-    "name": "冶炼黄铜矿",
     "key": "smelting_chalcopyrite",
+    "name": "冶炼黄铜矿",
     "description": "将黄铜矿与木炭混合进行高温反应，初步分离出铜，得到含有杂质的粗铜。",
+    "fragment_description": "以#chalcopyrite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "time_required": 80,
+    "required_era": "alchemy",
+    "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
       "min": 2,
-      "max": 2
+      "max": ""
     },
-    "required_container": "kiln",
     "required_items": [
       {
         "key": "chalcopyrite",
-        "quantity": 1,
-        "isMain": true
+        "quantity": 1
       },
       {
         "key": [
@@ -4350,18 +4252,12 @@
         "quantity": 1
       }
     ],
-    "time_required": 80,
     "products": [
       {
         "key": "blister_copper",
         "multiple": 1
       }
-    ],
-    "required_techs": [
-      "smelting"
-    ],
-    "fragment_description": "以#chalcopyrite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "copper_refining_electrolytic",
@@ -4372,8 +4268,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -4408,8 +4303,7 @@
     "description": "阳极泥在提取硒之后，残留的滤渣中仍富含碲，通过碱浸和还原工艺可以回收金属碲。",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4443,8 +4337,7 @@
     "description": "阳极泥经过多步处理后，最后的稀贵金属富集物可通过高温熔炼和化学分离得到金和银。",
     "required_actions": {
       "key": "roasting",
-      "min": 2,
-      "max": 2
+      "min": 2
     },
     "required_container": "kiln",
     "required_items": [
@@ -4477,8 +4370,7 @@
     "description": "利用酸处理钒铅矿，初步分离出其中的铅并回收含钒的中间产物。",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4513,8 +4405,7 @@
     "description": "用稀硫酸浸出焙烧后的锌焙砂，得到含有硫酸锌及杂质的溶液。",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4549,8 +4440,7 @@
     "description": "向含有镉杂质的锌酸浸出液中加入锌粉，利用金属活动性差异将镉置换析出，并获得纯净的硫酸锌溶液。",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_container": "beaker",
     "required_items": [
@@ -4597,8 +4487,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 80,
     "products": [
@@ -4627,8 +4516,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -4665,8 +4553,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -4709,8 +4596,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 50,
     "products": [
@@ -4741,8 +4627,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 40,
     "products": [
@@ -4773,8 +4658,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -4815,8 +4699,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -4838,8 +4721,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -4874,8 +4756,7 @@
     "required_container": "evaporating_dish",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -4906,8 +4787,7 @@
     "required_container": "distillation_flask",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 60,
     "products": [
@@ -4939,8 +4819,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 30,
     "products": [
@@ -4971,8 +4850,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 90,
     "products": [
@@ -5003,8 +4881,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 80,
     "products": [
@@ -5035,8 +4912,7 @@
     "required_container": "iron_tank",
     "required_actions": {
       "key": "stirring",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 40,
     "products": [
@@ -5067,8 +4943,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "time_required": 120,
     "products": [
@@ -5097,8 +4972,7 @@
     "required_container": "iron_tank",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5167,8 +5041,7 @@
     "required_container": "iron_tank",
     "required_actions": {
       "key": "electrolysis",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5237,8 +5110,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5272,8 +5144,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5715,8 +5586,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5743,8 +5613,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5806,8 +5675,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -5856,8 +5724,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "glassworking"
@@ -5895,8 +5762,7 @@
     "required_container": "distilling_flask",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "glassworking"
@@ -5929,8 +5795,7 @@
     "required_container": "crucible",
     "required_actions": {
       "key": "heating",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "glassworking"

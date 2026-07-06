@@ -151,13 +151,16 @@ export const useTaskStore = defineStore('task', () => {
                 const fEraObj = Eras.find(e => e.key === f.required_era);
                 const fEraOrder = fEraObj?.order ?? 0;
 
+                const mainItems = (f.required_items || []).filter(item => item.isMain);
+                const mainMaterialCheck = mainItems.length === 0 || mainItems.some(req => {
+                  const keys = Array.isArray(req.key) ? req.key : [req.key];
+                  return keys.some(k => packStore.hasEverHad(k));
+                });
+
                 return !packStore.hasProvenFormula(f.key) &&
                   !fragmentStore.hasFragment(f.key) &&
                   fEraOrder <= currentOrder &&
-                  (f.required_items || []).filter(f => f.isMain).some(req => {
-                    const keys = Array.isArray(req.key) ? req.key : [req.key];
-                    return keys.some(k => packStore.hasEverHad(k));
-                  })
+                  mainMaterialCheck;
               });
               if (eligibleFormulas.length > 0) {
                 const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];

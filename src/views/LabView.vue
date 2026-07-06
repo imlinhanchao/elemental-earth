@@ -178,7 +178,7 @@ const matchedFormula = computed<IFormula | null>(() => {
     const actMin = f.required_actions?.min ?? 1
     const actMax = f.required_actions?.max
     if (cycles.value < actMin) return false
-    if (actMax !== undefined && cycles.value > actMax) return false
+    if (actMax && cycles.value > actMax) return false
     return true
   }) || null
 })
