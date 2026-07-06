@@ -44,6 +44,7 @@ const selectedPowerSourceKey = ref<string | null>(null)
 const selectedFuels = ref<Map<string, number>>(new Map())
 const cycles = ref(1)
 const materialModalOpen = ref(false)
+const materialSearchQuery = ref('')
 
 // 切换操作时重置引火/燃料/chain选择
 watch(selectedOperationKey, () => {
@@ -71,6 +72,15 @@ const availableContainers = computed(() => {
 
 const availableMaterials = computed(() => {
   return packStore.items.filter(pItem => pItem.key !== selectedContainerKey.value)
+})
+
+const filteredAvailableMaterials = computed(() => {
+  const query = materialSearchQuery.value.toLowerCase().trim()
+  if (!query) return availableMaterials.value
+  return availableMaterials.value.filter(item => 
+    item.name.toLowerCase().includes(query) || 
+    item.key.toLowerCase().includes(query)
+  )
 })
 
 const selectedOperation = computed<ILabAction | null>(() => {
@@ -116,15 +126,18 @@ const operationRequirementMet = computed(() => {
 // ---- 材料弹窗 ----
 function openMaterialModal() {
   draftMaterials.value = new Map(selectedMaterials.value)
+  materialSearchQuery.value = ''
   materialModalOpen.value = true
 }
 function confirmMaterials() {
   selectedMaterials.value = new Map(draftMaterials.value)
   materialModalOpen.value = false
+  materialSearchQuery.value = ''
 }
 function cancelMaterials() {
   draftMaterials.value = new Map(selectedMaterials.value)
   materialModalOpen.value = false
+  materialSearchQuery.value = ''
 }
 function draftIncrement(itemKey: string) {
   const m = new Map(draftMaterials.value)
@@ -864,12 +877,31 @@ function startExperiment() {
         </button>
       </div>
 
-      <div v-if="availableMaterials.length === 0" class="text-sm text-base-content/50 py-4 text-center">
-        背包中无可用材料
+      <!-- 搜索框 -->
+      <div class="relative mb-3">
+        <Icon icon="tabler:search" class="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" />
+        <input
+          v-model="materialSearchQuery"
+          type="text"
+          placeholder="搜索材料名称或代码..."
+          class="input input-bordered input-sm w-full pl-9"
+          ref="searchInput"
+        />
+        <button 
+          v-if="materialSearchQuery" 
+          class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle"
+          @click="materialSearchQuery = ''"
+        >
+          <Icon icon="tabler:x" />
+        </button>
+      </div>
+
+      <div v-if="filteredAvailableMaterials.length === 0" class="text-sm text-base-content/50 py-4 text-center">
+        {{ materialSearchQuery ? '未找到匹配材料' : '背包中无可用材料' }}
       </div>
       <div v-else class="space-y-1 max-h-80 overflow-y-auto pr-1">
         <div
-          v-for="item in availableMaterials"
+          v-for="item in filteredAvailableMaterials"
           :key="item.key"
           class="flex items-center justify-between px-3 py-2 rounded-lg border text-sm transition-colors"
           :class="getDraftQty(item.key) > 0 ? 'border-primary bg-primary/5' : 'border-base-300'"

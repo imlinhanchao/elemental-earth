@@ -78,7 +78,14 @@
                 <span class="fuel-info">拥有 {{ f.qty }} · 燃烧 {{ f.burnTime }}s</span>
                 <div class="fuel-controls">
                   <button class="btn btn-xs" :disabled="(fuelMap.get(f.key) || 0) <= 0" @click="decFuel(f.key)">−</button>
-                  <span class="fuel-qty">{{ fuelMap.get(f.key) || 0 }}</span>
+                  <input
+                    type="number"
+                    class="input input-xs input-bordered w-10 text-center font-mono p-0 h-6"
+                    :value="fuelMap.get(f.key) || 0"
+                    @input="onFuelInput($event, f.key, f.qty)"
+                    min="0"
+                    :max="f.qty"
+                  />
                   <button class="btn btn-xs" :disabled="(fuelMap.get(f.key) || 0) >= f.qty" @click="incFuel(f.key)">+</button>
                 </div>
               </div>
@@ -320,6 +327,14 @@ function decFuel(key: string) {
   const cur = fuelMap.value.get(key) || 0
   if (cur <= 1) fuelMap.value.delete(key)
   else fuelMap.value.set(key, cur - 1)
+  fuelMap.value = new Map(fuelMap.value)
+}
+
+function onFuelInput(e: Event, key: string, max: number) {
+  const val = parseInt((e.target as HTMLInputElement).value) || 0
+  const safeVal = Math.max(0, Math.min(val, max))
+  if (safeVal <= 0) fuelMap.value.delete(key)
+  else fuelMap.value.set(key, safeVal)
   fuelMap.value = new Map(fuelMap.value)
 }
 
@@ -622,7 +637,6 @@ function cancel() {
 .fuel-name { font-size: 13px; font-weight: 500; min-width: 60px; }
 .fuel-info { font-size: 11px; opacity: 0.6; flex: 1; }
 .fuel-controls { display: flex; align-items: center; gap: 4px; }
-.fuel-qty { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
 .fuel-total { font-size: 12px; opacity: 0.7; margin-top: 4px; }
 
 .divider {
