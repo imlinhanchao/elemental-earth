@@ -166,7 +166,7 @@ export const useStateStore = defineStore('state', () => {
   function completeMilestone(key: string) {
     if (state.completedMilestones.includes(key)) return
     state.completedMilestones.push(key)
-    logStore.addLog(`里程碑达成: ${currentEra.value?.milestones.find(m => m.key === key)?.description || key}`, 'reward')
+    logStore.addLog(`里程碑达成: ${Eras.map(e => e.milestones).flat().find(m => m.key === key)?.description || key}`, 'reward')
     // 检查是否可以晋级
     if (currentEra.value && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
       pendingEraTransition.value = currentEra.value.key
