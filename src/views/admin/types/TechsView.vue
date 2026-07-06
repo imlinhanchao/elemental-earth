@@ -29,6 +29,7 @@
             <th>名称</th>
             <th>描述</th>
             <th>耗时</th>
+            <th>材料</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -40,6 +41,17 @@
               {{ r.description }}
             </td>
             <td>{{ r.time_required }}s</td>
+            <td>
+              <div class="flex flex-wrap gap-1">
+                <span
+                  v-for="i in r.required_items || []"
+                  :key="i.key"
+                  class="badge badge-ghost badge-sm"
+                >
+                  {{ Array.isArray(i.key) ? i.key.map((k: string) => itemOptions.find(o => o.key === k)?.name || k).join(', ') : itemOptions.find(o => o.key === i.key)?.name || i.key }}
+                </span>
+              </div>
+            </td>
             <td>
               <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
                 编辑</button
@@ -53,7 +65,7 @@
           </tr>
           <tr v-if="!records.length">
             <td
-              colspan="5"
+              colspan="6"
               class="text-center py-12 text-base-content/30 text-sm"
             >
               暂无数据

@@ -2117,9 +2117,9 @@
       {
         "key": [
           "iron_pickaxe",
-          "cobalt_pickaxe",
           "manganese_pickaxe",
-          "nickel_pickaxe"
+          "titanium_pickaxe",
+          "chromium_pickaxe"
         ],
         "quantity": 1,
         "use": 0.1
