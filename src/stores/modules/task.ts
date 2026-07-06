@@ -143,14 +143,22 @@ export const useTaskStore = defineStore('task', () => {
             if (Math.random() < chance) {
               const fragmentStore = useFragmentStore();
               const { Formulas } = await import('@/data/formula');
-              const eligibleFormulas = Formulas.filter(f =>
-                !packStore.hasProvenFormula(f.key) &&
-                !fragmentStore.hasFragment(f.key) &&
-                (f.required_items || []).some(req => {
-                  const keys = Array.isArray(req.key) ? req.key : [req.key];
-                  return keys.some(k => packStore.hasEverHad(k));
-                })
-              );
+
+              const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+              const currentOrder = currentEraObj?.order ?? 0;
+
+              const eligibleFormulas = Formulas.filter(f => {
+                const fEraObj = Eras.find(e => e.key === f.required_era);
+                const fEraOrder = fEraObj?.order ?? 0;
+
+                return !packStore.hasProvenFormula(f.key) &&
+                  !fragmentStore.hasFragment(f.key) &&
+                  fEraOrder <= currentOrder &&
+                  (f.required_items || []).some(req => {
+                    const keys = Array.isArray(req.key) ? req.key : [req.key];
+                    return keys.some(k => packStore.hasEverHad(k));
+                  })
+              });
               if (eligibleFormulas.length > 0) {
                 const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];
                 if (fragmentStore.unlockFragment(picked.key)) {

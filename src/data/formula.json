@@ -33,7 +33,8 @@
     "required_techs": [
       "pottery"
     ],
-    "fragment_description": "在封闭环境下对#wood#进行$dry_distillation$，利用热解反应将其转化为#charcoal#并释放#carbon_monoxide#与#wood_ash#。"
+    "fragment_description": "在封闭环境下对#wood#进行$dry_distillation$，利用热解反应将其转化为#charcoal#并释放#carbon_monoxide#与#wood_ash#。",
+    "required_era": "alchemy"
   },
   {
     "name": "制作粘土",
@@ -59,7 +60,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#mud#与#water#混合后进行$stirring$，通过物理结合形成具有可塑性的#clay#。"
+    "fragment_description": "将#mud#与#water#混合后进行$stirring$，通过物理结合形成具有可塑性的#clay#。",
+    "required_era": "stone"
   },
   {
     "key": "copper_smelting",
@@ -91,7 +93,8 @@
     "required_techs": [
       "pottery"
     ],
-    "fragment_description": "对#malachite#进行高温$roasting$，使其热分解为金属#copper#并释放#carbon_dioxide#。"
+    "fragment_description": "对#malachite#进行高温$roasting$，使其热分解为金属#copper#并释放#carbon_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "制作碱水",
@@ -117,7 +120,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#wood_ash#与#water#充分进行$stirring$，溶出其中的碱性物质以制备#alkaline_solution#。"
+    "fragment_description": "使#wood_ash#与#water#充分进行$stirring$，溶出其中的碱性物质以制备#alkaline_solution#。",
+    "required_era": "stone"
   },
   {
     "key": "pig_iron_smelting",
@@ -158,7 +162,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "在高炉中对#hematite#与#charcoal#进行$roasting$，在#bellows#的鼓风作用下还原出#pig_iron#并产生#slag#与#carbon_dioxide#。"
+    "fragment_description": "在高炉中对#hematite#与#charcoal#进行$roasting$，在#bellows#的鼓风作用下还原出#pig_iron#并产生#slag#与#carbon_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "water_gas_reaction",
@@ -194,7 +199,8 @@
       "gas_collection",
       "high_temp_furnace"
     ],
-    "fragment_description": "将#water#蒸气通过炽热的#charcoal#进行$gas_collecting$，反应生成#carbon_monoxide#与#hydrogen#的混合气体。"
+    "fragment_description": "将#water#蒸气通过炽热的#charcoal#进行$gas_collecting$，反应生成#carbon_monoxide#与#hydrogen#的混合气体。",
+    "required_era": "modern_chem"
   },
   {
     "key": "extract_mercury",
@@ -224,7 +230,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "通过高温$roasting$使#cinnabar#分解，产生的汞蒸气冷凝后提取出#mercury#并释放#sulfur_dioxide#。"
+    "fragment_description": "通过高温$roasting$使#cinnabar#分解，产生的汞蒸气冷凝后提取出#mercury#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_sphalerite",
@@ -253,7 +260,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#sphalerite#进行$roasting$氧化，将其转化为#zinc_oxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "对#sphalerite#进行$roasting$氧化，将其转化为#zinc_oxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_zinc_oxide",
@@ -289,7 +297,8 @@
     "required_techs": [
       "zinc_smelting"
     ],
-    "fragment_description": "以#charcoal#为还原剂对#zinc_oxide#进行$roasting$，通过碳热还原提取#zinc#并产生#carbon_monoxide#。"
+    "fragment_description": "以#charcoal#为还原剂对#zinc_oxide#进行$roasting$，通过碳热还原提取#zinc#并产生#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "smelt_brass",
@@ -317,7 +326,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "将#copper#与#zinc#按比例混合后进行高温$roasting$熔炼，通过合金化反应制得#brass#。"
+    "fragment_description": "将#copper#与#zinc#按比例混合后进行高温$roasting$熔炼，通过合金化反应制得#brass#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_galena",
@@ -350,7 +360,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#galena#与#charcoal#的混合物进行$roasting$，使其转化为#lead_oxide#并排除#sulfur_dioxide#。"
+    "fragment_description": "对#galena#与#charcoal#的混合物进行$roasting$，使其转化为#lead_oxide#并排除#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_lead_oxide",
@@ -386,7 +397,8 @@
     "required_techs": [
       "iron_tool_crafting"
     ],
-    "fragment_description": "使用#charcoal#对#lead_oxide#进行$roasting$还原，析出金属#lead#并释放#carbon_monoxide#。"
+    "fragment_description": "使用#charcoal#对#lead_oxide#进行$roasting$还原，析出金属#lead#并释放#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "smelt_tin",
@@ -419,7 +431,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#cassiterite#与#charcoal#进行高温$roasting$，通过还原反应提取#tin#并产生#carbon_monoxide#。"
+    "fragment_description": "对#cassiterite#与#charcoal#进行高温$roasting$，通过还原反应提取#tin#并产生#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "bronze_smelting",
@@ -453,7 +466,8 @@
         "multiple": 4
       }
     ],
-    "fragment_description": "将#copper#与#tin#共同$roasting$熔炼，通过合金化反应形成硬度更高的#bronze#。"
+    "fragment_description": "将#copper#与#tin#共同$roasting$熔炼，通过合金化反应形成硬度更高的#bronze#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_argentite",
@@ -481,7 +495,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对#argentite#进行$roasting$氧化，直接还原出金属#silver#并释放#sulfur_dioxide#。"
+    "fragment_description": "对#argentite#进行$roasting$氧化，直接还原出金属#silver#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧辉锑矿",
@@ -510,7 +525,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "通过对#stibnite#的$roasting$处理，使其转化为中间产物#antimony_trioxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "通过对#stibnite#的$roasting$处理，使其转化为中间产物#antimony_trioxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_antimony_trioxide",
@@ -543,7 +559,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#charcoal#还原#antimony_trioxide#进行$roasting$，制取单质#antimony#并产生#carbon_monoxide#。"
+    "fragment_description": "以#charcoal#还原#antimony_trioxide#进行$roasting$，制取单质#antimony#并产生#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_arsenopyrite",
@@ -581,7 +598,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "对#arsenopyrite#进行高温$roasting$，使其分解为#arsenic_trioxide#和#hematite#并释放#sulfur_dioxide#。"
+    "fragment_description": "对#arsenopyrite#进行高温$roasting$，使其分解为#arsenic_trioxide#和#hematite#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_realgar",
@@ -619,7 +637,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "将#realgar#与#coal#混合进行$roasting$，氧化生成#arsenic_trioxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "将#realgar#与#coal#混合进行$roasting$，氧化生成#arsenic_trioxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_orpiment",
@@ -657,7 +676,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "将#orpiment#与#coal#混合进行$roasting$，氧化生成#arsenic_trioxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "将#orpiment#与#coal#混合进行$roasting$，氧化生成#arsenic_trioxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_arsenic_trioxide",
@@ -695,7 +715,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "使用#coal#对#arsenic_trioxide#进行高温$roasting$还原，提取单质#arsenic#并产生#carbon_monoxide#。"
+    "fragment_description": "使用#coal#对#arsenic_trioxide#进行高温$roasting$还原，提取单质#arsenic#并产生#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "dry_distill_arsenopyrite",
@@ -725,7 +746,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "在隔绝空气的情况下对#arsenopyrite#进行$dry_distillation$，使其分解产出#arsenic#并残留#iron_sulfide#。"
+    "fragment_description": "在隔绝空气的情况下对#arsenopyrite#进行$dry_distillation$，使其分解产出#arsenic#并残留#iron_sulfide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "生产磷",
@@ -772,7 +794,8 @@
         "multiple": 3
       }
     ],
-    "fragment_description": "使#phosphorite#、#silica_sand#与#coke#在高炉中高温$roasting$还原，提取出#phosphorus#并伴随产生#carbon_monoxide#及#slag#。"
+    "fragment_description": "使#phosphorite#、#silica_sand#与#coke#在高炉中高温$roasting$还原，提取出#phosphorus#并伴随产生#carbon_monoxide#及#slag#。",
+    "required_era": "modern_chem"
   },
   {
     "name": "筛选硅砂",
@@ -804,7 +827,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "对#sand#使用$sifting$工艺，分离杂质以获取高纯度的#silica_sand#。"
+    "fragment_description": "对#sand#使用$sifting$工艺，分离杂质以获取高纯度的#silica_sand#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧辉钴矿",
@@ -836,7 +860,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "通过对#cobaltite#的$roasting$氧化，将其转化为#cobalt_oxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "通过对#cobaltite#的$roasting$氧化，将其转化为#cobalt_oxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化钴",
@@ -872,7 +897,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使用#charcoal#对#cobalt_oxide#进行$roasting$还原，制取金属#cobalt#并释放#carbon_monoxide#。"
+    "fragment_description": "使用#charcoal#对#cobalt_oxide#进行$roasting$还原，制取金属#cobalt#并释放#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "制作钴蓝",
@@ -908,7 +934,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "将#cobalt_oxide#与#silica_sand#及#alkaline_solution#混合进行$roasting$熔制，得到#cobalt_blue#颜料。"
+    "fragment_description": "将#cobalt_oxide#与#silica_sand#及#alkaline_solution#混合进行$roasting$熔制，得到#cobalt_blue#颜料。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_sperrylite",
@@ -941,7 +968,8 @@
     "required_techs": [
       "platinum_metallurgy"
     ],
-    "fragment_description": "对#sperrylite#进行$roasting$，使其中的砷转化为#arsenic_trioxide#挥发，富集得到#platinum_ingot#。"
+    "fragment_description": "对#sperrylite#进行$roasting$，使其中的砷转化为#arsenic_trioxide#挥发，富集得到#platinum_ingot#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧镍黄铁矿",
@@ -971,7 +999,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#pentlandite#进行高温$roasting$氧化，使其转变为#nickel_oxide#并释放#sulfur_dioxide#。"
+    "fragment_description": "对#pentlandite#进行高温$roasting$氧化，使其转变为#nickel_oxide#并释放#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化镍",
@@ -1008,7 +1037,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "使用#charcoal#对#nickel_oxide#进行高温$roasting$还原，提取纯净的金属#nickel#并产生#carbon_monoxide#。"
+    "fragment_description": "使用#charcoal#对#nickel_oxide#进行高温$roasting$还原，提取纯净的金属#nickel#并产生#carbon_monoxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_sulfur",
@@ -1038,7 +1068,8 @@
         "required_chain_operation": "blowing"
       }
     ],
-    "fragment_description": "使#sulfur#在空气中进行$roasting$燃烧，通过氧化反应生成刺激性气味的#sulfur_dioxide#。"
+    "fragment_description": "使#sulfur#在空气中进行$roasting$燃烧，通过氧化反应生成刺激性气味的#sulfur_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "absorb_sulfur_trioxide",
@@ -1066,7 +1097,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#sulfur_trioxide#通入水中进行吸收，利用水合反应生成强酸#dilute_sulfuric_acid#。"
+    "fragment_description": "将#sulfur_trioxide#通入水中进行吸收，利用水合反应生成强酸#dilute_sulfuric_acid#。",
+    "required_era": "stone"
   },
   {
     "key": "roast_green_vitriol",
@@ -1105,7 +1137,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#green_vitriol#进行高温$roasting$热分解，生成#hematite#并释放#sulfur_dioxide#及#sulfur_trioxide#。"
+    "fragment_description": "对#green_vitriol#进行高温$roasting$热分解，生成#hematite#并释放#sulfur_dioxide#及#sulfur_trioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "硫酸制氢",
@@ -1175,7 +1208,8 @@
         "required_item": "nickel"
       }
     ],
-    "fragment_description": "利用#dilute_sulfuric_acid#与活泼金属（如#pig_iron#或#zinc#）发生置换反应，制取#hydrogen#并产出对应的硫酸盐。"
+    "fragment_description": "利用#dilute_sulfuric_acid#与活泼金属（如#pig_iron#或#zinc#）发生置换反应，制取#hydrogen#并产出对应的硫酸盐。",
+    "required_era": "modern_chem"
   },
   {
     "name": "硝石制氮气",
@@ -1212,7 +1246,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#niter#与#charcoal#混合后进行$roasting$反应，析出#nitrogen#单质。"
+    "fragment_description": "将#niter#与#charcoal#混合后进行$roasting$反应，析出#nitrogen#单质。",
+    "required_era": "modern_chem"
   },
   {
     "name": "稀硫酸浓缩",
@@ -1237,7 +1272,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "通过浓缩工艺处理#dilute_sulfuric_acid#，利用水分蒸发提升溶液质量分数以获取#concentrated_sulfuric_acid#。"
+    "fragment_description": "通过浓缩工艺处理#dilute_sulfuric_acid#，利用水分蒸发提升溶液质量分数以获取#concentrated_sulfuric_acid#。",
+    "required_era": "alchemy"
   },
   {
     "name": "硝石制硝酸",
@@ -1269,7 +1305,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "利用#concentrated_sulfuric_acid#与#niter#反应，通过强酸制弱酸的原理制备#nitric_acid#。"
+    "fragment_description": "利用#concentrated_sulfuric_acid#与#niter#反应，通过强酸制弱酸的原理制备#nitric_acid#。",
+    "required_era": "modern_chem"
   },
   {
     "name": "配制火药",
@@ -1301,7 +1338,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#niter#、#charcoal#与#sulfur#按特定比例混合均匀并进行$grinding$处理，制得具有爆炸性的#gunpowder#。"
+    "fragment_description": "将#niter#、#charcoal#与#sulfur#按特定比例混合均匀并进行$grinding$处理，制得具有爆炸性的#gunpowder#。",
+    "required_era": "stone"
   },
   {
     "name": "焙烧石灰石",
@@ -1331,7 +1369,8 @@
         "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "fragment_description": "对#limestone#进行高温$roasting$热分解，使其转化为#quicklime#并释放大量#carbon_dioxide#。"
+    "fragment_description": "对#limestone#进行高温$roasting$热分解，使其转化为#quicklime#并释放大量#carbon_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "熟化石灰",
@@ -1360,7 +1399,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#quicklime#与#water#混合，利用剧烈的放热反应生成#slaked_lime#。"
+    "fragment_description": "将#quicklime#与#water#混合，利用剧烈的放热反应生成#slaked_lime#。",
+    "required_era": "stone"
   },
   {
     "name": "石灰石制取石膏",
@@ -1394,7 +1434,8 @@
         "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "fragment_description": "使#limestone#与#dilute_sulfuric_acid#发生反应，生成#gypsum#并释放#carbon_dioxide#。"
+    "fragment_description": "使#limestone#与#dilute_sulfuric_acid#发生反应，生成#gypsum#并释放#carbon_dioxide#。",
+    "required_era": "stone"
   },
   {
     "name": "水泥制造",
@@ -1423,7 +1464,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#clay#与#limestone#混合进行高温$roasting$煅烧，通过硅酸盐反应制得基础建筑材料#cement#。"
+    "fragment_description": "将#clay#与#limestone#混合进行高温$roasting$煅烧，通过硅酸盐反应制得基础建筑材料#cement#。",
+    "required_era": "alchemy"
   },
   {
     "name": "电解水",
@@ -1458,7 +1500,8 @@
       }
     ],
     "power_consumption": 0.1,
-    "fragment_description": "通过$electrolysis$作用使#water#发生电化学分解，在两极产出#hydrogen#与#oxygen#。"
+    "fragment_description": "通过$electrolysis$作用使#water#发生电化学分解，在两极产出#hydrogen#与#oxygen#。",
+    "required_era": "electrochem"
   },
   {
     "name": "电解食盐水",
@@ -1500,7 +1543,8 @@
       }
     ],
     "power_consumption": 0.1,
-    "fragment_description": "对饱和#rock_salt#溶液进行$electrolysis$电解，通过离子交换反应制得#chlorine#、#hydrogen#和#alkaline_solution#。"
+    "fragment_description": "对饱和#rock_salt#溶液进行$electrolysis$电解，通过离子交换反应制得#chlorine#、#hydrogen#和#alkaline_solution#。",
+    "required_era": "electrochem"
   },
   {
     "name": "合成盐酸",
@@ -1531,7 +1575,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#chlorine#与#hydrogen#在受控条件下反应生成氯化氢，溶于水后得到#hydrochloric_acid#。"
+    "fragment_description": "使#chlorine#与#hydrogen#在受控条件下反应生成氯化氢，溶于水后得到#hydrochloric_acid#。",
+    "required_era": "alchemy"
   },
   {
     "name": "制备漂白粉",
@@ -1562,7 +1607,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "利用#chlorine#与#slaked_lime#发生吸收反应，制备具有强氧化性的#bleaching_powder#。"
+    "fragment_description": "利用#chlorine#与#slaked_lime#发生吸收反应，制备具有强氧化性的#bleaching_powder#。",
+    "required_era": "stone"
   },
   {
     "name": "还原软锰矿",
@@ -1601,7 +1647,8 @@
         "multiple": 3
       }
     ],
-    "fragment_description": "使用#charcoal#在高温炉内还原#pyrolusite#，通过$dry_distillation$反应制取#manganese#单质。"
+    "fragment_description": "使用#charcoal#在高温炉内还原#pyrolusite#，通过$dry_distillation$反应制取#manganese#单质。",
+    "required_era": "modern_chem"
   },
   {
     "key": "smelt_manganese_steel",
@@ -1628,7 +1675,8 @@
         "multiple": 3
       }
     ],
-    "fragment_description": "将金属#manganese#与#steel#共同熔炼，利用高温$roasting$制得具有极高韧性和耐磨性的#manganese_steel#。"
+    "fragment_description": "将金属#manganese#与#steel#共同熔炼，利用高温$roasting$制得具有极高韧性和耐磨性的#manganese_steel#。",
+    "required_era": "alchemy"
   },
   {
     "key": "steel_smelting",
@@ -1668,7 +1716,8 @@
         "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "fragment_description": "在高温下对#pig_iron#进行$blowing$处理并通入#oxygen#脱碳，利用#quicklime#造渣除去杂质以纯化#steel#。"
+    "fragment_description": "在高温下对#pig_iron#进行$blowing$处理并通入#oxygen#脱碳，利用#quicklime#造渣除去杂质以纯化#steel#。",
+    "required_era": "alchemy"
   },
   {
     "name": "合成氧化汞",
@@ -1697,7 +1746,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "使金属#mercury#与#oxygen#在适度高温下缓慢进行$roasting$反应，化合生成红色的#mercury_oxide#粉末。"
+    "fragment_description": "使金属#mercury#与#oxygen#在适度高温下缓慢进行$roasting$反应，化合生成红色的#mercury_oxide#粉末。",
+    "required_era": "alchemy"
   },
   {
     "name": "加热分解氧化汞",
@@ -1728,7 +1778,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#mercury_oxide#进行高温$roasting$分解，利用氧化汞的热不稳定性获取#mercury#蒸汽与#oxygen#。"
+    "fragment_description": "对#mercury_oxide#进行高温$roasting$分解，利用氧化汞的热不稳定性获取#mercury#蒸汽与#oxygen#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧辉钼矿",
@@ -1761,7 +1812,8 @@
         "multiple": 0.5
       }
     ],
-    "fragment_description": "在有氧条件下对#molybdenite#进行$roasting$，使其氧化转化为#molybdenum_trioxide#并释放#sulfur_dioxide#气体。"
+    "fragment_description": "在有氧条件下对#molybdenite#进行$roasting$，使其氧化转化为#molybdenum_trioxide#并释放#sulfur_dioxide#气体。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原三氧化钼",
@@ -1798,7 +1850,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使用#charcoal#或煤还原#molybdenum_trioxide#，在高温$roasting$过程中通过夺取氧原子析出金属#molybdenum#。"
+    "fragment_description": "使用#charcoal#或煤还原#molybdenum_trioxide#，在高温$roasting$过程中通过夺取氧原子析出金属#molybdenum#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧白钨矿制三氧化钨",
@@ -1831,7 +1884,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#scheelite#与#hydrochloric_acid#反应后进行$roasting$处理，最终氧化转化为黄色固体#tungsten_trioxide#。"
+    "fragment_description": "将#scheelite#与#hydrochloric_acid#反应后进行$roasting$处理，最终氧化转化为黄色固体#tungsten_trioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原三氧化钨制钨粉",
@@ -1864,7 +1918,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#hydrogen#为还原剂对#tungsten_trioxide#进行高温$roasting$还原，脱水生成高纯度的灰色#tungsten_powder#。"
+    "fragment_description": "以#hydrogen#为还原剂对#tungsten_trioxide#进行高温$roasting$还原，脱水生成高纯度的灰色#tungsten_powder#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧碲金矿",
@@ -1893,7 +1948,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "对#tellurium_gold_ore#进行$roasting$氧化，使金矿石中的碲元素转化为#tellurium_dioxide#并以此富集#gold#单质。"
+    "fragment_description": "对#tellurium_gold_ore#进行$roasting$氧化，使金矿石中的碲元素转化为#tellurium_dioxide#并以此富集#gold#单质。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原二氧化碲",
@@ -1926,7 +1982,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "利用#charcoal#的还原性在高温下与#tellurium_dioxide#反应，还原析出#tellurium#单质并伴随一氧化碳产生。"
+    "fragment_description": "利用#charcoal#的还原性在高温下与#tellurium_dioxide#反应，还原析出#tellurium#单质并伴随一氧化碳产生。",
+    "required_era": "alchemy"
   },
   {
     "key": "roast_zircon",
@@ -1963,7 +2020,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "将#zircon#与#limestone#混合焙烧，利用碱性熔剂在$roasting$中的作用使锆石结构解体，生成#unrefined_zirconia#。"
+    "fragment_description": "将#zircon#与#limestone#混合焙烧，利用碱性熔剂在$roasting$中的作用使锆石结构解体，生成#unrefined_zirconia#。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_zirconia",
@@ -2003,7 +2061,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "对#zirconia#或#unrefined_zirconia#进行高温$roasting$还原，利用#coke#夺氧生成金属#zirconium#。"
+    "fragment_description": "对#zirconia#或#unrefined_zirconia#进行高温$roasting$还原，利用#coke#夺氧生成金属#zirconium#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧沥青铀矿",
@@ -2028,7 +2087,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对#pitchblende#进行长时间的$roasting$处理，使矿石内部的铀元素充分氧化转化为#uranium_oxide#以便后续分离。"
+    "fragment_description": "对#pitchblende#进行长时间的$roasting$处理，使矿石内部的铀元素充分氧化转化为#uranium_oxide#以便后续分离。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化铀",
@@ -2061,7 +2121,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使用还原剂在极高温度下还原#uranium_oxide#，通过$roasting$反应制得高密度的金属#uranium#。"
+    "fragment_description": "使用还原剂在极高温度下还原#uranium_oxide#，通过$roasting$反应制得高密度的金属#uranium#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧金红石制二氧化钛",
@@ -2097,7 +2158,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对#rutile#矿石进行高温$roasting$活化处理，使其转化为易于后续化学处理的#titanium_dioxide#。"
+    "fragment_description": "对#rutile#矿石进行高温$roasting$活化处理，使其转化为易于后续化学处理的#titanium_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原二氧化钛制钛",
@@ -2133,7 +2195,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "在惰性气氛或高温下利用强还原剂（如#charcoal#）处理#titanium_dioxide#，还原制取金属#titanium#。"
+    "fragment_description": "在惰性气氛或高温下利用强还原剂（如#charcoal#）处理#titanium_dioxide#，还原制取金属#titanium#。",
+    "required_era": "modern_chem"
   },
   {
     "name": "焙烧铬铁矿",
@@ -2165,7 +2228,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "在窑炉中对#chromite#进行氧化$roasting$，使其内部结构破坏并生成易溶的#chromium_oxide#。"
+    "fragment_description": "在窑炉中对#chromite#进行氧化$roasting$，使其内部结构破坏并生成易溶的#chromium_oxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化铬",
@@ -2206,7 +2270,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#charcoal#为媒介，在高温持续$roasting$下将#chromium_oxide#中的氧脱除，提取金属#chromium#。"
+    "fragment_description": "以#charcoal#为媒介，在高温持续$roasting$下将#chromium_oxide#中的氧脱除，提取金属#chromium#。",
+    "required_era": "alchemy"
   },
   {
     "name": "熔炼不锈钢",
@@ -2246,7 +2311,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#steel#、#chromium#及#nickel#按特定比例熔炼，利用合金化效应制备具有强抗氧化性能的#stainless_steel#。"
+    "fragment_description": "将#steel#、#chromium#及#nickel#按特定比例熔炼，利用合金化效应制备具有强抗氧化性能的#stainless_steel#。",
+    "required_era": "modern_chem"
   },
   {
     "name": "焙烧绿柱石",
@@ -2271,7 +2337,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "将#beryl#与碱性熔剂混合进行$roasting$处理，使其铝硅酸盐结构解离，产出#beryllium_oxide#。"
+    "fragment_description": "将#beryl#与碱性熔剂混合进行$roasting$处理，使其铝硅酸盐结构解离，产出#beryllium_oxide#。",
+    "required_era": "atomic_age"
   },
   {
     "name": "还原氧化铍",
@@ -2300,7 +2367,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。"
+    "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。",
+    "required_era": "atomic_age"
   },
   {
     "name": "电解熔融钾石盐制钾",
@@ -2334,7 +2402,8 @@
       }
     ],
     "power_consumption": 0.2,
-    "fragment_description": "对熔融状态的钾盐（如#potassium_chloride#）进行$electrolysis$，利用电解池反应产出活泼的金属#potassium#。"
+    "fragment_description": "对熔融状态的钾盐（如#potassium_chloride#）进行$electrolysis$，利用电解池反应产出活泼的金属#potassium#。",
+    "required_era": "electrochem"
   },
   {
     "name": "草木灰制碳酸钾",
@@ -2363,7 +2432,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "通过对#wood_ash#进行浸取、过滤和结晶处理，利用各成分溶解度差异提取出粗品#potassium_carbonate#。"
+    "fragment_description": "通过对#wood_ash#进行浸取、过滤和结晶处理，利用各成分溶解度差异提取出粗品#potassium_carbonate#。",
+    "required_era": "stone"
   },
   {
     "name": "碳酸钾制氢氧化钾",
@@ -2400,7 +2470,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#potassium_carbonate#与#slaked_lime#溶液发生复分解反应，生成碳酸钙沉淀并制取强碱#potassium_hydroxide#。"
+    "fragment_description": "使#potassium_carbonate#与#slaked_lime#溶液发生复分解反应，生成碳酸钙沉淀并制取强碱#potassium_hydroxide#。",
+    "required_era": "stone"
   },
   {
     "name": "电解熔融岩盐制钠",
@@ -2433,7 +2504,8 @@
       }
     ],
     "power_consumption": 0.2,
-    "fragment_description": "对熔融的#halite#（岩盐）进行$electrolysis$处理，通过电子转移在阴极析出金属#sodium#。"
+    "fragment_description": "对熔融的#halite#（岩盐）进行$electrolysis$处理，通过电子转移在阴极析出金属#sodium#。",
+    "required_era": "electrochem"
   },
   {
     "name": "钠与水反应制氢氧化钠",
@@ -2465,7 +2537,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#sodium#单质与#water#接触，发生极剧烈的放热置换反应，生成#sodium_hydroxide#并释放大量#hydrogen#。"
+    "fragment_description": "使#sodium#单质与#water#接触，发生极剧烈的放热置换反应，生成#sodium_hydroxide#并释放大量#hydrogen#。",
+    "required_era": "stone"
   },
   {
     "name": "氢氧化钠与二氧化碳制碳酸钠",
@@ -2497,7 +2570,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#carbon_dioxide#通入#sodium_hydroxide#溶液中，通过中和反应合成#sodium_carbonate#。"
+    "fragment_description": "将#carbon_dioxide#通入#sodium_hydroxide#溶液中，通过中和反应合成#sodium_carbonate#。",
+    "required_era": "stone"
   },
   {
     "name": "石灰石制氯化钙",
@@ -2534,7 +2608,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#limestone#充分溶解于#hydrochloric_acid#中，利用酸碱中和原理制备易溶的#calcium_chloride#。"
+    "fragment_description": "使#limestone#充分溶解于#hydrochloric_acid#中，利用酸碱中和原理制备易溶的#calcium_chloride#。",
+    "required_era": "stone"
   },
   {
     "name": "电解熔融氯化钙制钙",
@@ -2567,7 +2642,8 @@
       }
     ],
     "power_consumption": 0.2,
-    "fragment_description": "通过$electrolysis$电解熔融的#calcium_chloride#，在阴极还原得到活泼的碱土金属#calcium#。"
+    "fragment_description": "通过$electrolysis$电解熔融的#calcium_chloride#，在阴极还原得到活泼的碱土金属#calcium#。",
+    "required_era": "electrochem"
   },
   {
     "name": "还原重晶石",
@@ -2601,7 +2677,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "利用#charcoal#在高温下对#barite#（重晶石）进行还原$roasting$，产出具有活性的#barium_sulfide#。"
+    "fragment_description": "利用#charcoal#在高温下对#barite#（重晶石）进行还原$roasting$，产出具有活性的#barium_sulfide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "碳酸化硫化钡",
@@ -2631,7 +2708,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "通过对#barium_sulfide#进行碳酸化处理，利用溶度积差异转化生成沉淀#barium_carbonate#。"
+    "fragment_description": "通过对#barium_sulfide#进行碳酸化处理，利用溶度积差异转化生成沉淀#barium_carbonate#。",
+    "required_era": "stone"
   },
   {
     "name": "焙烧碳酸钡",
@@ -2661,7 +2739,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对#barium_carbonate#进行高温$roasting$热分解，使其转化为化学性质更稳定的#barium_oxide#。"
+    "fragment_description": "对#barium_carbonate#进行高温$roasting$热分解，使其转化为化学性质更稳定的#barium_oxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "碳酸钡与盐酸反应",
@@ -2695,7 +2774,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#barium_carbonate#充分溶于#hydrochloric_acid#，通过置换反应生成#barium_chloride#。"
+    "fragment_description": "使#barium_carbonate#充分溶于#hydrochloric_acid#，通过置换反应生成#barium_chloride#。",
+    "required_era": "stone"
   },
   {
     "name": "熔融电解制钡",
@@ -2726,7 +2806,8 @@
       }
     ],
     "power_consumption": 0.5,
-    "fragment_description": "对熔融的#barium_chloride#实施$electrolysis$，通过电化学分解提取银白色的金属#barium#。"
+    "fragment_description": "对熔融的#barium_chloride#实施$electrolysis$，通过电化学分解提取银白色的金属#barium#。",
+    "required_era": "electrochem"
   },
   {
     "name": "碳酸钡与硝酸反应",
@@ -2760,7 +2841,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "利用#nitric_acid#溶解#barium_carbonate#，通过复分解反应制备可溶性强的#barium_nitrate#。"
+    "fragment_description": "利用#nitric_acid#溶解#barium_carbonate#，通过复分解反应制备可溶性强的#barium_nitrate#。",
+    "required_era": "stone"
   },
   {
     "name": "焙烧毒重石",
@@ -2790,7 +2872,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#witherite#（毒重石）进行高温$roasting$处理，使其主要成分碳酸钡转化为#barium_oxide#。"
+    "fragment_description": "将#witherite#（毒重石）进行高温$roasting$处理，使其主要成分碳酸钡转化为#barium_oxide#。",
+    "required_era": "alchemy"
   },
   {
     "key": "saponification",
@@ -2824,7 +2907,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "利用强碱（如#sodium_hydroxide#）对#animal_fat#进行$stirring$碱性水解，发生皂化反应生成#soap#与甘油。"
+    "fragment_description": "利用强碱（如#sodium_hydroxide#）对#animal_fat#进行$stirring$碱性水解，发生皂化反应生成#soap#与甘油。",
+    "required_era": "stone"
   },
   {
     "name": "硝化甘油制备",
@@ -2861,7 +2945,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "在#concentrated_sulfuric_acid#的催化和吸水作用下，利用#nitric_acid#对有机物进行$stirring$硝化反应，生成#nitrocellulose#。"
+    "fragment_description": "在#concentrated_sulfuric_acid#的催化和吸水作用下，利用#nitric_acid#对有机物进行$stirring$硝化反应，生成#nitrocellulose#。",
+    "required_era": "stone"
   },
   {
     "name": "焙烧天青石制氧化锶",
@@ -2902,7 +2987,8 @@
         "multiple": 0.2
       }
     ],
-    "fragment_description": "将#celestine#（天青石）与还原剂混合后进行高温$roasting$，使其主要成分硫酸锶转化为#strontium_sulfide#。"
+    "fragment_description": "将#celestine#（天青石）与还原剂混合后进行高温$roasting$，使其主要成分硫酸锶转化为#strontium_sulfide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧菱锶矿制氧化锶",
@@ -2935,7 +3021,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "对#strontianite#（菱锶矿）进行高温$roasting$热分解，生成氧化物#strontium_oxide#并释放#carbon_dioxide#。"
+    "fragment_description": "对#strontianite#（菱锶矿）进行高温$roasting$热分解，生成氧化物#strontium_oxide#并释放#carbon_dioxide#。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化锶制锶",
@@ -2971,7 +3058,8 @@
         "multiple": 0.5
       }
     ],
-    "fragment_description": "使用强还原剂在极高温下处理#strontium_oxide#，通过还原反应析出金属#strontium#。"
+    "fragment_description": "使用强还原剂在极高温下处理#strontium_oxide#，通过还原反应析出金属#strontium#。",
+    "required_era": "alchemy"
   },
   {
     "name": "硝酸锶制备",
@@ -3007,7 +3095,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#strontianite#充分溶于#nitric_acid#，利用复分解反应制备在烟火中显红色的#strontium_nitrate#。"
+    "fragment_description": "使#strontianite#充分溶于#nitric_acid#，利用复分解反应制备在烟火中显红色的#strontium_nitrate#。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧菱镁矿",
@@ -3036,7 +3125,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对#magnesite#（菱镁矿）进行高温$roasting$预处理，使其转化为#magnesium_oxide#以便磁选提纯。"
+    "fragment_description": "对#magnesite#（菱镁矿）进行高温$roasting$预处理，使其转化为#magnesium_oxide#以便磁选提纯。",
+    "required_era": "alchemy"
   },
   {
     "name": "菱镁矿制氯化镁",
@@ -3073,7 +3163,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#magnesite#与#hydrochloric_acid#反应，通过溶解与反应制备电解所需的#magnesium_chloride#。"
+    "fragment_description": "使#magnesite#与#hydrochloric_acid#反应，通过溶解与反应制备电解所需的#magnesium_chloride#。",
+    "required_era": "stone"
   },
   {
     "name": "电解熔融氯化镁制镁",
@@ -3106,7 +3197,8 @@
       }
     ],
     "power_consumption": 0.5,
-    "fragment_description": "对熔融的#magnesium_chloride#进行$electrolysis$，通过电流作用制取轻质金属#magnesium#。"
+    "fragment_description": "对熔融的#magnesium_chloride#进行$electrolysis$，通过电流作用制取轻质金属#magnesium#。",
+    "required_era": "electrochem"
   },
   {
     "name": "干燥海藻",
@@ -3131,7 +3223,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "对采集#seaweed#进行晾晒干燥，利用水分蒸发富集其中的无机盐类组分。"
+    "fragment_description": "对采集#seaweed#进行晾晒干燥，利用水分蒸发富集其中的无机盐类组分。",
+    "required_era": "alchemy"
   },
   {
     "name": "烧制海藻灰",
@@ -3160,7 +3253,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将干燥后的海藻进行充分焚烧制得海藻灰，使有机物转化为无机灰分，以便后续提取#iodine#。"
+    "fragment_description": "将干燥后的海藻进行充分焚烧制得海藻灰，使有机物转化为无机灰分，以便后续提取#iodine#。",
+    "required_era": "alchemy"
   },
   {
     "name": "提取碘",
@@ -3194,7 +3288,8 @@
         "required_chain_operation": "condensation"
       }
     ],
-    "fragment_description": "利用化学试剂从海藻灰的浸出液中氧化还原，提取具有金属光泽的#iodine#单质。"
+    "fragment_description": "利用化学试剂从海藻灰的浸出液中氧化还原，提取具有金属光泽的#iodine#单质。",
+    "required_era": "alchemy"
   },
   {
     "name": "硫酸法提锂",
@@ -3228,7 +3323,8 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "将#spodumene#（锂辉石）与硫酸混合焙烧，利用酸反应将锂元素浸出为可溶的#lithium_sulfate#。"
+    "fragment_description": "将#spodumene#（锂辉石）与硫酸混合焙烧，利用酸反应将锂元素浸出为可溶的#lithium_sulfate#。",
+    "required_era": "rare_earth"
   },
   {
     "name": "碳酸锂制备",
@@ -3261,7 +3357,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "向#lithium_sulfate#溶液中加入碳酸钠，利用溶解度差异沉淀制取高纯度的#lithium_carbonate#。"
+    "fragment_description": "向#lithium_sulfate#溶液中加入碳酸钠，利用溶解度差异沉淀制取高纯度的#lithium_carbonate#。",
+    "required_era": "stone"
   },
   {
     "name": "氢氧化锂制备",
@@ -3294,7 +3391,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "使#lithium_carbonate#与#slaked_lime#发生复分解反应，生成低溶解度的#lithium_hydroxide#溶液。"
+    "fragment_description": "使#lithium_carbonate#与#slaked_lime#发生复分解反应，生成低溶解度的#lithium_hydroxide#溶液。",
+    "required_era": "rare_earth"
   },
   {
     "name": "熔融电解氯化锂制锂",
@@ -3325,7 +3423,8 @@
       }
     ],
     "power_consumption": 0.5,
-    "fragment_description": "对熔融的氯化锂（由#lithium_hydroxide#转化）进行$electrolysis$，电解制取极活泼的金属#lithium#。"
+    "fragment_description": "对熔融的氯化锂（由#lithium_hydroxide#转化）进行$electrolysis$，电解制取极活泼的金属#lithium#。",
+    "required_era": "electrochem"
   },
   {
     "key": "reduce_silica",
@@ -3364,7 +3463,8 @@
     "required_techs": [
       "high_temp_furnace"
     ],
-    "fragment_description": "以高纯#coke#在电弧炉内还原硅石（#silica_sand#），通过碳还原反应制取粗单质#silicon#。"
+    "fragment_description": "以高纯#coke#在电弧炉内还原硅石（#silica_sand#），通过碳还原反应制取粗单质#silicon#。",
+    "required_era": "alchemy"
   },
   {
     "name": "制作玻璃",
@@ -3398,7 +3498,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "以#silica_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#silica_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "玻璃蒸馏浓缩稀硫酸",
@@ -3430,7 +3531,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#dilute_sulfuric_acid#为基础原料，在进行$glass_distillation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#dilute_sulfuric_acid#为基础原料，在进行$glass_distillation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "modern_chem"
   },
   {
     "name": "拜耳法制氢氧化铝",
@@ -3475,7 +3577,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#bauxite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#bauxite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "modern_chem"
   },
   {
     "name": "焙烧氢氧化铝",
@@ -3504,7 +3607,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#aluminum_hydroxide#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#aluminum_hydroxide#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "电解制铝",
@@ -3541,7 +3645,8 @@
       }
     ],
     "power_consumption": 1,
-    "fragment_description": "以#alumina#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#alumina#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "制备雷酸汞",
@@ -3573,7 +3678,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#mercury#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#mercury#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "酸浸铯榴石制氯化铯溶液",
@@ -3606,7 +3712,8 @@
         "multiple": 0.5
       }
     ],
-    "fragment_description": "以#pollucite#为基础原料，在进行$dissolving$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#pollucite#为基础原料，在进行$dissolving$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "蒸发氯化铯溶液",
@@ -3631,7 +3738,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#cesium_chloride_solution#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#cesium_chloride_solution#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "熔融电解氯化铯制铯",
@@ -3664,7 +3772,8 @@
       }
     ],
     "power_consumption": 1,
-    "fragment_description": "以#cesium_chloride#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#cesium_chloride#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "铯与水反应制氢氧化铯",
@@ -3697,7 +3806,8 @@
         "multiple": 0.5
       }
     ],
-    "fragment_description": "以#cesium#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#cesium#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "硼砂制硼酸",
@@ -3731,7 +3841,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#borax#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#borax#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "钾还原硼酸",
@@ -3765,7 +3876,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#boric_acid#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。"
+    "fragment_description": "以#boric_acid#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧鸟粪石",
@@ -3798,7 +3910,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#struvite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。"
+    "fragment_description": "以#struvite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "required_era": "alchemy"
   },
   {
     "name": "磷酸还原制磷",
@@ -3835,7 +3948,8 @@
         "multiple": 5
       }
     ],
-    "fragment_description": "以#phosphoric_acid#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#phosphoric_acid#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "焙烧辉铋矿",
@@ -3867,7 +3981,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "以#bismuthite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。"
+    "fragment_description": "以#bismuthite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "required_era": "alchemy"
   },
   {
     "name": "还原氧化铋",
@@ -3903,7 +4018,8 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "以#bismuth_oxide#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。"
+    "fragment_description": "以#bismuth_oxide#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
+    "required_era": "alchemy"
   },
   {
     "name": "蒸发海水",
@@ -3932,7 +4048,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#brine#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#brine#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "氯气置换溴",
@@ -3961,7 +4078,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#bittern#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#bittern#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "从阳极泥提取硒",
@@ -3989,7 +4107,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "冶炼黄铜矿",
@@ -4021,7 +4140,8 @@
     "required_techs": [
       "smelting"
     ],
-    "fragment_description": "以#chalcopyrite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。"
+    "fragment_description": "以#chalcopyrite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "required_era": "alchemy"
   },
   {
     "key": "copper_refining_electrolytic",
@@ -4058,7 +4178,8 @@
     "required_techs": [
       "electricity"
     ],
-    "fragment_description": "以#blister_copper#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#blister_copper#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "从阳极泥提取碲",
@@ -4090,7 +4211,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#anode_slime#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "阳极泥贵金属回收",
@@ -4122,7 +4244,8 @@
     "required_techs": [
       "smelting"
     ],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "初步处理钒铅矿",
@@ -4156,7 +4279,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#vanadinite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#vanadinite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "硫酸浸出锌焙砂",
@@ -4190,7 +4314,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#zinc_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#zinc_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "湿法置换提镉",
@@ -4224,7 +4349,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "锂云母酸解",
@@ -4262,7 +4388,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#lepidolite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#lepidolite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "rare_earth"
   },
   {
     "key": "rubidium_reduction",
@@ -4297,7 +4424,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#rubidium_chloride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#rubidium_chloride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "rubidium_electrolysis",
@@ -4330,7 +4458,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#rubidium_chloride#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。"
+    "fragment_description": "以#rubidium_chloride#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
+    "required_era": "electrochem"
   },
   {
     "name": "提炼硫酸铊",
@@ -4360,7 +4489,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#lorandite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#lorandite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "置换沉铊",
@@ -4394,7 +4524,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#thallium_sulfate#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#thallium_sulfate#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "电解硫酸铊制铊",
@@ -4430,7 +4561,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#thallium_sulfate#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。"
+    "fragment_description": "以#thallium_sulfate#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
+    "required_era": "electrochem"
   },
   {
     "name": "从溶液提铟",
@@ -4460,7 +4592,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "key": "extract_gallium",
@@ -4489,7 +4622,8 @@
     "required_techs": [
       "electrochemistry"
     ],
-    "fragment_description": "以#bayer_liquor#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#bayer_liquor#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "结晶硫酸锌",
@@ -4515,7 +4649,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "氯化法提锗",
@@ -4546,7 +4681,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#zinc_leaching_residue#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#zinc_leaching_residue#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "四氯化锗水解",
@@ -4576,7 +4712,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#germanium_tetrachloride#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#germanium_tetrachloride#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "氢还原提锗",
@@ -4606,7 +4743,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#germanium_oxide#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#germanium_oxide#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "提炼氧化钪",
@@ -4636,7 +4774,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#bauxite_residue#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#bauxite_residue#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "氟化法制氟化钪",
@@ -4666,7 +4805,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#scandium_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#scandium_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "name": "镁还原提钪",
@@ -4702,7 +4842,8 @@
     "required_techs": [
       "rare_earth"
     ],
-    "fragment_description": "以#scandium_fluoride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#scandium_fluoride#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "produce_hydrofluoric_acid",
@@ -4740,7 +4881,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#fluorite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#fluorite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "name": "制备氟化钾",
@@ -4768,7 +4910,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#potassium_hydroxide#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#potassium_hydroxide#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "electrolyze_fluorine",
@@ -4809,7 +4952,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#hydrofluoric_acid#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#hydrofluoric_acid#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "electrochem"
   },
   {
     "name": "配置王水",
@@ -4833,7 +4977,8 @@
         "multiple": 4
       }
     ],
-    "fragment_description": "以#hydrochloric_acid#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#hydrochloric_acid#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "dissolve_platinum_sand",
@@ -4866,7 +5011,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#crude_platinum_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#crude_platinum_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "extract_os_ir",
@@ -4901,7 +5047,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#platinum_sand_residue#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#platinum_sand_residue#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "produce_ferrous_sulfate",
@@ -4929,7 +5076,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#pig_iron#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#pig_iron#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "key": "produce_ammonium_chloride",
@@ -4957,7 +5105,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#ammonia#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#ammonia#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "stone"
   },
   {
     "key": "refine_gold_step",
@@ -4989,7 +5138,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#precious_metal_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#precious_metal_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "refine_platinum_step",
@@ -5017,7 +5167,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#platinum_group_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#platinum_group_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "refine_pd_rh_step",
@@ -5045,7 +5196,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#platinum_group_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#platinum_group_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "tantalum_niobium_separation",
@@ -5085,7 +5237,8 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "以#tantalite_columbite#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#tantalite_columbite#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "refine_tantalum_step",
@@ -5113,7 +5266,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#potassium_fluotantalate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#potassium_fluotantalate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "refine_niobium_step",
@@ -5141,7 +5295,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#potassium_fluoniobate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#potassium_fluoniobate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "extract_rhenium_step",
@@ -5169,7 +5324,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#molybdenum_roaster_dust#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#molybdenum_roaster_dust#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "refine_rhenium_step",
@@ -5193,7 +5349,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#ammonium_perrhenate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#ammonium_perrhenate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "zirconium_hafnium_separation",
@@ -5229,7 +5386,8 @@
         "multiple": 0.2
       }
     ],
-    "fragment_description": "以#unpurified_zirconia#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#unpurified_zirconia#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "digest_xenotime",
@@ -5254,7 +5412,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#xenotime#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#xenotime#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "precipitate_yttrium",
@@ -5279,7 +5438,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#yttrium_solution#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#yttrium_solution#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "calcine_yttrium",
@@ -5305,7 +5465,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#yttrium_oxalate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#yttrium_oxalate#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_yttrium",
@@ -5339,7 +5500,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#yttrium_oxide#为基础原料，在进行$roasting$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。"
+    "fragment_description": "以#yttrium_oxide#为基础原料，在进行$roasting$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
+    "required_era": "alchemy"
   },
   {
     "key": "leach_zircon_frit",
@@ -5364,7 +5526,8 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#unrefined_zirconia#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。"
+    "fragment_description": "以#unrefined_zirconia#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "required_era": "alchemy"
   },
   {
     "key": "reduce_hafnium",
@@ -5398,6 +5561,7 @@
       }
     ],
     "required_techs": [],
-    "fragment_description": "以#hafnium_oxide#为基础原料，在进行$roasting$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。"
+    "fragment_description": "以#hafnium_oxide#为基础原料，在进行$roasting$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
+    "required_era": "alchemy"
   }
 ]

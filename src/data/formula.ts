@@ -34,6 +34,10 @@ export interface IFormula {
      */
     required_techs?: string[];
     /**
+     * 所需时代
+     */
+    required_era?: string;
+    /**
      * 所需时间（秒）
      */
     time_required: number; // in seconds

@@ -107,7 +107,7 @@
                 rows="2"
               ></textarea>
             </label>
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-3 gap-4">
               <label class="form-control w-full">
                 <span class="label-text mb-1">耗时（秒）</span>
                 <input
@@ -139,6 +139,14 @@
                   :options="labOptions"
                   v-model="form.action_key"
                   placeholder="不要求操作"
+                />
+              </label>
+              <label class="form-control w-full">
+                <span class="label-text mb-1">所属时代</span>
+                <SearchableSelect
+                  :options="eraOptions"
+                  v-model="form.era"
+                  placeholder="石器时代 (默认)"
                 />
               </label>
             </div>
@@ -340,6 +348,7 @@ const form = reactive({
   action_max: undefined as number | undefined,
   fragment_description: "",
   power_consumption: undefined as number | undefined,
+  era: "",
   techs: [] as string[],
 });
 const techInput = ref("");
@@ -349,6 +358,7 @@ const itemOptions = ref<any[]>([]);
 const techOptions = ref<any[]>([]);
 const labOptions = ref<any[]>([]);
 const containerItems = ref<any[]>([]);
+const eraOptions = ref<any[]>([]);
 
 onMounted(() => {
   loadRecords();
@@ -359,15 +369,17 @@ async function loadRecords() {
   records.value = await r.json();
 }
 async function fetchRefs() {
-  const [ir, tr, lr, cr] = await Promise.all([
+  const [ir, tr, lr, cr, er] = await Promise.all([
     admin.apiFetch("/api/items"),
     admin.apiFetch("/api/techs"),
     admin.apiFetch("/api/labs"),
     admin.apiFetch("/api/items"),
+    admin.apiFetch("/api/eras"),
   ]);
   itemOptions.value = await ir.json();
   techOptions.value = await tr.json();
   labOptions.value = await lr.json();
+  eraOptions.value = await er.json();
   containerItems.value = (await cr.json()).filter((i: any) =>
     i.type?.includes("container"),
   );
@@ -397,6 +409,7 @@ function resetForm() {
     action_max: undefined,
     fragment_description: "",
     power_consumption: undefined,
+    era: "",
     techs: [],
   });
   objItems.splice(0);
@@ -421,6 +434,7 @@ function openEdit(r: any) {
     action_max: r.required_actions?.max,
     fragment_description: r.fragment_description || "",
     power_consumption: r.power_consumption,
+    era: r.required_era || "",
     techs: [...(r.required_techs || [])],
   });
   objItems.push(
@@ -452,6 +466,7 @@ async function save() {
     fragment_description: form.fragment_description || undefined,
     time_required: form.time_required,
     power_consumption: form.power_consumption || undefined,
+    required_era: form.era || undefined,
   };
   if (form.container) body.required_container = form.container;
   if (form.action_key) {

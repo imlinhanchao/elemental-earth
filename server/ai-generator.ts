@@ -188,6 +188,7 @@ function buildSystemPrompt(contextData: ContextData): string {
   "required_container": "要求容器items的key（如 kiln, clay_pot）",
   "required_actions": { "key": "操作key", "min": 最少次数, "max": 最多次数 },
   "required_techs": ["前置科技key"],
+  "required_era": "时代key (stone, alchemy, modern_chem, electrochem, rare_earth, atomic_age)",
   "time_required": 时间秒,
   "fragment_description": "碎片描述（使用 #材料Key# 和 $操作key$ 占位）",
   "products": [
@@ -196,6 +197,14 @@ function buildSystemPrompt(contextData: ContextData): string {
   ]
 }
 \`\`\`
+时代节点参考：
+- \`stone\`: 石器时代 (基础采集、手工制作)
+- \`alchemy\`: 炼金术时代 (窑炉焙烧、简单金属提取)
+- \`modern_chem\`: 近代化学 (酸碱制备、气体收集、复杂合金)
+- \`electrochem\`: 电化学时代 (电池应用、电解产物)
+- \`rare_earth\`: 稀土时代 (稀有金属、锂系化学)
+- \`atomic_age\`: 原子时代 (放射性元素、核物理相关)
+建议根据所需操作和前置科技合理分配 \`required_era\`。
 
 ## 生成规则
 
