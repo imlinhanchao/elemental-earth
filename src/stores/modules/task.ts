@@ -154,7 +154,7 @@ export const useTaskStore = defineStore('task', () => {
                 return !packStore.hasProvenFormula(f.key) &&
                   !fragmentStore.hasFragment(f.key) &&
                   fEraOrder <= currentOrder &&
-                  (f.required_items || []).some(req => {
+                  (f.required_items || []).filter(f => f.isMain).some(req => {
                     const keys = Array.isArray(req.key) ? req.key : [req.key];
                     return keys.some(k => packStore.hasEverHad(k));
                   })

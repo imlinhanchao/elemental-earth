@@ -30,6 +30,7 @@
             <th>耗时</th>
             <th>容器</th>
             <th>操作</th>
+            <th>时代</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@
             <td>{{ r.time_required }}s</td>
             <td class="text-xs">{{ r.required_container || "—" }}</td>
             <td class="text-xs">{{ r.required_actions?.key || "—" }}</td>
+            <td class="text-xs">{{ eraOptions.find(e => e.key == r.required_era)?.name || "—" }}</td>
             <td>
               <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
                 编辑</button

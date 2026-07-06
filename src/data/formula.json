@@ -12,7 +12,8 @@
     "required_items": [
       {
         "key": "wood",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -43,7 +44,8 @@
     "required_items": [
       {
         "key": "mud",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -76,7 +78,8 @@
     "required_items": [
       {
         "key": "malachite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -103,7 +106,8 @@
     "required_items": [
       {
         "key": "wood_ash",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -136,7 +140,8 @@
     "required_items": [
       {
         "key": "hematite",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "charcoal",
@@ -178,7 +183,8 @@
     "required_items": [
       {
         "key": "charcoal",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -215,7 +221,8 @@
     "required_items": [
       {
         "key": "cinnabar",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "products": [
@@ -246,7 +253,8 @@
     "required_items": [
       {
         "key": "sphalerite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -276,10 +284,15 @@
     "required_items": [
       {
         "key": "zinc_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -313,11 +326,13 @@
     "required_items": [
       {
         "key": "copper",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "zinc",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -342,10 +357,15 @@
     "required_items": [
       {
         "key": "galena",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -376,10 +396,15 @@
     "required_items": [
       {
         "key": "lead_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -413,10 +438,15 @@
     "required_items": [
       {
         "key": "cassiterite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -450,14 +480,16 @@
           "copper",
           "malachite"
         ],
-        "quantity": 4
+        "quantity": 4,
+        "isMain": true
       },
       {
         "key": [
           "tin",
           "cassiterite"
         ],
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -482,7 +514,8 @@
     "required_items": [
       {
         "key": "argentite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -505,7 +538,8 @@
     "required_items": [
       {
         "key": "stibnite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -542,10 +576,15 @@
     "required_items": [
       {
         "key": "antimony_trioxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -576,7 +615,8 @@
     "required_items": [
       {
         "key": "arsenopyrite",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "products": [
@@ -615,10 +655,15 @@
     "required_items": [
       {
         "key": "realgar",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "coal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -654,10 +699,15 @@
     "required_items": [
       {
         "key": "orpiment",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "coal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -683,7 +733,9 @@
     "key": "reduce_arsenic_trioxide",
     "name": "还原三氧化二砷",
     "description": "用碳在高温下还原三氧化二砷，获得单质砷和一氧化碳。",
+    "fragment_description": "使用#coal#对#arsenic_trioxide#进行高温$roasting$还原，提取单质#arsenic#并产生#carbon_monoxide#。",
     "time_required": 30,
+    "required_era": "alchemy",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -693,10 +745,15 @@
     "required_items": [
       {
         "key": "arsenic_trioxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "coal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -714,9 +771,7 @@
     ],
     "required_techs": [
       "high_temp_furnace"
-    ],
-    "fragment_description": "使用#coal#对#arsenic_trioxide#进行高温$roasting$还原，提取单质#arsenic#并产生#carbon_monoxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "dry_distill_arsenopyrite",
@@ -732,7 +787,8 @@
     "required_items": [
       {
         "key": "arsenopyrite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -750,34 +806,37 @@
     "required_era": "alchemy"
   },
   {
-    "name": "生产磷",
     "key": "phosphorus_production",
+    "name": "硅砂炭还原磷",
     "description": "将磷矿石与硅砂、焦炭在高炉中高温还原，生成磷蒸汽，冷凝后得到白磷。",
-    "required_items": [
-      {
-        "key": "phosphorite",
-        "quantity": 2
-      },
-      {
-        "key": "silica_sand",
-        "quantity": 3
-      },
-      {
-        "key": "coke",
-        "quantity": 5
-      }
-    ],
+    "fragment_description": "使#phosphorite#、#silica_sand#与#coke#在高炉中高温$roasting$还原，提取出#phosphorus#并伴随产生#carbon_monoxide#及#slag#。",
+    "time_required": 120,
+    "required_era": "modern_chem",
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-      "high_temp_furnace",
-      "gas_collection"
+    "required_items": [
+      {
+        "key": "phosphorite",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "silica_sand",
+        "quantity": 3
+      },
+      {
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
+        "quantity": 5
+      }
     ],
-    "time_required": 120,
     "products": [
       {
         "key": "phosphorus",
@@ -794,29 +853,30 @@
         "multiple": 3
       }
     ],
-    "fragment_description": "使#phosphorite#、#silica_sand#与#coke#在高炉中高温$roasting$还原，提取出#phosphorus#并伴随产生#carbon_monoxide#及#slag#。",
-    "required_era": "modern_chem"
+    "required_techs": [
+      "high_temp_furnace",
+      "gas_collection"
+    ]
   },
   {
-    "name": "筛选硅砂",
     "key": "sift_silica_sand",
+    "name": "筛选硅砂",
     "description": "将普通沙子过筛，得到较纯净的硅砂。",
-    "required_items": [
-      {
-        "key": "sand",
-        "quantity": 5
-      }
-    ],
-    "required_container": null,
+    "fragment_description": "对#sand#使用$sifting$工艺，分离杂质以获取高纯度的#silica_sand#。",
+    "time_required": 15,
+    "required_era": "modern_chem",
     "required_actions": {
       "key": "sifting",
       "min": 1,
       "max": 1
     },
-    "required_techs": [
-      "sifting_technology"
+    "required_items": [
+      {
+        "key": "sand",
+        "quantity": 5,
+        "isMain": true
+      }
     ],
-    "time_required": 15,
     "products": [
       {
         "key": "silica_sand",
@@ -827,8 +887,9 @@
         "multiple": 2
       }
     ],
-    "fragment_description": "对#sand#使用$sifting$工艺，分离杂质以获取高纯度的#silica_sand#。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "sifting_technology"
+    ]
   },
   {
     "name": "焙烧辉钴矿",
@@ -837,7 +898,8 @@
     "required_items": [
       {
         "key": "cobaltite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -870,10 +932,15 @@
     "required_items": [
       {
         "key": "cobalt_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -907,7 +974,8 @@
     "required_items": [
       {
         "key": "cobalt_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "silica_sand",
@@ -951,7 +1019,8 @@
     "required_items": [
       {
         "key": "sperrylite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -978,7 +1047,8 @@
     "required_items": [
       {
         "key": "pentlandite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1009,7 +1079,8 @@
     "required_items": [
       {
         "key": "nickel_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": [
@@ -1053,7 +1124,8 @@
     "required_items": [
       {
         "key": "sulfur",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -1084,7 +1156,8 @@
     "required_items": [
       {
         "key": "sulfur_trioxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -1113,7 +1186,8 @@
     "required_items": [
       {
         "key": "green_vitriol",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "products": [
@@ -1158,7 +1232,8 @@
       },
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "clay_pot",
@@ -1218,10 +1293,15 @@
     "required_items": [
       {
         "key": "niter",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -1256,7 +1336,8 @@
     "required_items": [
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "brass_condenser",
@@ -1282,7 +1363,8 @@
     "required_items": [
       {
         "key": "niter",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
@@ -1319,7 +1401,8 @@
       },
       {
         "key": "niter",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       },
       {
         "key": "charcoal",
@@ -1348,7 +1431,8 @@
     "required_items": [
       {
         "key": "limestone",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1379,7 +1463,8 @@
     "required_items": [
       {
         "key": "quicklime",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -1409,11 +1494,13 @@
     "required_items": [
       {
         "key": "limestone",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "clay_pot",
@@ -1448,7 +1535,8 @@
       },
       {
         "key": "limestone",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1510,7 +1598,8 @@
     "required_items": [
       {
         "key": "rock_salt",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -1553,11 +1642,13 @@
     "required_items": [
       {
         "key": "chlorine",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrogen",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "fire_seed",
@@ -1585,11 +1676,13 @@
     "required_items": [
       {
         "key": "chlorine",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "slaked_lime",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_actions": {
@@ -1617,7 +1710,8 @@
     "required_items": [
       {
         "key": "pyrolusite",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       },
       {
         "key": [
@@ -1662,7 +1756,8 @@
     "required_items": [
       {
         "key": "manganese",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "steel",
@@ -1690,11 +1785,8 @@
     "required_items": [
       {
         "key": "pig_iron",
-        "quantity": 5
-      },
-      {
-        "key": "oxygen",
-        "quantity": 1
+        "quantity": 5,
+        "isMain": true
       },
       {
         "key": "quicklime",
@@ -1726,11 +1818,8 @@
     "required_items": [
       {
         "key": "mercury",
-        "quantity": 2
-      },
-      {
-        "key": "oxygen",
-        "quantity": 1
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1756,7 +1845,8 @@
     "required_items": [
       {
         "key": "mercury_oxide",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1788,7 +1878,8 @@
     "required_items": [
       {
         "key": "molybdenite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1813,7 +1904,7 @@
       }
     ],
     "fragment_description": "在有氧条件下对#molybdenite#进行$roasting$，使其氧化转化为#molybdenum_trioxide#并释放#sulfur_dioxide#气体。",
-    "required_era": "alchemy"
+    "required_era": "modern_chem"
   },
   {
     "name": "还原三氧化钼",
@@ -1822,7 +1913,8 @@
     "required_items": [
       {
         "key": "molybdenum_trioxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": [
@@ -1851,7 +1943,7 @@
       }
     ],
     "fragment_description": "使用#charcoal#或煤还原#molybdenum_trioxide#，在高温$roasting$过程中通过夺取氧原子析出金属#molybdenum#。",
-    "required_era": "alchemy"
+    "required_era": "modern_chem"
   },
   {
     "name": "焙烧白钨矿制三氧化钨",
@@ -1860,7 +1952,8 @@
     "required_items": [
       {
         "key": "scheelite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -1885,7 +1978,7 @@
       }
     ],
     "fragment_description": "将#scheelite#与#hydrochloric_acid#反应后进行$roasting$处理，最终氧化转化为黄色固体#tungsten_trioxide#。",
-    "required_era": "alchemy"
+    "required_era": "modern_chem"
   },
   {
     "name": "还原三氧化钨制钨粉",
@@ -1894,7 +1987,8 @@
     "required_items": [
       {
         "key": "tungsten_trioxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrogen",
@@ -1928,7 +2022,8 @@
     "required_items": [
       {
         "key": "tellurium_gold_ore",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -1958,10 +2053,15 @@
     "required_items": [
       {
         "key": "tellurium_dioxide",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -1999,7 +2099,8 @@
     "required_items": [
       {
         "key": "zircon",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "limestone",
@@ -2040,10 +2141,15 @@
           "zirconia",
           "unrefined_zirconia"
         ],
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -2071,7 +2177,8 @@
     "required_items": [
       {
         "key": "pitchblende",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -2097,10 +2204,15 @@
     "required_items": [
       {
         "key": "uranium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 2
       }
     ],
@@ -2131,10 +2243,15 @@
     "required_items": [
       {
         "key": "rutile",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -2168,7 +2285,8 @@
     "required_items": [
       {
         "key": "titanium_dioxide",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "magnesium",
@@ -2205,7 +2323,8 @@
     "required_items": [
       {
         "key": "chromite",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -2238,10 +2357,15 @@
     "required_items": [
       {
         "key": "chromium_oxide",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -2284,11 +2408,13 @@
       },
       {
         "key": "chromium",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "nickel",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "blast_furnace",
@@ -2321,7 +2447,8 @@
     "required_items": [
       {
         "key": "beryl",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -2347,10 +2474,15 @@
     "required_items": [
       {
         "key": "beryllium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 2
       }
     ],
@@ -2377,7 +2509,8 @@
     "required_items": [
       {
         "key": "sylvite",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -2412,7 +2545,8 @@
     "required_items": [
       {
         "key": "wood_ash",
-        "quantity": 5
+        "quantity": 5,
+        "isMain": true
       },
       {
         "key": "water",
@@ -2436,13 +2570,23 @@
     "required_era": "stone"
   },
   {
-    "name": "碳酸钾制氢氧化钾",
     "key": "potassium_hydroxide_from_carbonate",
+    "name": "碳酸钾制氢氧化钾",
     "description": "碳酸钾与熟石灰反应生成氢氧化钾和碳酸钙沉淀。",
+    "fragment_description": "使#potassium_carbonate#与#slaked_lime#溶液发生复分解反应，生成碳酸钙沉淀并制取强碱#potassium_hydroxide#。",
+    "time_required": 15,
+    "required_era": "modern_chem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
         "key": "potassium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "slaked_lime",
@@ -2453,13 +2597,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1,
-      "max": 1
-    },
-    "time_required": 15,
     "products": [
       {
         "key": "potassium_hydroxide",
@@ -2469,9 +2606,7 @@
         "key": "limestone",
         "multiple": 1
       }
-    ],
-    "fragment_description": "使#potassium_carbonate#与#slaked_lime#溶液发生复分解反应，生成碳酸钙沉淀并制取强碱#potassium_hydroxide#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "电解熔融岩盐制钠",
@@ -2480,7 +2615,8 @@
     "required_items": [
       {
         "key": "rock_salt",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -2514,7 +2650,8 @@
     "required_items": [
       {
         "key": "sodium",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -2547,7 +2684,8 @@
     "required_items": [
       {
         "key": "sodium_hydroxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "carbon_dioxide",
@@ -2580,7 +2718,8 @@
     "required_items": [
       {
         "key": "limestone",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -2618,7 +2757,8 @@
     "required_items": [
       {
         "key": "calcium_chloride",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -2652,10 +2792,15 @@
     "required_items": [
       {
         "key": "barite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -2687,7 +2832,8 @@
     "required_items": [
       {
         "key": "barium_sulfide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "sodium_carbonate",
@@ -2718,7 +2864,8 @@
     "required_items": [
       {
         "key": "barium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -2749,7 +2896,8 @@
     "required_items": [
       {
         "key": "barium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -2784,7 +2932,8 @@
     "required_items": [
       {
         "key": "barium_chloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -2816,7 +2965,8 @@
     "required_items": [
       {
         "key": "barium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "nitric_acid",
@@ -2851,7 +3001,8 @@
     "required_items": [
       {
         "key": "witherite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -2889,7 +3040,8 @@
     "required_items": [
       {
         "key": "animal_fat",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "alkaline_solution",
@@ -2917,15 +3069,18 @@
     "required_items": [
       {
         "key": "glycerol",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "nitric_acid",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "clay_pot",
@@ -2955,10 +3110,15 @@
     "required_items": [
       {
         "key": "celestine",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -2997,7 +3157,8 @@
     "required_items": [
       {
         "key": "strontianite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -3031,7 +3192,8 @@
     "required_items": [
       {
         "key": "strontium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "aluminum_powder",
@@ -3068,7 +3230,8 @@
     "required_items": [
       {
         "key": "strontium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "nitric_acid",
@@ -3105,7 +3268,8 @@
     "required_items": [
       {
         "key": "magnesite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -3135,7 +3299,8 @@
     "required_items": [
       {
         "key": "magnesite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -3173,7 +3338,8 @@
     "required_items": [
       {
         "key": "magnesium_chloride",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -3207,7 +3373,8 @@
     "required_items": [
       {
         "key": "seaweed",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": null,
@@ -3233,7 +3400,8 @@
     "required_items": [
       {
         "key": "dried_seaweed",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -3257,13 +3425,23 @@
     "required_era": "alchemy"
   },
   {
-    "name": "提取碘",
     "key": "extract_iodine",
+    "name": "提取碘",
     "description": "将海藻灰与稀硫酸、软锰矿混合加热，产生的碘蒸气通过冷凝收集。",
+    "fragment_description": "利用化学试剂从海藻灰的浸出液中氧化还原，提取具有金属光泽的#iodine#单质。",
+    "time_required": 30,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
         "key": "sea_weed_ash",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -3271,25 +3449,25 @@
       },
       {
         "key": "pyrolusite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "iodine",
         "multiple": 1,
         "required_chain_operation": "condensation"
+      },
+      {
+        "key": "manganese_sulfate",
+        "multiple": 1
+      },
+      {
+        "key": "potassium_bisulfate",
+        "multiple": 2
       }
-    ],
-    "fragment_description": "利用化学试剂从海藻灰的浸出液中氧化还原，提取具有金属光泽的#iodine#单质。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "硫酸法提锂",
@@ -3298,7 +3476,8 @@
     "required_items": [
       {
         "key": "spodumene",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
@@ -3333,7 +3512,8 @@
     "required_items": [
       {
         "key": "lithium_sulfate",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "sodium_carbonate",
@@ -3367,7 +3547,8 @@
     "required_items": [
       {
         "key": "lithium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "slaked_lime",
@@ -3401,7 +3582,8 @@
     "required_items": [
       {
         "key": "lithium_chloride",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -3443,11 +3625,13 @@
           "silica_sand",
           "quartz"
         ],
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "potassium",
-        "quantity": 4
+        "quantity": 4,
+        "isMain": true
       }
     ],
     "products": [
@@ -3473,11 +3657,13 @@
     "required_items": [
       {
         "key": "silica_sand",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "sodium_carbonate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -3508,7 +3694,8 @@
     "required_items": [
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       }
     ],
     "required_container": "distilling_flask",
@@ -3541,7 +3728,8 @@
     "required_items": [
       {
         "key": "bauxite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "sodium_hydroxide",
@@ -3587,7 +3775,8 @@
     "required_items": [
       {
         "key": "aluminum_hydroxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -3617,11 +3806,13 @@
     "required_items": [
       {
         "key": "alumina",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "cryolite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -3655,11 +3846,13 @@
     "required_items": [
       {
         "key": "mercury",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "nitric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "beaker",
@@ -3688,7 +3881,8 @@
     "required_items": [
       {
         "key": "pollucite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -3722,7 +3916,8 @@
     "required_items": [
       {
         "key": "cesium_chloride_solution",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       }
     ],
     "required_container": "beaker",
@@ -3748,7 +3943,8 @@
     "required_items": [
       {
         "key": "cesium_chloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "crucible",
@@ -3782,7 +3978,8 @@
     "required_items": [
       {
         "key": "cesium",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -3816,7 +4013,8 @@
     "required_items": [
       {
         "key": "borax",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -3851,7 +4049,8 @@
     "required_items": [
       {
         "key": "boric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "potassium",
@@ -3886,7 +4085,8 @@
     "required_items": [
       {
         "key": "struvite",
-        "quantity": 5
+        "quantity": 5,
+        "isMain": true
       }
     ],
     "required_container": "kiln",
@@ -3920,10 +4120,15 @@
     "required_items": [
       {
         "key": "phosphoric_acid",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 5
       }
     ],
@@ -3958,7 +4163,8 @@
     "required_items": [
       {
         "key": "bismuthite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_actions": {
@@ -3991,10 +4197,15 @@
     "required_items": [
       {
         "key": "bismuth_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -4034,7 +4245,8 @@
     "required_items": [
       {
         "key": "brine",
-        "quantity": 5
+        "quantity": 5,
+        "isMain": true
       }
     ],
     "time_required": 30,
@@ -4064,11 +4276,13 @@
     "required_items": [
       {
         "key": "bittern",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "chlorine",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "time_required": 15,
@@ -4094,7 +4308,8 @@
     "required_items": [
       {
         "key": "anode_slime",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       }
     ],
     "time_required": 45,
@@ -4123,10 +4338,15 @@
     "required_items": [
       {
         "key": "chalcopyrite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "charcoal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
@@ -4158,7 +4378,8 @@
     "required_items": [
       {
         "key": "blister_copper",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -4194,11 +4415,13 @@
     "required_items": [
       {
         "key": "anode_slime",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "alkaline_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "time_required": 50,
@@ -4227,7 +4450,8 @@
     "required_items": [
       {
         "key": "anode_slime",
-        "quantity": 5
+        "quantity": 5,
+        "isMain": true
       }
     ],
     "time_required": 180,
@@ -4260,7 +4484,8 @@
     "required_items": [
       {
         "key": "vanadinite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -4295,7 +4520,8 @@
     "required_items": [
       {
         "key": "zinc_oxide",
-        "quantity": 4
+        "quantity": 4,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -4330,7 +4556,8 @@
     "required_items": [
       {
         "key": "zinc_leaching_solution",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "zinc",
@@ -4359,7 +4586,8 @@
     "required_items": [
       {
         "key": "lepidolite",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
@@ -4405,7 +4633,8 @@
     "required_items": [
       {
         "key": "rubidium_chloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "calcium",
@@ -4442,7 +4671,8 @@
     "required_items": [
       {
         "key": "rubidium_chloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -4468,7 +4698,8 @@
     "required_items": [
       {
         "key": "lorandite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -4499,7 +4730,8 @@
     "required_items": [
       {
         "key": "thallium_sulfate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "zinc",
@@ -4534,7 +4766,8 @@
     "required_items": [
       {
         "key": "thallium_sulfate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "beaker",
@@ -4571,7 +4804,8 @@
     "required_items": [
       {
         "key": "zinc_leaching_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "iron",
@@ -4610,7 +4844,8 @@
     "required_items": [
       {
         "key": "bayer_liquor",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -4632,7 +4867,8 @@
     "required_items": [
       {
         "key": "zinc_leaching_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "evaporating_dish",
@@ -4659,7 +4895,8 @@
     "required_items": [
       {
         "key": "zinc_leaching_residue",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "concentrated_hydrochloric_acid",
@@ -4691,7 +4928,8 @@
     "required_items": [
       {
         "key": "germanium_tetrachloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "water",
@@ -4722,7 +4960,8 @@
     "required_items": [
       {
         "key": "germanium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrogen",
@@ -4753,7 +4992,8 @@
     "required_items": [
       {
         "key": "bauxite_residue",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
@@ -4784,7 +5024,8 @@
     "required_items": [
       {
         "key": "scandium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrofluoric_acid",
@@ -4811,11 +5052,12 @@
   {
     "name": "镁还原提钪",
     "key": "scandium_reduction",
-    "description": "在惰性气体保护和高温环境下，用金属镁还原氟化钪，得到高纯度的金属钪。",
+    "description": "在高温环境下，用金属镁还原氟化钪，得到高纯度的金属钪。",
     "required_items": [
       {
         "key": "scandium_fluoride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "magnesium",
@@ -4849,7 +5091,9 @@
     "key": "produce_hydrofluoric_acid",
     "name": "制备氢氟酸",
     "description": "将萤石精矿与浓硫酸反应，加热产生氟化氢气体，经水吸收得到氢氟酸。",
+    "fragment_description": "以#fluorite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "time_required": 15,
+    "required_era": "electrochem",
     "required_container": "iron_tank",
     "required_actions": {
       "key": "heating",
@@ -4859,7 +5103,8 @@
     "required_items": [
       {
         "key": "fluorite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "concentrated_sulfuric_acid",
@@ -4880,9 +5125,7 @@
         "key": "calcium_sulfate",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#fluorite#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "制备氟化钾",
@@ -4891,11 +5134,13 @@
     "required_items": [
       {
         "key": "potassium_hydroxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrofluoric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "iron_tank",
@@ -4928,11 +5173,13 @@
     "required_items": [
       {
         "key": "hydrofluoric_acid",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "potassium_fluoride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -4962,11 +5209,13 @@
     "required_items": [
       {
         "key": "hydrochloric_acid",
-        "quantity": 3
+        "quantity": 3,
+        "isMain": true
       },
       {
         "key": "nitric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "required_container": "beaker",
@@ -4994,7 +5243,8 @@
     "required_items": [
       {
         "key": "crude_platinum_sand",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "aqua_regia",
@@ -5028,7 +5278,8 @@
     "required_items": [
       {
         "key": "platinum_sand_residue",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5066,7 +5317,8 @@
       },
       {
         "key": "dilute_sulfuric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5091,7 +5343,8 @@
     "required_items": [
       {
         "key": "ammonia",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -5120,11 +5373,13 @@
     "required_items": [
       {
         "key": "precious_metal_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "ferrous_sulfate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5153,11 +5408,13 @@
     "required_items": [
       {
         "key": "platinum_group_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "ammonium_chloride",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5182,7 +5439,8 @@
     "required_items": [
       {
         "key": "platinum_group_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5212,7 +5470,8 @@
     "required_items": [
       {
         "key": "tantalite_columbite",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrofluoric_acid",
@@ -5252,7 +5511,8 @@
     "required_items": [
       {
         "key": "potassium_fluotantalate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "sodium",
@@ -5281,7 +5541,8 @@
     "required_items": [
       {
         "key": "potassium_fluoniobate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "sodium",
@@ -5310,7 +5571,8 @@
     "required_items": [
       {
         "key": "molybdenum_roaster_dust",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "ammonia",
@@ -5339,7 +5601,8 @@
     "required_items": [
       {
         "key": "ammonium_perrhenate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5365,7 +5628,8 @@
     "required_items": [
       {
         "key": "unpurified_zirconia",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "hydrofluoric_acid",
@@ -5398,7 +5662,8 @@
     "required_items": [
       {
         "key": "xenotime",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "sulfuric_acid",
@@ -5424,7 +5689,8 @@
     "required_items": [
       {
         "key": "yttrium_solution",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "oxalic_acid",
@@ -5455,7 +5721,8 @@
     "required_items": [
       {
         "key": "yttrium_oxalate",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
     "products": [
@@ -5482,7 +5749,8 @@
     "required_items": [
       {
         "key": "yttrium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "calcium",
@@ -5512,7 +5780,8 @@
     "required_items": [
       {
         "key": "unrefined_zirconia",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "hydrochloric_acid",
@@ -5543,7 +5812,8 @@
     "required_items": [
       {
         "key": "hafnium_oxide",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
         "key": "calcium",
@@ -5563,5 +5833,120 @@
     "required_techs": [],
     "fragment_description": "以#hafnium_oxide#为基础原料，在进行$roasting$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
     "required_era": "alchemy"
+  },
+  {
+    "name": "软锰矿制硫酸锰",
+    "key": "manganese_sulfate_from_pyrolusite",
+    "description": "将软锰矿与木炭粉混合，加入稀硫酸共热，还原溶解后过滤结晶。",
+    "required_items": [
+      {
+        "key": "pyrolusite",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 3
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "glassworking"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 120,
+    "fragment_description": "将 #pyrolusite# 和 #charcoal# 投入 #beaker#，加入 #dilute_sulfuric_acid# 后 $heating$，溶液渐呈淡粉色，趁热 $filtering$ 得清液。",
+    "products": [
+      {
+        "key": "manganese_sulfate",
+        "multiple": 2
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "钾石盐制硫酸氢钾",
+    "key": "potassium_bisulfate_from_sylvite",
+    "description": "将钾石盐与浓硫酸共热，生成硫酸氢钾和氯化氢气体，用水吸收氯化氢得盐酸。",
+    "required_items": [
+      {
+        "key": "sylvite",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "distilling_flask",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "glassworking"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 90,
+    "fragment_description": "在 #distilling_flask# 中混合 #sylvite# 和 #concentrated_sulfuric_acid#，$heating$ 后白雾升腾，用 $gas_collecting$ 收集气体并通入水中。",
+    "products": [
+      {
+        "key": "potassium_bisulfate",
+        "multiple": 2
+      },
+      {
+        "key": "hydrochloric_acid",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硫酸氢钾热分解",
+    "key": "potassium_pyrosulfate_decomposition",
+    "description": "将硫酸氢钾加热至熔融，分解释放出水，生成焦硫酸钾。",
+    "required_items": [
+      {
+        "key": "potassium_bisulfate",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "glassworking"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 60,
+    "fragment_description": "将 #potassium_bisulfate# 放入 #crucible# 中 $heating$ 至红热，固体融化成粘稠液体，表面冒出白色蒸汽。",
+    "products": [
+      {
+        "key": "potassium_pyrosulfate",
+        "multiple": 1
+      },
+      {
+        "key": "water",
+        "multiple": 1
+      }
+    ]
   }
 ]

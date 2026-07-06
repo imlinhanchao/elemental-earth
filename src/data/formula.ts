@@ -16,7 +16,7 @@ export interface IFormula {
     /**
      * 所需物品
      */
-    required_items: { key: string | string[]; quantity: number, use?: number }[];
+    required_items: { key: string | string[]; quantity: number, use?: number, isMain?: boolean }[];
     /**
      * 要求容器
      */

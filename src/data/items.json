@@ -2818,5 +2818,35 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "硫酸锰",
+    "key": "manganese_sulfate",
+    "category": "材料",
+    "description": "白色或浅红色的晶体，溶于水呈淡粉色，略带金属味。晶体表面有些许潮解感，在空气中缓慢风化。",
+    "type": [
+      "material"
+    ],
+    "elemental": 25
+  },
+  {
+    "name": "硫酸氢钾",
+    "key": "potassium_bisulfate",
+    "category": "材料",
+    "description": "无色或白色固体颗粒，表面有玻璃光泽，味酸涩，遇水放热并发出嘶嘶声。",
+    "type": [
+      "material"
+    ],
+    "elemental": 19
+  },
+  {
+    "name": "焦硫酸钾",
+    "key": "potassium_pyrosulfate",
+    "category": "材料",
+    "description": "白色吸湿性固体，在空气中渐渐潮解成粘稠液体。具有强酸性，遇水猛烈放热。",
+    "type": [
+      "material"
+    ],
+    "elemental": 19
   }
 ]
