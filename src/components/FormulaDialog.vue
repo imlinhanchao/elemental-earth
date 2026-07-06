@@ -2,7 +2,7 @@
   <Teleport to="body">
     <Transition name="dialog-fade">
       <div v-if="visible" class="dialog-overlay" @click.self="cancel">
-        <div class="dialog-panel">
+        <div class="dialog-panel bg-base-100">
           <!-- 标题 -->
           <div class="dialog-header">
             <h3>{{ formula?.name || '执行配方' }}</h3>
@@ -519,8 +519,6 @@ function cancel() {
 .dialog-fade-enter-from, .dialog-fade-leave-to { opacity: 0; }
 
 .dialog-panel {
-  background: oklch(var(--b1));
-  border: 1px solid oklch(var(--b3));
   border-radius: 12px;
   width: 100%;
   max-width: 520px;
