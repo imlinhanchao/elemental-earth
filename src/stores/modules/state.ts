@@ -19,9 +19,6 @@ export interface IGameState {
   allowedMapKeys: string[] | null; // 允许显示的地图 key 列表（用于教程引导）
 }
 
-/** 曼哈顿距离 -> 耗时毫秒的倍率 */
-const TIME_PER_DISTANCE = 100;
-
 export const useStateStore = defineStore('state', () => {
   const logStore = useLogStore()
   const state = reactive<IGameState>({
@@ -36,6 +33,15 @@ export const useStateStore = defineStore('state', () => {
   });
 
   const getState = computed(() => state);
+
+  /** 当前时代数据 */
+  const currentEra = computed<IEra | undefined>(() => Eras.find(e => e.key === state.currentEra))
+
+  /** 曼哈顿距离 -> 耗时毫秒的倍率，随时代演进减少 */
+  const timePerDistance = computed(() => {
+    const order = currentEra.value?.order || 0
+    return Math.max(25, 100 - order * 15)
+  })
 
   /** 可见地图列表（支持教程引导过滤） */
   const availableMaps = computed(() => {
@@ -77,7 +83,7 @@ export const useStateStore = defineStore('state', () => {
     const to = Maps.find(m => m.key === toKey)
     if (!from || !to) return 0
     const dist = Math.abs(from.position.x - to.position.x) + Math.abs(from.position.y - to.position.y)
-    return dist * TIME_PER_DISTANCE
+    return dist * timePerDistance.value
   }
 
   /** 开始切换地图（任务列表不为空时禁止切换） */
@@ -137,9 +143,6 @@ export const useStateStore = defineStore('state', () => {
 
   // ─── 时代系统 ────────────────────────────────────────────────
 
-  /** 当前时代数据 */
-  const currentEra = computed<IEra | undefined>(() => Eras.find(e => e.key === state.currentEra))
-
   /** 下一个时代 */
   const nextEra = computed<IEra | undefined>(() => {
     const cur = currentEra.value
@@ -192,7 +195,7 @@ export const useStateStore = defineStore('state', () => {
     isSwitching, switchProgress, getSwitchTargetMap,
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
     getElements, addElement, discoveryQueue, clearPendingDiscovery,
-    currentEra, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
+    currentEra, timePerDistance, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
     pendingEraTransition, clearEraTransition, checkMilestone,
   }
 })
