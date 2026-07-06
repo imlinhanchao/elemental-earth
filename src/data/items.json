@@ -1695,7 +1695,11 @@
     "type": [
       "material",
       "fuel"
-    ]
+    ],
+    "attrs": {
+      "burn_time": 120,
+      "explosive": true
+    }
   },
   {
     "name": "天青石",
