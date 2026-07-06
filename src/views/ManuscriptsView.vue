@@ -46,6 +46,16 @@ function selectFragment(key: string) {
     fragmentStore.markAsRead(key);
 }
 
+function getFormulaTime(formula: any) {
+    if (formula?.required_actions) {
+        const action = Labs.find((l: any) => l.key === formula.required_actions.key);
+        if (action) {
+            return action.time_required * (formula.required_actions.min || 1);
+        }
+    }
+    return formula?.time_required || 0;
+}
+
 onMounted(() => {
     if (allFragments.value.length > 0 && !activeKey.value) {
         selectFragment(allFragments.value[0].key);
@@ -159,7 +169,7 @@ onMounted(() => {
           <div class="mt-8 pt-4 border-t border-base-300 flex flex-wrap gap-4 items-center">
              <div class="flex items-center gap-2 text-xs opacity-60">
                 <Icon icon="mdi:clock-outline" />
-                耗时约为 {{ activeFragment.formula?.time_required }}s
+                耗时约为 {{ getFormulaTime(activeFragment.formula) }}s
              </div>
              <div v-if="activeFragment.formula?.required_container" class="flex items-center gap-2 text-xs opacity-60">
                 <Icon icon="mdi:archive-outline" />

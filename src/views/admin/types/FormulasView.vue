@@ -38,7 +38,10 @@
           <tr v-for="r in records" :key="r.key">
             <td class="font-mono text-xs">{{ r.key }}</td>
             <td>{{ r.name }}</td>
-            <td>{{ r.time_required }}s</td>
+            <td class="text-xs">
+              <span v-if="getFormulaTime(r) !== r.time_required" class="text-warning font-bold" title="与原始设置不符">{{ getFormulaTime(r) }}s*</span>
+              <span v-else>{{ r.time_required }}s</span>
+            </td>
             <td class="text-xs">{{ r.required_container || "—" }}</td>
             <td class="text-xs">{{ r.required_actions?.key || "—" }}</td>
             <td class="text-xs">{{ eraOptions.find(e => e.key == r.required_era)?.name || "—" }}</td>
@@ -407,6 +410,16 @@ function removeItemKey(row: any, idx: number | string) {
   row.key = row._keys.join(",") || "";
 }
 
+function getFormulaTime(r: any) {
+  if (r.required_actions?.key) {
+    const action = labOptions.value.find((l) => l.key === r.required_actions.key);
+    if (action) {
+      return action.time_required * (r.required_actions.min || 1);
+    }
+  }
+  return r.time_required;
+}
+
 function resetForm() {
   Object.assign(form, {
     key: "",
@@ -469,12 +482,22 @@ async function save() {
     alert("标识符不能为空");
     return;
   }
+
+  // 计算实际耗时
+  let calculatedTime = form.time_required;
+  if (form.action_key) {
+    const action = labOptions.value.find((l) => l.key === form.action_key);
+    if (action) {
+      calculatedTime = action.time_required * (form.action_min || 1);
+    }
+  }
+
   const body: Record<string, any> = {
     key: form.key,
     name: form.name,
     description: form.description,
     fragment_description: form.fragment_description || undefined,
-    time_required: form.time_required,
+    time_required: calculatedTime,
     power_consumption: form.power_consumption || undefined,
     required_era: form.era || undefined,
   };
