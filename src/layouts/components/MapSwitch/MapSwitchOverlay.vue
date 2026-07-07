@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { useStateStore } from '@/stores/modules/state'
+import GameTip from '@/components/GameTip.vue'
 
 const emit = defineEmits<{
   (e: 'cancel'): void
@@ -103,6 +104,11 @@ onUnmounted(() => stopTimer())
         <div class="flex justify-between items-center mb-6">
           <span class="text-lg font-mono font-bold">{{ Math.round(stateStore.switchProgress * 100) }}%</span>
           <span class="text-sm text-base-content/70">{{ remainingLabel }}</span>
+        </div>
+
+        <!-- 游戏小贴士 -->
+        <div class="mb-6">
+          <GameTip />
         </div>
 
         <!-- 取消按钮 -->
