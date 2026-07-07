@@ -333,17 +333,17 @@
     ]
   },
   {
-    "name": "高炉",
     "key": "blast_furnace",
+    "name": "高炉",
     "category": "容器",
     "description": "用于高温冶炼金属的竖炉，需耐火砖建造，可进行还原熔炼。",
     "type": [
       "container"
     ],
+    "durable": 100,
     "attrs": {
       "can_heat": true
-    },
-    "durable": 1
+    }
   },
   {
     "name": "石灰石",

@@ -1235,6 +1235,10 @@
       {
         "key": "clay",
         "quantity": 5
+      },
+      {
+        "key": "bellows",
+        "quantity": 1
       }
     ],
     "rewards": [
