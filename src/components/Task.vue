@@ -36,9 +36,17 @@
   });
 
   function remove() {
-    if (props.ids && props.ids.length > 1) {
+    const taskName = props.task.name;
+    const isBatch = props.ids && props.ids.length > 1;
+    const confirmMsg = isBatch 
+      ? `确定要取消全部 ${props.count} 个「${taskName}」任务吗？\n取消后将返还所有材料。`
+      : `确定要取消任务「${taskName}」吗？\n取消后将返还所有材料。`;
+
+    if (!confirm(confirmMsg)) return;
+
+    if (isBatch) {
       // 逆序移除，防止索引错乱（虽然 removeTask 是按 ID 查找，但安全起见）
-      const toRemove = [...props.ids].reverse();
+      const toRemove = [...props.ids!].reverse();
       toRemove.forEach(id => taskStore.removeTask(id));
     } else {
       taskStore.removeTask(props.task.id);
