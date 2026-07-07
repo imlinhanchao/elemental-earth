@@ -1285,13 +1285,11 @@
     "required_items": [
       {
         "key": "clay",
-        "quantity": 5,
-        "use": 0.1
+        "quantity": 5
       },
       {
         "key": "fire_brick",
-        "quantity": 3,
-        "use": 0.1
+        "quantity": 3
       }
     ],
     "rewards": [
@@ -1311,8 +1309,7 @@
     "required_items": [
       {
         "key": "clay",
-        "quantity": 2,
-        "use": 1
+        "quantity": 2
       }
     ],
     "rewards": [
@@ -1518,13 +1515,11 @@
     "required_items": [
       {
         "key": "wood",
-        "quantity": 2,
-        "use": 0.05
+        "quantity": 2
       },
       {
         "key": "fiber_cloth",
-        "quantity": 1,
-        "use": 0.05
+        "quantity": 1
       }
     ],
     "required_techs": [
@@ -2175,8 +2170,7 @@
     "required_items": [
       {
         "key": "titanium",
-        "quantity": 2,
-        "use": 0.01
+        "quantity": 2
       },
       {
         "key": "wood",
@@ -2267,13 +2261,11 @@
     "required_items": [
       {
         "key": "nitroglycerin",
-        "quantity": 1,
-        "use": 0
+        "quantity": 1
       },
       {
         "key": "diatomaceous_earth",
-        "quantity": 2,
-        "use": 0
+        "quantity": 2
       }
     ],
     "required_techs": [
@@ -2503,8 +2495,7 @@
       },
       {
         "key": "copper",
-        "quantity": 1,
-        "use": 0.5
+        "quantity": 1
       }
     ],
     "required_techs": [
