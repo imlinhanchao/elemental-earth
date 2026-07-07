@@ -10,8 +10,9 @@ import Icon from '@/components/Icon.vue';
 const fragmentStore = useFragmentStore();
 const packStore = usePackStore();
 
+const searchQuery = ref('');
 const allFragments = computed(() => {
-    return fragmentStore.fragments.map(key => {
+    const frags = fragmentStore.fragments.map(key => {
         const formula = Formulas.find(f => f.key === key);
         return {
             key,
@@ -19,6 +20,15 @@ const allFragments = computed(() => {
             isUnread: fragmentStore.isUnread(key)
         };
     }).filter(f => f.formula);
+
+    if (!searchQuery.value.trim()) return frags;
+
+    const query = searchQuery.value.toLowerCase().trim();
+    return frags.filter(f => 
+        f.formula?.name?.toLowerCase().includes(query) || 
+        f.formula?.key?.toLowerCase().includes(query) ||
+        f.formula?.fragment_description?.toLowerCase().includes(query)
+    );
 });
 
 function formatDescription(desc: string, products: any[] = []) {
@@ -65,25 +75,51 @@ onMounted(() => {
 
 <template>
   <div class="manuscripts-view flex flex-col h-full overflow-hidden">
-    <div class="mb-4 flex items-center justify-between flex-none">
-      <h1 class="text-xl font-bold flex items-center gap-2">
-        <Icon icon="mingcute:document-fill" class="text-primary" />
-        研究手稿
-      </h1>
-      <span class="badge badge-outline text-xs">
-        已收集 {{ allFragments.length }} 份
-      </span>
-    </div>
+    <header class="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-3 flex-none">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold flex items-center gap-2">
+          <Icon icon="mingcute:document-fill" class="text-primary" />
+          研究手稿
+        </h1>
+        <span class="badge badge-outline text-xs md:hidden">
+          {{ allFragments.length }} 份
+        </span>
+      </div>
 
-    <div v-if="allFragments.length === 0" class="flex-1 flex flex-col items-center justify-center opacity-50 p-8 text-center">
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <div class="relative flex-1 md:w-64">
+          <Icon icon="tabler:search" class="absolute left-3 top-1/2 -translate-y-1/2 opacity-30 text-sm" />
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="搜索手稿名称或内容..." 
+            class="input input-sm input-bordered w-full"
+          />
+          <button v-if="searchQuery" class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle" @click="searchQuery = ''">
+            <Icon icon="tabler:x" />
+          </button>
+        </div>
+        <span class="badge badge-outline text-xs hidden md:inline-flex whitespace-nowrap">
+          已收集 {{ allFragments.length }} 份
+        </span>
+      </div>
+    </header>
+
+    <div v-if="fragmentStore.fragments.length === 0" class="flex-1 flex flex-col items-center justify-center opacity-50 p-8 text-center">
       <Icon icon="game-icons:parchment" class="text-6xl mb-4" />
       <p>目前还没有收集到任何手稿。</p>
       <p class="text-xs mt-2">在石器时代之后，通过挖掘或爆破行动有机会获得它们。</p>
     </div>
 
+    <div v-else-if="allFragments.length === 0 && searchQuery" class="flex-1 flex flex-col items-center justify-center opacity-50 p-8 text-center">
+      <Icon icon="tabler:search-off" class="text-6xl mb-4" />
+      <p>没有找到匹配的手稿。</p>
+      <button class="btn btn-ghost btn-sm mt-2" @click="searchQuery = ''">重置搜索</button>
+    </div>
+
     <div v-else class="flex-1 flex gap-4 overflow-hidden min-h-0">
       <!-- 列表侧栏 -->
-      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto px-1 custom-scrollbar">
+      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto px-1 pb-1 custom-scrollbar">
         <div 
           v-for="frag in allFragments" 
           :key="frag.key"
