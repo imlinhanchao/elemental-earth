@@ -17,9 +17,17 @@ const allFragments = computed(() => {
         return {
             key,
             formula,
-            isUnread: fragmentStore.isUnread(key)
+            isUnread: fragmentStore.isUnread(key),
+            isProven: packStore.hasProvenFormula(key)
         };
-    }).filter(f => f.formula);
+    }).filter(f => f.formula).sort((a, b) => {
+        // 先按是否已解锁排序，未解锁的在前
+        if (a.isProven !== b.isProven) {
+            return a.isProven ? 1 : -1;
+        }
+        // 如果状态相同，保持原有顺序（或可以按 key 排序）
+        return 0;
+    });
 
     if (!searchQuery.value.trim()) return frags;
 
@@ -126,12 +134,16 @@ onMounted(() => {
           class="p-3 rounded-lg cursor-pointer transition-all border border-base-300 relative"
           :class="[
             activeKey === frag.key ? 'bg-primary text-primary-content border-primary shadow-md' : 'bg-base-200 hover:bg-base-300',
-            frag.isUnread ? 'ring-1 ring-error' : ''
+            frag.isUnread ? 'ring-1 ring-error' : '',
+            frag.isProven && activeKey !== frag.key ? 'opacity-70' : ''
           ]"
           @click="selectFragment(frag.key)"
         >
           <div v-if="frag.isUnread" class="badge badge-error badge-xs absolute -top-1 -right-1">NEW</div>
-          <div class="text-sm font-bold truncate leading-tight">{{ frag.formula?.name }}</div>
+          <div v-if="frag.isProven" class="absolute top-1 right-1">
+            <Icon icon="tabler:circle-check-filled" class="text-success text-xs" />
+          </div>
+          <div class="text-sm font-bold truncate leading-tight pr-4">{{ frag.formula?.name }}</div>
         </div>
       </div>
 
@@ -142,8 +154,12 @@ onMounted(() => {
             <Icon icon="game-icons:parchment" class="text-8xl" />
           </div>
 
-          <h2 class="text-2xl font-serif font-bold mb-2 border-b-2 border-primary/20 pb-2">
-            「{{ activeFragment.formula?.name }}」的手稿
+          <h2 class="text-2xl font-serif font-bold mb-2 border-b-2 border-primary/20 pb-2 flex items-center justify-between">
+            <span>「{{ activeFragment.formula?.name }}」的手稿</span>
+            <div v-if="activeFragment.isProven" class="badge badge-success gap-1 text-xs">
+              <Icon icon="tabler:check" />
+              已实验成功
+            </div>
           </h2>
           
           <div class="mb-6 p-4 bg-base-300/50 rounded-lg italic font-serif leading-relaxed text-lg" v-html="formatDescription(activeFragment.formula?.fragment_description || '', activeFragment.formula?.products)">
