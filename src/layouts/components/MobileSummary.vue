@@ -15,10 +15,24 @@ const showSummary = computed(() => {
 })
 
 const summaryItems = computed(() => {
-  return packStore.items.slice(0, 5)
+  return packStore.items
 })
 
-const tasks = computed(() => taskStore.getTasks)
+const displayTasks = computed(() => {
+  const allTasks = taskStore.getTasks
+  if (!appStore.foldTasks) return allTasks.map(t => ({ task: t, count: 1 }))
+  
+  const groups: { task: any; count: number }[] = []
+  for (const t of allTasks) {
+    const last = groups[groups.length - 1]
+    if (last && last.task.name === t.name && last.task.type === t.type && last.task.key === t.key) {
+      last.count++
+    } else {
+      groups.push({ task: t, count: 1 })
+    }
+  }
+  return groups
+})
 </script>
 
 <template>
@@ -27,8 +41,8 @@ const tasks = computed(() => taskStore.getTasks)
     <div v-if="!appStore.leftSidebarOpen" class="flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
       <Icon icon="raphael:package" class="opacity-40 flex-none" />
       <span class="opacity-50 flex-none font-bold">背包:</span>
-      <section class="truncate">
-        <div v-for="item in summaryItems" :key="item.key" class="badge badge-sm badge-ghost gap-1 px-1.5 h-6">
+      <section class="flex items-center gap-1 overflow-x-auto">
+        <div v-for="item in summaryItems" :key="item.key" class="badge badge-sm badge-ghost gap-1 px-1.5 h-6 flex-none">
           <span class="max-w-16 truncate">{{ packStore.getDisplayName(item.key) }}</span>
           <span class="opacity-70 font-mono">x{{ item.quantity }}</span>
         </div>
@@ -38,13 +52,15 @@ const tasks = computed(() => taskStore.getTasks)
 
     <!-- 任务摘要 (右侧栏关闭时显示) -->
     <div v-if="!appStore.rightSidebarOpen" class="flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
-      <Icon icon="tabler:list-details" class="opacity-40" />
+      <Icon icon="tabler:list-details" class="opacity-40 flex-none" />
       <span class="opacity-50 flex-none font-bold">任务:</span>
-      <div v-for="task in tasks.slice(0, 3)" :key="task.id" class="badge badge-sm badge-primary gap-1 px-1.5 h-6 text-[10px]">
-        <span class="max-w-24 truncate">{{ task.name }}</span>
-      </div>
-      <span v-if="tasks.length > 3" class="opacity-30 text-[10px]">等{{ tasks.length }}个</span>
-      <span v-if="tasks.length === 0" class="opacity-50 text-[10px] badge">无</span>
+      <section class="flex items-center gap-1">
+        <div v-for="(item, index) in displayTasks" :key="index" class="badge badge-sm badge-primary gap-1 px-1.5 h-6 text-[10px] flex-none">
+          <span class="max-w-24 truncate">{{ item.task.name }}</span>
+          <span v-if="item.count > 1" class="opacity-70 font-mono">x{{ item.count }}</span>
+        </div>
+      </section>
+      <span v-if="displayTasks.length === 0" class="opacity-50 text-[10px] badge">无</span>
     </div>
   </div>
 </template>

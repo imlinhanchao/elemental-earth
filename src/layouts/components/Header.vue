@@ -54,11 +54,11 @@ function handleSelectMap(targetKey: string) {
         </button>
       </div>
       <div class="flex-1 px-2 flex items-center gap-2">
-        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary" :class="{ 'hidden': appStore.isMobile }"></Icon>
+        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary"></Icon>
         <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
-        <div v-if="enteredEra" class="badge badge-soft badge-primary gap-1 ml-2">
+        <div v-if="enteredEra" class="badge badge-soft badge-secondary gap-1 ml-2">
           <Icon :icon="enteredEra.icon" class="text-sm" />
-          {{ enteredEra.name }}
+          <span v-if="!appStore.isMobile">{{ enteredEra.name }}</span>
         </div>
       </div>
       <div class="flex-none gap-2 flex items-center">

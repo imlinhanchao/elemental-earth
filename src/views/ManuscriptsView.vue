@@ -83,7 +83,7 @@ onMounted(() => {
 
     <div v-else class="flex-1 flex gap-4 overflow-hidden min-h-0">
       <!-- 列表侧栏 -->
-      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto pr-2 custom-scrollbar">
+      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto px-1 custom-scrollbar">
         <div 
           v-for="frag in allFragments" 
           :key="frag.key"
@@ -96,7 +96,6 @@ onMounted(() => {
         >
           <div v-if="frag.isUnread" class="badge badge-error badge-xs absolute -top-1 -right-1">NEW</div>
           <div class="text-sm font-bold truncate leading-tight">{{ frag.formula?.name }}</div>
-          <div class="text-[10px] opacity-70 mt-1">手稿残片</div>
         </div>
       </div>
 

@@ -31,8 +31,11 @@ function getAlertClass(type: string) {
         class="alert shadow-lg mb-2 py-2 px-4 text-sm pointer-events-auto"
         :class="getAlertClass(toast.type)"
       >
-        <div class="flex items-center gap-2">
+        <div class="flex items-center justify-between w-full gap-2">
           <span>{{ toast.message }}</span>
+          <span v-if="toast.count && toast.count > 1" class="badge badge-ghost badge-xs opacity-70">
+            x{{ toast.count }}
+          </span>
         </div>
       </div>
     </TransitionGroup>

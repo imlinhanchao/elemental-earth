@@ -27,20 +27,47 @@
     });
   });
 
-  // 移动端点击显示
+  // 移动端长按显示
   const mobileShow = ref(false);
-  function toggleMobile(e: Event) {
+  let pressTimer: any = null;
+
+  function handleTouchStart() {
     if (!appStore.isMobile) return;
-    mobileShow.value = !mobileShow.value;
-    if (mobileShow.value) {
+    // 重置状态
+    if (pressTimer) clearTimeout(pressTimer);
+    
+    pressTimer = setTimeout(() => {
+      mobileShow.value = true;
+      pressTimer = null;
       // 3秒后自动关闭，避免遮挡
       setTimeout(() => { mobileShow.value = false }, 3000);
+    }, 500); // 500ms 定义为长按
+  }
+
+  function handleTouchEnd() {
+    if (!appStore.isMobile) return;
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+    }
+  }
+
+  function handleTouchMove() {
+    if (!appStore.isMobile) return;
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
     }
   }
 
 </script>
 <template>
-  <section class="inline-flex relative group" @click="toggleMobile">
+  <section 
+    class="inline-flex relative group" 
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd"
+    @touchmove="handleTouchMove"
+  >
     <slot></slot>
     <section 
       class="w-full absolute content p-2 bg-base-200/80 rounded border border-base-300 z-100 shadow-xl backdrop-blur-sm transition-all"

@@ -5,6 +5,7 @@ export interface IToast {
   id: number
   message: string
   type: string
+  count?: number
 }
 
 export const useToastStore = defineStore('toast', () => {
@@ -14,8 +15,22 @@ export const useToastStore = defineStore('toast', () => {
   let isProcessing = false
 
   const addToast = (message: string, type: string = 'info') => {
+    // 检查是否与正在显示的或队列中的最后一条相同
+    const lastInToasts = toasts.value[toasts.value.length - 1]
+    const lastInQueue = queue[queue.length - 1]
+
+    if (lastInToasts && lastInToasts.message === message && lastInToasts.type === type) {
+      lastInToasts.count = (lastInToasts.count || 1) + 1
+      return
+    }
+
+    if (lastInQueue && lastInQueue.message === message && lastInQueue.type === type) {
+      lastInQueue.count = (lastInQueue.count || 1) + 1
+      return
+    }
+
     const id = nextId++
-    queue.push({ id, message, type })
+    queue.push({ id, message, type, count: 1 })
     
     // 如果队列过长，丢弃过旧的，保持及时性
     if (queue.length > 10) {
