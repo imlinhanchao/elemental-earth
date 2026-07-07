@@ -1284,7 +1284,10 @@
     "time_required": 60,
     "required_items": [
       {
-        "key": "clay",
+        "key": [
+          "clay",
+          "pig_iron"
+        ],
         "quantity": 5
       },
       {
