@@ -16,7 +16,7 @@ export const routes: RouteRecordRaw[] = [
         path: '',
         name: 'Home',
         component: () => import('../views/HomeView.vue'),
-        meta: { tab: 'home', label: '行动', icon: 'entypo:tools' },
+        meta: { tab: 'home', label: '制造', icon: 'entypo:tools' },
       },
       {
         path: 'tech',

@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue';
   import { Actions } from '@/data/actions';
-  import { Formulas } from '@/data/formula';
+  import { Formulas, type IFormula } from '@/data/formula';
+  import { LabActions } from '@/data/labs';
   import Action from '@/components/Action.vue';
   import ActionTip from '@/components/ActionTip.vue';
   import FormulaDialog from '@/components/FormulaDialog.vue';
@@ -11,9 +12,29 @@
   const packStore = usePackStore();
   const stateStore = useStateStore();
 
+  const searchQuery = ref('');
+
+  /** 获取配方的单次耗时（操作耗时 * 最小次数） */
+  function getFormulaTime(f: IFormula) {
+    const opKey = f.required_actions?.key;
+    if (!opKey) return f.time_required;
+    const op = LabActions.find(a => a.key === opKey);
+    if (!op) return f.time_required;
+    return op.time_required * (f.required_actions?.min || 1);
+  }
+
   /** 已习得的配方 */
   const provenFormulas = computed(() => {
-    return Formulas.filter(f => packStore.hasProvenFormula(f.key));
+    let list = Formulas.filter(f => packStore.hasProvenFormula(f.key));
+    if (searchQuery.value.trim()) {
+      const q = searchQuery.value.toLowerCase().trim();
+      list = list.filter(f => 
+        f.name.toLowerCase().includes(q) || 
+        f.key.toLowerCase().includes(q) || 
+        f.description.toLowerCase().includes(q)
+      );
+    }
+    return list;
   });
 
   /** 分类显示顺序 */
@@ -23,6 +44,7 @@
   const groupedActions = computed(() => {
     const groups: { category: string; actions: typeof Actions }[] = [];
     const map = new Map<string, typeof Actions>();
+    const q = searchQuery.value.toLowerCase().trim();
 
     for (const action of Actions) {
       // 跳过不可见的行动（科技未解锁 / 依赖物品不曾拥有 / 不在所需地图）
@@ -32,6 +54,13 @@
         return !keys.some(k => packStore.hasEverHad(k))
       })) continue
       if (action.map && !action.map.includes(stateStore.state.map)) continue
+
+      // 搜索过滤
+      if (q && !(
+        action.name.toLowerCase().includes(q) || 
+        action.key.toLowerCase().includes(q) || 
+        action.description.toLowerCase().includes(q)
+      )) continue;
 
       const cat = action.category || '未分类';
       if (!map.has(cat)) map.set(cat, []);
@@ -79,6 +108,32 @@
 </script>
 <template>
   <div class="flex flex-col gap-3">
+    <!-- 搜索栏 -->
+    <div class="relative w-full mb-1">
+      <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none opacity-50">
+        <Icon icon="tabler:search" class="text-sm" />
+      </div>
+      <input 
+        v-model="searchQuery" 
+        type="text" 
+        placeholder="搜索行动或配方..." 
+        class="input input-sm input-bordered w-full pl-9 h-10 bg-base-200/50"
+      />
+      <button 
+        v-if="searchQuery" 
+        class="absolute inset-y-0 right-3 flex items-center opacity-50 hover:opacity-100 transition-opacity"
+        @click="searchQuery = ''"
+      >
+        <Icon icon="tabler:x" class="text-xs" />
+      </button>
+    </div>
+
+    <div v-if="provenFormulas.length === 0 && groupedActions.length === 0 && searchQuery" class="py-12 text-center opacity-50">
+      <Icon icon="tabler:search-off" class="text-3xl mx-auto mb-2" />
+      <p>没有找到匹配的内容</p>
+      <button class="btn btn-link btn-xs mt-1" @click="searchQuery = ''">清除搜索</button>
+    </div>
+
     <!-- 已习得的配方 -->
     <details
       v-if="provenFormulas.length > 0"
@@ -103,6 +158,7 @@
               quantity: req.quantity,
             }))"
             :required_techs="f.required_techs"
+            :time_required="getFormulaTime(f)"
           >
             <button
               class="btn btn-soft w-[10em]"

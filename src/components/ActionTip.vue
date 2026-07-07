@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import Icon from '@/components/Icon.vue';
   import { Items } from '@/data/items';
   import { usePackStore } from '@/stores/modules/pack';
   import { useAppStore } from '@/stores/modules/app';
@@ -8,6 +9,7 @@
     description: string;
     required_items: { key: string; quantity: number }[];
     required_techs?: string[];
+    time_required?: number;
   }>();
 
   const packStore = usePackStore();
@@ -75,7 +77,13 @@
         appStore.isMobile ? (mobileShow ? 'block animate-in fade-in zoom-in duration-200' : 'hidden') : 'hidden group-hover:block'
       ]"
     >
-      <div class="text-xs font-bold mb-1">{{ description }}</div>
+      <div class="flex items-center justify-between gap-2 mb-1">
+        <div class="text-xs font-bold">{{ description }}</div>
+      </div>
+      <div v-if="time_required" class="text-[10px] opacity-60 whitespace-nowrap flex items-center gap-0.5">
+        <Icon icon="tabler:clock" />
+        {{ time_required }}s
+      </div>
       <div v-if="items.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed" :class="{ 'text-error': item.insufficient }">
         {{ item.quantity }}x {{ item.name }}

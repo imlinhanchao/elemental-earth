@@ -193,6 +193,7 @@
     :description="data.description"
     :required_items="resolveMaterials().map(r => ({ key: r.key, quantity: r.quantity }))"
     :required_techs="data.required_techs"
+    :time_required="data.time_required"
   >
     <div class="relative inline-flex">
       <button 

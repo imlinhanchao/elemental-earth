@@ -389,7 +389,11 @@ const insufficientMaterials = computed(() => {
 // ─── 总耗时 ────────────────────────────────────────────────────
 const totalTime = computed(() => {
   if (!formula.value) return 0
-  let t = formula.value.time_required * batches.value
+  // 使用操作时间 * 最小操作次数作为基础时间
+  const opTime = operation.value?.time_required ?? formula.value.time_required
+  const minOps = formula.value.required_actions?.min || 1
+  let t = opTime * minOps * batches.value
+  
   for (const key of selectedChainOperations.value) {
     const op = LabActions.find(a => a.key === key)
     if (op) t += op.time_required * batches.value

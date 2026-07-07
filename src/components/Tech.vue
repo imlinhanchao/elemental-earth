@@ -72,7 +72,10 @@
     :required_items="data.required_items.map(req => ({
     key: Array.isArray(req.key) ? req.key[0] : req.key,
     quantity: req.quantity,
-  }))" :required_techs="data.required_techs">
+  }))" 
+    :required_techs="data.required_techs"
+    :time_required="data.time_required"
+  >
     <div class="relative w-[10em]">
       <button 
         class="btn w-full" 
