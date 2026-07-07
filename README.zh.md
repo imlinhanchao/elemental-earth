@@ -1,3 +1,5 @@
+[English](README.md) / 简体中文
+
 <p align="center">
   <img src="public/icons.svg" width="128" height="128" alt="Elemental Earth Logo">
 </p>
