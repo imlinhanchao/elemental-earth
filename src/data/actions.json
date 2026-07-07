@@ -1143,10 +1143,11 @@
     "time_required": 30
   },
   {
-    "name": "制作纤维布",
     "key": "craft_fiber_cloth",
+    "name": "制作纤维布",
     "category": "制作",
     "description": "使用树皮制作纤维布，可以用来制作衣物和其他物品。",
+    "time_required": 20,
     "required_items": [
       {
         "key": "bark",
@@ -1157,9 +1158,6 @@
         "quantity": 5
       }
     ],
-    "required_techs": [
-      "wood_processing"
-    ],
     "rewards": [
       {
         "key": "fiber_cloth",
@@ -1167,7 +1165,10 @@
         "probability": 1000
       }
     ],
-    "time_required": 20
+    "required_techs": [
+      "wood_processing",
+      "bark_processing"
+    ]
   },
   {
     "name": "制作鼓风机",
