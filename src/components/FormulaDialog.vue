@@ -210,7 +210,19 @@ const neededChainOperations = computed(() => {
   for (const p of formula.value.products) {
     if (p.required_chain_operation) ops.add(p.required_chain_operation)
   }
-  return LabActions.filter(a => ops.has(a.key))
+  return LabActions.filter(a => {
+    if (!ops.has(a.key)) return false
+    // 检查科技
+    if (a.required_techs && !a.required_techs.every(t => packStore.hasTech(t))) return false
+    // 检查所需物品是否“曾拥有过”
+    if (a.required_item) {
+      if (!a.required_item.every(req => {
+        const keys = Array.isArray(req.key) ? req.key : [req.key]
+        return keys.some(k => packStore.hasEverHad(k))
+      })) return false
+    }
+    return true
+  })
 })
 
 watch(() => props.visible, (v) => {
