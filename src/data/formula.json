@@ -5775,5 +5775,66 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "key": "lithium_chloride_from_carbonate",
+    "name": "氯化锂制备（碳酸锂法）",
+    "description": "碳酸锂与盐酸反应，经过量蒸发结晶得到氯化锂。",
+    "time_required": 30,
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "lithium_carbonate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "lithium_chloride",
+        "multiple": 2
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "required_techs": [
+      "industrial_chemistry"
+    ],
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "lithium_chloride_from_hydroxide",
+    "name": "氯化锂制备（氢氧化锂法）",
+    "description": "氢氧化锂与盐酸中和反应，通过蒸发浓缩提取氯化锂晶体。",
+    "time_required": 25,
+    "required_container": "beaker",
+    "required_items": [
+      {
+        "key": "lithium_hydroxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "lithium_chloride",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "industrial_chemistry"
+    ],
+    "required_era": "modern_chem"
   }
 ]
