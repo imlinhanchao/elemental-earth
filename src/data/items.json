@@ -71,9 +71,9 @@
     ]
   },
   {
-    "name": "水",
     "key": "water",
-    "category": "材料",
+    "name": "水",
+    "category": "液体",
     "description": "清澈透明的液体，无色无味，捧在掌心能看到指缝间透过的光线。",
     "type": [
       "material"
