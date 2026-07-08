@@ -847,8 +847,9 @@
     "name": "筛选硅砂",
     "description": "将普通沙子过筛，得到较纯净的硅砂。",
     "fragment_description": "对#sand#使用$sifting$工艺，分离杂质以获取高纯度的#silica_sand#。",
-    "time_required": 15,
+    "time_required": 10,
     "required_era": "modern_chem",
+    "required_container": "sieve",
     "required_actions": {
       "key": "sifting",
       "min": 1

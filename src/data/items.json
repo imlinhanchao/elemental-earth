@@ -782,12 +782,13 @@
     "elemental": 0
   },
   {
-    "name": "筛子",
     "key": "sieve",
+    "name": "筛子",
     "category": "工具",
     "description": "用木框和纤维布编织而成的筛网，可以用来筛选不同粒度的颗粒物。",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
     "durable": 1
   },

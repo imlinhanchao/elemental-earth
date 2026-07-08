@@ -45,6 +45,7 @@ const selectedFuels = ref<Map<string, number>>(new Map())
 const cycles = ref(1)
 const materialModalOpen = ref(false)
 const materialSearchQuery = ref('')
+const selectedCategory = ref<string | null>(null)
 
 // 切换操作时重置引火/燃料/chain选择
 watch(selectedOperationKey, () => {
@@ -74,13 +75,33 @@ const availableMaterials = computed(() => {
   return packStore.items.filter(pItem => pItem.key !== selectedContainerKey.value)
 })
 
+const availableCategories = computed(() => {
+  const cats = new Set<string>()
+  availableMaterials.value.forEach(item => {
+    const def = getItem(item.key)
+    if (def?.category) cats.add(def.category)
+  })
+  return Array.from(cats).sort()
+})
+
 const filteredAvailableMaterials = computed(() => {
+  let list = availableMaterials.value
+
+  if (selectedCategory.value) {
+    list = list.filter(item => {
+      const def = getItem(item.key)
+      return def?.category === selectedCategory.value
+    })
+  }
+
   const query = materialSearchQuery.value.toLowerCase().trim()
-  if (!query) return availableMaterials.value
-  return availableMaterials.value.filter(item => 
-    item.name.toLowerCase().includes(query) || 
-    item.key.toLowerCase().includes(query)
-  )
+  if (query) {
+    return list.filter(item => 
+      item.name.toLowerCase().includes(query) || 
+      item.key.toLowerCase().includes(query)
+    )
+  }
+  return list
 })
 
 const selectedOperation = computed<ILabAction | null>(() => {
@@ -127,6 +148,7 @@ const operationRequirementMet = computed(() => {
 function openMaterialModal() {
   draftMaterials.value = new Map(selectedMaterials.value)
   materialSearchQuery.value = ''
+  selectedCategory.value = null
   materialModalOpen.value = true
 }
 function confirmMaterials() {
@@ -874,6 +896,19 @@ function startExperiment() {
         <h3 class="font-bold text-lg">选择材料</h3>
         <button class="btn btn-sm btn-circle btn-ghost" @click="cancelMaterials">
           <Icon icon="tabler:x" class="text-xl" />
+        </button>
+      </div>
+
+      <!-- 分类过滤 -->
+      <div v-if="availableCategories.length > 0" class="flex flex-wrap gap-1.5 mb-3">
+        <button 
+          v-for="cat in availableCategories" 
+          :key="cat"
+          class="btn btn-xs rounded-full border-none font-normal"
+          :class="selectedCategory === cat ? 'btn-primary shadow-sm' : 'btn-ghost bg-base-300/50 hover:bg-base-300 text-base-content/60'"
+          @click="selectedCategory = selectedCategory === cat ? null : cat"
+        >
+          {{ cat }}
         </button>
       </div>
 
