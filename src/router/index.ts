@@ -66,6 +66,7 @@ export const routes: RouteRecordRaw[] = [
       { path: 'techs',     name: 'AdminTechs',      component: () => import('../views/admin/types/TechsView.vue') },
       { path: 'labs',      name: 'AdminLabs',       component: () => import('../views/admin/types/LabsView.vue') },
       { path: 'formulas',  name: 'AdminFormulas',   component: () => import('../views/admin/types/FormulasView.vue') },
+      { path: 'elements/:id',  name: 'AdminElementsDetail',   component: () => import('../views/admin/types/ElementsDetailView.vue') },
       { path: 'elements',  name: 'AdminElements',   component: () => import('../views/admin/types/ElementsView.vue') },
       { path: 'eras',      name: 'AdminEras',       component: () => import('../views/admin/types/ErasView.vue') },
       { path: 'tips',      name: 'AdminTips',       component: () => import('../views/admin/types/TipsView.vue') },

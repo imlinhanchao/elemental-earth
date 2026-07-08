@@ -40,9 +40,17 @@
             <td class="text-xs">{{ r.category }}</td>
             <td class="text-xs">{{ r.mass }}</td>
             <td>
-              <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
-                编辑
-              </button>
+              <div class="flex gap-1">
+                <button
+                  class="btn btn-xs btn-ghost"
+                  @click="$router.push(`/admin/elements/${r.number}`)"
+                >
+                  路径
+                </button>
+                <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
+                  编辑
+                </button>
+              </div>
             </td>
           </tr>
           <tr v-if="!records.length">
