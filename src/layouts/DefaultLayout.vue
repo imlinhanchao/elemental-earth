@@ -38,6 +38,12 @@
       :itemKey="discoveryItemKey"
       @done="onDiscoveryDialogDone"
     />
+    <LabSuccessOverlay
+      :visible="appStore.showLabSuccess"
+      :formulaKey="appStore.labSuccessFormula"
+      :products="appStore.labSuccessProducts"
+      @close="appStore.showLabSuccess = false"
+    />
     <TutorialOverlay />
     <Toast />
   </div>
@@ -58,6 +64,7 @@ import Right from './components/Right.vue'
 import ElementDiscovery from '@/components/ElementDiscovery.vue'
 import EraTransition from '@/components/EraTransition.vue'
 import DiscoveryDialog from '@/components/DiscoveryDialog.vue'
+import LabSuccessOverlay from '../components/LabSuccessOverlay.vue'
 import TutorialOverlay from '@/components/TutorialOverlay.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
 import Toast from '@/components/Toast.vue'

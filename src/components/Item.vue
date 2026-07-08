@@ -5,7 +5,6 @@
   import { computed, ref } from 'vue';
   import InlineTooltip from '@/components/InlineTooltip.vue';
   import RenameDialog from '@/components/RenameDialog.vue';
-import { Icon } from '@iconify/vue';
 
   const props = defineProps<{
     data: IPackItem;
@@ -14,7 +13,7 @@ import { Icon } from '@iconify/vue';
   const appStore = useAppStore();
   const packStore = usePackStore();
   const itemData = computed(() => {
-    return Items.find(item => item.key === props.data.key);
+    return Items.find(item => item.key === props.data?.key);
   });
 
   const displayName = computed(() => packStore.getDisplayName(props.data.key));

@@ -2,13 +2,16 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useFragmentStore } from '@/stores/modules/fragment';
 import { usePackStore } from '@/stores/modules/pack';
+import { useStateStore } from '@/stores/modules/state';
 import { Formulas } from '@/data/formula';
 import { Items, getItem } from '@/data/items';
 import { LabActions as Labs } from '@/data/labs';
+import { Eras } from '@/data/eras';
 import Icon from '@/components/Icon.vue';
 
 const fragmentStore = useFragmentStore();
 const packStore = usePackStore();
+const stateStore = useStateStore();
 
 const hasGasTech = computed(() => packStore.techs.includes('gas_collection'));
 
@@ -18,8 +21,17 @@ function isGasItem(key: string) {
 }
 
 const searchQuery = ref('');
+const selectedEra = ref('all');
+const eraTabs = computed(() => [
+  { key: 'all', name: '全部时代' },
+  ...Eras.filter(e => {
+    const currEra = Eras.find(ce => ce.key === stateStore.state.currentEra);
+    return Eras.indexOf(e) <= (currEra ? Eras.indexOf(currEra) : 0);
+  })
+]);
+
 const allFragments = computed(() => {
-    const frags = fragmentStore.fragments.map(key => {
+    let frags = fragmentStore.fragments.map(key => {
         const formula = Formulas.find(f => f.key === key);
         return {
             key,
@@ -27,7 +39,14 @@ const allFragments = computed(() => {
             isUnread: fragmentStore.isUnread(key),
             isProven: packStore.hasProvenFormula(key)
         };
-    }).filter(f => f.formula).sort((a, b) => {
+    }).filter(f => f.formula);
+
+    // 时代过滤
+    if (selectedEra.value !== 'all') {
+        frags = frags.filter(f => f.formula?.required_era === selectedEra.value);
+    }
+
+    frags = frags.sort((a, b) => {
         // 先按是否已解锁排序，未解锁的在前
         if (a.isProven !== b.isProven) {
             return a.isProven ? 1 : -1;
@@ -126,6 +145,19 @@ onMounted(() => {
         </span>
       </div>
     </header>
+
+    <!-- 时代切换页签 -->
+    <div v-if="fragmentStore.fragments.length > 0" class="flex items-center gap-1 mb-4 overflow-x-auto no-scrollbar pb-1 flex-none border-b border-base-200">
+      <button 
+        v-for="era in eraTabs" 
+        :key="era.key"
+        class="btn btn-sm whitespace-nowrap"
+        :class="selectedEra === era.key ? 'btn-primary' : 'btn-ghost text-base-content/60'"
+        @click="selectedEra = era.key"
+      >
+        {{ era.name }}
+      </button>
+    </div>
 
     <div v-if="fragmentStore.fragments.length === 0" class="flex-1 flex flex-col items-center justify-center opacity-50 p-8 text-center">
       <Icon icon="game-icons:parchment" class="text-6xl mb-4" />

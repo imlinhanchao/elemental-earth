@@ -17,19 +17,22 @@
     "requires_burning": true
   },
   {
-    "name": "焙烧",
     "key": "roasting",
+    "name": "焙烧",
     "description": "将物体在有氧条件下加热，促进化学反应或物理变化。",
     "time_required": 20,
+    "milestone": "first_smelt",
+    "requires_burning": true,
     "required_item": [
       {
-        "key": "kiln",
+        "key": [
+          "kiln",
+          "blast_furnace"
+        ],
         "quantity": 1,
         "use": 0.1
       }
-    ],
-    "requires_burning": true,
-    "milestone": "first_smelt"
+    ]
   },
   {
     "name": "搅拌",

@@ -4,6 +4,7 @@ import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
+import { useAppStore } from '@/stores/modules/app';
 import { useFragmentStore } from '@/stores/modules/fragment';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
@@ -187,10 +188,13 @@ export const useTaskStore = defineStore('task', () => {
             }
           }
         } else if (task.type === 'lab') {
+          const appStore = useAppStore();
           // lab 类型：给予所有产物
+          const obtainedProducts: { key: string; quantity: number }[] = [];
           for (const reward of task.rewards) {
             const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
             if (packStore.addItem(reward.key, quantity)) {
+              obtainedProducts.push({ key: reward.key, quantity });
               logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
               notifyTaskComplete('实验室', `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
             }
@@ -199,10 +203,12 @@ export const useTaskStore = defineStore('task', () => {
           if ('formulaKey' in task && task.formulaKey && !packStore.hasProvenFormula(task.formulaKey)) {
             const { Formulas } = await import('@/data/formula')
             const f = Formulas.find(fm => fm.key === task.formulaKey)
-            packStore.addProvenFormula(task.formulaKey)
+            
             if (f) {
               logStore.addLog(`发现新配方: ${f.name}`, 'lab')
+              appStore.triggerLabSuccess(task.formulaKey, obtainedProducts)
             }
+            packStore.addProvenFormula(task.formulaKey)
           }
         } else {
           packStore.addTech(task.key);

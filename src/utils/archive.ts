@@ -88,9 +88,9 @@ export function loadGame(): boolean {
   try {
     const data = storage.getItem<SaveData>(SAVE_KEY);
     if (!data) return false;
-    // 版本不匹配时拒绝加载旧存档，防止数据结构变更导致崩溃
-    if (data.version !== SAVE_VERSION) {
-      console.warn(`存档版本不匹配: 当前 v${SAVE_VERSION}，存档 v${data.version}，跳过加载`);
+    // 版本检查：拒绝加载未来版本的存档，支持加载旧版本并自动升级
+    if (data.version > SAVE_VERSION) {
+      console.warn(`存档版本太新: 存档 v${data.version}，当前支持 v${SAVE_VERSION}，请更新程序`);
       return false;
     }
 

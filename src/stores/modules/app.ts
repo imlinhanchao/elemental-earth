@@ -46,6 +46,17 @@ export const useAppStore = defineStore('app', () => {
   const hardMode = ref<boolean>(config?.hardMode ?? false)
   const foldTasks = ref<boolean>(config?.foldTasks ?? false)
 
+  // 动画状态
+  const showLabSuccess = ref(false)
+  const labSuccessFormula = ref<string | null>(null)
+  const labSuccessProducts = ref<{ key: string; quantity: number }[]>([])
+
+  function triggerLabSuccess(formulaKey: string, products: { key: string; quantity: number }[]) {
+    labSuccessFormula.value = formulaKey
+    labSuccessProducts.value = products
+    showLabSuccess.value = true
+  }
+
   function toggleTheme(): void {
     theme.value = theme.value === lightTheme ? darkTheme : lightTheme
     saveConfig();
@@ -113,7 +124,9 @@ export const useAppStore = defineStore('app', () => {
   return {
     theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile, isReady,
     taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode, foldTasks,
+    showLabSuccess, labSuccessFormula, labSuccessProducts,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar, toggleFoldTasks,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,
+    triggerLabSuccess
   }
 })

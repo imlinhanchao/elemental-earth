@@ -8,6 +8,7 @@ import { useLabStore } from '@/stores/modules/lab'
 import { getItem } from '@/data/items'
 import { LabActions, type ILabAction } from '@/data/labs'
 import { Formulas, type IFormula } from '@/data/formula'
+import { Eras } from '@/data/eras'
 
 const packStore = usePackStore()
 const taskStore = useTaskStore()
@@ -129,19 +130,56 @@ const availableChainOperations = computed(() => {
   return LabActions.filter(a => a.key !== op.key)
 })
 
-/** 操作所需的容器/设备是否已满足 */
+/** 操作以及追加操作所需的容器/设备是否已满足 */
 const operationRequirementMet = computed(() => {
-  const op = selectedOperation.value
-  if (!op?.required_item) return true
-  // 未验证配方时，不检查容器耐久充分性（自由探索）
-  if (matchedFormula.value && !formulaProven.value) return true
-  for (const req of op.required_item) {
-    const keys = reqKeys(req.key)
-    if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
-    const pack = selectedContainerPack.value
-    if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+  const ops = [selectedOperation.value, ...selectedChainOperations.value].filter(Boolean) as ILabAction[]
+  if (ops.length === 0) return true
+  
+  for (const op of ops) {
+    if (!op.required_item) continue
+    for (const req of op.required_item) {
+      const keys = reqKeys(req.key)
+      
+      // 1. 优先尝试从容器位匹配
+      const isContainerMatched = selectedContainerKey.value && keys.includes(selectedContainerKey.value)
+      if (isContainerMatched) {
+        // 如果容器匹配，检查其耐久（仅当配方已验证且存在时，执行严格检查）
+        if (matchedFormula.value && formulaProven.value) {
+          const pack = selectedContainerPack.value
+          if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+        }
+        continue
+      }
+      
+      // 2. 容器不匹配，尝试从已选材料中匹配（针对非容器类设备，如集气瓶）
+      const materialKey = keys.find(k => selectedMaterials.value.has(k))
+      if (materialKey) {
+        // 如果找到了匹配材料，检查数量是否满足单次需求
+        if ((selectedMaterials.value.get(materialKey) || 0) < req.quantity) return false
+        // 工具类耐久检查（配方已验证时）
+        if (matchedFormula.value && formulaProven.value && req.use !== undefined) {
+          const pack = packStore.items.find(i => i.key === materialKey)
+          if (!pack || pack.durable < req.use * cycles.value) return false
+        }
+        continue
+      }
+      
+      return false
+    }
   }
   return true
+})
+
+/** 获取所有选中操作（主+追加）的所有设备/道具需求 */
+const allOperationRequirements = computed(() => {
+  const ops = [selectedOperation.value, ...selectedChainOperations.value].filter(Boolean) as ILabAction[]
+  const allReqs: { key: string | string[]; quantity: number, use?: number }[] = []
+  for (const op of ops) {
+    if (op.required_item) {
+      allReqs.push(...op.required_item)
+    }
+  }
+  return allReqs
 })
 
 // ---- 材料弹窗 ----
@@ -200,7 +238,17 @@ const materialCount = computed(() => selectedMaterials.value.size)
 const matchedFormula = computed<IFormula | null>(() => {
   const op = selectedOperation.value
   if (!op) return null
-  return Formulas.find(f => {
+  
+  const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra)
+  const currentOrder = currentEraObj?.order ?? 0
+
+  const matches = Formulas.filter(f => {
+    // 时代限制
+    if (f.required_era) {
+      const targetEraObj = Eras.find(e => e.key === f.required_era)
+      if (targetEraObj && targetEraObj.order > currentOrder) return false
+    }
+
     if (f.required_actions && f.required_actions.key !== op.key) return false
     if (f.required_container && f.required_container !== selectedContainerKey.value) return false
     if (f.required_items) {
@@ -215,7 +263,11 @@ const matchedFormula = computed<IFormula | null>(() => {
     if (cycles.value < actMin) return false
     if (actMax && cycles.value > actMax) return false
     return true
-  }) || null
+  })
+
+  if (matches.length === 0) return null
+  // 优先匹配需求项更多的配方（更精确匹配，解决石灰石焙烧 vs 水泥制造的冲突）
+  return matches.sort((a, b) => (b.required_items?.length || 0) - (a.required_items?.length || 0))[0]
 })
 
 const formulaProven = computed(() => {
@@ -482,21 +534,13 @@ const canStart = computed(() => {
   if (!selectedContainerKey.value) return false
   if (selectedMaterials.value.size === 0) return false
   if (!selectedOperation.value) return false
-
+  
+  // 检查技能需求
   if (selectedOperation.value.required_techs &&
       !selectedOperation.value.required_techs.every(t => packStore.hasTech(t))) return false
 
-  if (selectedOperation.value.required_item) {
-    for (const req of selectedOperation.value.required_item) {
-      const keys = reqKeys(req.key)
-      if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) return false
-      // 未验证配方时，不检查容器耐久是否足够（自由探索）
-      if (matchedFormula.value && formulaProven.value) {
-        const pack = selectedContainerPack.value
-        if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
-      }
-    }
-  }
+  // 检查设备需求（主操作+追加操作）
+  if (!operationRequirementMet.value) return false
 
   // 有匹配配方时才检查配方材料是否充足
   if (matchedFormula.value?.required_items) {
@@ -547,10 +591,25 @@ function startExperiment() {
 
   const consumedItems: { key: string; quantity: number; use?: number }[] = []
 
-  for (const req of selectedOperation.value.required_item || []) {
-    const keys = reqKeys(req.key)
-    if (selectedContainerKey.value && keys.includes(selectedContainerKey.value)) {
-      consumedItems.push({ key: selectedContainerKey.value, quantity: 0, use: (req.use ?? 1) * cycles.value })
+  const ops = [selectedOperation.value, ...selectedChainOperations.value].filter(Boolean) as ILabAction[]
+  for (const op of ops) {
+    for (const req of op.required_item || []) {
+      const keys = reqKeys(req.key)
+      // 1. 优先尝试从容器位扣除
+      if (selectedContainerKey.value && keys.includes(selectedContainerKey.value)) {
+        consumedItems.push({ key: selectedContainerKey.value, quantity: 0, use: (req.use ?? 1) * cycles.value })
+      } else {
+        // 2. 尝试从已选材料中匹配并扣除（针对非容器类设备，如集气瓶）
+        const matchedMaterialKey = keys.find(k => selectedMaterials.value.size > 0 && Array.from(selectedMaterials.value.keys()).includes(k))
+        if (matchedMaterialKey) {
+          // 如果提供了 use，则消耗耐久（工具类）；否则消耗数量
+          if (req.use !== undefined) {
+            consumedItems.push({ key: matchedMaterialKey, quantity: 0, use: req.use * cycles.value })
+          } else {
+            consumedItems.push({ key: matchedMaterialKey, quantity: req.quantity * cycles.value })
+          }
+        }
+      }
     }
   }
 
@@ -562,7 +621,6 @@ function startExperiment() {
         consumedItems.push({ key: matchedKey, quantity: req.quantity * batches.value })
       }
     }
-    packStore.addProvenFormula(matchedFormula.value.key)
     // 实验室里程碑（从操作数据读取）
     const opMilestone = selectedOperation.value?.milestone
     if (opMilestone) stateStore.checkMilestone(opMilestone)
@@ -667,16 +725,19 @@ function startExperiment() {
         <div v-if="selectedOperation" class="mt-2 text-xs text-base-content/70 space-y-0.5">
           <p>{{ selectedOperation.description }}</p>
           <p v-if="selectedOperation.requires_burning" class="text-warning"><Icon icon="tabler:flame" class="text-sm inline-block align-middle" />需要火源</p>
-          <p v-if="selectedOperation.required_item"
+          <p v-if="allOperationRequirements.length > 0"
              :class="operationRequirementMet ? '' : 'text-error'">
-            需要: {{ selectedOperation.required_item.map(r => {
+            需要: {{ allOperationRequirements.map(r => {
               const keys = Array.isArray(r.key) ? r.key : [r.key]
               return keys.map(k => {
                 const def = getItem(k)
-                return `${def?.name || k}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
+                const inContainer = selectedContainerKey && keys.includes(selectedContainerKey)
+                const inMaterial = selectedMaterials.has(k)
+                const status = (inContainer || inMaterial) ? '✓' : ''
+                return `${def?.name || k}${status}${r.use ? ` (耐久 -${r.use}/次)` : ''}`
               }).join(' 或 ')
             }).join('、') }}
-            <span v-if="!operationRequirementMet" class="text-error"> ⚠️ 未满足</span>
+            <span v-if="!operationRequirementMet" class="text-error"> ⚠️ 未满足（可在容器或材料位提供）</span>
           </p>
           <p v-if="selectedOperation.required_techs && !selectedOperation.required_techs.every(t => packStore.hasTech(t))" class="text-error">
             前置科技未解锁

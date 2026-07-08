@@ -633,6 +633,7 @@ function cancel() {
   margin: 0;
 }
 .batch-input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
