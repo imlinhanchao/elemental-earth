@@ -10,6 +10,13 @@ import Icon from '@/components/Icon.vue';
 const fragmentStore = useFragmentStore();
 const packStore = usePackStore();
 
+const hasGasTech = computed(() => packStore.techs.includes('gas_collection'));
+
+function isGasItem(key: string) {
+    const item = getItem(key);
+    return item?.type.includes('gas');
+}
+
 const searchQuery = ref('');
 const allFragments = computed(() => {
     const frags = fragmentStore.fragments.map(key => {
@@ -43,6 +50,9 @@ function formatDescription(desc: string, products: any[] = []) {
     if (!desc) return '这份手稿上的字迹模糊不清...';
     const productKeys = products.map(p => p.key);
     return desc.replace(/#([\w_]+)#/g, (_, key) => {
+        if (isGasItem(key) && !hasGasTech.value) {
+            return `<span class="text-base-content/40 italic">???</span>`;
+        }
         if (packStore.hasEverHad(key) || productKeys.includes(key)) {
             return `<span class="font-bold text-primary">${packStore.getDisplayName(key)}</span>`;
         }
@@ -210,7 +220,9 @@ onMounted(() => {
                   :key="i"
                   class="flex items-center justify-between p-2 bg-base-100 rounded border border-base-300"
                 >
-                  <span class="text-sm font-medium">{{ packStore.getDisplayName(prod.key) }}</span>
+                  <span class="text-sm font-medium">
+                    {{ (isGasItem(prod.key) && !hasGasTech) ? '???' : packStore.getDisplayName(prod.key) }}
+                  </span>
                   <span v-if="prod.multiple && prod.multiple !== 1" class="text-xs opacity-60">x {{ prod.multiple }}</span>
                 </div>
               </div>
