@@ -2848,5 +2848,23 @@
       "material"
     ],
     "elemental": 0
+  },
+  {
+    "name": "硫酸钠",
+    "key": "sodium_sulfate",
+    "category": "材料",
+    "description": "白色结晶性粉末，干燥时呈松散状，舔之微咸带苦。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硫化钙",
+    "key": "calcium_sulfide",
+    "category": "材料",
+    "description": "棕黑色或灰色固体，有强烈臭味，类似臭鸡蛋味。",
+    "type": [
+      "material"
+    ]
   }
 ]
