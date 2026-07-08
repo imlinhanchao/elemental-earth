@@ -5868,9 +5868,18 @@
     "required_era": "alchemy"
   },
   {
-    "name": "芒硝法（路布兰第一步）",
     "key": "mirabilite_production",
+    "name": "芒硝法（路布兰第一步）",
     "description": "将食盐与浓硫酸混合加热，生成硫酸钠和氯化氢气体，冷凝后得到盐酸。",
+    "fragment_description": "在 #iron_tank# 中混合 #rock_salt# 与 #concentrated_sulfuric_acid#，$heating$ 后固体变为白色，同时有刺激性气体升腾，$gas_collecting$ 可得盐酸。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "iron_tank",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": 2
+    },
     "required_items": [
       {
         "key": "rock_salt",
@@ -5879,18 +5888,10 @@
       },
       {
         "key": "concentrated_sulfuric_acid",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       }
     ],
-    "required_container": "iron_tank",
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 2
-    },
-    "required_era": "modern_chem",
-    "time_required": 30,
-    "fragment_description": "在 #iron_tank# 中混合 #rock_salt# 与 #concentrated_sulfuric_acid#，$heating$ 后固体变为白色，同时有刺激性气体升腾，$gas_collecting$ 可得盐酸。",
     "products": [
       {
         "key": "sodium_sulfate",
@@ -5899,14 +5900,23 @@
       {
         "key": "hydrochloric_acid",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "dissolving"
       }
     ]
   },
   {
-    "name": "路布兰法（制碳酸钠）",
     "key": "leblanc_process",
+    "name": "路布兰法（制碳酸钠）",
     "description": "将硫酸钠、石灰石和煤混合后高温焙烧，生成碳酸钠和硫化钙。",
+    "fragment_description": "将 #sodium_sulfate#、#limestone# 和 #coal# 放入 #kiln# 中 $roasting$，混合物熔融后放出气体，冷却后得到黑色固体团块，$dissolving$ 再 $filtering$ 可分离出 #sodium_carbonate# 溶液。",
+    "time_required": 40,
+    "required_era": "modern_chem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2,
+      "max": 3
+    },
     "required_items": [
       {
         "key": "sodium_sulfate",
@@ -5915,22 +5925,18 @@
       },
       {
         "key": "limestone",
-        "quantity": 1
+        "quantity": 1,
+        "isMain": true
       },
       {
-        "key": "coal",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 2,
-      "max": 3
-    },
-    "required_era": "modern_chem",
-    "time_required": 60,
-    "fragment_description": "将 #sodium_sulfate#、#limestone# 和 #coal# 放入 #kiln# 中 $roasting$，混合物熔融后放出气体，冷却后得到黑色固体团块，$dissolving$ 再 $filtering$ 可分离出 #sodium_carbonate# 溶液。",
     "products": [
       {
         "key": "sodium_carbonate",
