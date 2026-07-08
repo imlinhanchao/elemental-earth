@@ -25,6 +25,19 @@
           {{ node.name }}
         </span>
         
+        <!-- Path Selection -->
+        <select 
+          v-if="node.availableMethods && node.availableMethods.length > 1"
+          class="select select-bordered select-xs h-6 min-h-0 py-0 px-1 bg-base-100/50 border-base-content/10 text-[10px] font-normal focus:outline-none"
+          :value="node.selectedMethodKey"
+          @click.stop
+          @change="onPathChange"
+        >
+          <option v-for="m in node.availableMethods" :key="m.key" :value="m.key">
+            {{ m.name }}
+          </option>
+        </select>
+        
         <div class="flex items-center gap-1.5 no-shrink">
           <span v-if="node.quantity > 0" class="badge badge-sm font-mono bg-base-300 border-none text-base-content/70">
             x{{ formatNumber(node.quantity) }}
@@ -73,11 +86,19 @@ const props = defineProps<{
     children: any[];
     note?: string;
     summary?: string;
+    availableMethods?: { key: string; name: string; type: 'formula' | 'action' }[];
+    selectedMethodKey?: string;
   };
   depth: number;
 }>();
 
 const expanded = ref(props.depth < 1);
+const pathOverrides = inject<any>('pathOverrides');
+
+function onPathChange(e: Event) {
+  const select = e.target as HTMLSelectElement;
+  pathOverrides?.update(props.node.key, select.value);
+}
 
 const typeIcon = computed(() => {
   switch (props.node.type) {

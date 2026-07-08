@@ -136,8 +136,16 @@ const elementId = ref(route.params.id as string);
 const targetQuantity = ref(1);
 const selectedRootIndex = ref(0);
 const requestedLocationKey = ref<string | null>(null);
+const pathOverrides = ref<Record<string, string>>({});
 
 provide('requestedLocationKey', requestedLocationKey);
+provide('pathOverrides', {
+  overrides: pathOverrides,
+  update: (itemKey: string, methodKey: string) => {
+    pathOverrides.value[itemKey] = methodKey;
+    buildTree(false);
+  }
+});
 
 const element = computed(() => {
   return elementsData.find(e => e.number.toString() === elementId.value || e.symbol === elementId.value);
@@ -162,16 +170,18 @@ interface TreeNode {
   children: TreeNode[];
   note?: string;
   summary?: string;
+  availableMethods?: { key: string; name: string; type: 'formula' | 'action' }[];
+  selectedMethodKey?: string;
 }
 
-function buildTree() {
+function buildTree(resetRoot = false) {
   if (!element.value) return;
   
   const elNum = element.value.number;
   const items = itemsData.filter(i => i.elemental === elNum);
   
   treeNodes.value = [];
-  selectedRootIndex.value = 0;
+  if (resetRoot) selectedRootIndex.value = 0;
   totalTechs.value = new Set();
   globalProcessedTechs.clear();
   
@@ -193,10 +203,29 @@ function resolveItem(itemKey: string, count: number, visited: Set<string>): Tree
   const formulas = (formulasData as any[]).filter(f => f.products.some((p: any) => p.key === itemKey));
   const actions = (actionsData as any[]).filter(a => a.rewards.some((r: any) => r.key === itemKey));
   
-  // Pick only the first available production method to avoid over-counting
-  // Preference: Action > Formula
-  const bestAction = actions[0];
-  const bestFormula = bestAction ? null : formulas[0];
+  // All possible methods
+  node.availableMethods = [
+    ...actions.map(a => ({ key: a.key, name: `行动: ${a.name}`, type: 'action' as const })),
+    ...formulas.map(f => ({ key: f.key, name: `配方: ${f.name}`, type: 'formula' as const }))
+  ];
+
+  // Pick production method
+  let bestAction = null;
+  let bestFormula = null;
+
+  const overrideKey = pathOverrides.value[itemKey];
+  if (overrideKey) {
+    bestAction = actions.find(a => a.key === overrideKey);
+    bestFormula = !bestAction ? formulas.find(f => f.key === overrideKey) : null;
+    node.selectedMethodKey = overrideKey;
+  }
+
+  if (!bestAction && !bestFormula) {
+    // Default Preference: Action > Formula
+    bestAction = actions[0];
+    bestFormula = bestAction ? null : formulas[0];
+    node.selectedMethodKey = bestAction?.key || bestFormula?.key;
+  }
 
   if (visited.has(itemKey)) {
     node.note = "(已折叠 - 循环引用)";
@@ -355,10 +384,11 @@ function resolveTech(techKey: string, visited: Set<string>): TreeNode {
 }
 
 onMounted(() => {
-  buildTree();
+  buildTree(true);
 });
 
 watch([elementId, targetQuantity], () => {
-  buildTree();
+  pathOverrides.value = {};
+  buildTree(true);
 });
 </script>
