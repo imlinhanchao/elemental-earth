@@ -903,6 +903,22 @@
           "volcano",
           "meteor_crater"
         ]
+      },
+      {
+        "key": "coal",
+        "probability": 1,
+        "required_era": "modern_chem",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave",
+          "basin"
+        ]
       }
     ]
   },
