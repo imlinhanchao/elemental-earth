@@ -31,6 +31,10 @@ export interface SaveData {
   renames: Record<string, { customName: string; note: string }>;
   /** 行动冷却时间戳（v3 新增） */
   cooldowns: Record<string, number>;
+  /** 行动替代材料选择（v4 新增） */
+  materialChoices?: Record<string, string>;
+  /** 行动批量执行数量（v4 新增） */
+  batchCounts?: Record<string, number>;
   /** 玩家收集的手稿（碎片） key 列表 */
   fragments: string[];
   /** 未读手稿列表 */
@@ -63,6 +67,8 @@ export function saveGame(): boolean {
       discovered: Array.from(packStore.discoveredItems),
       renames: JSON.parse(JSON.stringify(packStore.itemRenames)),
       cooldowns: JSON.parse(JSON.stringify(packStore.cooldowns)),
+      materialChoices: JSON.parse(JSON.stringify(packStore.materialChoices)),
+      batchCounts: JSON.parse(JSON.stringify(packStore.batchCounts)),
       fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
     };
@@ -152,6 +158,14 @@ export function loadGame(): boolean {
     // 恢复行动冷却（v3 新增）
     if (data.cooldowns) {
       Object.assign(packStore.cooldowns, data.cooldowns)
+    }
+
+    // 恢复行动选项与批量设置（v4 新增）
+    if (data.materialChoices) {
+      Object.assign(packStore.materialChoices, data.materialChoices)
+    }
+    if (data.batchCounts) {
+      Object.assign(packStore.batchCounts, data.batchCounts)
     }
 
     lastSavedTime.value = data.timestamp;

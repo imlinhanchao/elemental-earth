@@ -16,7 +16,7 @@ const availableTips = computed(() => {
   })
 })
 
-const currentTipIndex = ref(Math.floor(Math.random() * availableTips.value.length))
+const currentTipIndex = ref(0)
 let intervalId: ReturnType<typeof setInterval> | null = null
 
 function updateTip() {
@@ -27,6 +27,11 @@ function updateTip() {
 function startRotating() {
   stopRotating()
   if (availableTips.value.length === 0) return
+  
+  // 随机初始化第一个
+  if (currentTipIndex.value >= availableTips.value.length) {
+    currentTipIndex.value = Math.floor(Math.random() * availableTips.value.length)
+  }
   
   // 根据内容长度动态计算切换时间，最小 4s，最大 8s
   const currentTip = availableTips.value[currentTipIndex.value]?.content || ''

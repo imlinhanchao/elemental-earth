@@ -46,14 +46,18 @@ const allFragments = computed(() => {
     );
 });
 
-function formatDescription(desc: string, products: any[] = []) {
+function formatDescription(desc: string, products: any[] = [], required: any[] = []) {
     if (!desc) return '这份手稿上的字迹模糊不清...';
     const productKeys = products.map(p => p.key);
+    const requiredKeys = required.flatMap(r => Array.isArray(r.key) ? r.key : [r.key]);
+    
     return desc.replace(/#([\w_]+)#/g, (_, key) => {
-        if (isGasItem(key) && !hasGasTech.value) {
+        // 如果是产物中的气体且未解锁科技，显示 ???
+        if (productKeys.includes(key) && isGasItem(key) && !hasGasTech.value) {
             return `<span class="text-base-content/40 italic">???</span>`;
         }
-        if (packStore.hasEverHad(key) || productKeys.includes(key)) {
+        // 如果是反应物，或者已经拥有过，或者是在产物列表中，则显示名称
+        if (requiredKeys.includes(key) || packStore.hasEverHad(key) || productKeys.includes(key)) {
             return `<span class="font-bold text-primary">${packStore.getDisplayName(key)}</span>`;
         }
         return `<span class="text-base-content/40 italic">???</span>`;
@@ -172,7 +176,7 @@ onMounted(() => {
             </div>
           </h2>
           
-          <div class="mb-6 p-4 bg-base-300/50 rounded-lg italic font-serif leading-relaxed text-lg" v-html="formatDescription(activeFragment.formula?.fragment_description || '', activeFragment.formula?.products)">
+          <div class="mb-6 p-4 bg-base-300/50 rounded-lg italic font-serif leading-relaxed text-lg" v-html="formatDescription(activeFragment.formula?.fragment_description || '', activeFragment.formula?.products, activeFragment.formula?.required_items)">
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -192,14 +196,14 @@ onMounted(() => {
                     <template v-if="Array.isArray(req.key)">
                       <template v-for="(k, idx) in req.key" :key="k">
                         <span v-if="idx > 0" class="mx-1 opacity-50">/</span>
-                        <span :class="{ 'opacity-40 italic': !packStore.hasEverHad(k) }">
-                          {{ packStore.hasEverHad(k) ? packStore.getDisplayName(k) : '???' }}
+                        <span :class="{ 'opacity-100': true }">
+                          {{ packStore.getDisplayName(k) }}
                         </span>
                       </template>
                     </template>
                     <template v-else>
-                      <span :class="{ 'opacity-40 italic': !packStore.hasEverHad(req.key) }">
-                        {{ packStore.hasEverHad(req.key) ? packStore.getDisplayName(req.key) : '???' }}
+                      <span :class="{ 'opacity-100': true }">
+                        {{ packStore.getDisplayName(req.key) }}
                       </span>
                     </template>
                   </span>

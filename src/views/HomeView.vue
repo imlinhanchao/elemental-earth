@@ -154,7 +154,7 @@
             :id="`action-${f.key}`"
             :description="f.description"
             :required_items="f.required_items.map(req => ({
-              key: Array.isArray(req.key) ? req.key[0] : req.key,
+              key: Array.isArray(req.key) ? (req.key.find(k => packStore.hasEverHad(k)) || req.key[0]) : req.key,
               quantity: req.quantity,
             }))"
             :required_techs="f.required_techs"

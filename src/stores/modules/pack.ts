@@ -31,6 +31,10 @@ export const usePackStore = defineStore('pack', () => {
   const discoveryQueue = reactive<string[]>([])
   /** 行动冷却结束时间戳 actionKey → timestamp */
   const cooldowns = reactive<Record<string, number>>({})
+  /** 行动替代材料选择 actionKey_groupKey → itemKey */
+  const materialChoices = reactive<Record<string, string>>({})
+  /** 行动批量执行数量 actionKey → count */
+  const batchCounts = reactive<Record<string, number>>({})
 
   const logStore = useLogStore();
 
@@ -216,6 +220,7 @@ export const usePackStore = defineStore('pack', () => {
 
   return { 
     items, techs, provenFormulas, discoveredItems, itemRenames, discoveryQueue, cooldowns,
+    materialChoices, batchCounts,
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,

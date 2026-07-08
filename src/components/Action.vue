@@ -30,9 +30,6 @@
   onBeforeUnmount(() => { if (cooldownTimer) clearInterval(cooldownTimer) })
 
   // ─── 替代材料选择 ────────────────────────────────────────────
-  /** 按 action key 存储用户为每个替代材料组选定的 key */
-  const materialChoices = reactive<Record<string, string>>({});
-
   /** 是否有替代材料配置 */
   const hasAlternatives = computed(() =>
     props.data.required_items.some(r => Array.isArray(r.key))
@@ -48,7 +45,7 @@
     return props.data.required_items.map(r => {
       const keys = Array.isArray(r.key) ? r.key : [r.key];
       // 用户已选择 →
-      const chosen = materialChoices[`${props.data.key}_${r.key}`];
+      const chosen = packStore.materialChoices[`${props.data.key}_${r.key}`];
       if (chosen && keys.includes(chosen) && packStore.hasItem(chosen, r.quantity)) return { key: chosen, quantity: r.quantity, use: r.use };
       // 默认第一个可用的
       for (const k of keys) {
@@ -85,25 +82,12 @@
   }
 
   function selectAlternative(storeKey: string, itemKey: string) {
-    materialChoices[storeKey] = itemKey;
+    packStore.materialChoices[storeKey] = itemKey;
     showMaterialPicker.value = false;
   }
 
   // ─── 批量次数 ────────────────────────────────────────────────
-  const STORAGE_PREFIX = 'action_batch_'
-
-  function loadBatchCount(): number {
-    try {
-      const val = localStorage.getItem(STORAGE_PREFIX + props.data.key)
-      return val ? Math.max(1, Math.min(20, parseInt(val) || 1)) : 1
-    } catch { return 1 }
-  }
-
-  function saveBatchCount(n: number) {
-    try { localStorage.setItem(STORAGE_PREFIX + props.data.key, String(n)) } catch {}
-  }
-
-  const batchCount = ref(loadBatchCount());
+  const batchCount = computed(() => packStore.batchCounts[props.data.key] || 1);
   const showBatchPicker = ref(false);
 
   const maxBatch = computed(() => {
@@ -122,13 +106,14 @@
   });
 
   function setBatch(n: number) {
-    batchCount.value = Math.max(1, Math.min(n, maxBatch.value));
-    saveBatchCount(batchCount.value);
+    const val = Math.max(1, Math.min(n, maxBatch.value));
+    packStore.batchCounts[props.data.key] = val;
     showBatchPicker.value = false;
   }
 
   function toggleBatchPicker(e: Event) {
     e.stopPropagation();
+    if (isRunning.value) return;
     showBatchPicker.value = !showBatchPicker.value;
   }
 
@@ -248,7 +233,7 @@
               <div class="text-[10px] opacity-50 mb-1">替代材料</div>
               <button v-for="opt in getAvailableOptions(r.key)" :key="opt.key"
                 class="btn btn-xs w-full justify-start mb-0.5"
-                :class="(materialChoices[`${data.key}_${r.key}`] || resolveMaterials().find(m => r.key.includes ? r.key.includes(m.key) : false)?.key) === opt.key ? 'btn-secondary' : 'btn-ghost'"
+                :class="(packStore.materialChoices[`${data.key}_${r.key}`] || resolveMaterials().find(m => r.key.includes ? r.key.includes(m.key) : false)?.key) === opt.key ? 'btn-secondary' : 'btn-ghost'"
                 @click="selectAlternative(`${data.key}_${r.key}`, opt.key)"
               >{{ opt.name }}</button>
             </template>
