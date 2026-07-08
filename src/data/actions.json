@@ -1315,7 +1315,10 @@
     "time_required": 30,
     "required_items": [
       {
-        "key": "clay",
+        "key": [
+          "clay",
+          "glass"
+        ],
         "quantity": 2
       }
     ],

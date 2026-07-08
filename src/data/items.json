@@ -772,14 +772,14 @@
     "elemental": 15
   },
   {
-    "name": "沙子",
     "key": "sand",
+    "name": "沙子",
     "category": "材料",
     "description": "浅黄色、细小的颗粒，握在手中会从指缝间滑落，夹杂着微小的贝壳碎屑。",
     "type": [
       "material"
     ],
-    "elemental": 14
+    "elemental": 0
   },
   {
     "name": "筛子",
