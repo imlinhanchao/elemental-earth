@@ -296,23 +296,23 @@
     "time_required": 60
   },
   {
-    "name": "高能炸药",
     "key": "high_explosive_tech",
+    "name": "高能炸药",
     "description": "掌握了将硝化甘油与硅藻土结合制成稳定高爆炸药的技术。",
+    "time_required": 60,
     "required_items": [
-      {
-        "key": "nitroglycerin",
-        "quantity": 1
-      },
       {
         "key": "diatomaceous_earth",
         "quantity": 2
+      },
+      {
+        "key": "copper",
+        "quantity": 1
       }
     ],
     "required_techs": [
       "explosives"
-    ],
-    "time_required": 60
+    ]
   },
   {
     "key": "lithium_battery_tech",
@@ -350,13 +350,23 @@
     "time_required": 120
   },
   {
-    "name": "起爆技术",
     "key": "detonation_tech",
+    "name": "起爆技术",
     "description": "掌握了通过起爆药安全引爆高能炸药的技术。",
+    "time_required": 30,
+    "required_items": [
+      {
+        "key": "gunpowder",
+        "quantity": 5
+      },
+      {
+        "key": "high_explosive",
+        "quantity": 5
+      }
+    ],
     "required_techs": [
       "explosives"
-    ],
-    "time_required": 30
+    ]
   },
   {
     "name": "结晶工艺",

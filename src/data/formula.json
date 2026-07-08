@@ -380,7 +380,9 @@
     "key": "reduce_lead_oxide",
     "name": "还原氧化铅",
     "description": "用碳还原氧化铅，得到金属铅和一氧化碳。",
-    "time_required": 60,
+    "fragment_description": "使用#charcoal#对#lead_oxide#进行$roasting$还原，析出金属#lead#并释放#carbon_monoxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -411,12 +413,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ],
-    "required_techs": [
-      "iron_tool_crafting"
-    ],
-    "fragment_description": "使用#charcoal#对#lead_oxide#进行$roasting$还原，析出金属#lead#并释放#carbon_monoxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "smelt_tin",
@@ -1649,9 +1646,17 @@
     "required_era": "stone"
   },
   {
-    "name": "还原软锰矿",
     "key": "reduce_pyrolusite",
+    "name": "还原软锰矿",
     "description": "将软锰矿与碳一起干馏，还原得到金属锰。",
+    "fragment_description": "使用#charcoal#在高温炉内还原#pyrolusite#，通过$dry_distillation$反应制取#manganese#单质。",
+    "time_required": 30,
+    "required_era": "modern_chem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "pyrolusite",
@@ -1666,15 +1671,6 @@
         "quantity": 6
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "dry_distillation",
-      "min": 1
-    },
-    "required_techs": [
-      "manganese_alloy_smithing"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "manganese",
@@ -1684,9 +1680,7 @@
         "key": "carbon_monoxide",
         "multiple": 3
       }
-    ],
-    "fragment_description": "使用#charcoal#在高温炉内还原#pyrolusite#，通过$dry_distillation$反应制取#manganese#单质。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "key": "smelt_manganese_steel",
@@ -2210,9 +2204,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "还原二氧化钛制钛",
     "key": "reduce_titanium_dioxide",
+    "name": "还原二氧化钛制钛",
     "description": "在高温下用镁还原二氧化钛，得到海绵钛。",
+    "fragment_description": "在惰性气氛或高温下利用强还原剂（如#charcoal#）处理#titanium_dioxide#，还原制取金属#titanium#。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "titanium_dioxide",
@@ -2224,15 +2226,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "titanium_alloy_smithing"
-    ],
-    "time_required": 120,
     "products": [
       {
         "key": "titanium",
@@ -2242,9 +2235,7 @@
         "key": "magnesium_oxide",
         "multiple": 1
       }
-    ],
-    "fragment_description": "在惰性气氛或高温下利用强还原剂（如#charcoal#）处理#titanium_dioxide#，还原制取金属#titanium#。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "name": "焙烧铬铁矿",
