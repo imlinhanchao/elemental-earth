@@ -409,5 +409,71 @@
     "content": "在山脉的断层与洞穴的阴影中，隐藏着铅灰色且极为沉重的矿石，它是光亮与财富的古老契机。",
     "era": "alchemy",
     "item": "argentite"
+  },
+  {
+    "id": "tip-1710400000056",
+    "content": "在那粗糙的石块裂缝中，有时能看到深灰色且质地致密的锋利边缘，那是石器时代的珍宝。",
+    "era": "stone",
+    "item": "flint"
+  },
+  {
+    "id": "tip-1710400000057",
+    "content": "河滨与湖泊的浅滩上，覆盖着无数细小的金黄或灰白微粒，在阳光下折涉着晶莹的光。",
+    "era": "stone",
+    "item": "sand"
+  },
+  {
+    "id": "tip-1710400000058",
+    "content": "那些透明度极高的微小晶核，常随风在荒漠中堆积，是通往玻璃世界的基石。",
+    "era": "modern_chem",
+    "item": "silica_sand"
+  },
+  {
+    "id": "tip-1710400000059",
+    "content": "这类散发着耀眼金光却又带着一丝沉重气息的稀有矿脉，往往在深山的古老岩层中交织。",
+    "era": "modern_chem",
+    "item": "tellurium_gold_ore"
+  },
+  {
+    "id": "tip-1710400000060",
+    "content": "那种呈漆黑色、具有惊人重量且能让周围物质发生微妙变化的‘沥青’，藏在偏远而荒凉的无人之境。",
+    "era": "atomic_age",
+    "item": "pitchblende"
+  },
+  {
+    "id": "tip-1710400000061",
+    "content": "这些鲜红或火橙色的六方晶体，如宝石般点缀在深埋的矿脉中，蕴含着沉睡的金属意志。",
+    "era": "electrochem",
+    "item": "vanadinite"
+  },
+  {
+    "id": "tip-1710400000062",
+    "content": "在古老的花岗岩裂隙中，藏着这些呈黄褐色、微小且蕴含着强大稀土力量的晶体。",
+    "era": "rare_earth",
+    "item": "xenotime"
+  },
+  {
+    "id": "tip-1710400000063",
+    "content": "那些在砂石中闪烁着淡红或蜜黄色泽的高密度微粒，记录了亿万年前大地的低语。",
+    "era": "rare_earth",
+    "item": "monazite"
+  },
+  {
+    "id": "tip-1710400000064",
+    "content": "在远离陆地的海平面下，随波逐流的深绿羽翼中，汲取着大海深处的咸涩精华。",
+    "era": "stone",
+    "item": "seaweed"
+  },
+  {
+    "id": "tip-1710400000065",
+    "content": "那种呈灰黑色且极难熔化的沉重砂砾，常在偏远的水道下游静静沉寂。",
+    "era": "modern_chem",
+    "item": "crude_platinum_sand"
+  },
+  {
+    "id": "tip-1710400000066",
+    "content": "在那银白色的分支条纹中，闪烁着月光般的圣洁光芒，是大自然亲手雕琢的纯洁之礼。",
+    "era": "alchemy",
+    "item": "native_silver"
   }
 ]

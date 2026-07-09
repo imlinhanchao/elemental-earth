@@ -8,6 +8,7 @@ import { useAppStore } from '@/stores/modules/app';
 import { useFragmentStore } from '@/stores/modules/fragment';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
+import { tips } from '@/data/tips';
 import { Eras } from '@/data/eras';
 import { useLogStore } from './log';
 import { getItem } from '@/data/items';
@@ -215,6 +216,26 @@ export const useTaskStore = defineStore('task', () => {
           logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
           notifyTaskComplete(task.name, '科技研究完成');
         }
+
+        // 1% 概率在 Log 中添加小贴士
+        if (Math.random() < 0.01) {
+          const currentEra = Eras.find(e => e.key === stateStore.state.currentEra)
+          const currentEraOrder = currentEra?.order ?? 0
+          const availableTips = tips.filter(t => {
+            // 过滤已发现的矿石提示
+            if (t.item && packStore.discoveredItems.has(t.item)) return false
+            
+            if (!t.era) return true
+            const requiredEra = Eras.find(e => e.key === t.era)
+            return requiredEra ? requiredEra.order <= currentEraOrder : true
+          })
+
+          if (availableTips.length > 0) {
+            const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)]
+            logStore.addLog(`💡 小贴士：${randomTip.content}`, 'tip')
+          }
+        }
+
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length > 0) {
           recalculateStartTimes();

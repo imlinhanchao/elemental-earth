@@ -2,14 +2,19 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { tips } from '@/data/tips'
 import { useStateStore } from '@/stores/modules/state'
+import { usePackStore } from '@/stores/modules/pack'
 import { Eras } from '@/data/eras'
 
 const stateStore = useStateStore()
+const packStore = usePackStore()
 
 const availableTips = computed(() => {
   const currentEra = Eras.find(e => e.key === stateStore.currentEra?.key)
   const currentEraOrder = currentEra?.order ?? 0
   return tips.filter(t => {
+    // 过滤已发现的矿石提示
+    if (t.item && packStore.discoveredItems.has(t.item)) return false
+    
     if (!t.era) return true
     const requiredEra = Eras.find(e => e.key === t.era)
     return requiredEra ? requiredEra.order <= currentEraOrder : true
