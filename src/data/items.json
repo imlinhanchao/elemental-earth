@@ -617,7 +617,8 @@
     "category": "容器",
     "description": "螺旋冷凝管，可高效冷却蒸汽，用于蒸馏操作。",
     "type": [
-      "container"
+      "container",
+      "tool"
     ],
     "durable": 2
   },

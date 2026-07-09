@@ -69,7 +69,9 @@
     "key": "copper_smelting",
     "name": "炼铜",
     "description": "将孔雀石放入窑炉中进行焙烧，得到铜和二氧化碳。",
-    "time_required": 60,
+    "fragment_description": "对#malachite#进行高温$roasting$，使其热分解为金属#copper#并释放#carbon_dioxide#。",
+    "time_required": 40,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -95,9 +97,7 @@
     ],
     "required_techs": [
       "pottery"
-    ],
-    "fragment_description": "对#malachite#进行高温$roasting$，使其热分解为金属#copper#并释放#carbon_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "制作碱水",
@@ -497,7 +497,10 @@
     "key": "roast_argentite",
     "name": "焙烧辉银矿",
     "description": "将辉银矿投入焙烧炉中，与空气反应生成银和二氧化硫。",
-    "time_required": 45,
+    "fragment_description": "对#argentite#进行$roasting$氧化，直接还原出金属#silver#并释放#sulfur_dioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
       "min": 1
@@ -518,9 +521,7 @@
         "key": "sulfur_dioxide",
         "multiple": 1
       }
-    ],
-    "fragment_description": "对#argentite#进行$roasting$氧化，直接还原出金属#silver#并释放#sulfur_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "焙烧辉锑矿",
@@ -1080,7 +1081,10 @@
     "key": "roast_sulfur",
     "name": "焙烧硫磺",
     "description": "将硫磺在空气中燃烧，生成二氧化硫气体。",
+    "fragment_description": "使#sulfur#在空气中进行$roasting$燃烧，通过氧化反应生成刺激性气味的#sulfur_dioxide#。",
     "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
       "min": 1
@@ -1103,9 +1107,7 @@
         "multiple": 1,
         "required_chain_operation": "blowing"
       }
-    ],
-    "fragment_description": "使#sulfur#在空气中进行$roasting$燃烧，通过氧化反应生成刺激性气味的#sulfur_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "absorb_sulfur_trioxide",
@@ -1140,7 +1142,10 @@
     "key": "roast_green_vitriol",
     "name": "焙烧绿矾",
     "description": "将绿矾加热分解，得到赤铁矿和二氧化硫气体。",
-    "time_required": 30,
+    "fragment_description": "对#green_vitriol#进行高温$roasting$热分解，生成#hematite#并释放#sulfur_dioxide#及#sulfur_trioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
       "min": 1
@@ -1172,9 +1177,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "对#green_vitriol#进行高温$roasting$热分解，生成#hematite#并释放#sulfur_dioxide#及#sulfur_trioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "硫酸制氢",
@@ -1654,7 +1657,7 @@
     "fragment_description": "使用#charcoal#在高温炉内还原#pyrolusite#，通过$dry_distillation$反应制取#manganese#单质。",
     "time_required": 30,
     "required_era": "modern_chem",
-    "required_container": "kiln",
+    "required_container": "clay_pot",
     "required_actions": {
       "key": "dry_distillation",
       "min": 1
@@ -1882,9 +1885,17 @@
     "required_era": "modern_chem"
   },
   {
-    "name": "焙烧白钨矿制三氧化钨",
     "key": "roast_scheelite",
+    "name": "焙烧白钨矿制三氧化钨",
     "description": "将白钨矿与盐酸反应，再经焙烧得到三氧化钨。",
+    "fragment_description": "将#scheelite#与#hydrochloric_acid#反应后进行$roasting$处理，最终氧化转化为黄色固体#tungsten_trioxide#。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "scheelite",
@@ -1896,12 +1907,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 90,
     "products": [
       {
         "key": "tungsten_trioxide",
@@ -1911,9 +1916,7 @@
         "key": "slag",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#scheelite#与#hydrochloric_acid#反应后进行$roasting$处理，最终氧化转化为黄色固体#tungsten_trioxide#。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "name": "还原三氧化钨制钨粉",
@@ -4029,9 +4032,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "焙烧辉铋矿",
     "key": "roast_bismuthite",
+    "name": "焙烧辉铋矿",
     "description": "将辉铋矿在空气中焙烧，生成氧化铋和二氧化硫。",
+    "fragment_description": "以#bismuthite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "bismuthite",
@@ -4039,14 +4050,6 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 20,
     "products": [
       {
         "key": "bismuth_oxide",
@@ -4058,8 +4061,9 @@
         "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "以#bismuthite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "name": "还原氧化铋",
@@ -4164,14 +4168,17 @@
     "required_era": "stone"
   },
   {
-    "name": "从阳极泥提取硒",
     "key": "extract_selenium_from_slime",
+    "name": "从阳极泥提取硒",
     "description": "将阳极泥与苏打混匀并在空气中焙烧，使硒转化为二氧化硒蒸发并捕集，之后还原得到硒单质。",
+    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 20,
+    "required_era": "electrochem",
+    "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
       "min": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "anode_slime",
@@ -4179,7 +4186,6 @@
         "isMain": true
       }
     ],
-    "time_required": 45,
     "products": [
       {
         "key": "selenium",
@@ -4188,9 +4194,7 @@
     ],
     "required_techs": [
       "electrochemistry"
-    ],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "key": "smelting_chalcopyrite",

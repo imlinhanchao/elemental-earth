@@ -43,7 +43,15 @@
               <span v-if="getFormulaTime(r) !== r.time_required" class="text-warning font-bold" title="与原始设置不符">{{ getFormulaTime(r) }}s*</span>
               <span v-else>{{ r.time_required }}s</span>
             </td>
-            <td class="text-xs">{{ r.required_container || "—" }}</td>
+            <td
+              class="text-xs"
+              :class="{ 'text-error font-bold': hasContainerConflict(r) }"
+              :title="
+                hasContainerConflict(r) ? '操作需求 ' + getActionContainerName(r) : ''
+              "
+            >
+              {{ r.required_container || "—" }}
+            </td>
             <td class="text-xs">{{ r.required_actions?.key || "—" }}</td>
             <td class="text-xs">{{ eraOptions.find(e => e.key == r.required_era)?.name || "—" }}</td>
             <td class="text-xs">
@@ -431,6 +439,49 @@ function getFormulaTime(r: any) {
     }
   }
   return r.time_required;
+}
+
+function getActionContainerName(r: any) {
+  if (!r.required_actions?.key) return null;
+  const action = labOptions.value.find((l) => l.key === r.required_actions.key);
+  if (!action || !action.required_item) return null;
+
+  for (const req of action.required_item) {
+    const keys = Array.isArray(req.key) ? req.key : [req.key];
+    const isContainerReq = keys.some((k: string) => {
+      const item = itemOptions.value.find((i) => i.key === k);
+      return item?.type?.includes("container");
+    });
+
+    if (isContainerReq) {
+      return keys
+        .map((k: string) => itemOptions.value.find((i) => i.key === k)?.name || k)
+        .join("/");
+    }
+  }
+  return null;
+}
+
+function hasContainerConflict(r: any) {
+  if (!r.required_actions?.key) return false;
+  const action = labOptions.value.find((l) => l.key === r.required_actions.key);
+  if (!action || !action.required_item) return false;
+
+  for (const req of action.required_item) {
+    const keys = Array.isArray(req.key) ? req.key : [req.key];
+    const isContainerReq = keys.some((k: string) => {
+      const item = itemOptions.value.find((i) => i.key === k);
+      return item?.type?.includes("container");
+    });
+
+    if (isContainerReq) {
+      // 如果配方指定了容器，但不在操作要求的范围内，或者配方没指定容器但操作要求了
+      if (!r.required_container || !keys.includes(r.required_container)) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function resetForm() {

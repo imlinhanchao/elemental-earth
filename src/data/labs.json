@@ -241,16 +241,20 @@
     "name": "分步结晶",
     "description": "利用不同物质在同一溶剂中溶解度的差异，通过反复溶解与结晶逐步分离混合物。",
     "time_required": 30,
+    "requires_burning": false,
     "required_item": [
       {
-        "key": "crucible",
+        "key": [
+          "crucible",
+          "beaker",
+          "iron_tank"
+        ],
         "quantity": 1,
         "use": 0.05
       }
     ],
     "required_techs": [
       "crystallization_tech"
-    ],
-    "requires_burning": false
+    ]
   }
 ]
