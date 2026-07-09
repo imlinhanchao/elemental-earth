@@ -27,7 +27,8 @@
       {
         "key": [
           "kiln",
-          "blast_furnace"
+          "blast_furnace",
+          "crucible"
         ],
         "quantity": 1,
         "use": 0.1
