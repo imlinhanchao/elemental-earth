@@ -82,5 +82,332 @@
   {
     "id": "tip-1783418242619",
     "content": "在任务列表右侧有一个按钮，点击可以折叠相同的任务。"
+  },
+  {
+    "id": "tip-1710400000001",
+    "content": "那闪烁着金黄色泽的细屑，往往藏匿在清澈溪水的沉积物之中。",
+    "era": "stone",
+    "item": "gold_sand"
+  },
+  {
+    "id": "tip-1710400000002",
+    "content": "火山脚下的焦灼土地里，有时能挖掘到一股刺鼻气味的黄色晶体。",
+    "era": "alchemy",
+    "item": "sulfur"
+  },
+  {
+    "id": "tip-1710400000003",
+    "content": "那种带有孔雀羽毛般绿色的珍稀矿石，通常在崇山峻岭的深处等待被探寻。",
+    "era": "alchemy",
+    "item": "malachite"
+  },
+  {
+    "id": "tip-1710400000004",
+    "content": "在盆地的深层土壤下，埋藏着能被点燃的漆黑之物，那是远古植被的馈赠。",
+    "era": "stone",
+    "item": "coal"
+  },
+  {
+    "id": "tip-1710400000005",
+    "content": "洞穴中那些像霜雪一样的白色晶体，在阴湿的角落里无声生长，是调配秘药的关键。",
+    "era": "alchemy",
+    "item": "niter"
+  },
+  {
+    "id": "tip-1710400000006",
+    "content": "有些极度坚硬的矿物隐藏在山脉的断层中，或许只有猛烈的爆破才能令其露出真容。",
+    "era": "alchemy"
+  },
+  {
+    "id": "tip-1710400000007",
+    "content": "那一抹如鲜血般夺目的红，在炽热的熔炉中会悄然化作沉重而流动的银色魅影。",
+    "era": "alchemy",
+    "item": "cinnabar"
+  },
+  {
+    "id": "tip-1710400000008",
+    "content": "那些透明纯净的晶体，在光影下折射着迷人的色彩，常出没于山岳与幽邃的岩缝中。",
+    "era": "stone",
+    "item": "quartz"
+  },
+  {
+    "id": "tip-1710400000009",
+    "content": "河岸边那些湿润而细腻的泥土，是塑造最初文明容器的上好材料。",
+    "era": "stone",
+    "item": "clay"
+  },
+  {
+    "id": "tip-1710400000010",
+    "content": "那带着暗红条痕的沉重石块，在烈火与焦炭的洗礼下将展现出钢铁的意志。",
+    "era": "alchemy",
+    "item": "hematite"
+  },
+  {
+    "id": "tip-1710400000011",
+    "content": "山脉中随处可见的灰色岩石，若滴上酸液，便会如同沸腾般吐出泡沫。",
+    "era": "alchemy",
+    "item": "limestone"
+  },
+  {
+    "id": "tip-1710400000012",
+    "content": "铅灰色的规则晶体散发着冷冽的金属光泽，即使体积微小却重得惊人。",
+    "era": "alchemy",
+    "item": "galena"
+  },
+  {
+    "id": "tip-1710400000013",
+    "content": "那些色彩艳丽得近乎诡异的矿石，往往伴随着危险的毒性和灼热感，在火山深处静候。",
+    "era": "alchemy",
+    "item": "realgar"
+  },
+  {
+    "id": "tip-1710400000014",
+    "content": "干涸古湖的沉积物中，藏着让食物变美味也让舌尖感到苦涩的晶状之物。",
+    "era": "alchemy",
+    "item": "rock_salt"
+  },
+  {
+    "id": "tip-1710400000015",
+    "content": "在星辰陨落过的焦黑坑洞里，可以寻获那些本不属于这颗星球的珍稀馈赠。",
+    "era": "modern_chem",
+    "item": "sperrylite"
+  },
+  {
+    "id": "tip-1710400000016",
+    "content": "海鸟密集的孤岛之上，经年累月的堆积物孕育出了特殊的矿藏。",
+    "era": "modern_chem",
+    "item": "phosphorite"
+  },
+  {
+    "id": "tip-1710400000017",
+    "content": "在黑暗的注视下，某些矿石内部会发生奇妙的共鸣，透出幽幽的荧光。",
+    "era": "modern_chem",
+    "item": "fluorite"
+  },
+  {
+    "id": "tip-1710400000018",
+    "content": "那些看起来像土块一样平凡无奇的疙瘩，实际上蕴含着轻盈金属的奥秘。",
+    "era": "electrochem",
+    "item": "bauxite"
+  },
+  {
+    "id": "tip-1710400000019",
+    "content": "海滩的细砂或是高山的伟晶岩中，偶尔会闪过如宝石般璀璨的微光。",
+    "era": "rare_earth",
+    "item": "zircon"
+  },
+  {
+    "id": "tip-1710400000020",
+    "content": "并非所有闪烁着金属光泽的都是黄金，山野间的‘愚人金’常会误导粗心的探险者。",
+    "era": "stone",
+    "item": "chalcopyrite"
+  },
+  {
+    "id": "tip-1710400000021",
+    "content": "即便不像木炭那样可以燃烧，那种漆黑细腻的矿石也能轻易染黑你的指尖。",
+    "era": "modern_chem",
+    "item": "pyrolusite"
+  },
+  {
+    "id": "tip-1710400000022",
+    "content": "当爆破的艺术达到极致，定点的震颤能精准地唤醒沉睡在特定岩层中的稀有矿脉。",
+    "era": "modern_chem"
+  },
+  {
+    "id": "tip-1710400000023",
+    "content": "有些极为坚韧的矿物，只有在配备了更高级材质的工具时才肯从岩壁上脱落。",
+    "era": "alchemy"
+  },
+  {
+    "id": "tip-1710400000024",
+    "content": "那种呈褐色且密度极大的碎块，在深山的岩层中默默堆积，是获取锡的关键。",
+    "era": "alchemy",
+    "item": "cassiterite"
+  },
+  {
+    "id": "tip-1710400000025",
+    "content": "闪烁着深色金属光泽且带有条纹的沉重岩块，往往需要在洞穴深处才能被镐头触碰。",
+    "era": "alchemy",
+    "item": "sphalerite"
+  },
+  {
+    "id": "tip-1710400000026",
+    "content": "伴随着刺鼻气味出没的银灰色针状晶体，常潜伏在洞穴或火山的硫磺气息之中。",
+    "era": "alchemy",
+    "item": "stibnite"
+  },
+  {
+    "id": "tip-1710400000027",
+    "content": "那些带有浅灰金属光泽的致密方块，常与剧毒的硫磺矿脉共生，等待着无畏的矿工。",
+    "era": "alchemy",
+    "item": "arsenopyrite"
+  },
+  {
+    "id": "tip-1710400000028",
+    "content": "在地下水流经的潮湿洞壁上，或许能刮取出一些带有酸涩味道的天然绿盐。",
+    "era": "alchemy",
+    "item": "green_vitriol"
+  },
+  {
+    "id": "tip-1710400000029",
+    "content": "这些银灰色的坚硬晶体，藏匿在重重高山之下，是现代合金中不可或缺的强韧之源。",
+    "era": "modern_chem",
+    "item": "molybdenite"
+  },
+  {
+    "id": "tip-1710400000030",
+    "content": "那种呈灰白色、密度惊人的沉重矿物，常点缀在花岗岩的纹理中，在紫外光下会发出淡蓝光芒。",
+    "era": "modern_chem",
+    "item": "scheelite"
+  },
+  {
+    "id": "tip-1710400000031",
+    "content": "这些极度细小的白色粉末，堆积在远离大陆的海岸边，那是远古单细胞生物留下的骸骨。",
+    "era": "modern_chem",
+    "item": "diatomaceous_earth"
+  },
+  {
+    "id": "tip-1710400000032",
+    "content": "在那些满是盐渍的湖岸旁，除了食盐，还藏着带有苦涩味的白色粉末，那是肥沃土壤的良药。",
+    "era": "modern_chem",
+    "item": "sylvite"
+  },
+  {
+    "id": "tip-1710400000033",
+    "content": "这些呈微弱浅蓝色或白色的透明柱状晶体，常出没于盐湖与洞穴的缝隙，是提取锶的秘钥。",
+    "era": "modern_chem",
+    "item": "celestine"
+  },
+  {
+    "id": "tip-1710400000034",
+    "content": "那些带有丝绢光泽的针状结晶，在火山沉积物中闪烁，是制造奇异色彩的原材料。",
+    "era": "electrochem",
+    "item": "lorandite"
+  },
+  {
+    "id": "tip-1710400000035",
+    "content": "在那些黑色的致密矿块中，隐藏着坚硬的耐高温金属，常在巍峨的山脉中迎接爆破的冲击。",
+    "era": "modern_chem",
+    "item": "tantalite_columbite"
+  },
+  {
+    "id": "tip-1710400000036",
+    "content": "那种略带淡粉或浅紫色的矿物，质地较软，常在溶洞与火山的交界处现身，是获取钴的源泉。",
+    "era": "alchemy",
+    "item": "cobaltite"
+  },
+  {
+    "id": "tip-1710400000037",
+    "content": "银灰色且带有金属光泽的沉重碎块，常在深邃的洞穴中被发现，在烈火下会呈现出奇妙的变幻。",
+    "era": "alchemy",
+    "item": "bismuthite"
+  },
+  {
+    "id": "tip-1710400000038",
+    "content": "在干燥的洞穴角落，有时能发现这种像冰一样透明的晶体，它们能轻易溶解在水里。",
+    "era": "alchemy",
+    "item": "mirabilite"
+  },
+  {
+    "id": "tip-1710400000039",
+    "content": "金灿灿的矿物虽如黄金般耀眼，却常与危险的红石伴生，是古代绘画中不可或缺的色彩。",
+    "era": "alchemy",
+    "item": "orpiment"
+  },
+  {
+    "id": "tip-1710400000040",
+    "content": "漆黑而沉重的致密矿块，常隐匿在山脉或火山的岩层深处，是坚韧合金的守护者。",
+    "era": "modern_chem",
+    "item": "chromite"
+  },
+  {
+    "id": "tip-1710400000041",
+    "content": "透明或白色的板状晶体，沉重而坚实，常出没于幽暗的溶洞之中。",
+    "era": "modern_chem",
+    "item": "barite"
+  },
+  {
+    "id": "tip-1710400000042",
+    "content": "深红至暗黑色的细小晶体，坚硬而稳定，散落在山峰或岩浆流过的痕迹里。",
+    "era": "modern_chem",
+    "item": "rutile"
+  },
+  {
+    "id": "tip-1710400000043",
+    "content": "火山的灰烬与热泉旁，常能捡到这种白色的细小晶体，它是连接古老陶瓷与现代工业的纽带。",
+    "era": "modern_chem",
+    "item": "borax"
+  },
+  {
+    "id": "tip-1710400000044",
+    "content": "那种呈淡粉色或白色的颗粒状岩石，与盐渍土共生，常在盆地和盐湖的边缘被挖掘。",
+    "era": "modern_chem",
+    "item": "strontianite"
+  },
+  {
+    "id": "tip-1710400000045",
+    "content": "在那些焦黑的陨石坑或是灼热的火山旁，藏着这种带着青铜色泽的奇异矿石。",
+    "era": "modern_chem",
+    "item": "pentlandite"
+  },
+  {
+    "id": "tip-1710400000046",
+    "content": "远离尘嚣的海岛与湿润的洞穴里，由无数生命痕迹凝结而成的晶体在悄然生长。",
+    "era": "modern_chem",
+    "item": "struvite"
+  },
+  {
+    "id": "tip-1710400000047",
+    "content": "这种呈淡紫色或灰白色的柱状矿石，藏身于大山深处的伟晶岩中，蕴含着驱动未来的力量。",
+    "era": "electrochem",
+    "item": "spodumene"
+  },
+  {
+    "id": "tip-1710400000048",
+    "content": "在终年积雪或极端恶劣的环境里，这种看起来像冰块却不会融化的石头是冶炼轻金属的关键。",
+    "era": "electrochem",
+    "item": "cryolite"
+  },
+  {
+    "id": "tip-1710400000049",
+    "content": "盐湖的结晶物中，有一种极易吸潮的苦涩矿物，那是获取轻盈金属的宝库。",
+    "era": "electrochem",
+    "item": "carnallite"
+  },
+  {
+    "id": "tip-1710400000050",
+    "content": "那些拥有六方柱状晶形的迷人石头，常在伟晶岩的缝隙里展示其独特的魅力。",
+    "era": "rare_earth",
+    "item": "beryl"
+  },
+  {
+    "id": "tip-1710400000051",
+    "content": "一种洁白而致密的块体，常点缀在岩壁上，是耐火材料的重要来源。",
+    "era": "rare_earth",
+    "item": "magnesite"
+  },
+  {
+    "id": "tip-1710400000052",
+    "content": "在大山与洞穴的深处，这种看起来像石英却更为稀有的矿物，蕴含着极重的碱性元素。",
+    "era": "rare_earth",
+    "item": "pollucite"
+  },
+  {
+    "id": "tip-1710400000053",
+    "content": "那种沉甸甸的白色块状矿物，滴上酸液后会剧烈反应，常栖息在深邃的矿洞之中。",
+    "era": "modern_chem",
+    "item": "witherite"
+  },
+  {
+    "id": "tip-1710400000054",
+    "content": "那些如紫色鳞片般闪耀的矿物，常在大山与洞穴中成簇出现，蕴含着极轻的金属灵性。",
+    "era": "modern_chem",
+    "item": "lepidolite"
+  },
+  {
+    "id": "tip-1710400000055",
+    "content": "在山脉的断层与洞穴的阴影中，隐藏着铅灰色且极为沉重的矿石，它是光亮与财富的古老契机。",
+    "era": "alchemy",
+    "item": "argentite"
   }
 ]
