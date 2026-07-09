@@ -5870,8 +5870,8 @@
   {
     "key": "mirabilite_production",
     "name": "芒硝法（路布兰第一步）",
-    "description": "将食盐与浓硫酸混合加热，生成硫酸钠和氯化氢气体，冷凝后得到盐酸。",
-    "fragment_description": "在 #iron_tank# 中混合 #rock_salt# 与 #concentrated_sulfuric_acid#，$heating$ 后固体变为白色，同时有刺激性气体升腾，$gas_collecting$ 可得盐酸。",
+    "description": "将食盐与浓硫酸混合加热，生成硫酸钠和氯化氢气体，溶解后得到盐酸。",
+    "fragment_description": "在 #iron_tank# 中混合 #rock_salt# 与 #concentrated_sulfuric_acid#，$heating$ 后固体变为白色，同时有刺激性气体升腾，$dissolving$ 可得盐酸。",
     "time_required": 10,
     "required_era": "modern_chem",
     "required_container": "iron_tank",
