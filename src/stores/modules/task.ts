@@ -211,6 +211,11 @@ export const useTaskStore = defineStore('task', () => {
             }
             packStore.addProvenFormula(task.formulaKey)
           }
+
+          if (!task.formulaKey) {
+            logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
+            notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
+          }
         } else {
           packStore.addTech(task.key);
           logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
