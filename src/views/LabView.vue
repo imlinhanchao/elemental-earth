@@ -974,18 +974,18 @@ function startExperiment() {
       </div>
 
       <!-- 搜索框 -->
-      <div class="relative mb-3">
-        <Icon icon="tabler:search" class="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" />
+      <div class="relative mb-3 input input-bordered input-sm w-full">
+        <Icon icon="tabler:search" class="text-base-content/40" />
         <input
           v-model="materialSearchQuery"
           type="text"
           placeholder="搜索材料名称或代码..."
-          class="input input-bordered input-sm w-full pl-9"
+          class="w-full"
           ref="searchInput"
         />
         <button 
           v-if="materialSearchQuery" 
-          class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle"
+          class="btn btn-ghost btn-xs btn-circle"
           @click="materialSearchQuery = ''"
         >
           <Icon icon="tabler:x" />

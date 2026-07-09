@@ -15,10 +15,37 @@
       </h2>
       <span class="badge badge-ghost badge-sm">{{ records.length }} 条</span>
     </div>
-    <div class="flex gap-2 mb-4">
+    <div class="flex flex-wrap gap-2 mb-4">
       <button class="btn btn-primary btn-sm" @click="openNew">
         ＋ 新增配方
       </button>
+
+      <div class="join">
+        <div class="relative join-item input input-bordered input-sm ">
+          <Icon icon="tabler:search" class="text-xs" />
+          <input
+            v-model="searchMaterial"
+            class="w-40"
+            placeholder="搜索原材料..."
+          />
+        </div>
+        <div class="relative join-item input input-bordered input-sm ">
+          <Icon icon="tabler:search" class="text-xs" />
+          <input
+            v-model="searchProduct"
+            class="w-40"
+            placeholder="搜索产物..."
+          />
+        </div>
+        <button
+          v-if="searchMaterial || searchProduct"
+          class="btn btn-sm join-item"
+          @click="searchMaterial = ''; searchProduct = ''"
+        >
+          ✕
+        </button>
+      </div>
+
       <button class="btn btn-ghost btn-sm" @click="loadRecords">⟳ 刷新</button>
     </div>
     <div class="overflow-x-auto rounded-box border border-base-300">
@@ -36,7 +63,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="r in records" :key="r.key">
+          <tr v-for="r in filteredRecords" :key="r.key">
             <td class="font-mono text-xs">{{ r.key }}</td>
             <td>{{ r.name }}</td>
             <td class="text-xs">
@@ -77,12 +104,12 @@
               </button>
             </td>
           </tr>
-          <tr v-if="!records.length">
+          <tr v-if="!filteredRecords.length">
             <td
-              colspan="6"
+              colspan="8"
               class="text-center py-12 text-base-content/30 text-sm"
             >
-              暂无数据
+              {{ records.length ? '没有匹配的配方' : '暂无数据' }}
             </td>
           </tr>
         </tbody>
@@ -362,7 +389,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import { useAdminStore } from "@/stores/modules/admin";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import LabelTag from "@/components/LabelTag.vue";
@@ -371,6 +398,39 @@ const admin = useAdminStore();
 const records = ref<any[]>([]);
 const modalRef = ref<HTMLDialogElement | null>(null);
 const editing = ref<any>(null);
+
+const searchMaterial = ref("");
+const searchProduct = ref("");
+
+const filteredRecords = computed(() => {
+  let list = records.value;
+  const mQuery = searchMaterial.value.toLowerCase().trim();
+  const pQuery = searchProduct.value.toLowerCase().trim();
+
+  if (mQuery) {
+    list = list.filter((r) => {
+      return r.required_items?.some((req: any) => {
+        const keys = Array.isArray(req.key) ? req.key : [req.key];
+        return keys.some((k: string) => {
+          const item = itemOptions.value.find((i) => i.key === k);
+          return k.toLowerCase().includes(mQuery) || item?.name?.toLowerCase().includes(mQuery);
+        });
+      });
+    });
+  }
+
+  if (pQuery) {
+    list = list.filter((r) => {
+      return r.products?.some((prod: any) => {
+        const item = itemOptions.value.find((i) => i.key === prod.key);
+        return prod.key?.toLowerCase().includes(pQuery) || item?.name?.toLowerCase().includes(pQuery);
+      });
+    });
+  }
+
+  return list;
+});
+
 const form = reactive({
   key: "",
   name: "",

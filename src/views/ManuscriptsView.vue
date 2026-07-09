@@ -58,11 +58,36 @@ const allFragments = computed(() => {
     if (!searchQuery.value.trim()) return frags;
 
     const query = searchQuery.value.toLowerCase().trim();
-    return frags.filter(f => 
-        f.formula?.name?.toLowerCase().includes(query) || 
-        f.formula?.key?.toLowerCase().includes(query) ||
-        f.formula?.fragment_description?.toLowerCase().includes(query)
-    );
+    return frags.filter(f => {
+        const formula = f.formula;
+        if (!formula) return false;
+
+        // 1. 基础信息搜索 (名称/ID/描述)
+        if (formula.name?.toLowerCase().includes(query) || 
+            formula.key?.toLowerCase().includes(query) ||
+            formula.fragment_description?.toLowerCase().includes(query)) {
+            return true;
+        }
+
+        // 2. 原材料搜索
+        const matchesRequired = formula.required_items?.some(req => {
+            const keys = Array.isArray(req.key) ? req.key : [req.key];
+            return keys.some(k => {
+                const displayName = packStore.getDisplayName(k).toLowerCase();
+                return k.toLowerCase().includes(query) || displayName.includes(query);
+            });
+        });
+        if (matchesRequired) return true;
+
+        // 3. 产物搜索
+        const matchesProducts = formula.products?.some(prod => {
+            const displayName = packStore.getDisplayName(prod.key).toLowerCase();
+            return prod.key.toLowerCase().includes(query) || displayName.includes(query);
+        });
+        if (matchesProducts) return true;
+
+        return false;
+    });
 });
 
 function formatDescription(desc: string, products: any[] = [], required: any[] = []) {
@@ -128,15 +153,15 @@ onMounted(() => {
       </div>
 
       <div class="flex items-center gap-2 w-full md:w-auto">
-        <div class="relative flex-1 md:w-64">
-          <Icon icon="tabler:search" class="absolute left-3 top-1/2 -translate-y-1/2 opacity-30 text-sm" />
+        <div class="input input-sm input-bordered flex-1 md:w-64">
+          <Icon icon="tabler:search" class="opacity-30 text-sm" />
           <input 
             v-model="searchQuery" 
             type="text" 
             placeholder="搜索手稿名称或内容..." 
-            class="input input-sm input-bordered w-full"
+            class="w-full"
           />
-          <button v-if="searchQuery" class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle" @click="searchQuery = ''">
+          <button v-if="searchQuery" class="btn btn-ghost btn-xs btn-circle" @click="searchQuery = ''">
             <Icon icon="tabler:x" />
           </button>
         </div>

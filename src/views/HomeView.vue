@@ -28,11 +28,33 @@
     let list = Formulas.filter(f => packStore.hasProvenFormula(f.key));
     if (searchQuery.value.trim()) {
       const q = searchQuery.value.toLowerCase().trim();
-      list = list.filter(f => 
-        f.name.toLowerCase().includes(q) || 
-        f.key.toLowerCase().includes(q) || 
-        f.description.toLowerCase().includes(q)
-      );
+      list = list.filter(f => {
+        // 1. 基础信息搜索
+        if (f.name.toLowerCase().includes(q) || 
+            f.key.toLowerCase().includes(q) || 
+            f.description.toLowerCase().includes(q)) {
+          return true;
+        }
+
+        // 2. 原材料搜索
+        const matchesRequired = f.required_items?.some(req => {
+          const keys = Array.isArray(req.key) ? req.key : [req.key];
+          return keys.some(k => {
+            const displayName = packStore.getDisplayName(k).toLowerCase();
+            return k.toLowerCase().includes(q) || displayName.includes(q);
+          });
+        });
+        if (matchesRequired) return true;
+
+        // 3. 产物搜索
+        const matchesProducts = f.products?.some(prod => {
+          const displayName = packStore.getDisplayName(prod.key).toLowerCase();
+          return prod.key.toLowerCase().includes(q) || displayName.includes(q);
+        });
+        if (matchesProducts) return true;
+
+        return false;
+      });
     }
     return list;
   });
@@ -109,19 +131,19 @@
 <template>
   <div class="flex flex-col gap-3">
     <!-- 搜索栏 -->
-    <div class="relative w-full mb-1">
-      <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none opacity-50">
+    <div class="relative w-full mb-1 input input-sm input-bordered ">
+      <div class="flex items-center pointer-events-none opacity-50">
         <Icon icon="tabler:search" class="text-sm" />
       </div>
       <input 
         v-model="searchQuery" 
         type="text" 
         placeholder="搜索行动或配方..." 
-        class="input input-sm input-bordered w-full pl-9 h-10 bg-base-200/50"
+        class="w-full"
       />
       <button 
         v-if="searchQuery" 
-        class="absolute inset-y-0 right-3 flex items-center opacity-50 hover:opacity-100 transition-opacity"
+        class="flex items-center opacity-50 hover:opacity-100 transition-opacity"
         @click="searchQuery = ''"
       >
         <Icon icon="tabler:x" class="text-xs" />

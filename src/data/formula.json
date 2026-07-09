@@ -92,7 +92,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
@@ -162,7 +162,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 2,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -232,7 +232,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "通过高温$roasting$使#cinnabar#分解，产生的汞蒸气冷凝后提取出#mercury#并释放#sulfur_dioxide#。",
@@ -263,7 +263,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#sphalerite#进行$roasting$氧化，将其转化为#zinc_oxide#并释放#sulfur_dioxide#。",
@@ -304,7 +304,8 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
     ]
   },
@@ -372,7 +373,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#galena#与#charcoal#的混合物进行$roasting$，使其转化为#lead_oxide#并排除#sulfur_dioxide#。",
@@ -519,7 +520,8 @@
       },
       {
         "key": "sulfur_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -547,7 +549,8 @@
       },
       {
         "key": "sulfur_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "通过对#stibnite#的$roasting$处理，使其转化为中间产物#antimony_trioxide#并释放#sulfur_dioxide#。",
@@ -557,7 +560,9 @@
     "key": "reduce_antimony_trioxide",
     "name": "还原锑白",
     "description": "用木炭还原三氧化二锑，得到金属锑和一氧化碳。",
-    "time_required": 30,
+    "fragment_description": "以#charcoal#还原#antimony_trioxide#进行$roasting$，制取单质#antimony#并产生#carbon_monoxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -585,11 +590,10 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "以#charcoal#还原#antimony_trioxide#进行$roasting$，制取单质#antimony#并产生#carbon_monoxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "roast_arsenopyrite",
@@ -617,7 +621,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 2,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "hematite",
@@ -664,7 +668,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
@@ -707,7 +711,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
@@ -901,7 +905,8 @@
       },
       {
         "key": "sulfur_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -939,7 +944,8 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
     ]
   },
@@ -1033,7 +1039,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#pentlandite#进行高温$roasting$氧化，使其转变为#nickel_oxide#并释放#sulfur_dioxide#。",
@@ -1100,7 +1106,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "sulfur_trioxide",
@@ -1165,7 +1171,7 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -1175,7 +1181,7 @@
       {
         "key": "sulfur_trioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -1547,30 +1553,32 @@
     "required_era": "electrochem"
   },
   {
-    "name": "电解食盐水",
     "key": "electrolysis_brine",
+    "name": "电解食盐水",
     "description": "通过电解饱和食盐水制取氯气、氢气和碱液。",
-    "required_items": [
-      {
-        "key": "rock_salt",
-        "quantity": 1,
-        "isMain": true
-      },
-      {
-        "key": "water",
-        "quantity": 1
-      }
-    ],
+    "fragment_description": "对饱和#rock_salt#溶液进行$electrolysis$电解，通过离子交换反应制得#chlorine#、#hydrogen#和#alkaline_solution#。",
+    "time_required": 20,
+    "power_consumption": 0.1,
+    "required_era": "electrochem",
     "required_actions": {
       "key": "electrolysis",
       "min": 1
     },
-    "required_techs": [],
-    "time_required": 60,
+    "required_items": [
+      {
+        "key": "rock_salt",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 2
+      }
+    ],
     "products": [
       {
         "key": "chlorine",
-        "multiple": 1,
+        "multiple": 2,
         "required_chain_operation": "gas_collecting_air"
       },
       {
@@ -1579,13 +1587,10 @@
         "required_chain_operation": "gas_collecting"
       },
       {
-        "key": "alkaline_solution",
-        "multiple": 1
+        "key": "sodium_hydroxide",
+        "multiple": 2
       }
-    ],
-    "power_consumption": 0.1,
-    "fragment_description": "对饱和#rock_salt#溶液进行$electrolysis$电解，通过离子交换反应制得#chlorine#、#hydrogen#和#alkaline_solution#。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "name": "合成盐酸",
@@ -1683,7 +1688,8 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 3
+        "multiple": 3,
+        "required_chain_operation": "gas_collecting"
       }
     ]
   },
@@ -1836,7 +1842,8 @@
       },
       {
         "key": "sulfur_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "molybdenum_roaster_dust",
@@ -1847,9 +1854,17 @@
     "required_era": "modern_chem"
   },
   {
-    "name": "还原三氧化钼",
     "key": "reduce_molybdenum_trioxide",
+    "name": "还原三氧化钼",
     "description": "用煤或木炭还原三氧化钼，制得金属钼。",
+    "fragment_description": "使用#charcoal#或煤还原#molybdenum_trioxide#，在高温$roasting$过程中通过夺取氧原子析出金属#molybdenum#。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "molybdenum_trioxide",
@@ -1865,12 +1880,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 40,
     "products": [
       {
         "key": "molybdenum",
@@ -1878,11 +1887,10 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "使用#charcoal#或煤还原#molybdenum_trioxide#，在高温$roasting$过程中通过夺取氧原子析出金属#molybdenum#。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "key": "roast_scheelite",
@@ -1983,9 +1991,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "还原二氧化碲",
     "key": "reduce_tellurium_dioxide",
+    "name": "还原二氧化碲",
     "description": "用碳还原二氧化碲，得到碲单质和一氧化碳。",
+    "fragment_description": "利用#charcoal#的还原性在高温下与#tellurium_dioxide#反应，还原析出#tellurium#单质并伴随一氧化碳产生。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "tellurium_dioxide",
@@ -2001,12 +2017,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "tellurium",
@@ -2014,17 +2024,18 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 2
+        "multiple": 2,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "利用#charcoal#的还原性在高温下与#tellurium_dioxide#反应，还原析出#tellurium#单质并伴随一氧化碳产生。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "roast_zircon",
     "name": "焙烧锆石制氧化锆",
     "description": "将锆石与石灰石混合，在高温下焙烧，使锆石分解为氧化锆和硅酸钙。",
-    "time_required": 60,
+    "fragment_description": "将#zircon#与#limestone#混合焙烧，利用碱性熔剂在$roasting$中的作用使锆石结构解体，生成#unrefined_zirconia#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
@@ -2049,14 +2060,12 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
       "high_temp_furnace"
-    ],
-    "fragment_description": "将#zircon#与#limestone#混合焙烧，利用碱性熔剂在$roasting$中的作用使锆石结构解体，生成#unrefined_zirconia#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "reduce_zirconia",
@@ -2130,9 +2139,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "还原氧化铀",
     "key": "reduce_uranium_oxide",
+    "name": "还原氧化铀",
     "description": "用碳在高温下还原氧化铀，得到金属铀。",
+    "fragment_description": "使用还原剂在极高温度下还原#uranium_oxide#，通过$roasting$反应制得高密度的金属#uranium#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "uranium_oxide",
@@ -2148,12 +2165,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 600,
     "products": [
       {
         "key": "uranium",
@@ -2161,11 +2172,10 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "使用还原剂在极高温度下还原#uranium_oxide#，通过$roasting$反应制得高密度的金属#uranium#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "焙烧金红石制二氧化钛",
@@ -2202,7 +2212,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#rutile#矿石进行高温$roasting$活化处理，使其转化为易于后续化学处理的#titanium_dioxide#。",
@@ -2391,9 +2402,13 @@
     "required_era": "atomic_age"
   },
   {
-    "name": "还原氧化铍",
     "key": "reduce_beryllium_oxide",
+    "name": "还原氧化铍",
     "description": "在坩埚中用碳高温还原氧化铍，得到金属铍和一氧化碳。",
+    "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。",
+    "time_required": 20,
+    "required_era": "atomic_age",
+    "required_container": "crucible",
     "required_items": [
       {
         "key": "beryllium_oxide",
@@ -2409,9 +2424,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "crucible",
-    "required_techs": [],
-    "time_required": 20,
     "products": [
       {
         "key": "beryllium",
@@ -2419,16 +2431,24 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。",
-    "required_era": "atomic_age"
+    ]
   },
   {
-    "name": "电解熔融钾石盐制钾",
     "key": "potassium_electrolysis",
+    "name": "电解熔融钾石盐制钾",
     "description": "将钾石盐加热熔融后，通过电解得到金属钾和氯气。",
+    "fragment_description": "对熔融状态的钾盐（如#potassium_chloride#）进行$electrolysis$，利用电解池反应产出活泼的金属#potassium#。",
+    "time_required": 20,
+    "power_consumption": 0.2,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sylvite",
@@ -2436,15 +2456,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "electrolysis",
-      "min": 1
-    },
-    "required_techs": [
-      "electrochemistry"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "potassium",
@@ -2453,12 +2464,12 @@
       {
         "key": "chlorine",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "power_consumption": 0.2,
-    "fragment_description": "对熔融状态的钾盐（如#potassium_chloride#）进行$electrolysis$，利用电解池反应产出活泼的金属#potassium#。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
     "key": "potash_from_wood_ash",
@@ -2529,9 +2540,18 @@
     ]
   },
   {
-    "name": "电解熔融岩盐制钠",
     "key": "sodium_from_halite",
+    "name": "电解熔融岩盐制钠",
     "description": "通过熔融电解将岩盐分解为金属钠和氯气。",
+    "fragment_description": "对熔融的#halite#（岩盐）进行$electrolysis$处理，通过电子转移在阴极析出金属#sodium#。",
+    "time_required": 30,
+    "power_consumption": 0.2,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "rock_salt",
@@ -2539,15 +2559,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [
-      "electrochemistry"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "sodium",
@@ -2555,17 +2566,25 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "power_consumption": 0.2,
-    "fragment_description": "对熔融的#halite#（岩盐）进行$electrolysis$处理，通过电子转移在阴极析出金属#sodium#。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
-    "name": "钠与水反应制氢氧化钠",
     "key": "sodium_with_water",
+    "name": "钠与水反应制氢氧化钠",
     "description": "将钠投入水中，剧烈反应生成氢氧化钠和氢气。",
+    "fragment_description": "使#sodium#单质与#water#接触，发生极剧烈的放热置换反应，生成#sodium_hydroxide#并释放大量#hydrogen#。",
+    "time_required": 15,
+    "required_era": "stone",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sodium",
@@ -2577,11 +2596,6 @@
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "dissolving",
-      "min": 1
-    },
-    "time_required": 10,
     "products": [
       {
         "key": "sodium_hydroxide",
@@ -2589,11 +2603,10 @@
       },
       {
         "key": "hydrogen",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "使#sodium#单质与#water#接触，发生极剧烈的放热置换反应，生成#sodium_hydroxide#并释放大量#hydrogen#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "氢氧化钠与二氧化碳制碳酸钠",
@@ -2607,7 +2620,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "quantity": 1
+        "quantity": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_actions": {
@@ -2656,7 +2670,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       },
       {
         "key": "water",
@@ -2667,9 +2682,18 @@
     "required_era": "stone"
   },
   {
-    "name": "电解熔融氯化钙制钙",
     "key": "calcium_electrolysis",
+    "name": "电解熔融氯化钙制钙",
     "description": "将熔融的氯化钙电解，在阴极得到金属钙，阳极产生氯气。",
+    "fragment_description": "通过$electrolysis$电解熔融的#calcium_chloride#，在阴极还原得到活泼的碱土金属#calcium#。",
+    "time_required": 30,
+    "power_consumption": 0.2,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "calcium_chloride",
@@ -2677,15 +2701,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [
-      "electrochemistry"
-    ],
-    "time_required": 30,
     "products": [
       {
         "key": "calcium",
@@ -2693,17 +2708,26 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "power_consumption": 0.2,
-    "fragment_description": "通过$electrolysis$电解熔融的#calcium_chloride#，在阴极还原得到活泼的碱土金属#calcium#。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
-    "name": "还原重晶石",
     "key": "reduce_barite",
+    "name": "还原重晶石",
     "description": "将重晶石与焦炭共同焙烧，还原得到硫化钡。",
+    "fragment_description": "利用#charcoal#在高温下对#barite#（重晶石）进行还原$roasting$，产出具有活性的#barium_sulfide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barite",
@@ -2719,13 +2743,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "barium_sulfide",
@@ -2733,11 +2750,10 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "利用#charcoal#在高温下对#barite#（重晶石）进行还原$roasting$，产出具有活性的#barium_sulfide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "碳酸化硫化钡",
@@ -2795,7 +2811,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#barium_carbonate#进行高温$roasting$热分解，使其转化为化学性质更稳定的#barium_oxide#。",
@@ -2830,16 +2847,26 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "使#barium_carbonate#充分溶于#hydrochloric_acid#，通过置换反应生成#barium_chloride#。",
     "required_era": "stone"
   },
   {
-    "name": "熔融电解制钡",
     "key": "electrolysis_barium_chloride",
+    "name": "熔融电解制钡",
     "description": "熔融电解无水氯化钡，在阴极得到金属钡，阳极产生氯气。",
+    "fragment_description": "对熔融的#barium_chloride#实施$electrolysis$，通过电化学分解提取银白色的金属#barium#。",
+    "time_required": 30,
+    "power_consumption": 0.5,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barium_chloride",
@@ -2847,13 +2874,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 60,
     "products": [
       {
         "key": "barium",
@@ -2861,17 +2881,23 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "power_consumption": 0.5,
-    "fragment_description": "对熔融的#barium_chloride#实施$electrolysis$，通过电化学分解提取银白色的金属#barium#。",
-    "required_era": "electrochem"
+    ]
   },
   {
-    "name": "碳酸钡与硝酸反应",
     "key": "barium_carbonate_hno3",
+    "name": "碳酸钡与硝酸反应",
     "description": "碳酸钡与硝酸反应生成硝酸钡、水和二氧化碳。",
+    "fragment_description": "利用#nitric_acid#溶解#barium_carbonate#，通过复分解反应制备可溶性强的#barium_nitrate#。",
+    "time_required": 10,
+    "required_era": "stone",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barium_carbonate",
@@ -2883,13 +2909,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 15,
     "products": [
       {
         "key": "barium_nitrate",
@@ -2897,16 +2916,23 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "利用#nitric_acid#溶解#barium_carbonate#，通过复分解反应制备可溶性强的#barium_nitrate#。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "焙烧毒重石",
     "key": "roast_witherite",
+    "name": "焙烧毒重石",
     "description": "直接焙烧毒重石（碳酸钡矿物），分解得到氧化钡。",
+    "fragment_description": "将#witherite#（毒重石）进行高温$roasting$处理，使其主要成分碳酸钡转化为#barium_oxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "witherite",
@@ -2914,13 +2940,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "barium_oxide",
@@ -2928,11 +2947,10 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "将#witherite#（毒重石）进行高温$roasting$处理，使其主要成分碳酸钡转化为#barium_oxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "saponification",
@@ -3083,7 +3101,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#strontianite#（菱锶矿）进行高温$roasting$热分解，生成氧化物#strontium_oxide#并释放#carbon_dioxide#。",
@@ -3187,16 +3205,25 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "对#magnesite#（菱镁矿）进行高温$roasting$预处理，使其转化为#magnesium_oxide#以便磁选提纯。",
     "required_era": "alchemy"
   },
   {
-    "name": "菱镁矿制氯化镁",
     "key": "magnesite_to_magnesium_chloride",
+    "name": "菱镁矿制氯化镁",
     "description": "用盐酸溶解菱镁矿，生成氯化镁、水和二氧化碳。",
+    "fragment_description": "使#magnesite#与#hydrochloric_acid#反应，通过溶解与反应制备电解所需的#magnesium_chloride#。",
+    "time_required": 10,
+    "required_era": "stone",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "magnesite",
@@ -3208,12 +3235,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 60,
     "products": [
       {
         "key": "magnesium_chloride",
@@ -3225,16 +3246,24 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "使#magnesite#与#hydrochloric_acid#反应，通过溶解与反应制备电解所需的#magnesium_chloride#。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "电解熔融氯化镁制镁",
     "key": "electrolysis_magnesium_chloride",
+    "name": "电解熔融氯化镁制镁",
     "description": "在坩埚中熔融氯化镁，电解得到金属镁和氯气。",
+    "fragment_description": "对熔融的#magnesium_chloride#进行$electrolysis$，通过电流作用制取轻质金属#magnesium#。",
+    "time_required": 30,
+    "power_consumption": 0.5,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "magnesium_chloride",
@@ -3242,15 +3271,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [
-      "electrochemistry"
-    ],
-    "time_required": 180,
     "products": [
       {
         "key": "magnesium",
@@ -3258,12 +3278,13 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "power_consumption": 0.5,
-    "fragment_description": "对熔融的#magnesium_chloride#进行$electrolysis$，通过电流作用制取轻质金属#magnesium#。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
     "name": "干燥海藻",
@@ -3292,9 +3313,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "烧制海藻灰",
     "key": "ash_seaweed",
+    "name": "烧制海藻灰",
     "description": "在窑炉中燃烧干海藻，得到海藻灰。",
+    "fragment_description": "将干燥后的海藻进行充分焚烧制得海藻灰，使有机物转化为无机灰分，以便后续提取#iodine#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "dried_seaweed",
@@ -3302,12 +3331,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 20,
     "products": [
       {
         "key": "sea_weed_ash",
@@ -3315,11 +3338,10 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "将干燥后的海藻进行充分焚烧制得海藻灰，使有机物转化为无机灰分，以便后续提取#iodine#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "extract_iodine",
@@ -3469,9 +3491,18 @@
     "required_era": "rare_earth"
   },
   {
-    "name": "熔融电解氯化锂制锂",
     "key": "lithium_from_chloride",
+    "name": "熔融电解氯化锂制锂",
     "description": "熔融氯化锂通过电解分解，在阴极得到金属锂，阳极产生氯气。",
+    "fragment_description": "对熔融的氯化锂（由#lithium_hydroxide#转化）进行$electrolysis$，电解制取极活泼的金属#lithium#。",
+    "time_required": 30,
+    "power_consumption": 0.5,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lithium_chloride",
@@ -3479,13 +3510,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 120,
     "products": [
       {
         "key": "lithium",
@@ -3493,12 +3517,10 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "power_consumption": 0.5,
-    "fragment_description": "对熔融的氯化锂（由#lithium_hydroxide#转化）进行$electrolysis$，电解制取极活泼的金属#lithium#。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "key": "reduce_silica",
@@ -3571,7 +3593,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "以#silica_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
@@ -3630,7 +3652,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "quantity": 1
+        "quantity": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_container": "beaker",
@@ -3687,9 +3710,18 @@
     "required_era": "alchemy"
   },
   {
-    "name": "电解制铝",
     "key": "electrolyze_alumina",
+    "name": "电解制铝",
     "description": "将氧化铝与冰晶石混合熔融后进行电解，得到铝和氧气。",
+    "fragment_description": "以#alumina#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 30,
+    "power_consumption": 1,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "alumina",
@@ -3702,13 +3734,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 15,
     "products": [
       {
         "key": "aluminum",
@@ -3716,12 +3741,10 @@
       },
       {
         "key": "oxygen",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "power_consumption": 1,
-    "fragment_description": "以#alumina#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "name": "制备雷酸汞",
@@ -3818,9 +3841,18 @@
     "required_era": "stone"
   },
   {
-    "name": "熔融电解氯化铯制铯",
     "key": "electrolyze_cesium_chloride",
+    "name": "熔融电解氯化铯制铯",
     "description": "将氯化铯熔融后电解，在阴极得到金属铯，阳极产生氯气。",
+    "fragment_description": "以#cesium_chloride#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 30,
+    "power_consumption": 1,
+    "required_era": "electrochem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cesium_chloride",
@@ -3828,15 +3860,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "molten_electrolysis",
-      "min": 1
-    },
-    "required_techs": [
-      "electrochemistry"
-    ],
-    "time_required": 40,
     "products": [
       {
         "key": "cesium",
@@ -3844,17 +3867,26 @@
       },
       {
         "key": "chlorine",
-        "multiple": 0.6
+        "multiple": 0.6,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "power_consumption": 1,
-    "fragment_description": "以#cesium_chloride#为基础原料，在进行$molten_electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
-    "name": "铯与水反应制氢氧化铯",
     "key": "cesium_water_reaction",
+    "name": "铯与水反应制氢氧化铯",
     "description": "将金属铯投入水中，剧烈反应生成氢氧化铯和氢气。",
+    "fragment_description": "以#cesium#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "stone",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cesium",
@@ -3866,12 +3898,6 @@
         "quantity": 3
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 10,
     "products": [
       {
         "key": "cesium_hydroxide",
@@ -3879,11 +3905,10 @@
       },
       {
         "key": "hydrogen",
-        "multiple": 0.5
+        "multiple": 0.5,
+        "required_chain_operation": "gas_collecting"
       }
-    ],
-    "fragment_description": "以#cesium#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "硼砂制硼酸",
@@ -3956,9 +3981,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "焙烧鸟粪石",
     "key": "roast_struvite",
+    "name": "焙烧鸟粪石",
     "description": "加热分解鸟粪石，生成磷酸、氧化镁和氨气。",
+    "fragment_description": "以#struvite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "struvite",
@@ -3966,12 +3999,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "phosphoric_acid",
@@ -3983,16 +4010,23 @@
       },
       {
         "key": "ammonia",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "以#struvite#为基础原料，在进行$roasting$的过程中，利用热能驱动物质转化，析出目标产物。",
-    "required_era": "alchemy"
+    ]
   },
   {
-    "name": "磷酸还原制磷",
     "key": "phosphorus_from_phosphoric_acid",
+    "name": "磷酸还原制磷",
     "description": "将磷酸与焦炭混合，在高温下还原生成磷蒸气，冷凝后得到单质磷。",
+    "fragment_description": "以#phosphoric_acid#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "phosphoric_acid",
@@ -4008,15 +4042,6 @@
         "quantity": 5
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "phosphorus",
@@ -4025,11 +4050,13 @@
       },
       {
         "key": "carbon_monoxide",
-        "multiple": 5
+        "multiple": 5,
+        "required_chain_operation": "gas_collecting"
       }
     ],
-    "fragment_description": "以#phosphoric_acid#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "key": "roast_bismuthite",
@@ -4100,7 +4127,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "fragment_description": "以#bismuth_oxide#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
@@ -4516,8 +4543,10 @@
     "key": "rubidium_electrolysis",
     "name": "电解熔融氯化铷",
     "description": "类似于电解钾的方法，将氯化铷熔融并加入适量助熔剂后电解，在阴极析出金属铷。",
-    "time_required": 40,
+    "fragment_description": "以#rubidium_chloride#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
+    "time_required": 20,
     "power_consumption": 1,
+    "required_era": "electrochem",
     "required_container": "crucible",
     "required_actions": {
       "key": "electrolysis",
@@ -4537,14 +4566,13 @@
       },
       {
         "key": "chlorine",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
       "electrochemistry"
-    ],
-    "fragment_description": "以#rubidium_chloride#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "name": "提炼硫酸铊",
@@ -4613,9 +4641,17 @@
     "required_era": "stone"
   },
   {
-    "name": "电解硫酸铊制铊",
     "key": "thallium_electrolysis",
+    "name": "电解硫酸铊制铊",
     "description": "通过电解硫酸铊的水溶液，在阴极获得纯净的金属铊。",
+    "fragment_description": "以#thallium_sulfate#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
+    "time_required": 20,
+    "required_era": "electrochem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "thallium_sulfate",
@@ -4623,12 +4659,6 @@
         "isMain": true
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "electrolysis",
-      "min": 1
-    },
-    "time_required": 60,
     "products": [
       {
         "key": "thallium",
@@ -4636,7 +4666,8 @@
       },
       {
         "key": "oxygen",
-        "multiple": 0.5
+        "multiple": 0.5,
+        "required_chain_operation": "gas_collecting"
       },
       {
         "key": "dilute_sulfuric_acid",
@@ -4645,9 +4676,7 @@
     ],
     "required_techs": [
       "electrochemistry"
-    ],
-    "fragment_description": "以#thallium_sulfate#为基础原料，通过$electrolysis$作用，利用电能驱动非自发的氧化还原反应。",
-    "required_era": "electrochem"
+    ]
   },
   {
     "name": "从溶液提铟",
@@ -5706,7 +5735,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -5805,7 +5834,7 @@
       {
         "key": "carbon_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
     ],
     "required_techs": [
@@ -5952,7 +5981,8 @@
       },
       {
         "key": "carbon_dioxide",
-        "multiple": 0.5
+        "multiple": 0.5,
+        "required_chain_operation": "gas_collecting_air"
       }
     ]
   }

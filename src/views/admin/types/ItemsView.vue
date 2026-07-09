@@ -15,12 +15,63 @@
       </h2>
       <span class="badge badge-ghost badge-sm">{{ records.length }} 条</span>
     </div>
-    <div class="flex gap-2 mb-4">
-      <button class="btn btn-primary btn-sm" @click="openNew">
-        ＋ 新增物品
-      </button>
-      <button class="btn btn-ghost btn-sm" @click="loadRecords">⟳ 刷新</button>
+    
+    <div class="flex flex-col gap-4 mb-6 bg-base-200/50 p-4 rounded-xl border border-base-300">
+      <div class="flex flex-wrap gap-3 items-center">
+        <button class="btn btn-primary btn-sm" @click="openNew">
+          ＋ 新增物品
+        </button>
+        
+        <div class="join">
+          <div class="input input-bordered input-sm join-item">
+            <Icon icon="tabler:search" class="opacity-30 text-xs" />
+            <input
+              v-model="searchQuery"
+              class="w-40"
+              placeholder="搜索名称或Key..."
+            />
+          </div>
+          <div class="input input-bordered input-sm join-item border-l-0">
+            <Icon icon="tabler:atom-2" class="opacity-30 text-xs" />
+            <input
+              v-model="searchElement"
+              type="number"
+              class="w-24"
+              placeholder="元素序数"
+            />
+          </div>
+        </div>
+
+        <select v-model="filterCategory" class="select select-bordered select-sm">
+          <option value="">全部分类</option>
+          <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+        </select>
+
+        <button class="btn btn-ghost btn-sm" @click="loadRecords">⟳ 刷新</button>
+        
+        <button 
+          v-if="searchQuery || searchElement || filterCategory || filterTypes.length" 
+          class="btn btn-ghost btn-sm text-error"
+          @click="searchQuery = ''; searchElement = ''; filterCategory = ''; filterTypes = []"
+        >
+          重置筛选
+        </button>
+      </div>
+
+      <div class="flex flex-wrap gap-2 items-center">
+        <span class="text-xs opacity-50 mr-1">类型过滤:</span>
+        <button
+          v-for="opt in typeOptions"
+          :key="opt"
+          class="btn btn-xs rounded-full px-3"
+          :class="filterTypes.includes(opt) ? 'btn-primary' : 'btn-ghost border-base-300'"
+          @click="toggleFilterType(opt)"
+        >
+          {{ opt }}
+        </button>
+      </div>
     </div>
+
     <div class="overflow-x-auto rounded-box border border-base-300">
       <table class="table table-zebra table-xs">
         <thead>
@@ -35,7 +86,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="r in records" :key="r.key">
+          <tr v-for="r in filteredRecords" :key="r.key">
             <td class="font-mono text-xs">{{ r.key }}</td>
             <td>{{ r.name }}</td>
             <td>{{ r.category }}</td>
@@ -60,12 +111,12 @@
               </button>
             </td>
           </tr>
-          <tr v-if="!records.length">
+          <tr v-if="!filteredRecords.length">
             <td
-              colspan="6"
+              colspan="7"
               class="text-center py-12 text-base-content/30 text-sm"
             >
-              暂无数据
+              {{ records.length ? '没有匹配的物品' : '暂无数据' }}
             </td>
           </tr>
         </tbody>
@@ -205,7 +256,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import { useAdminStore } from "@/stores/modules/admin";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import type { IItem } from "@/data/items";
@@ -224,6 +275,46 @@ const typeOptions = [
   "liquid",
   "fire_source",
 ];
+
+const searchQuery = ref("");
+const searchElement = ref("");
+const filterCategory = ref("");
+const filterTypes = ref<string[]>([]);
+
+const filteredRecords = computed(() => {
+  let list = records.value;
+  const q = searchQuery.value.toLowerCase().trim();
+  const eq = searchElement.value.trim();
+
+  if (q) {
+    list = list.filter(r => 
+      r.name?.toLowerCase().includes(q) || 
+      r.key?.toLowerCase().includes(q)
+    );
+  }
+
+  if (eq) {
+    list = list.filter(r => r.elemental?.toString() === eq);
+  }
+
+  if (filterCategory.value) {
+    list = list.filter(r => r.category === filterCategory.value);
+  }
+
+  if (filterTypes.value.length > 0) {
+    list = list.filter(r => 
+      filterTypes.value.every(t => r.type?.includes(t))
+    );
+  }
+
+  return list;
+});
+
+function toggleFilterType(t: string) {
+  const i = filterTypes.value.indexOf(t);
+  i >= 0 ? filterTypes.value.splice(i, 1) : filterTypes.value.push(t);
+}
+
 const form = reactive<IItem>({
   key: "",
   name: "",
