@@ -1167,11 +1167,11 @@
     "required_items": [
       {
         "key": "bark",
-        "quantity": 10
+        "quantity": 5
       },
       {
         "key": "alkaline_solution",
-        "quantity": 5
+        "quantity": 1
       }
     ],
     "rewards": [
