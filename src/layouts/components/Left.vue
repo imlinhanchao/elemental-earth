@@ -72,12 +72,6 @@ const groupedItems = computed(() => {
             class="grow"
             @keydown.esc="((searchQuery = ''), (enableSearch = false))"
           />
-          <Icon
-            v-if="searchQuery"
-            icon="material-symbols:close-rounded"
-            class="opacity-50 cursor-pointer"
-            @click="searchQuery = ''"
-          />
         </label>
         <button
           v-if="!enableSearch"

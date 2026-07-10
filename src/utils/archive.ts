@@ -35,6 +35,8 @@ export interface SaveData {
   materialChoices?: Record<string, string>;
   /** 行动批量执行数量（v4 新增） */
   batchCounts?: Record<string, number>;
+  /** 玩家已执行过的行动 key 列表 */
+  performedActions?: string[];
   /** 玩家收集的手稿（碎片） key 列表 */
   fragments: string[];
   /** 未读手稿列表 */
@@ -69,6 +71,7 @@ export function saveGame(): boolean {
       cooldowns: JSON.parse(JSON.stringify(packStore.cooldowns)),
       materialChoices: JSON.parse(JSON.stringify(packStore.materialChoices)),
       batchCounts: JSON.parse(JSON.stringify(packStore.batchCounts)),
+      performedActions: Array.from(packStore.performedActions),
       fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
     };
@@ -133,6 +136,12 @@ export function loadGame(): boolean {
     // 恢复已验证配方（旧存档可能没有此字段）
     if (Array.isArray(data.formulas)) {
       packStore.provenFormulas.splice(0, packStore.provenFormulas.length, ...data.formulas);
+    }
+
+    // 恢复已执行行动记录
+    packStore.performedActions.clear();
+    if (Array.isArray(data.performedActions)) {
+      for (const k of data.performedActions) packStore.performedActions.add(k);
     }
 
     // 恢复曾拥有物品记录（v1 新增），兼容旧存档则从 items 推算

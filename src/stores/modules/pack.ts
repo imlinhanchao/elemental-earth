@@ -25,6 +25,8 @@ export const usePackStore = defineStore('pack', () => {
   const techs = reactive<string[]>([]);
   const provenFormulas = reactive<string[]>([])
   const discoveredItems = reactive<Set<string>>(new Set())
+  /** 玩家已执行过的行动 key 列表 */
+  const performedActions = reactive<Set<string>>(new Set())
   /** 玩家对物品的自定义命名和备注 key → { customName, note } */
   const itemRenames = reactive<Record<string, ItemCustomization>>({})
   /** 等待命名的发现物品队列（由 AddItem 触发，UI 消费后清除） */
@@ -160,6 +162,11 @@ export const usePackStore = defineStore('pack', () => {
   }
   const hasProvenFormula = (formulaKey: string) => provenFormulas.includes(formulaKey);
 
+  /** 记录已执行过的行动 */
+  const addPerformedAction = (actionKey: string) => performedActions.add(actionKey);
+  /** 检查行动是否已执行过 */
+  const hasPerformedAction = (actionKey: string) => performedActions.has(actionKey);
+
   /** 玩家是否曾经拥有过某物品（消耗光的也算） */
   const hasEverHad = (itemKey: string) => discoveredItems.has(itemKey);
 
@@ -219,11 +226,12 @@ export const usePackStore = defineStore('pack', () => {
   }
 
   return { 
-    items, techs, provenFormulas, discoveredItems, itemRenames, discoveryQueue, cooldowns,
+    items, techs, provenFormulas, discoveredItems, performedActions, itemRenames, discoveryQueue, cooldowns,
     materialChoices, batchCounts,
     getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
+    addPerformedAction, hasPerformedAction,
     hasEverHad, getDisplayName, setItemName, setItemNote, getItemNote,
     clearPendingDiscovery,
     setCooldown, isOnCooldown, getCooldownRemaining,

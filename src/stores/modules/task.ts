@@ -103,6 +103,9 @@ export const useTaskStore = defineStore('task', () => {
       if (!task) return; // 没有任务，跳过检查
       if (now - task.begin_time >= task.time_required * 1000) {
         if (task.type === 'action') {
+          // 标记行动为已执行
+          packStore.addPerformedAction(task.key);
+
           // 必定掉落的奖励（并行，不受随机抽选影响）
           const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);
           const currentMap = stateStore.getMap?.key || '';

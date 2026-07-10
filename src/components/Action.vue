@@ -139,6 +139,18 @@
     return techsOk && itemsEverHad && mapOk;
   });
 
+  const isNew = computed(() => {
+    if (packStore.hasPerformedAction(props.data.key)) return false;
+
+    // 如果 action 有产物列表，且所有产物都曾经拥有过，则不显示 indicator
+    if (props.data.rewards && props.data.rewards.length > 0) {
+      const allDiscovered = props.data.rewards.every(r => packStore.hasEverHad(r.key));
+      if (allDiscovered) return false;
+    }
+
+    return true;
+  });
+
   // ─── 执行 ──────────────────────────────────────────────────
   const showFormulaDialog = ref(false);
 
@@ -146,9 +158,13 @@
     if (!isEnabled.value) return;
     const f = props.data.formula;
     if (f?.key && f?.operation) {
+      packStore.addPerformedAction(props.data.key);
       showFormulaDialog.value = true;
       return;
     }
+    // 标记为已尝试执行
+    packStore.addPerformedAction(props.data.key);
+    
     // 批量推送
     const count = Math.min(batchCount.value, maxBatch.value);
     for (let i = 0; i < count; i++) {
@@ -186,7 +202,10 @@
         :disabled="!isEnabled" 
         @click="performAction"
       >
-        {{ data.name }}
+        <span class="indicator">
+          <span class="px-1">{{ data.name }}</span>
+          <span v-if="isNew" class="indicator-item status status-error"></span>
+        </span>
       </button>
       <!-- 冷却倒计时遮罩 -->
       <div v-if="cooldownRemaining > 0" class="absolute inset-0 flex items-center justify-center bg-base-300/60 rounded-xl backdrop-blur-sm z-20 pointer-events-none">
