@@ -62,6 +62,7 @@ export const routes: RouteRecordRaw[] = [
       // 每种数据类型独立路由和组件
       { path: 'maps',      name: 'AdminMaps',       component: () => import('../views/admin/types/MapsView.vue') },
       { path: 'items',     name: 'AdminItems',      component: () => import('../views/admin/types/ItemsView.vue') },
+      { path: 'items/:id', name: 'AdminItemsDetail', component: () => import('../views/admin/types/ItemsDetailView.vue') },
       { path: 'actions',   name: 'AdminActions',    component: () => import('../views/admin/types/ActionsView.vue') },
       { path: 'techs',     name: 'AdminTechs',      component: () => import('../views/admin/types/TechsView.vue') },
       { path: 'labs',      name: 'AdminLabs',       component: () => import('../views/admin/types/LabsView.vue') },

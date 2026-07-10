@@ -61,7 +61,7 @@
     </div>
 
     <!-- Children -->
-    <div v-if="expanded && node.children && node.children.length">
+    <div class="pl-0.5" v-if="expanded && node.children && node.children.length">
       <DependencyNode 
         v-for="(child, idx) in node.children" 
         :key="idx" 
@@ -75,24 +75,15 @@
 <script setup lang="ts">
 import { ref, computed, inject, watch, onMounted } from "vue";
 import DependencyNode from "./DependencyNode.vue";
+import type { TreeNode } from "@/hook/useProductionTree";
 
 const props = defineProps<{
-  node: {
-    type: 'item' | 'formula' | 'action' | 'tech';
-    key: string;
-    name: string;
-    quantity: number;
-    multiplier?: number;
-    children: any[];
-    note?: string;
-    summary?: string;
-    availableMethods?: { key: string; name: string; type: 'formula' | 'action' }[];
-    selectedMethodKey?: string;
-  };
+  node: TreeNode;
   depth: number;
+  isRoot?: boolean;
 }>();
 
-const expanded = ref(props.depth < 1);
+const expanded = ref(props.isRoot || props.depth < 1);
 const pathOverrides = inject<any>('pathOverrides');
 
 function onPathChange(e: Event) {

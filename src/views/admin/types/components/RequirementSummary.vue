@@ -21,13 +21,18 @@
             <div 
               v-for="(count, key) in summary.operations" 
               :key="key"
-              class="flex items-center justify-between p-2 bg-base-200/50 rounded-lg text-sm border border-base-content/5"
+              class="flex items-center justify-between p-2 bg-base-200/50 rounded-lg text-sm border border-base-content/5 cursor-pointer hover:bg-warning/10 hover:border-warning/30 transition-all group"
+              @click="$emit('locate', key)"
+              title="点击在路径树中定位"
             >
               <div class="flex items-center gap-2">
                 <Icon :icon="getActionIcon(key)" class="text-warning" />
                 <span>{{ getActionName(key) }}</span>
               </div>
-              <span class="font-mono font-bold text-primary">x{{ count }}</span>
+              <div class="flex items-center gap-2">
+                <span class="font-mono font-bold text-primary">x{{ count }}</span>
+                <Icon icon="tabler:target-arrow" class="opacity-0 group-hover:opacity-100 text-warning" size="14" />
+              </div>
             </div>
             <div v-if="Object.keys(summary.operations).length === 0" class="text-xs opacity-40 italic py-2">
               无需基础采集操作
@@ -45,10 +50,13 @@
             <div 
               v-for="(count, key) in summary.materials" 
               :key="key"
-              class="badge badge-lg bg-base-200 border-none gap-2 py-4 px-3"
+              class="badge badge-lg bg-base-200 border-none gap-2 py-4 px-3 cursor-pointer hover:bg-info/10 hover:ring-1 hover:ring-info/30 transition-all group"
+              @click="$emit('locate', key)"
+              title="点击在路径树中定位"
             >
               <span class="opacity-60 text-xs">{{ getItemName(key) }}</span>
               <span class="font-mono font-bold text-sm">x{{ count }}</span>
+              <Icon icon="tabler:target-arrow" class="opacity-0 group-hover:opacity-100 text-info ml-1" size="14" />
             </div>
             <div v-if="Object.keys(summary.materials).length === 0" class="text-xs opacity-40 italic py-2">
               无需基础原材料
@@ -87,9 +95,12 @@
             <div 
               v-for="(v, key) in summary.techs" 
               :key="key"
-              class="badge badge-outline badge-info badge-sm py-2"
+              class="badge badge-outline badge-info badge-sm py-3 px-3 cursor-pointer hover:bg-info hover:text-info-content transition-all active:scale-95 group"
+              @click="$emit('locate', key)"
+              title="点击在路径树中定位"
             >
-              {{ getTechName(key) }}
+              <span>{{ getTechName(key) }}</span>
+              <Icon icon="tabler:target-arrow" class="opacity-0 group-hover:opacity-100 ml-1" size="12" />
             </div>
           </div>
         </div>
@@ -103,16 +114,7 @@ import { computed } from 'vue';
 import itemsData from "@/data/items.json";
 import actionsData from "@/data/actions.json";
 import techsData from "@/data/techs.json";
-
-interface TreeNode {
-  type: 'item' | 'formula' | 'action' | 'tech';
-  key: string;
-  name: string;
-  quantity: number;
-  children: TreeNode[];
-  note?: string;
-  summary?: string;
-}
+import type { TreeNode } from "@/hook/useProductionTree";
 
 const props = defineProps<{
   rootNode: TreeNode | null;

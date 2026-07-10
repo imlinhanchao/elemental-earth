@@ -101,14 +101,23 @@
             <td>{{ r.elemental ?? "—" }}</td>
             <td class="text-xs opacity-70">{{ r.description }}</td>
             <td>
-              <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
-                编辑</button
-              ><button
-                class="btn btn-xs btn-ghost text-error"
-                @click="remove(r)"
-              >
-                删除
-              </button>
+              <div class="flex gap-1">
+                <button
+                  class="btn btn-xs btn-ghost text-primary"
+                  @click="$router.push({ name: 'AdminItemsDetail', params: { id: r.key } })"
+                >
+                  详情
+                </button>
+                <button class="btn btn-xs btn-ghost" @click="openEdit(r)">
+                  编辑
+                </button>
+                <button
+                  class="btn btn-xs btn-ghost text-error"
+                  @click="remove(r)"
+                >
+                  删除
+                </button>
+              </div>
             </td>
           </tr>
           <tr v-if="!filteredRecords.length">
