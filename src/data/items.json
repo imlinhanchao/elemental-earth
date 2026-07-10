@@ -2867,5 +2867,15 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "标枪",
+    "key": "javelin",
+    "category": "工具",
+    "description": "一种长柄投掷武器，适合远距离攻击。",
+    "type": [
+      "tool"
+    ],
+    "durable": 10
   }
 ]

@@ -1297,6 +1297,33 @@
     "time_required": 30
   },
   {
+    "name": "打造标枪",
+    "key": "craft_javelin",
+    "category": "制作",
+    "description": "使用木材和钢制作一把标枪。",
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 2
+      },
+      {
+        "key": "steel",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "javelin",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 30
+  },
+  {
     "key": "craft_crucible",
     "name": "制作坩埚",
     "category": "制作",
@@ -2240,20 +2267,16 @@
     ]
   },
   {
-    "name": "狩猎",
     "key": "hunting",
+    "name": "狩猎",
     "category": "采集",
-    "description": "在森林中使用工具捕猎动物，获取肉类和油脂。",
+    "description": "在森林中使用工具捕猎动物，获取动物油脂。",
+    "time_required": 30,
     "required_items": [
       {
-        "key": "stone_axe",
+        "key": "javelin",
         "quantity": 1,
-        "use": 0.05
-      },
-      {
-        "key": "iron_axe",
-        "quantity": 1,
-        "use": 0.05
+        "use": 0.01
       }
     ],
     "rewards": [
@@ -2264,17 +2287,8 @@
           3
         ],
         "probability": 800
-      },
-      {
-        "key": "wood",
-        "quantity": [
-          1,
-          2
-        ],
-        "probability": 200
       }
     ],
-    "time_required": 30,
     "map": [
       "forest"
     ]

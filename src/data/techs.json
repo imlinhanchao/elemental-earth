@@ -221,9 +221,10 @@
     ]
   },
   {
-    "name": "电化学",
     "key": "electrochemistry",
+    "name": "电化学",
     "description": "掌握了利用化学反应产生电流的方法，以及电流对物质的作用。",
+    "time_required": 60,
     "required_items": [
       {
         "key": "zinc",
@@ -239,9 +240,8 @@
       }
     ],
     "required_techs": [
-      "bronze_tool_crafting"
-    ],
-    "time_required": 60
+      "glassworking"
+    ]
   },
   {
     "name": "锰合金锻造",
@@ -264,9 +264,10 @@
     "time_required": 120
   },
   {
-    "name": "钛合金锻造",
     "key": "titanium_alloy_smithing",
+    "name": "钛合金锻造",
     "description": "掌握了高温下锻造钛金属的技术，能够将钛加工成耐用的工具。",
+    "time_required": 180,
     "required_items": [
       {
         "key": "titanium",
@@ -275,14 +276,14 @@
     ],
     "required_techs": [
       "high_temp_furnace",
-      "iron_tool_crafting"
-    ],
-    "time_required": 180
+      "manganese_alloy_smithing"
+    ]
   },
   {
-    "name": "铬合金锻造",
     "key": "chrome_alloy_smithing",
+    "name": "铬合金锻造",
     "description": "掌握了将铬与铁熔炼成坚韧合金的技术，能够制作铬制工具。",
+    "time_required": 60,
     "required_items": [
       {
         "key": "chromium",
@@ -291,9 +292,8 @@
     ],
     "required_techs": [
       "high_temp_furnace",
-      "iron_tool_crafting"
-    ],
-    "time_required": 60
+      "titanium_alloy_smithing"
+    ]
   },
   {
     "key": "high_explosive_tech",
@@ -306,7 +306,7 @@
         "quantity": 2
       },
       {
-        "key": "copper",
+        "key": "nitroglycerin",
         "quantity": 1
       }
     ],
@@ -335,9 +335,10 @@
     ]
   },
   {
-    "name": "玻璃加工技术",
     "key": "glassworking",
+    "name": "玻璃加工技术",
     "description": "掌握了高温下对玻璃进行吹制、拉制和压制的技术，能够制作各种玻璃器材。",
+    "time_required": 120,
     "required_items": [
       {
         "key": "glass",
@@ -345,9 +346,9 @@
       }
     ],
     "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 120
+      "high_temp_furnace",
+      "gas_collection"
+    ]
   },
   {
     "key": "detonation_tech",
