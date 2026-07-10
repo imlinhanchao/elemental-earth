@@ -241,8 +241,10 @@
   {
     "key": "roast_sphalerite",
     "name": "焙烧闪锌矿",
-    "description": "在窑炉中焙烧闪锌矿，生成氧化锌和二氧化硫气体。",
-    "time_required": 15,
+    "description": "在窑炉中焙烧闪锌矿，生成锌焙砂和二氧化硫气体。",
+    "fragment_description": "对#sphalerite#进行$roasting$氧化，将其转化为#zinc_oxide#并释放#sulfur_dioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -265,9 +267,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "对#sphalerite#进行$roasting$氧化，将其转化为#zinc_oxide#并释放#sulfur_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "reduce_zinc_oxide",
@@ -311,9 +311,11 @@
   },
   {
     "key": "smelt_brass",
-    "name": "炼黄铜",
+    "name": "冶炼黄铜合金",
     "description": "在坩埚中加热熔融铜和锌，制成黄铜合金。",
-    "time_required": 30,
+    "fragment_description": "将#copper#与#zinc#按比例混合后进行高温$roasting$熔炼，通过合金化反应制得#brass#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
@@ -336,9 +338,7 @@
         "key": "brass",
         "multiple": 2
       }
-    ],
-    "fragment_description": "将#copper#与#zinc#按比例混合后进行高温$roasting$熔炼，通过合金化反应制得#brass#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "roast_galena",
@@ -1117,9 +1117,11 @@
   },
   {
     "key": "absorb_sulfur_trioxide",
-    "name": "吸收三氧化硫",
+    "name": "制备稀硫酸",
     "description": "将三氧化硫气体通入水中，生成稀硫酸。",
-    "time_required": 20,
+    "fragment_description": "将#sulfur_trioxide#通入水中进行吸收，利用水合反应生成强酸#dilute_sulfuric_acid#。",
+    "time_required": 15,
+    "required_era": "stone",
     "required_actions": {
       "key": "dissolving",
       "min": 1
@@ -1140,9 +1142,7 @@
         "key": "dilute_sulfuric_acid",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#sulfur_trioxide#通入水中进行吸收，利用水合反应生成强酸#dilute_sulfuric_acid#。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "roast_green_vitriol",
@@ -1299,9 +1299,17 @@
     "required_era": "modern_chem"
   },
   {
-    "name": "稀硫酸浓缩",
     "key": "concentrate_sulfuric_acid",
+    "name": "稀硫酸浓缩",
     "description": "通过蒸馏将稀硫酸中的水分蒸发，得到浓硫酸。",
+    "fragment_description": "通过浓缩工艺处理#dilute_sulfuric_acid#，利用水分蒸发提升溶液质量分数以获取#concentrated_sulfuric_acid#。",
+    "time_required": 30,
+    "required_era": "alchemy",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "distillation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "dilute_sulfuric_acid",
@@ -1309,20 +1317,13 @@
         "isMain": true
       }
     ],
-    "required_container": "brass_condenser",
-    "required_actions": {
-      "key": "distillation",
-      "min": 1
-    },
-    "time_required": 60,
     "products": [
       {
         "key": "concentrated_sulfuric_acid",
-        "multiple": 1
+        "multiple": 1,
+        "required_chain_operation": "condensation"
       }
-    ],
-    "fragment_description": "通过浓缩工艺处理#dilute_sulfuric_acid#，利用水分蒸发提升溶液质量分数以获取#concentrated_sulfuric_acid#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "硝石制硝酸",
@@ -5881,9 +5882,17 @@
     ]
   },
   {
-    "name": "芒硝脱水",
     "key": "dehydrate_mirabilite",
+    "name": "芒硝脱水",
     "description": "将含水量高的芒硝晶体加热，使其失去结晶水，得到无水硫酸钠。",
+    "fragment_description": "将 #mirabilite# 放入容器中 $heating$，晶体逐渐失水崩碎，最终得到白色粉末。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_actions": {
+      "key": "heating",
+      "min": 1,
+      "max": ""
+    },
     "required_items": [
       {
         "key": "mirabilite",
@@ -5891,13 +5900,6 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "heating",
-      "min": 1,
-      "max": 1
-    },
-    "time_required": 30,
-    "fragment_description": "将 #mirabilite# 放入容器中 $heating$，晶体逐渐失水崩碎，最终得到白色粉末。",
     "products": [
       {
         "key": "sodium_sulfate",
@@ -5907,8 +5909,7 @@
         "key": "water",
         "multiple": 0.5
       }
-    ],
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "mirabilite_production",
@@ -5921,7 +5922,7 @@
     "required_actions": {
       "key": "heating",
       "min": 1,
-      "max": 2
+      "max": ""
     },
     "required_items": [
       {
@@ -5958,7 +5959,7 @@
     "required_actions": {
       "key": "roasting",
       "min": 2,
-      "max": 3
+      "max": ""
     },
     "required_items": [
       {

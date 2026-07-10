@@ -1492,8 +1492,8 @@
     "required_items": [
       {
         "key": [
-          "brass",
-          "glass"
+          "glass",
+          "brass"
         ],
         "quantity": 3
       }

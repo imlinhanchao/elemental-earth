@@ -215,7 +215,7 @@ export const useTaskStore = defineStore('task', () => {
             packStore.addProvenFormula(task.formulaKey)
           }
 
-          if (!task.formulaKey) {
+          if (!task.formulaKey && task.rewards.length === 0) {
             logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
             notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
           }
@@ -240,7 +240,7 @@ export const useTaskStore = defineStore('task', () => {
 
           if (availableTips.length > 0) {
             const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)]
-            logStore.addLog(`💡 小贴士：${randomTip.content}`, 'tip')
+            logStore.addLog(`${randomTip.content}`, 'tip')
           }
         }
 

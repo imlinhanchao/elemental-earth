@@ -2,7 +2,7 @@
   <Teleport to="body">
     <Transition name="overlay-fade">
       <div v-if="visible" class="lab-success-overlay bg-base-100/70" @click="close">
-        <div class="success-content bg-base-100 border-4 border-primary shadow-2xl rounded-[2rem]" @click.stop>
+        <div class="success-content bg-base-100 border-4 border-primary shadow-2xl rounded-[2rem]">
           <div class="success-header">
             <Icon icon="fluent:beaker-sparkle-16-filled" class="header-icon text-primary" />
             <h2 class="title from-base-content to-primary bg-gradient-to-b bg-clip-text text-transparent">发现新配方！</h2>

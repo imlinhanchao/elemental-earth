@@ -129,11 +129,11 @@ const typeEntries = computed(() =>
             <header class="bg-base-100 sticky top-0 z-10 p-2">
                 <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider flex items-center justify-between">
                     <span>日志</span>
-                    <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-1">
+                    <div v-if="typeEntries.length > 1" class="flex flex-wrap gap-0">
                         <button
                             v-for="[type, style] in typeEntries"
                             :key="type"
-                            class="flex btn-ghost items-center gap-0.5 rounded text-[10px] btn bg-transparent btn-xs"
+                            class="btn-ghost btn-circle text-[10px] btn btn-xs"
                             :class="isTypeVisible(type)
                                 ? ''
                                 : 'opacity-40 hover:opacity-60'"
