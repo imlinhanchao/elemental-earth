@@ -5973,9 +5973,9 @@
       },
       {
         "key": [
-          "coal",
           "charcoal",
-          "coke"
+          "coke",
+          "coal"
         ],
         "quantity": 1
       }
