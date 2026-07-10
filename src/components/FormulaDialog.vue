@@ -432,7 +432,7 @@ const canConfirm = computed(() => {
   if (operation.value?.requires_burning) {
     if (!selectedFireSource.value) return false
     const fs = packStore.items.find(i => i.key === selectedFireSource.value)
-    if (!fs || fs.durable < 0.01 * batches.value) return false
+    if (!fs || fs.durable < 0.01) return false
     if (neededBurnTime.value > totalBurnTime.value) return false
   }
 
@@ -481,7 +481,7 @@ function confirm() {
       consumedItems.push({ key, quantity: qty })
     }
     if (selectedFireSource.value) {
-      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 * batches.value })
+      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 })
     }
   }
 
