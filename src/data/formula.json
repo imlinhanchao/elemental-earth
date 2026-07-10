@@ -1590,6 +1590,9 @@
         "key": "sodium_hydroxide",
         "multiple": 2
       }
+    ],
+    "required_techs": [
+      "electrochemistry"
     ]
   },
   {
@@ -2884,6 +2887,9 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
+    ],
+    "required_techs": [
+      "electrochemistry"
     ]
   },
   {
@@ -3520,6 +3526,9 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
+    ],
+    "required_techs": [
+      "electrochemistry"
     ]
   },
   {
@@ -3744,6 +3753,9 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "electrochemistry"
     ]
   },
   {
@@ -4262,8 +4274,10 @@
     "key": "copper_refining_electrolytic",
     "name": "电解精炼粗铜",
     "description": "以粗铜为阳极进行电解，高纯度铜析出到阴极，而硒、金、银等杂质则沉入底部形成阳极泥。",
-    "time_required": 120,
+    "fragment_description": "以#blister_copper#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 20,
     "power_consumption": 1,
+    "required_era": "electrochem",
     "required_container": "beaker",
     "required_actions": {
       "key": "electrolysis",
@@ -4290,9 +4304,9 @@
         "multiple": 1
       }
     ],
-    "required_techs": [],
-    "fragment_description": "以#blister_copper#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
     "name": "从阳极泥提取碲",
@@ -5031,8 +5045,10 @@
     "key": "electrolyze_fluorine",
     "name": "莫瓦桑电解法制氟",
     "description": "在无水氢氟酸中溶解氟化钾增加导电性，分步电解产生氟气和氢气。注意：氟气具有极强腐蚀性，需在特殊的铂-铱或铜质容器内进行。",
-    "time_required": 30,
+    "fragment_description": "以#hydrofluoric_acid#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 20,
     "power_consumption": 2,
+    "required_era": "electrochem",
     "required_container": "iron_tank",
     "required_actions": {
       "key": "electrolysis",
@@ -5066,9 +5082,9 @@
         "multiple": 1
       }
     ],
-    "required_techs": [],
-    "fragment_description": "以#hydrofluoric_acid#为基础原料，在进行$electrolysis$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "electrochem"
+    "required_techs": [
+      "electrochemistry"
+    ]
   },
   {
     "name": "配置王水",
@@ -5814,6 +5830,7 @@
     "name": "氯化锂制备（碳酸锂法）",
     "description": "碳酸锂与盐酸反应，经过量蒸发结晶得到氯化锂。",
     "time_required": 30,
+    "required_era": "modern_chem",
     "required_container": "beaker",
     "required_items": [
       {
@@ -5836,17 +5853,14 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "required_techs": [
-      "industrial_chemistry"
-    ],
-    "required_era": "modern_chem"
+    ]
   },
   {
     "key": "lithium_chloride_from_hydroxide",
     "name": "氯化锂制备（氢氧化锂法）",
     "description": "氢氧化锂与盐酸中和反应，通过蒸发浓缩提取氯化锂晶体。",
     "time_required": 25,
+    "required_era": "modern_chem",
     "required_container": "beaker",
     "required_items": [
       {
@@ -5864,11 +5878,7 @@
         "key": "lithium_chloride",
         "multiple": 1
       }
-    ],
-    "required_techs": [
-      "industrial_chemistry"
-    ],
-    "required_era": "modern_chem"
+    ]
   },
   {
     "name": "芒硝脱水",
