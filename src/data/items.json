@@ -24,7 +24,7 @@
   {
     "name": "燧石",
     "key": "flint",
-    "category": "材料",
+    "category": "矿石",
     "description": "深灰至黑色的致密石块，断面呈贝壳状、带有蜡样光泽，边缘锐利如刃。",
     "type": [
       "material"
@@ -117,7 +117,7 @@
   {
     "name": "砂金",
     "key": "gold_sand",
-    "category": "材料",
+    "category": "矿石",
     "description": "细碎的金黄色颗粒，混杂在灰黑的河砂之中，在日光下闪烁着耀眼的金属光泽。",
     "elemental": 79,
     "type": [
@@ -229,7 +229,7 @@
   {
     "name": "孔雀石",
     "key": "malachite",
-    "category": "材料",
+    "category": "矿石",
     "description": "一簇浓绿色的矿石，表面有深浅交替的弧形纹路，断面显现丝绢般的光泽。",
     "type": [
       "material"
@@ -259,7 +259,7 @@
   {
     "key": "hematite",
     "name": "赤铁矿",
-    "category": "材料",
+    "category": "矿石",
     "description": "暗红色的致密矿石，断面呈不规则的参差状，表面隐约泛着金属光泽。",
     "type": [
       "material"
@@ -348,7 +348,7 @@
   {
     "name": "石灰石",
     "key": "limestone",
-    "category": "材料",
+    "category": "矿石",
     "description": "浅灰色的致密岩石，表面有细微的砂质感，滴上液体后冒出细密的气泡。",
     "type": [
       "material"
@@ -358,7 +358,7 @@
   {
     "name": "硫磺",
     "key": "sulfur",
-    "category": "材料",
+    "category": "矿石",
     "description": "鲜黄色的晶体碎块，半透明，表面有油脂般的光泽，散发着刺鼻的气味。",
     "type": [
       "material"
@@ -412,7 +412,7 @@
   {
     "name": "硝石",
     "key": "niter",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色针状结晶，在阳光下闪烁如冰霜，尝起来有一丝清冽的咸味。",
     "type": [
       "material"
@@ -447,7 +447,7 @@
   {
     "key": "cinnabar",
     "name": "辰砂",
-    "category": "材料",
+    "category": "矿石",
     "description": "鲜红色的矿物，质地柔软，表面带有玻璃光泽。",
     "type": [
       "material"
@@ -478,7 +478,7 @@
   {
     "name": "闪锌矿",
     "key": "sphalerite",
-    "category": "材料",
+    "category": "矿石",
     "description": "深色带有金属光泽的块状矿物，表面常有条纹，在阳光下闪烁，手感沉重。",
     "type": [
       "material"
@@ -488,7 +488,7 @@
   {
     "name": "锌焙砂",
     "key": "zinc_oxide",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色微细粉末，无味，接触皮肤时有滑腻感。",
     "type": [
       "material"
@@ -516,7 +516,7 @@
   {
     "key": "cassiterite",
     "name": "锡石",
-    "category": "材料",
+    "category": "矿石",
     "description": "深棕色至黑色的矿物碎块，密度大，有金属光泽，表面有油脂感。",
     "type": [
       "material"
@@ -526,7 +526,7 @@
   {
     "key": "galena",
     "name": "方铅矿",
-    "category": "材料",
+    "category": "矿石",
     "description": "铅灰色立方体晶体，金属光泽，质地柔软，比重很大。",
     "type": [
       "material"
@@ -635,7 +635,7 @@
   {
     "key": "argentite",
     "name": "辉银矿",
-    "category": "材料",
+    "category": "矿石",
     "description": "灰黑色、金属光泽的矿石碎块，断口呈参差状，重而脆。",
     "type": [
       "material"
@@ -654,7 +654,7 @@
   {
     "key": "stibnite",
     "name": "辉锑矿",
-    "category": "材料",
+    "category": "矿石",
     "description": "铅灰色、针状晶体簇，金属光泽，质脆易碎。",
     "type": [
       "material"
@@ -683,7 +683,7 @@
   {
     "key": "arsenopyrite",
     "name": "毒砂",
-    "category": "材料",
+    "category": "矿石",
     "description": "银白色或钢灰色块状矿物，表面常有黄褐色锖色，质地脆硬，断口参差状，有金属光泽。",
     "type": [
       "material"
@@ -694,7 +694,7 @@
   {
     "key": "orpiment",
     "name": "雌黄",
-    "category": "材料",
+    "category": "矿石",
     "description": "柠檬黄色或橘黄色的片状或块状矿物，半透明，质地柔软，有油脂光泽。",
     "type": [
       "material"
@@ -705,7 +705,7 @@
   {
     "key": "realgar",
     "name": "雄黄",
-    "category": "材料",
+    "category": "矿石",
     "description": "深红色或橙红色的晶体或块状矿物，半透明，断口贝壳状，有油脂光泽。",
     "type": [
       "material"
@@ -746,7 +746,7 @@
   {
     "key": "phosphorite",
     "name": "磷矿石",
-    "category": "材料",
+    "category": "矿石",
     "description": "灰白色或浅绿色块状矿物，表面粗糙，带有泥土气息。",
     "type": [
       "material"
@@ -756,7 +756,7 @@
   {
     "name": "硅砂",
     "key": "silica_sand",
-    "category": "材料",
+    "category": "矿石",
     "description": "洁白细腻的砂粒，主要成分为二氧化硅。",
     "type": [
       "material"
@@ -796,7 +796,7 @@
   {
     "key": "cobaltite",
     "name": "辉钴矿",
-    "category": "材料",
+    "category": "矿石",
     "description": "银白色或锡白色的金属光泽矿物，常呈立方体或八面体晶体，表面有时带有灰色调。",
     "type": [
       "material"
@@ -834,7 +834,7 @@
   {
     "name": "砷铂矿",
     "key": "sperrylite",
-    "category": "材料",
+    "category": "矿石",
     "description": "锡白色或钢灰色的金属光泽晶体，常呈立方体或八面体，质地坚硬，分量极重。",
     "type": [
       "material"
@@ -854,7 +854,7 @@
   {
     "name": "镍黄铁矿",
     "key": "pentlandite",
-    "category": "材料",
+    "category": "矿石",
     "description": "暗铜黄色的块状矿石，表面有金属光泽，断面呈不规则粒状，手感沉重。",
     "type": [
       "material"
@@ -905,7 +905,7 @@
   {
     "name": "绿矾",
     "key": "green_vitriol",
-    "category": "材料",
+    "category": "矿石",
     "description": "翠绿色透明的晶体碎块，在光照下闪烁玻璃般的光泽，表面微微潮湿，散发着一股淡淡的金属酸味。",
     "type": [
       "material"
@@ -1093,7 +1093,7 @@
   {
     "name": "岩盐",
     "key": "rock_salt",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色或浅灰色的结晶块，表面有透明感，味咸。",
     "type": [
       "material"
@@ -1133,7 +1133,7 @@
   {
     "name": "软锰矿",
     "key": "pyrolusite",
-    "category": "材料",
+    "category": "矿石",
     "description": "黑色或深灰色的块状矿物，表面有金属光泽，质地较软，容易染手。",
     "type": [
       "material"
@@ -1181,7 +1181,7 @@
   {
     "name": "辉钼矿",
     "key": "molybdenite",
-    "category": "材料",
+    "category": "矿石",
     "description": "铅灰色、具金属光泽的片状晶体，质地柔软，可污手。",
     "type": [
       "material"
@@ -1210,7 +1210,7 @@
   {
     "name": "白钨矿",
     "key": "scheelite",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色至白色半透明的矿物，有时带浅黄色或浅绿色，呈四方双锥状晶体，在紫外光下发蓝白色荧光。",
     "type": [
       "material"
@@ -1239,7 +1239,7 @@
   {
     "name": "碲金矿",
     "key": "tellurium_gold_ore",
-    "category": "材料",
+    "category": "矿石",
     "description": "银灰色金属光泽的矿物，断口呈参差状，是提取金和碲的重要矿石。",
     "type": [
       "material"
@@ -1278,7 +1278,7 @@
   {
     "name": "锆石",
     "key": "zircon",
-    "category": "材料",
+    "category": "矿石",
     "description": "棕红色半透明的晶体碎块，断口呈玻璃光泽，质地坚硬，在光线下折射出明亮的火彩。",
     "type": [
       "material"
@@ -1316,7 +1316,7 @@
   {
     "name": "沥青铀矿",
     "key": "pitchblende",
-    "category": "材料",
+    "category": "矿石",
     "description": "黑色沥青光泽的致密块状矿物，质地沉重，断口呈贝壳状。",
     "type": [
       "material"
@@ -1345,7 +1345,7 @@
   {
     "name": "金红石",
     "key": "rutile",
-    "category": "材料",
+    "category": "矿石",
     "description": "深红色至黑色的柱状晶体，带有金刚光泽，质地坚硬而脆。",
     "type": [
       "material"
@@ -1384,7 +1384,7 @@
   {
     "name": "铬铁矿",
     "key": "chromite",
-    "category": "材料",
+    "category": "矿石",
     "description": "黑色带有金属光泽的矿物碎块，断口参差，握在手中沉甸甸的，表面有时可见微细的晶面反光。",
     "type": [
       "material"
@@ -1432,7 +1432,7 @@
   {
     "name": "绿柱石",
     "key": "beryl",
-    "category": "材料",
+    "category": "矿石",
     "description": "淡绿色至翠绿色的透明晶体，六棱柱状，表面有玻璃光泽。",
     "type": [
       "material"
@@ -1461,7 +1461,7 @@
   {
     "name": "钾石盐",
     "key": "sylvite",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色透明或白色的立方晶体，味咸涩，表面有玻璃光泽。",
     "type": [
       "material"
@@ -1470,7 +1470,7 @@
   {
     "name": "光卤石",
     "key": "carnallite",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色带红色调的粒状矿物，表面粗糙，暴露在空气中易潮解。",
     "type": [
       "material"
@@ -1536,7 +1536,7 @@
   {
     "name": "芒硝",
     "key": "mirabilite",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色透明晶体，像碎冰一般，在干燥空气中会失去水分变成白色粉末。",
     "type": [
       "material"
@@ -1565,7 +1565,7 @@
   {
     "name": "重晶石",
     "key": "barite",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色或无色透明的晶体，密度极大，手感沉重，表面有玻璃光泽。",
     "type": [
       "material"
@@ -1575,7 +1575,7 @@
   {
     "name": "毒重石",
     "key": "witherite",
-    "category": "材料",
+    "category": "矿石",
     "description": "乳白色或淡黄色的块状矿物，断口参差，质地较脆，用指甲可划出痕迹。",
     "type": [
       "material"
@@ -1705,7 +1705,7 @@
   {
     "name": "天青石",
     "key": "celestine",
-    "category": "材料",
+    "category": "矿石",
     "description": "浅蓝色或无色半透明的晶体碎块，断口呈玻璃光泽，握在手中感觉较沉，是锶的主要矿石。",
     "type": [
       "material"
@@ -1715,7 +1715,7 @@
   {
     "name": "菱锶矿",
     "key": "strontianite",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色至浅黄色的块状矿物，表面有玻璃光泽，质地较脆，是另一种重要的锶矿石。",
     "type": [
       "material"
@@ -1762,7 +1762,7 @@
   {
     "name": "菱镁矿",
     "key": "magnesite",
-    "category": "材料",
+    "category": "矿石",
     "description": "白色或灰白色、玻璃光泽的块状矿物，断口呈贝壳状，质地较脆，手捻有颗粒感。",
     "type": [
       "material"
@@ -1800,7 +1800,7 @@
   {
     "name": "硼砂",
     "key": "borax",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色或白色半透明晶体，表面有玻璃光泽，触感滑腻，微带咸味，常伴有风化形成的白色粉末状皮壳。",
     "type": [
       "material"
@@ -1857,7 +1857,7 @@
   {
     "name": "锂辉石",
     "key": "spodumene",
-    "category": "材料",
+    "category": "矿石",
     "description": "呈灰白色或淡绿色的柱状晶体，玻璃光泽，表面有纵向条纹，质地较脆，握在手心有些许凉意。",
     "type": [
       "material"
@@ -1923,7 +1923,7 @@
   {
     "name": "石英",
     "key": "quartz",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色透明或乳白色的六方柱状晶体，断口呈油脂光泽，质地坚硬且脆。",
     "type": [
       "material"
@@ -2023,7 +2023,7 @@
   {
     "name": "铝土矿",
     "key": "bauxite",
-    "category": "材料",
+    "category": "矿石",
     "description": "红褐色或灰色的土状矿石，表面粗糙，常混杂着铁质斑点，手感沉重而黏腻。",
     "type": [
       "material"
@@ -2033,7 +2033,7 @@
   {
     "name": "冰晶石",
     "key": "cryolite",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色至白色的透明矿物，玻璃光泽，质地较软，像冰糖般易碎。",
     "type": [
       "material"
@@ -2091,7 +2091,7 @@
   {
     "name": "铯榴石",
     "key": "pollucite",
-    "category": "材料",
+    "category": "矿石",
     "description": "无色或白色半透明晶体，玻璃光泽，常呈立方体或粒状，断面参差，手感沉重。",
     "type": [
       "material"
@@ -2148,7 +2148,7 @@
   {
     "name": "鸟粪石",
     "key": "struvite",
-    "category": "材料",
+    "category": "矿石",
     "description": "淡黄色至白色透明晶体，带有玻璃光泽，常形成鸟笼状或楔形晶体。质地较脆，富含磷、镁和氮。",
     "type": [
       "material"
@@ -2178,7 +2178,7 @@
   {
     "name": "萤石",
     "key": "fluorite",
-    "category": "材料",
+    "category": "矿石",
     "description": "又称氟石，玻璃光泽，颜色多样，是自然界中最主要的含氟矿物。",
     "type": [
       "material"
@@ -2188,7 +2188,7 @@
   {
     "name": "辉铋矿",
     "key": "bismuthite",
-    "category": "材料",
+    "category": "矿石",
     "description": "银灰色金属光泽的矿物，常呈柱状或针状集合体，断口参差不齐，质地较脆。",
     "type": [
       "material"
@@ -2261,7 +2261,7 @@
   {
     "name": "阳极泥",
     "key": "anode_slime",
-    "category": "材料",
+    "category": "矿石",
     "description": "电解精炼金属（如铜）时沉积在电解槽底部的废泥，虽然看起来不起眼，但富含硒、碲及金银等稀有金属。",
     "type": [
       "material"
@@ -2270,7 +2270,7 @@
   {
     "name": "黄铜矿",
     "key": "chalcopyrite",
-    "category": "材料",
+    "category": "矿石",
     "description": "最主要的铜矿石，呈鲜艳的金黄色，表面带有金属光泽及彩色锖色。它是提取铜及其副产物（如硒）的重要来源。",
     "type": [
       "material"
@@ -2288,7 +2288,7 @@
   {
     "name": "钒铅矿",
     "key": "vanadinite",
-    "category": "材料",
+    "category": "矿石",
     "description": "呈六方晶系的鲜红色或橘红色晶体，含铅且富含钒元素。不仅是提炼钒的主要矿石，也常被收藏者视为美丽的矿物标本。",
     "type": [
       "material"
@@ -2328,7 +2328,7 @@
   {
     "name": "锂云母",
     "key": "lepidolite",
-    "category": "材料",
+    "category": "矿石",
     "description": "紫红色或粉红色的鳞片状矿物，具有珍珠光泽，常与锂辉石共生，是提取锂、铷、铯的重要原料。",
     "type": [
       "material"
@@ -2357,7 +2357,7 @@
   {
     "name": "红铊矿",
     "key": "lorandite",
-    "category": "材料",
+    "category": "矿石",
     "description": "一种深红色至胭脂红色的矿物，金属光泽，常以细小板状或粒状集合体产出。晶体完好时可见四方晶系的板状或短柱状形态，但多数情况下呈致密块状或细粒浸染状附着在围岩表面。用指甲可以刻动，条痕为暗红色，比重大，手感沉甸甸的。",
     "type": [
       "material"
@@ -2597,7 +2597,7 @@
   {
     "name": "粗铂砂",
     "key": "crude_platinum_sand",
-    "category": "材料",
+    "category": "矿石",
     "description": "从河床或矿床中淘出的重砂，富含天然铂及其他铂族金属（钯、锇、铱等）。",
     "type": [
       "material"
@@ -2652,7 +2652,7 @@
   {
     "name": "钽铌铁矿",
     "key": "tantalite_columbite",
-    "category": "材料",
+    "category": "矿石",
     "description": "一种深褐色的重矿石，是提取钽和铌的主要矿物来源。通常产于花岗伟晶岩中。",
     "type": [
       "material"
@@ -2738,7 +2738,7 @@
   {
     "name": "磷钇矿",
     "key": "xenotime",
-    "category": "材料",
+    "category": "矿石",
     "description": "主要的钇矿石，化学成分为磷酸钇（YPO4），常含有钍、铀及各种稀土元素。是提炼钇及重稀土元素的重要原料。",
     "type": [
       "material"
@@ -2748,8 +2748,8 @@
   {
     "name": "独居石",
     "key": "monazite",
-    "category": "材料",
-    "description": "一种磷酸盐矿物，富含铈、镧等轻稀土元素，也含有一定量的钇和钍。通常呈红褐色或棕黄色。",
+    "category": "矿石",
+    "description": "一种磷酸盐矿物，富含铈、镧等轻稀土元素，也含有一定量的钇 and 钍。通常呈红褐色或棕黄色。",
     "type": [
       "material"
     ],
@@ -2877,5 +2877,50 @@
       "tool"
     ],
     "durable": 10
+  },
+  {
+    "name": "硝酸钾",
+    "key": "potassium_nitrate",
+    "category": "材料",
+    "description": "白色晶体，味咸而凉，易溶于水，是火药的重要成分。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸钠",
+    "key": "sodium_nitrate",
+    "category": "材料",
+    "description": "无色透明晶体，易潮解，常用于肥料和玻璃制造。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸钙",
+    "key": "calcium_nitrate",
+    "category": "材料",
+    "description": "白色颗粒，极易吸湿，用作水溶性肥料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸镁",
+    "key": "magnesium_nitrate",
+    "category": "材料",
+    "description": "白色固体，易潮解，常用于化肥和催化剂。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "硝酸锂",
+    "key": "lithium_nitrate",
+    "category": "材料",
+    "description": "白色晶体，易溶于水，用于陶瓷和荧光材料。",
+    "type": [
+      "material"
+    ]
   }
 ]

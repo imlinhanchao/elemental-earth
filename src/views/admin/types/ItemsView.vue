@@ -274,7 +274,7 @@ const admin = useAdminStore();
 const records = ref<any[]>([]);
 const modalRef = ref<HTMLDialogElement | null>(null);
 const editing = ref<any>(null);
-const categories = ["材料", "工具", "容器", "燃料", "气体", "液体", "火源"];
+const categories = ["材料", "矿石", "工具", "容器", "燃料", "气体", "液体", "火源"];
 const typeOptions = [
   "material",
   "tool",

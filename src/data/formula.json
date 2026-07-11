@@ -1359,16 +1359,27 @@
     "required_era": "modern_chem"
   },
   {
-    "name": "配制火药",
     "key": "gunpowder_production",
+    "name": "配制火药",
     "description": "将硫磺、硝石和木炭按适当比例混合并碾磨，制成火药。",
+    "fragment_description": "将#niter#、#charcoal#与#sulfur#按特定比例混合均匀并进行$grinding$处理，制得具有爆炸性的#gunpowder#。",
+    "time_required": 20,
+    "required_era": "stone",
+    "required_actions": {
+      "key": "grinding",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sulfur",
         "quantity": 1
       },
       {
-        "key": "niter",
+        "key": [
+          "niter",
+          "potassium_nitrate",
+          "sodium_nitrate"
+        ],
         "quantity": 3,
         "isMain": true
       },
@@ -1377,19 +1388,12 @@
         "quantity": 2
       }
     ],
-    "required_actions": {
-      "key": "grinding",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "gunpowder",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#niter#、#charcoal#与#sulfur#按特定比例混合均匀并进行$grinding$处理，制得具有爆炸性的#gunpowder#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "焙烧石灰石",
@@ -5994,6 +5998,191 @@
         "key": "carbon_dioxide",
         "multiple": 0.5,
         "required_chain_operation": "gas_collecting_air"
+      }
+    ]
+  },
+  {
+    "name": "硝酸钾制备（碳酸钾法）",
+    "key": "potassium_nitrate_from_carbonate",
+    "description": "将碳酸钾溶于硝酸，蒸发结晶得硝酸钾。",
+    "required_items": [
+      {
+        "key": "potassium_carbonate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2,
+        "isMain": false
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_era": "modern_chem",
+    "time_required": 20,
+    "fragment_description": "将 #potassium_carbonate# 缓缓倒入 #nitric_acid# 中，冒出大量气泡，$dissolving$ 后得到无色溶液，再通过 $evaporation$ 析出白色晶体。",
+    "products": [
+      {
+        "key": "potassium_nitrate",
+        "multiple": 2,
+        "required_chain_operation": "evaporation"
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝酸钠制备（碳酸钠法）",
+    "key": "sodium_nitrate_from_carbonate",
+    "description": "将碳酸钠溶于硝酸，蒸发结晶得硝酸钠。",
+    "required_items": [
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2,
+        "isMain": false
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_era": "modern_chem",
+    "time_required": 20,
+    "fragment_description": "将 #sodium_carbonate# 加入 #nitric_acid#，$dissolving$ 后产生大量气泡，溶液清澈透明，$evaporation$ 后得到无色晶体。",
+    "products": [
+      {
+        "key": "sodium_nitrate",
+        "multiple": 2,
+        "required_chain_operation": "evaporation"
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝酸钙制备（碳酸钙法）",
+    "key": "calcium_nitrate_from_limestone",
+    "description": "将石灰石溶于硝酸，蒸发结晶得硝酸钙。",
+    "required_items": [
+      {
+        "key": "limestone",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2,
+        "isMain": false
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_era": "modern_chem",
+    "time_required": 20,
+    "fragment_description": "将 #limestone# 投入 #nitric_acid#，$dissolving$ 中剧烈冒泡，石灰石逐渐消失，$evaporation$ 后得到白色颗粒。",
+    "products": [
+      {
+        "key": "calcium_nitrate",
+        "multiple": 1,
+        "required_chain_operation": "evaporation"
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝酸镁制备（碳酸镁法）",
+    "key": "magnesium_nitrate_from_magnesite",
+    "description": "将菱镁矿溶于硝酸，蒸发结晶得硝酸镁。",
+    "required_items": [
+      {
+        "key": "magnesite",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2,
+        "isMain": false
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_era": "modern_chem",
+    "time_required": 20,
+    "fragment_description": "将 #magnesite# 放入 #nitric_acid#，$dissolving$ 后产生二氧化碳气泡，溶液澄清，$evaporation$ 后析出白色固体。",
+    "products": [
+      {
+        "key": "magnesium_nitrate",
+        "multiple": 1,
+        "required_chain_operation": "evaporation"
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "硝酸锂制备（碳酸锂法）",
+    "key": "lithium_nitrate_from_carbonate",
+    "description": "将碳酸锂溶于硝酸，蒸发结晶得硝酸锂。",
+    "required_items": [
+      {
+        "key": "lithium_carbonate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2,
+        "isMain": false
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_era": "modern_chem",
+    "time_required": 20,
+    "fragment_description": "将 #lithium_carbonate# 与 #nitric_acid# 混合，$dissolving$ 时产生气泡，得到无色溶液，$evaporation$ 后得到白色晶体。",
+    "products": [
+      {
+        "key": "lithium_nitrate",
+        "multiple": 2,
+        "required_chain_operation": "evaporation"
+      },
+      {
+        "key": "carbon_dioxide",
+        "multiple": 1
       }
     ]
   }
