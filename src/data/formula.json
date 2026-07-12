@@ -1678,7 +1678,7 @@
     "required_items": [
       {
         "key": "pyrolusite",
-        "quantity": 3,
+        "quantity": 1,
         "isMain": true
       },
       {
@@ -1692,7 +1692,7 @@
     "products": [
       {
         "key": "manganese",
-        "multiple": 1
+        "multiple": 3
       },
       {
         "key": "carbon_monoxide",
