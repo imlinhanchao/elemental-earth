@@ -25,9 +25,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons.svg'],
       manifest: {
-        name: '元素尘埃 - Elemental Earth',
-        short_name: '元素尘埃',
-        description: '基于化学元素与炼金术的增量汉化游戏',
+        name: '元素纪元',
+        short_name: '元素纪元',
+        description: '基于矿物学和化学实验的放置游戏',
         theme_color: '#000000',
         icons: [
           {

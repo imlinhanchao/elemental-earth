@@ -11,7 +11,11 @@ import MobileSummary from './MobileSummary.vue'
 
         <!-- Router View -->
         <div class="flex-1 overflow-y-auto p-4 lg:p-6">
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+            <KeepAlive>
+              <component :is="Component" />
+            </KeepAlive>
+          </RouterView>
         </div>
     </main>
 </template>

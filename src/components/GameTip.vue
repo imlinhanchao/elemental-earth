@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { tips } from '@/data/tips'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
@@ -21,24 +21,54 @@ const availableTips = computed(() => {
   })
 })
 
-const currentTipIndex = ref(0)
+const currentTipIndex = ref(-1)
+const pool = ref<number[]>([])
 let intervalId: ReturnType<typeof setInterval> | null = null
 
+function shufflePool() {
+  const len = availableTips.value.length
+  if (len === 0) {
+    pool.value = []
+    return
+  }
+  const indices = Array.from({ length: len }, (_, i) => i)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]]
+  }
+  pool.value = indices
+}
+
 function updateTip() {
-  if (availableTips.value.length === 0) return
-  currentTipIndex.value = (currentTipIndex.value + 1) % availableTips.value.length
+  const len = availableTips.value.length
+  if (len === 0) return
+  
+  if (pool.value.length === 0) {
+    shufflePool()
+  }
+  
+  const lastIndex = currentTipIndex.value
+  let nextIndex = pool.value.pop() ?? 0
+  
+  // 防止循环开始时与上一个重复
+  if (nextIndex === lastIndex && pool.value.length > 0) {
+    const temp = nextIndex
+    nextIndex = pool.value.pop()!
+    pool.value.push(temp)
+  }
+  
+  currentTipIndex.value = nextIndex
 }
 
 function startRotating() {
   stopRotating()
-  if (availableTips.value.length === 0) return
+  const len = availableTips.value.length
+  if (len === 0) return
   
-  // 随机初始化第一个
-  if (currentTipIndex.value >= availableTips.value.length) {
-    currentTipIndex.value = Math.floor(Math.random() * availableTips.value.length)
+  if (currentTipIndex.value === -1 || currentTipIndex.value >= len) {
+    updateTip()
   }
   
-  // 根据内容长度动态计算切换时间，最小 4s，最大 8s
   const currentTip = availableTips.value[currentTipIndex.value]?.content || ''
   const duration = Math.min(Math.max(currentTip.length * 200, 4000), 8000)
   
@@ -54,6 +84,13 @@ function stopRotating() {
     intervalId = null
   }
 }
+
+watch(availableTips, () => {
+  pool.value = []
+  if (currentTipIndex.value >= availableTips.value.length) {
+    currentTipIndex.value = -1
+  }
+}, { deep: true })
 
 onMounted(() => {
   startRotating()
