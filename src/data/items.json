@@ -724,15 +724,15 @@
     "durable": 1
   },
   {
-    "name": "砷",
     "key": "arsenic",
+    "name": "砷",
     "category": "材料",
     "description": "银灰色脆性金属，表面暴露在空气中会迅速氧化变暗，无臭。",
     "type": [
       "material"
     ],
     "elemental": 33,
-    "durable": 1
+    "durable": 0
   },
   {
     "name": "硫化亚铁",

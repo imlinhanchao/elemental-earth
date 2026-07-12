@@ -22,7 +22,7 @@
       return {
         key: item.key,
         quantity: item.quantity,
-        name: known ? (itemData?.name || item.key) : '????',
+        name: itemData?.name || item.key,
         known,
         insufficient: known && item.quantity > packStore.getItemQuantity(item.key),
       };
@@ -85,8 +85,8 @@
         {{ time_required }}s
       </div>
       <div v-if="items.length" class="divider my-1 h-px"></div>
-      <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed" :class="{ 'text-error': item.insufficient }">
-        {{ item.quantity }}x {{ item.name }}
+      <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed group" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
+        {{ item.quantity }}x <span class="hidden group-hover:inline">{{ item.name }}</span><span class="group-hover:hidden">????</span>
       </div>
     </section>
   </section>

@@ -44,7 +44,7 @@ export const useAppStore = defineStore('app', () => {
   const desktopPush = ref<boolean>(config?.desktopPush ?? false)
   const notifyOnlyHidden = ref<boolean>(config?.notifyOnlyHidden ?? true)
   const hardMode = ref<boolean>(config?.hardMode ?? false)
-  const foldTasks = ref<boolean>(config?.foldTasks ?? false)
+  const foldTasks = ref<boolean>(config?.foldTasks ?? true)
 
   // 动画状态
   const showLabSuccess = ref(false)
