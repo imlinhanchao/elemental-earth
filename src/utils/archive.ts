@@ -225,7 +225,7 @@ export function downloadSaveData(): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `elemental-earth-save-${new Date().toISOString().slice(0, 10)}.sav`;
+  a.download = `elemental-earth-save-${new Date().toISOString().slice(0, 10)}.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -251,12 +251,12 @@ export function importSaveDataFromText(text: string): boolean {
   }
 }
 
-/** 从文件导入存档（支持 .sav 加密格式 和 .json 明文格式） */
+/** 从文件导入存档（支持 .txt 加密格式 和 .json 明文格式） */
 export function importSaveDataFromFile(): Promise<boolean> {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.sav,.json';
+    input.accept = '.txt,.json';
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) { resolve(false); return; }
