@@ -395,7 +395,10 @@
         ],
         "map": [
           "basin",
-          "cave"
+          {
+            "key": "cave",
+            "probability": 250
+          }
         ]
       },
       {
@@ -2408,7 +2411,7 @@
     "key": "craft_iron_tank",
     "name": "制作铁罐",
     "category": "制作",
-    "description": "通过焊接和锻造制作坚固的铁罐，用于储存具有腐蚀性的化学品。",
+    "description": "通过焊接和锻造制作坚固的铁罐，用于储存某些特殊的腐蚀性的化学品。",
     "time_required": 20,
     "required_items": [
       {
