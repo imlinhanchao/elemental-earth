@@ -5348,11 +5348,13 @@
     "key": "tantalum_niobium_separation",
     "name": "钽铌氟化分离",
     "description": "将钽铌铁矿溶解于氢氟酸与硫酸的混合液中，加入钾盐，利用氟钽酸钾和氟铌酸钾的溶解度差异进行分步结晶分离。",
-    "time_required": 60,
+    "fragment_description": "以#tantalite_columbite#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 120,
+    "required_era": "alchemy",
     "required_container": "iron_tank",
     "required_actions": {
       "key": "fractional_crystallization",
-      "min": 1
+      "min": 4
     },
     "required_items": [
       {
@@ -5382,9 +5384,7 @@
         "key": "potassium_fluoniobate",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#tantalite_columbite#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "refine_tantalum_step",
@@ -5506,11 +5506,13 @@
     "key": "zirconium_hafnium_separation",
     "name": "锆铪萃取分离",
     "description": "利用化学性质极度相近的锆与铪在不同溶剂中的分配系数差异，通过多级萃取分离出氧化铪。",
-    "time_required": 80,
+    "fragment_description": "以#unpurified_zirconia#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 120,
+    "required_era": "alchemy",
     "required_container": "iron_tank",
     "required_actions": {
       "key": "fractional_crystallization",
-      "min": 1
+      "min": 4
     },
     "required_items": [
       {
@@ -5536,9 +5538,7 @@
         "key": "hafnium_oxide",
         "multiple": 0.2
       }
-    ],
-    "fragment_description": "以#unpurified_zirconia#为基础原料，在进行$fractional_crystallization$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "digest_xenotime",
@@ -5761,9 +5761,17 @@
     ]
   },
   {
-    "name": "钾石盐制硫酸氢钾",
     "key": "potassium_bisulfate_from_sylvite",
+    "name": "钾石盐制硫酸氢钾",
     "description": "将钾石盐与浓硫酸共热，生成硫酸氢钾和氯化氢气体，用水吸收氯化氢得盐酸。",
+    "fragment_description": "在 #distilling_flask# 中混合 #sylvite# 和 #concentrated_sulfuric_acid#，$heating$ 后白雾升腾，用 $gas_collecting$ 收集气体并通入水中。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "distilling_flask",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sylvite",
@@ -5775,17 +5783,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "distilling_flask",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "glassworking"
-    ],
-    "required_era": "modern_chem",
-    "time_required": 90,
-    "fragment_description": "在 #distilling_flask# 中混合 #sylvite# 和 #concentrated_sulfuric_acid#，$heating$ 后白雾升腾，用 $gas_collecting$ 收集气体并通入水中。",
     "products": [
       {
         "key": "potassium_bisulfate",
@@ -5795,6 +5792,9 @@
         "key": "hydrochloric_acid",
         "multiple": 1
       }
+    ],
+    "required_techs": [
+      "glassworking"
     ]
   },
   {
@@ -6020,8 +6020,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_era": "modern_chem",
     "time_required": 20,
@@ -6057,8 +6056,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_era": "modern_chem",
     "time_required": 20,
@@ -6094,8 +6092,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_era": "modern_chem",
     "time_required": 20,
@@ -6131,8 +6128,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_era": "modern_chem",
     "time_required": 20,
@@ -6168,8 +6164,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_era": "modern_chem",
     "time_required": 20,
@@ -6196,8 +6191,7 @@
     "required_container": "autoclave",
     "required_actions": {
       "key": "high_pressure_reaction",
-      "min": 1,
-      "max": 3
+      "min": 1
     },
     "required_items": [
       {
@@ -6238,8 +6232,7 @@
     "required_container": "gas_bottle",
     "required_actions": {
       "key": "catalytic_oxidation",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -6281,8 +6274,7 @@
     "required_container": "gas_bottle",
     "required_actions": {
       "key": "gas_collecting_air",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_items": [
       {
@@ -6323,8 +6315,7 @@
     "required_container": "beaker",
     "required_actions": {
       "key": "dissolving",
-      "min": 1,
-      "max": 1
+      "min": 1
     },
     "required_techs": [
       "glassworking"
@@ -6414,5 +6405,1800 @@
     ],
     "fragment_description": "将#air#通入装有#copper#的装置并进行$heating$，利用铜的氧化反应提取#nitrogen#，同时得到#copper_oxide#。",
     "required_era": "modern_chem"
+  },
+  {
+    "key": "lanthanum_oxalate_precipitation",
+    "name": "草酸沉淀镧",
+    "description": "向镧富集液中加入草酸，使镧离子以草酸盐粉末的形式沉淀析出。",
+    "required_items": [
+      {
+        "key": "lanthanum_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "lanthanum_oxalate",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#lanthanum_solution#与#oxalic_acid#混合后进行$stirring$，析出#lanthanum_oxalate#。",
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "calcine_lanthanum",
+    "name": "草酸镧煅烧",
+    "description": "在高温下煅烧草酸镧，分解产生氧化镧固体。",
+    "required_items": [
+      {
+        "key": "lanthanum_oxalate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "lanthanum_oxide",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#lanthanum_oxalate#置于容器中进行$roasting$反应，分解得到#lanthanum_oxide#。",
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "reduce_lanthanum",
+    "name": "钙还原氧化镧",
+    "description": "在高温下使用金属钙还原氧化镧，获得高纯度的金属镧。",
+    "required_items": [
+      {
+        "key": "lanthanum_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 80,
+    "products": [
+      {
+        "key": "lanthanum",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#lanthanum_oxide#与#calcium#一同在高炉中$roasting$还原，提取出#lanthanum#单质。",
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "oxalic_acid_synthesis",
+    "name": "木材氧化制草酸",
+    "description": "利用浓硝酸氧化木材（纤维素）来制备草酸。这是早期工业制取草酸的方法之一。",
+    "fragment_description": "在容器中将#wood#与#nitric_acid#混合后进行$heating$氧化反应，随后过滤、冷却结晶得到#oxalic_acid#。",
+    "time_required": 100,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "evaporation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "wood",
+        "quantity": 2
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "oxalic_acid",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+      "crystallization_tech"
+    ]
+  },
+  {
+    "key": "cerium_oxalate_precipitation",
+    "name": "草酸沉淀铈",
+    "description": "向铈富集液中加入草酸，使铈离子以草酸盐粉末的形式沉淀析出。",
+    "required_items": [
+      {
+        "key": "cerium_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 20,
+    "products": [
+      {
+        "key": "cerium_oxalate",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#cerium_solution#与#oxalic_acid#混合后进行$stirring$，析出#cerium_oxalate#。",
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "calcine_cerium",
+    "name": "草酸铈煅烧",
+    "description": "在高温下煅烧草酸铈，分解产生氧化铈固体。",
+    "required_items": [
+      {
+        "key": "cerium_oxalate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 40,
+    "products": [
+      {
+        "key": "cerium_oxide",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#cerium_oxalate#置于容器中进行$roasting$反应，分解得到#cerium_oxide#。",
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "reduce_cerium",
+    "name": "钙还原氧化铈",
+    "description": "在高温下使用金属钙还原氧化铈，获得金属铈单质。",
+    "required_items": [
+      {
+        "key": "cerium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 2
+      }
+    ],
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_techs": [
+      "crystallization_tech"
+    ],
+    "time_required": 80,
+    "products": [
+      {
+        "key": "cerium",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#cerium_oxide#与#calcium#一同在高炉中$roasting$还原，提取出#cerium#单质。",
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "monazite_leaching",
+    "name": "独居石酸浸处理",
+    "description": "浓硫酸高温分解独居石，冰水溶解后过滤除去放射性钍渣。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "acid_leaching",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "monazite",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sulfuric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "mixed_rare_earth_solution",
+        "multiple": 1
+      },
+      {
+        "key": "thorium_residue",
+        "multiple": 1
+      }
+    ],
+    "time_required": 20,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "rare_earth_oxalate_pp",
+    "name": "稀土草酸盐沉淀",
+    "description": "加入草酸使稀土离子沉淀，分离杂质。",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "precipitation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "mixed_rare_earth_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "mixed_rare_earth_oxalate",
+        "multiple": 1
+      }
+    ],
+    "time_required": 10,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "rare_earth_calcination",
+    "name": "混合草酸盐煅烧",
+    "description": "800℃煅烧使草酸盐分解为氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "calcination",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "mixed_rare_earth_oxalate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "mixed_rare_earth_oxide",
+        "multiple": 1
+      }
+    ],
+    "time_required": 15,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "lanthanum_chlorination",
+    "name": "氧化镧氯化",
+    "description": "高温下通氯气将氧化物转变为无水氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lanthanum_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum_chloride",
+        "multiple": 2
+      }
+    ],
+    "time_required": 20,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "cerium_chlorination",
+    "name": "氧化铈氯化",
+    "description": "高温下通氯气将氧化物转变为无水氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "cerium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "cerium_chloride",
+        "multiple": 2
+      }
+    ],
+    "time_required": 20,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "lanthanum_electrolysis",
+    "name": "金属镧电解还原",
+    "description": "熔融氯化镧电解获得单质。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lanthanum_chloride",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ],
+    "requires_electricity": true,
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "cerium_electrolysis",
+    "name": "金属铈电解还原",
+    "description": "熔融氯化铈电解获得单质。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "molten_electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "cerium_chloride",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "cerium",
+        "multiple": 1
+      },
+      {
+        "key": "chlorine",
+        "multiple": 1
+      }
+    ],
+    "requires_electricity": true,
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "prepare_rare_earth_nitrate_solution",
+    "name": "制备混合稀土硝酸溶液",
+    "description": "将混合稀土氧化物溶解于硝酸中，为后续的分步结晶做准备。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "mixed_rare_earth_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "rare_earth_nitrate_solution",
+        "multiple": 2
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "rare_earth_fractional_crystallization",
+    "name": "稀土分步结晶分离",
+    "description": "利用各种稀土硝酸盐溶解度的微小差异，通过反复重结晶将混合溶液分离成单一元素的硝酸盐晶体。",
+    "time_required": 600,
+    "required_era": "rare_earth",
+    "required_container": "evaporating_dish",
+    "required_actions": {
+      "key": "fractional_crystallization",
+      "min": 20
+    },
+    "required_items": [
+      {
+        "key": "rare_earth_nitrate_solution",
+        "quantity": 5,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "cerium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "praseodymium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "neodymium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "samarium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "europium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "gadolinium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "terbium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "dysprosium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "holmium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "erbium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "thulium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "ytterbium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "lutetium_nitrate",
+        "multiple": 0.3
+      },
+      {
+        "key": "yttrium_nitrate",
+        "multiple": 0.3
+      }
+    ]
+  },
+  {
+    "key": "calcine_lanthanum_nitrate",
+    "name": "煅烧硝酸镧",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lanthanum_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "chlorinate_lanthanum_oxide",
+    "name": "氧化镧氯化",
+    "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lanthanum_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "activated_carbon",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum_chloride",
+        "multiple": 1.2
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "electrolyze_lanthanum_chloride",
+    "name": "熔盐电解制镧",
+    "description": "在石墨电解槽中，通过熔盐电解获得纯金属镧。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lanthanum_chloride",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "lanthanum",
+        "multiple": 1
+      }
+    ],
+    "time_required": 80,
+    "requires_electricity": true,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_cerium_nitrate",
+    "name": "煅烧硝酸铈",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "cerium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "cerium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "chlorinate_cerium_oxide",
+    "name": "氧化铈氯化",
+    "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "cerium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "activated_carbon",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "cerium_chloride",
+        "multiple": 1.2
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "electrolyze_cerium_chloride",
+    "name": "熔盐电解制铈",
+    "description": "在石墨电解槽中，通过熔盐电解获得纯金属铈。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "cerium_chloride",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "cerium",
+        "multiple": 1
+      }
+    ],
+    "time_required": 80,
+    "requires_electricity": true,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_praseodymium_nitrate",
+    "name": "煅烧硝酸镨",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "praseodymium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "praseodymium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "chlorinate_praseodymium_oxide",
+    "name": "氧化镨氯化",
+    "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "praseodymium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "activated_carbon",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "praseodymium_chloride",
+        "multiple": 1.2
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "electrolyze_praseodymium_chloride",
+    "name": "熔盐电解制镨",
+    "description": "在石墨电解槽中，通过熔盐电解获得纯金属镨。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "praseodymium_chloride",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "praseodymium",
+        "multiple": 1
+      }
+    ],
+    "time_required": 80,
+    "requires_electricity": true,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_neodymium_nitrate",
+    "name": "煅烧硝酸钕",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "neodymium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "neodymium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "chlorinate_neodymium_oxide",
+    "name": "氧化钕氯化",
+    "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "neodymium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "activated_carbon",
+        "quantity": 1
+      },
+      {
+        "key": "chlorine",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "neodymium_chloride",
+        "multiple": 1.2
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "electrolyze_neodymium_chloride",
+    "name": "熔盐电解制钕",
+    "description": "在石墨电解槽中，通过熔盐电解获得纯金属钕。",
+    "required_container": "graphite_electrolytic_cell",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "neodymium_chloride",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "neodymium",
+        "multiple": 1
+      }
+    ],
+    "time_required": 80,
+    "requires_electricity": true,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_samarium_nitrate",
+    "name": "煅烧硝酸钐",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "samarium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "samarium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_samarium_oxide",
+    "name": "氧化钐氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "samarium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "samarium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_samarium_fluoride",
+    "name": "钙还原制取钐",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钐。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "samarium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "samarium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_europium_nitrate",
+    "name": "煅烧硝酸铕",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "europium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "europium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_europium_oxide",
+    "name": "氧化铕氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "europium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "europium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_europium_fluoride",
+    "name": "钙还原制取铕",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铕。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "europium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "europium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_gadolinium_nitrate",
+    "name": "煅烧硝酸钆",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "gadolinium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "gadolinium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_gadolinium_oxide",
+    "name": "氧化钆氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "gadolinium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "gadolinium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_gadolinium_fluoride",
+    "name": "钙还原制取钆",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钆。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "gadolinium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "gadolinium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_terbium_nitrate",
+    "name": "煅烧硝酸铽",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "terbium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "terbium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_terbium_oxide",
+    "name": "氧化铽氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "terbium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "terbium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_terbium_fluoride",
+    "name": "钙还原制取铽",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铽。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "terbium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "terbium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_dysprosium_nitrate",
+    "name": "煅烧硝酸镝",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "dysprosium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "dysprosium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_dysprosium_oxide",
+    "name": "氧化镝氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "dysprosium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "dysprosium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_dysprosium_fluoride",
+    "name": "钙还原制取镝",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镝。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "dysprosium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "dysprosium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_holmium_nitrate",
+    "name": "煅烧硝酸钬",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "holmium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "holmium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_holmium_oxide",
+    "name": "氧化钬氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "holmium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "holmium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_holmium_fluoride",
+    "name": "钙还原制取钬",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钬。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "holmium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "holmium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_erbium_nitrate",
+    "name": "煅烧硝酸铒",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "erbium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "erbium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_erbium_oxide",
+    "name": "氧化铒氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "erbium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "erbium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_erbium_fluoride",
+    "name": "钙还原制取铒",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铒。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "erbium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "erbium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_thulium_nitrate",
+    "name": "煅烧硝酸铥",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thulium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "thulium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_thulium_oxide",
+    "name": "氧化铥氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thulium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "thulium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_thulium_fluoride",
+    "name": "钙还原制取铥",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铥。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thulium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "thulium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_ytterbium_nitrate",
+    "name": "煅烧硝酸镱",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "ytterbium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "ytterbium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_ytterbium_oxide",
+    "name": "氧化镱氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "ytterbium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "ytterbium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_ytterbium_fluoride",
+    "name": "钙还原制取镱",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镱。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "ytterbium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "ytterbium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_lutetium_nitrate",
+    "name": "煅烧硝酸镥",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lutetium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "lutetium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_lutetium_oxide",
+    "name": "氧化镥氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lutetium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "lutetium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_lutetium_fluoride",
+    "name": "钙还原制取镥",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镥。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "lutetium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "lutetium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "calcine_yttrium_nitrate",
+    "name": "煅烧硝酸钇",
+    "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "yttrium_nitrate",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium_oxide",
+        "multiple": 0.8
+      }
+    ],
+    "time_required": 30,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "fluorinate_yttrium_oxide",
+    "name": "氧化钇氟化",
+    "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "yttrium_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrofluoric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium_fluoride",
+        "multiple": 1.1
+      }
+    ],
+    "time_required": 40,
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "reduce_yttrium_fluoride",
+    "name": "钙还原制取钇",
+    "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钇。",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "reduction",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "yttrium_fluoride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "calcium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "yttrium",
+        "multiple": 0.9
+      }
+    ],
+    "time_required": 60,
+    "required_era": "rare_earth"
   }
 ]

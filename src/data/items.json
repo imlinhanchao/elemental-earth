@@ -2981,5 +2981,648 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "key": "lanthanum",
+    "name": "镧",
+    "category": "材料",
+    "description": "银白色金属，质地柔软，在空气中极易被氧化。它是镧系元素的领头羊，广泛应用于电池、镜头及催化剂。",
+    "type": [
+      "material"
+    ],
+    "elemental": 57,
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "lanthanum_oxide",
+    "name": "氧化镧",
+    "category": "材料",
+    "description": "白色粉末，用于制造特种光学玻璃。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "lanthanum_oxalate",
+    "name": "草酸镧",
+    "category": "材料",
+    "description": "白色沉淀，从稀土溶液中利用草酸沉淀出的中间产物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "草酸铈",
+    "key": "cerium_oxalate",
+    "category": "材料",
+    "description": "白色晶体粉末，不溶于水，是提炼金属铈的重要中间产物。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氧化铈",
+    "key": "cerium_oxide",
+    "category": "材料",
+    "description": "淡黄色粉末，极其优良的抛光材料。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "name": "铈",
+    "key": "cerium",
+    "category": "材料",
+    "description": "银灰色金属，在地壳中含量最高的一种稀土元素。在空气中容易氧化，是打火石的主要成分。",
+    "type": [
+      "material"
+    ],
+    "elemental": 58,
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "name": "混合稀土硫酸盐溶液",
+    "key": "mixed_rare_earth_solution",
+    "category": "液体",
+    "description": "独居石经硫酸浸出后的混合溶液。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "thorium_residue",
+    "name": "含钍废渣",
+    "type": [
+      "material"
+    ],
+    "description": "具有放射性，需铅封容器储存。提炼稀土的副产物。"
+  },
+  {
+    "key": "mixed_rare_earth_oxalate",
+    "name": "混合稀土草酸盐",
+    "type": [
+      "material"
+    ],
+    "description": "白色沉淀，所有稀土元素的草酸盐混合物。"
+  },
+  {
+    "key": "mixed_rare_earth_oxide",
+    "name": "混合稀土氧化物",
+    "type": [
+      "material"
+    ],
+    "description": "经煅烧获得的粗氧化物结晶。"
+  },
+  {
+    "key": "lanthanum_chloride",
+    "name": "氯化镧",
+    "type": [
+      "material"
+    ],
+    "description": "无水氯化物，用于电解。"
+  },
+  {
+    "key": "cerium_chloride",
+    "name": "氯化铈",
+    "type": [
+      "material"
+    ],
+    "description": "无水氯化物，用于电解。"
+  },
+  {
+    "key": "rare_earth_nitrate_solution",
+    "name": "混合稀土硝酸溶液",
+    "description": "含有多种稀土元素的硝酸盐溶液，是分步结晶的原料。",
+    "type": [
+      "material"
+    ],
+    "category": "liquid"
+  },
+  {
+    "key": "lanthanum_nitrate",
+    "name": "硝酸镧",
+    "description": "硝酸镧晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "cerium_nitrate",
+    "name": "硝酸铈",
+    "description": "硝酸铈晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "praseodymium",
+    "name": "镨",
+    "description": "高纯度的金属镨。原子序数59。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "praseodymium_oxide",
+    "name": "氧化镨",
+    "description": "高纯度的氧化镨粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "praseodymium_nitrate",
+    "name": "硝酸镨",
+    "description": "硝酸镨晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "praseodymium_chloride",
+    "name": "氯化镨",
+    "description": "无水氯化镨，用于熔盐电解制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "neodymium",
+    "name": "钕",
+    "description": "高纯度的金属钕。原子序数60。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "neodymium_oxide",
+    "name": "氧化钕",
+    "description": "高纯度的氧化钕粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "neodymium_nitrate",
+    "name": "硝酸钕",
+    "description": "硝酸钕晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "neodymium_chloride",
+    "name": "氯化钕",
+    "description": "无水氯化钕，用于熔盐电解制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "samarium",
+    "name": "钐",
+    "description": "高纯度的金属钐。原子序数62。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "samarium_oxide",
+    "name": "氧化钐",
+    "description": "高纯度的氧化钐粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "samarium_nitrate",
+    "name": "硝酸钐",
+    "description": "硝酸钐晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "europium",
+    "name": "铕",
+    "description": "高纯度的金属铕。原子序数63。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "europium_oxide",
+    "name": "氧化铕",
+    "description": "高纯度的氧化铕粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "europium_nitrate",
+    "name": "硝酸铕",
+    "description": "硝酸铕晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "gadolinium",
+    "name": "钆",
+    "description": "高纯度的金属钆。原子序数64。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "gadolinium_oxide",
+    "name": "氧化钆",
+    "description": "高纯度的氧化钆粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "gadolinium_nitrate",
+    "name": "硝酸钆",
+    "description": "硝酸钆晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "gadolinium_fluoride",
+    "name": "氟化钆",
+    "description": "氟化钆，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "terbium",
+    "name": "铽",
+    "description": "高纯度的金属铽。原子序数65。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "terbium_oxide",
+    "name": "氧化铽",
+    "description": "高纯度的氧化铽粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "terbium_nitrate",
+    "name": "硝酸铽",
+    "description": "硝酸铽晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "terbium_fluoride",
+    "name": "氟化铽",
+    "description": "氟化铽，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "dysprosium",
+    "name": "镝",
+    "description": "高纯度的金属镝。原子序数66。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "dysprosium_oxide",
+    "name": "氧化镝",
+    "description": "高纯度的氧化镝粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "dysprosium_nitrate",
+    "name": "硝酸镝",
+    "description": "硝酸镝晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "dysprosium_fluoride",
+    "name": "氟化镝",
+    "description": "氟化镝，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "holmium",
+    "name": "钬",
+    "description": "高纯度的金属钬。原子序数67。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "holmium_oxide",
+    "name": "氧化钬",
+    "description": "高纯度的氧化钬粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "holmium_nitrate",
+    "name": "硝酸钬",
+    "description": "硝酸钬晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "holmium_fluoride",
+    "name": "氟化钬",
+    "description": "氟化钬，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "erbium",
+    "name": "铒",
+    "description": "高纯度的金属铒。原子序数68。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "erbium_oxide",
+    "name": "氧化铒",
+    "description": "高纯度的氧化铒粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "erbium_nitrate",
+    "name": "硝酸铒",
+    "description": "硝酸铒晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "erbium_fluoride",
+    "name": "氟化铒",
+    "description": "氟化铒，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "thulium",
+    "name": "铥",
+    "description": "高纯度的金属铥。原子序数69。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "thulium_oxide",
+    "name": "氧化铥",
+    "description": "高纯度的氧化铥粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "thulium_nitrate",
+    "name": "硝酸铥",
+    "description": "硝酸铥晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "thulium_fluoride",
+    "name": "氟化铥",
+    "description": "氟化铥，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "ytterbium",
+    "name": "镱",
+    "description": "高纯度的金属镱。原子序数70。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "ytterbium_oxide",
+    "name": "氧化镱",
+    "description": "高纯度的氧化镱粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "ytterbium_nitrate",
+    "name": "硝酸镱",
+    "description": "硝酸镱晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "ytterbium_fluoride",
+    "name": "氟化镱",
+    "description": "氟化镱，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "lutetium",
+    "name": "镥",
+    "description": "高纯度的金属镥。原子序数71。",
+    "type": [
+      "element"
+    ],
+    "category": "metal",
+    "milestone": "separate_rare_earth"
+  },
+  {
+    "key": "lutetium_oxide",
+    "name": "氧化镥",
+    "description": "高纯度的氧化镥粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "lutetium_nitrate",
+    "name": "硝酸镥",
+    "description": "硝酸镥晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "lutetium_fluoride",
+    "name": "氟化镥",
+    "description": "氟化镥，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "yttrium_oxide",
+    "name": "氧化钇",
+    "description": "高纯度的氧化钇粉末。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "yttrium_nitrate",
+    "name": "硝酸钇",
+    "description": "硝酸钇晶体，通过分步结晶获得。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "yttrium_fluoride",
+    "name": "氟化钇",
+    "description": "氟化钇，用于金属还原制取金属。",
+    "type": [
+      "material"
+    ],
+    "category": "powder"
+  },
+  {
+    "key": "reaction_kettle",
+    "name": "反应釜",
+    "type": [
+      "tool"
+    ],
+    "description": "耐酸碱高温的工业反应容器。",
+    "durable": 100
+  },
+  {
+    "key": "evaporating_dish",
+    "name": "蒸发皿",
+    "type": [
+      "tool"
+    ],
+    "description": "用于浓缩溶液的瓷质器皿。",
+    "durable": 50
+  },
+  {
+    "key": "sealed_tube",
+    "name": "石英反应管",
+    "type": [
+      "tool"
+    ],
+    "description": "耐高温石英管，适用于通气反应。",
+    "durable": 20
+  },
+  {
+    "key": "graphite_electrolytic_cell",
+    "name": "石墨电解槽",
+    "type": [
+      "tool"
+    ],
+    "description": "用于熔盐电解的专用容器。",
+    "durable": 30
+  },
+  {
+    "name": "石墨",
+    "key": "graphite",
+    "category": "材料",
+    "description": "深灰色至黑色的不透明固体，质软且具有滑腻感。它是碳的一种同素异形体，具有极佳的导电性、耐氧化性及耐高温性，是制造电极和坩埚的理想材料。",
+    "type": [
+      "material"
+    ],
+    "is_discovery": true
+  },
+  {
+    "key": "fractionating_column",
+    "name": "分馏柱",
+    "description": "用于分馏操作，增加汽液接触面积以提高分离效率。",
+    "type": [
+      "tool"
+    ],
+    "milestone": "rare_earth"
   }
 ]

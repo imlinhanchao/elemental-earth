@@ -185,7 +185,17 @@
     "name": "蒸发",
     "description": "通过加热使液体蒸发，留下固体溶质。",
     "time_required": 100,
-    "requires_burning": true
+    "requires_burning": true,
+    "required_item": [
+      {
+        "key": [
+          "crucible",
+          "evaporating_dish"
+        ],
+        "quantity": 1,
+        "use": 0.05
+      }
+    ]
   },
   {
     "name": "熔融电解",
@@ -194,9 +204,12 @@
     "time_required": 30,
     "required_item": [
       {
-        "key": "crucible",
+        "key": [
+          "crucible",
+          "graphite_electrolytic_cell"
+        ],
         "quantity": 1,
-        "use": 0.02
+        "use": 0.05
       }
     ],
     "required_techs": [
@@ -237,6 +250,27 @@
     "is_chain": false
   },
   {
+    "key": "fractional_distillation",
+    "name": "分馏",
+    "description": "利用液体混合物中各成分沸点不同，多次部分气化和冷凝，使其分离成纯净物。",
+    "time_required": 40,
+    "required_item": [
+      {
+        "key": "fractionating_column",
+        "quantity": 1,
+        "use": 0.05
+      },
+      {
+        "key": "brass_condenser",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "milestone": "rare_earth",
+    "requires_burning": true,
+    "is_chain": false
+  },
+  {
     "key": "fractional_crystallization",
     "name": "分步结晶",
     "description": "利用不同物质在同一溶剂中溶解度的差异，通过反复溶解与结晶逐步分离混合物。",
@@ -247,7 +281,8 @@
         "key": [
           "crucible",
           "beaker",
-          "iron_tank"
+          "iron_tank",
+          "evaporating_dish"
         ],
         "quantity": 1,
         "use": 0.05
@@ -271,6 +306,48 @@
     ],
     "required_techs": [
       "high_pressure_tech"
+    ],
+    "requires_burning": true
+  },
+  {
+    "key": "acid_leaching",
+    "name": "酸浸",
+    "description": "使用酸性溶液将固体原料中的有用成分溶解出来。",
+    "time_required": 20,
+    "required_item": [
+      {
+        "key": "reaction_kettle",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "requires_burning": true
+  },
+  {
+    "key": "precipitation",
+    "name": "沉淀",
+    "description": "通过加入沉淀剂使溶液中的特定组分以固体形式析出。",
+    "time_required": 10,
+    "required_item": [
+      {
+        "key": "beaker",
+        "quantity": 1,
+        "use": 0.02
+      }
+    ],
+    "requires_burning": false
+  },
+  {
+    "key": "calcination",
+    "name": "煅烧",
+    "description": "在高温（不熔化）下加热物质，使其分解或发生化学性质变化。",
+    "time_required": 15,
+    "required_item": [
+      {
+        "key": "crucible",
+        "quantity": 1,
+        "use": 0.05
+      }
     ],
     "requires_burning": true
   }

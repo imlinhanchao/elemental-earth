@@ -370,28 +370,36 @@
     ]
   },
   {
-    "name": "结晶工艺",
     "key": "crystallization_tech",
+    "name": "结晶工艺",
     "description": "掌握了利用物质溶解度差异进行分离提纯的技术，能够通过反复结晶获得高纯度物质。",
+    "time_required": 60,
+    "milestone": "crystallization_tech",
     "required_items": [
-      {
-        "key": "niter",
-        "quantity": 5
-      },
-      {
-        "key": "copper",
-        "quantity": 3
-      },
       {
         "key": "water",
         "quantity": 10
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 2
+      },
+      {
+        "key": "beaker",
+        "quantity": 1
+      },
+      {
+        "key": "test_tube",
+        "quantity": 1
+      },
+      {
+        "key": "glass_rod",
+        "quantity": 1
       }
     ],
     "required_techs": [
       "glassworking"
-    ],
-    "time_required": 60,
-    "milestone": "crystallization_tech"
+    ]
   },
   {
     "key": "high_pressure_tech",
@@ -407,6 +415,31 @@
     "required_techs": [
       "gas_collection",
       "manganese_alloy_smithing"
+    ]
+  },
+  {
+    "key": "advanced_chemical_equipment",
+    "name": "高级化学器材",
+    "description": "掌握了制造耐腐蚀反应釜、精密蒸发皿以及耐高温石墨电极的技术，为工业化化学生产奠定基础。",
+    "time_required": 180,
+    "milestone": "unlock_advanced_chem_tools",
+    "required_items": [
+      {
+        "key": "manganese_steel",
+        "quantity": 5
+      },
+      {
+        "key": "glass",
+        "quantity": 10
+      },
+      {
+        "key": "graphite",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "glassworking",
+      "high_pressure_tech"
     ]
   }
 ]

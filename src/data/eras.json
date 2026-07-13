@@ -97,6 +97,10 @@
       {
         "key": "separate_rare_earth",
         "description": "完成第一次稀土分离"
+      },
+      {
+        "key": "unlock_advanced_chem_tools",
+        "description": "解锁高级化学实验器材制作工艺"
       }
     ]
   },

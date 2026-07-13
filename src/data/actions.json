@@ -922,6 +922,25 @@
           "cave",
           "basin"
         ]
+      },
+      {
+        "key": "graphite",
+        "quantity": [
+          1,
+          2
+        ],
+        "probability": 150,
+        "required_era": "modern_chem",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave",
+          "deep_mine"
+        ]
       }
     ]
   },
@@ -2476,30 +2495,6 @@
     "formula": null
   },
   {
-    "name": "制作玻璃漏斗",
-    "key": "craft_glass_funnel",
-    "category": "制作",
-    "description": "将玻璃熔体压制成漏斗形状。",
-    "required_items": [
-      {
-        "key": "glass",
-        "quantity": 1
-      }
-    ],
-    "required_techs": [
-      "glassworking"
-    ],
-    "rewards": [
-      {
-        "key": "glass_funnel",
-        "quantity": 1,
-        "probability": 1000
-      }
-    ],
-    "time_required": 15,
-    "formula": null
-  },
-  {
     "name": "拉制玻璃棒",
     "key": "craft_glass_rod",
     "category": "制作",
@@ -3172,5 +3167,101 @@
       "beach",
       "island"
     ]
+  },
+  {
+    "name": "制造反应釜",
+    "key": "craft_reaction_kettle",
+    "category": "制作",
+    "description": "使用锰钢制造坚固的外壳，并衬以高硼硅玻璃，用于大规模的化学反应。",
+    "required_items": [
+      {
+        "key": "manganese_steel",
+        "quantity": 4
+      },
+      {
+        "key": "glass",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ],
+    "rewards": [
+      {
+        "key": "reaction_kettle",
+        "quantity": 1
+      }
+    ],
+    "time_required": 120
+  },
+  {
+    "name": "烧制蒸发皿",
+    "key": "craft_evaporating_dish",
+    "category": "制作",
+    "description": "使用精制陶瓷或耐热玻璃烧制，用于液体的浓缩结晶。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ],
+    "rewards": [
+      {
+        "key": "evaporating_dish",
+        "quantity": 1
+      }
+    ],
+    "time_required": 60
+  },
+  {
+    "name": "制作封管",
+    "key": "craft_sealed_tube",
+    "category": "制作",
+    "description": "制作能够承受一定压力的厚壁玻璃封管，用于高温高压密闭反应。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ],
+    "rewards": [
+      {
+        "key": "sealed_tube",
+        "quantity": 1
+      }
+    ],
+    "time_required": 45
+  },
+  {
+    "name": "制造石墨电解槽",
+    "key": "craft_graphite_electrolytic_cell",
+    "category": "制作",
+    "description": "以高纯度石墨作为电极，锰钢作为槽体，构建高性能的电解设备。",
+    "required_items": [
+      {
+        "key": "graphite",
+        "quantity": 4
+      },
+      {
+        "key": "manganese_steel",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ],
+    "rewards": [
+      {
+        "key": "graphite_electrolytic_cell",
+        "quantity": 1
+      }
+    ],
+    "time_required": 150
   }
 ]
