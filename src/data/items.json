@@ -3653,5 +3653,16 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "key": "promethium",
+    "name": "钷",
+    "description": "人造放射性稀土元素。在自然界中极度罕见，通常作为裂变产物或通过中子轰击产生。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "is_discovery": true,
+    "milestone": "first_transmutation"
   }
 ]

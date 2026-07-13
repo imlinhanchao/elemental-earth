@@ -8200,5 +8200,30 @@
     ],
     "time_required": 60,
     "required_era": "rare_earth"
+  },
+  {
+    "key": "bombard_neodymium_to_promethium",
+    "name": "中子轰击钕",
+    "description": "利用核反应堆产生的中子束轰击金属钕，使其转化为人造放射性元素钷。",
+    "time_required": 120,
+    "required_container": "reactor_vessel",
+    "required_actions": {
+      "key": "neutron_irradiation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "neodymium",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "promethium",
+        "multiple": 1
+      }
+    ],
+    "required_era": "atomic_age"
   }
 ]
