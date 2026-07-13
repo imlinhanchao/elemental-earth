@@ -190,7 +190,8 @@
       {
         "key": [
           "crucible",
-          "evaporating_dish"
+          "evaporating_dish",
+          "clay_pot"
         ],
         "quantity": 1,
         "use": 0.05
@@ -254,6 +255,8 @@
     "name": "分馏",
     "description": "利用液体混合物中各成分沸点不同，多次部分气化和冷凝，使其分离成纯净物。",
     "time_required": 40,
+    "milestone": "rare_earth",
+    "requires_burning": true,
     "required_item": [
       {
         "key": "fractionating_column",
@@ -266,9 +269,9 @@
         "use": 0.05
       }
     ],
-    "milestone": "rare_earth",
-    "requires_burning": true,
-    "is_chain": false
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ]
   },
   {
     "key": "fractional_crystallization",
@@ -314,14 +317,17 @@
     "name": "酸浸",
     "description": "使用酸性溶液将固体原料中的有用成分溶解出来。",
     "time_required": 20,
+    "requires_burning": true,
     "required_item": [
       {
-        "key": "reaction_kettle",
+        "key": [
+          "reaction_kettle",
+          "autoclave"
+        ],
         "quantity": 1,
         "use": 0.05
       }
-    ],
-    "requires_burning": true
+    ]
   },
   {
     "key": "precipitation",
@@ -367,5 +373,20 @@
     "required_techs": [
       "nuclear_reactor_tech"
     ]
+  },
+  {
+    "key": "aging",
+    "name": "静置/衰变",
+    "description": "将物质在密封容器中长期静置，利用放射性元素的自然衰变产生子体产物。",
+    "time_required": 300,
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": "gas_bottle",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "milestone": "atomic_age"
   }
 ]

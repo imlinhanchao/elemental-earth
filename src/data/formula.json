@@ -6522,6 +6522,10 @@
         "key": "concentrated_sulfuric_acid",
         "quantity": 1,
         "isMain": true
+      },
+      {
+        "key": "evaporating_dish",
+        "quantity": 1
       }
     ],
     "products": [
@@ -8225,5 +8229,520 @@
       }
     ],
     "required_era": "atomic_age"
+  },
+  {
+    "key": "pitchblende_grinding",
+    "name": "沥青铀矿粉碎",
+    "description": "使用研磨装置将沥青铀矿石粉碎成细粉。",
+    "time_required": 20,
+    "required_era": "rare_earth",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "grinding",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "pitchblende",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "grinded_pitchblende",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "pitchblende_acid_leaching",
+    "name": "沥青铀矿酸浸",
+    "description": "在浓硫酸和硝酸作用下加热，将铀、镭从矿石中溶解出来。",
+    "time_required": 20,
+    "required_era": "rare_earth",
+    "required_container": "autoclave",
+    "required_actions": {
+      "key": "acid_leaching",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "grinded_pitchblende",
+        "quantity": 10,
+        "isMain": true
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1
+      },
+      {
+        "key": "nitric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "radioactive_acid_solution",
+        "multiple": 0.95
+      },
+      {
+        "key": "polonium_residue",
+        "multiple": 0.95
+      }
+    ]
+  },
+  {
+    "key": "radium_precipitation",
+    "name": "碳酸钠沉淀镭",
+    "description": "在浸出液中加入碳酸钠，使镭以碳酸盐形式沉淀。",
+    "time_required": 40,
+    "required_actions": {
+      "key": "precipitation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radioactive_acid_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sodium_carbonate",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "radium_carbonate_precipitate",
+        "quantity": 1
+      },
+      {
+        "key": "uranyl_sodium_solution",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "radium_carbonate_dissolving",
+    "name": "沉淀溶解",
+    "description": "使用盐酸溶解碳酸镭沉淀，转变为可溶性的氯化镭。",
+    "time_required": 20,
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radium_carbonate_precipitate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "radium_chloride_solution",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "radium_fractional_crystallization",
+    "name": "镭-钡分步结晶",
+    "description": "利用镭盐和钡盐溶解度的微小差异，经过上千次重结晶获得纯氯化镭。",
+    "time_required": 120,
+    "required_actions": {
+      "key": "fractional_crystallization",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radium_chloride_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "barium_chloride",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "pure_radium_chloride",
+        "quantity": 0.1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "radium_reduction",
+    "name": "镭还原",
+    "description": "在真空中使用金属镁还原氯化镭，得到纯金属镭。",
+    "time_required": 80,
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "pure_radium_chloride",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "magnesium",
+        "quantity": 1
+      },
+      {
+        "key": "vacuum_pump",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "products": [
+      {
+        "key": "radium",
+        "quantity": 1
+      }
+    ],
+    "required_era": "atomic_age"
+  },
+  {
+    "key": "radium_to_radon",
+    "name": "镭衰变产氡",
+    "description": "金属镭在密封容器中发生衰变，缓慢产生氡气。",
+    "time_required": 300,
+    "required_actions": {
+      "key": "aging",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radium",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "radon_gas_mixture",
+        "quantity": 1
+      }
+    ],
+    "required_era": "atomic_age"
+  },
+  {
+    "key": "radon_purification",
+    "name": "氡分离纯化",
+    "description": "通过真空转移和液氮冷凝，将氡从气体混合物中分离。",
+    "time_required": 60,
+    "required_actions": {
+      "key": "gas_collecting_air",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radon_gas_mixture",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "liquid_nitrogen",
+        "quantity": 1
+      },
+      {
+        "key": "vacuum_pump",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "products": [
+      {
+        "key": "radon",
+        "quantity": 1
+      }
+    ],
+    "required_era": "atomic_age"
+  },
+  {
+    "key": "pitchblende_helium_release",
+    "name": "真空加热脱氦",
+    "description": "真空加热沥青铀矿至红热，释放出其中捕获的氦气。",
+    "time_required": 100,
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "pitchblende",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "vacuum_pump",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "products": [
+      {
+        "key": "crude_helium",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "helium_deoxidation",
+    "name": "氦气除氧",
+    "description": "通过灼热的铜网，使氦气中的氧气杂质与之反应生成氧化铜。",
+    "time_required": 40,
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "crude_helium",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "copper",
+        "quantity": 0.1
+      }
+    ],
+    "products": [
+      {
+        "key": "helium_deoxidized",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "helium_charcoal_trap",
+    "name": "氦气活性炭纯化",
+    "description": "在液氮冷却下，利用活性炭吸附除去剩余的氮、氧、氩等杂质。",
+    "time_required": 60,
+    "required_actions": {
+      "key": "filtering",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "helium_deoxidized",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "activated_charcoal",
+        "quantity": 1
+      },
+      {
+        "key": "liquid_nitrogen",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "helium",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "polonium_leaching",
+    "name": "钋渣溶解",
+    "description": "使用盐酸溶解酸浸残渣，使其中的钋进入溶液。",
+    "time_required": 30,
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "polonium_residue",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrochloric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "polonium_acid_solution",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "polonium_displacement",
+    "name": "铋片置换钋",
+    "description": "利用金属铋比钋更活泼的性质，将溶液中的钋原子置换沉积在铋片表面。",
+    "time_required": 60,
+    "required_actions": {
+      "key": "precipitation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "polonium_acid_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "bismuth",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "polonium_on_bismuth",
+        "quantity": 1
+      }
+    ],
+    "required_era": "rare_earth"
+  },
+  {
+    "key": "polonium_vacuum_distillation",
+    "name": "钋真空蒸馏",
+    "description": "在真空下加热铋片，利用钋的挥发性将其蒸馏分离。",
+    "time_required": 80,
+    "required_actions": {
+      "key": "distillation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "polonium_on_bismuth",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "vacuum_pump",
+        "quantity": 1,
+        "use": 0.1
+      }
+    ],
+    "products": [
+      {
+        "key": "polonium",
+        "quantity": 1
+      }
+    ],
+    "required_era": "atomic_age"
+  },
+  {
+    "key": "air_separation",
+    "name": "空气分馏",
+    "description": "利用深低温技术将液态空气分馏，获得氮气、氧气及氩、氖、氪、氙等稀有气体。",
+    "time_required": 40,
+    "required_era": "rare_earth",
+    "required_container": "fractionating_column",
+    "required_actions": {
+      "key": "fractional_distillation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "air",
+        "quantity": 10000,
+        "isMain": true
+      },
+      {
+        "key": "steel_cylinder",
+        "quantity": 6
+      }
+    ],
+    "products": [
+      {
+        "key": "liquid_nitrogen",
+        "multiple": 7800
+      },
+      {
+        "key": "oxygen",
+        "multiple": 2100
+      },
+      {
+        "key": "argon",
+        "multiple": 90
+      },
+      {
+        "key": "neon",
+        "multiple": 18
+      },
+      {
+        "key": "krypton",
+        "multiple": 1
+      },
+      {
+        "key": "xenon",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "activated_charcoal_production",
+    "name": "制备活性炭",
+    "description": "通过物理或化学活化处理木炭或焦炭，使其产生大量孔隙。",
+    "required_items": [
+      {
+        "key": "charcoal",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
+    "time_required": 30,
+    "products": [
+      {
+        "key": "activated_charcoal",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem"
+  },
+  {
+    "key": "rubber_production",
+    "name": "硫化橡胶",
+    "description": "通过硫化处理树脂获得橡胶。",
+    "required_items": [
+      {
+        "key": "resin",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "sulfur",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
+    "time_required": 20,
+    "products": [
+      {
+        "key": "rubber",
+        "multiple": 1
+      }
+    ],
+    "required_era": "modern_chem"
   }
 ]

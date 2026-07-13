@@ -59,6 +59,8 @@
             <th>操作</th>
             <th>时代</th>
             <th>科技</th>
+            <th>反应物</th>
+            <th>产物</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -89,6 +91,34 @@
                   class="badge badge-ghost badge-sm mr-1 mb-1"
                 >
                   {{ techOptions.find(x => x.key == t)?.name || t }}
+                </span>
+              </span>
+              <span v-else>—</span>
+            </td>
+            <td class="text-xs">
+              <span v-if="r.required_items?.length">
+                <span
+                  v-for="(i, idx) in r.required_items"
+                  :key="idx"
+                  class="badge badge-ghost badge-sm mr-1 mb-1"
+                  :class="{ 'badge-error': !i.quantity }"
+                >
+                  {{ itemOptions.find(x => x.key == i.key || x.key == i.key[0])?.name || i.key }}
+                  <span v-if="i.quantity > 1">×{{ i.quantity }}</span>
+                </span>
+              </span>
+              <span v-else>—</span>
+            </td>
+            <td class="text-xs">
+              <span v-if="r.products?.length">
+                <span
+                  v-for="(p, idx) in r.products"
+                  :key="idx"
+                  class="badge badge-ghost badge-sm mr-1 mb-1"
+                  :class="{ 'badge-error': !p.multiple }"
+                >
+                  {{ itemOptions.find(x => x.key == p.key)?.name || p.key }}
+                  <span v-if="p.multiple > 1">×{{ p.multiple }}</span>
                 </span>
               </span>
               <span v-else>—</span>

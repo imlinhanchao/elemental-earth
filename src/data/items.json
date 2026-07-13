@@ -1742,15 +1742,6 @@
     ]
   },
   {
-    "name": "氢氧化锶",
-    "key": "strontium_hydroxide",
-    "category": "材料",
-    "description": "白色结晶粉末，易潮解，水溶液呈强碱性。",
-    "type": [
-      "material"
-    ]
-  },
-  {
     "name": "硝酸锶",
     "key": "strontium_nitrate",
     "category": "材料",
@@ -3053,6 +3044,7 @@
   {
     "key": "thorium_residue",
     "name": "含钍废渣",
+    "category": "材料",
     "type": [
       "material"
     ],
@@ -3061,6 +3053,7 @@
   {
     "key": "mixed_rare_earth_oxalate",
     "name": "混合稀土草酸盐",
+    "category": "材料",
     "type": [
       "material"
     ],
@@ -3069,6 +3062,7 @@
   {
     "key": "mixed_rare_earth_oxide",
     "name": "混合稀土氧化物",
+    "category": "材料",
     "type": [
       "material"
     ],
@@ -3077,6 +3071,7 @@
   {
     "key": "lanthanum_chloride",
     "name": "氯化镧",
+    "category": "材料",
     "type": [
       "material"
     ],
@@ -3085,6 +3080,7 @@
   {
     "key": "cerium_chloride",
     "name": "氯化铈",
+    "category": "材料",
     "type": [
       "material"
     ],
@@ -3094,10 +3090,10 @@
     "key": "rare_earth_nitrate_solution",
     "name": "混合稀土硝酸溶液",
     "description": "含有多种稀土元素的硝酸盐溶液，是分步结晶的原料。",
+    "category": "液体",
     "type": [
       "material"
-    ],
-    "category": "liquid"
+    ]
   },
   {
     "key": "lanthanum_nitrate",
@@ -3106,7 +3102,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "cerium_nitrate",
@@ -3115,16 +3111,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "praseodymium",
     "name": "镨",
-    "description": "高纯度的金属镨。原子序数59。",
+    "description": "高纯度的金属镨，可以用于制造高性能磁性材料。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 59,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3134,7 +3131,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "praseodymium_nitrate",
@@ -3143,7 +3140,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "praseodymium_chloride",
@@ -3152,16 +3149,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "neodymium",
     "name": "钕",
-    "description": "高纯度的金属钕。原子序数60。",
+    "description": "高纯度的金属钕，可以用于制造高性能磁性材料。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 60,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3171,7 +3169,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "neodymium_nitrate",
@@ -3180,7 +3178,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "neodymium_chloride",
@@ -3189,16 +3187,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "samarium",
     "name": "钐",
-    "description": "高纯度的金属钐。原子序数62。",
+    "description": "高纯度的金属钐，可以用于制造高性能磁性材料。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 62,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3208,7 +3207,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "samarium_nitrate",
@@ -3217,16 +3216,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "europium",
     "name": "铕",
-    "description": "高纯度的金属铕。原子序数63。",
+    "description": "高纯度的金属铕，可以用于中子吸收剂。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 63,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3236,7 +3236,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "europium_nitrate",
@@ -3245,16 +3245,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "gadolinium",
     "name": "钆",
-    "description": "高纯度的金属钆。原子序数64。",
+    "description": "高纯度的金属钆，可以用于制造高性能磁性材料。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 64,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3264,7 +3265,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "gadolinium_nitrate",
@@ -3273,7 +3274,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "gadolinium_fluoride",
@@ -3282,16 +3283,17 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "terbium",
     "name": "铽",
-    "description": "高纯度的金属铽。原子序数65。",
+    "description": "高纯度的金属铽，可以用于制造高性能磁性材料。",
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 65,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3301,7 +3303,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "terbium_nitrate",
@@ -3310,7 +3312,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "terbium_fluoride",
@@ -3319,7 +3321,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "dysprosium",
@@ -3328,7 +3330,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 66,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3338,7 +3341,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "dysprosium_nitrate",
@@ -3347,7 +3350,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "dysprosium_fluoride",
@@ -3356,7 +3359,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "holmium",
@@ -3365,7 +3368,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 67,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3375,7 +3379,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "holmium_nitrate",
@@ -3384,7 +3388,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "holmium_fluoride",
@@ -3393,7 +3397,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "erbium",
@@ -3402,7 +3406,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 68,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3412,7 +3417,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "erbium_nitrate",
@@ -3421,7 +3426,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "erbium_fluoride",
@@ -3430,7 +3435,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "thulium",
@@ -3439,7 +3444,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 69,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3449,7 +3455,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "thulium_nitrate",
@@ -3458,7 +3464,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "thulium_fluoride",
@@ -3467,7 +3473,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "ytterbium",
@@ -3476,7 +3482,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 70,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3486,7 +3493,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "ytterbium_nitrate",
@@ -3495,7 +3502,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "ytterbium_fluoride",
@@ -3504,7 +3511,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "lutetium",
@@ -3513,7 +3520,8 @@
     "type": [
       "element"
     ],
-    "category": "metal",
+    "elemental": 71,
+    "category": "材料",
     "milestone": "separate_rare_earth"
   },
   {
@@ -3523,7 +3531,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "lutetium_nitrate",
@@ -3532,7 +3540,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "lutetium_fluoride",
@@ -3541,7 +3549,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "yttrium_oxide",
@@ -3550,7 +3558,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "yttrium_nitrate",
@@ -3559,7 +3567,7 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "yttrium_fluoride",
@@ -3568,14 +3576,16 @@
     "type": [
       "material"
     ],
-    "category": "powder"
+    "category": "材料"
   },
   {
     "key": "reaction_kettle",
     "name": "反应釜",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
+    "category": "工具",
     "description": "耐酸碱高温的工业反应容器。",
     "durable": 100
   },
@@ -3583,8 +3593,10 @@
     "key": "evaporating_dish",
     "name": "蒸发皿",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
+    "category": "工具",
     "description": "用于浓缩溶液的瓷质器皿。",
     "durable": 50
   },
@@ -3592,8 +3604,10 @@
     "key": "sealed_tube",
     "name": "石英反应管",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
+    "category": "工具",
     "description": "耐高温石英管，适用于通气反应。",
     "durable": 20
   },
@@ -3601,8 +3615,10 @@
     "key": "graphite_electrolytic_cell",
     "name": "石墨电解槽",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
+    "category": "工具",
     "description": "用于熔盐电解的专用容器。",
     "durable": 30
   },
@@ -3623,6 +3639,8 @@
     "type": [
       "tool"
     ],
+    "category": "工具",
+    "durable": 50,
     "milestone": "rare_earth"
   },
   {
@@ -3642,8 +3660,7 @@
     "description": "用硼或镉制成的棒状组件，插入反应堆可吸收中子，调节反应速率。",
     "type": [
       "tool"
-    ],
-    "durable": 1
+    ]
   },
   {
     "name": "核燃料棒",
@@ -3657,12 +3674,296 @@
   {
     "key": "promethium",
     "name": "钷",
+    "category": "材料",
     "description": "人造放射性稀土元素。在自然界中极度罕见，通常作为裂变产物或通过中子轰击产生。",
     "type": [
       "material",
       "element"
     ],
-    "is_discovery": true,
+    "elemental": 61,
     "milestone": "first_transmutation"
+  },
+  {
+    "key": "radium",
+    "name": "镭",
+    "category": "材料",
+    "description": "银白色放射性碱土金属，由居里夫人发现。其放射性极强，曾在历史上用于夜光涂料。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "elemental": 88,
+    "milestone": "isolate_radium"
+  },
+  {
+    "key": "polonium",
+    "name": "钋",
+    "category": "材料",
+    "description": "银灰色放射性金属，极具毒性。它是第一个由居里夫妇发现的放射性元素。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age",
+    "elemental": 84
+  },
+  {
+    "key": "radon",
+    "name": "氡",
+    "category": "气体",
+    "description": "无色无味放射性惰性气体，由镭衰变产生。由于是气体，极易扩散并造成放射性污染。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age",
+    "elemental": 86
+  },
+  {
+    "key": "helium",
+    "name": "氦",
+    "category": "气体",
+    "description": "无色无味惰性气体，是宇宙中含量第二多的元素。由铀矿石中的α衰变产生并被岩石捕获。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "rare_earth",
+    "elemental": 2
+  },
+  {
+    "key": "grinded_pitchblende",
+    "name": "粉碎的沥青铀矿",
+    "category": "材料",
+    "description": "经过粉碎处理的沥青铀矿粉末，增加了酸浸的反应面积。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "radioactive_acid_solution",
+    "name": "放射性酸浸液",
+    "category": "材料",
+    "description": "含有铀、镭、钋等多种放射性元素的浓硫酸-硝酸浸出液。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "radium_carbonate_precipitate",
+    "name": "粗碳酸镭沉淀",
+    "category": "材料",
+    "description": "加入碳酸钠后形成的混合沉淀，包含碳酸镭及大量钡、钙等杂质。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "uranyl_sodium_solution",
+    "name": "铀酰钠溶液",
+    "category": "材料",
+    "description": "沉淀分离后的上清液，含有铀资源。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "radium_chloride_solution",
+    "name": "氯化镭溶液",
+    "category": "液体",
+    "description": "溶解于盐酸后的溶液，准备进行分步结晶。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "pure_radium_chloride",
+    "name": "纯氯化镭",
+    "category": "材料",
+    "description": "通过数千次分步结晶获得的极高纯度氯化镭，呈白色晶体。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "crude_helium",
+    "name": "粗氦气",
+    "category": "气体",
+    "description": "从铀矿石中释放出的气体，含有空气杂质。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "helium_deoxidized",
+    "name": "除氧氦气",
+    "category": "气体",
+    "description": "通过灼热铜网后除去氧气的氦气。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "polonium_residue",
+    "name": "含钋残渣",
+    "category": "材料",
+    "description": "酸浸后剩余的固体残渣，富集了钋元素。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "polonium_acid_solution",
+    "name": "含钋酸溶液",
+    "category": "材料",
+    "description": "残渣经盐酸溶解后的溶液，含有钋。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "polonium_on_bismuth",
+    "name": "吸附钋的铋片",
+    "category": "材料",
+    "description": "表面沉积了一层薄薄钋原子的铋片。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "vacuum_pump",
+    "name": "真空泵",
+    "category": "工具",
+    "description": "用于抽取容器空气，制造真空环境。",
+    "type": [
+      "tool"
+    ],
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "steel_cylinder",
+    "name": "钢制气瓶",
+    "category": "工具",
+    "description": "高压容器，用于储存和运输各种气体。",
+    "type": [
+      "tool",
+      "durable"
+    ],
+    "durable": 1,
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "liquid_nitrogen",
+    "name": "液氮",
+    "category": "液体",
+    "description": "极低温液体，用于冷阱吸附和低温物理研究。",
+    "type": [
+      "material"
+    ],
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "activated_charcoal",
+    "name": "活性炭",
+    "category": "材料",
+    "description": "具有高度发达孔隙结构的碳材料，能强力吸附气体杂质。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "radon_gas_mixture",
+    "name": "氡气混合物",
+    "category": "气体",
+    "description": "含有氡气的混合气体，需在密闭容器中储存，避免放射性污染。",
+    "type": [
+      "material",
+      "gas"
+    ]
+  },
+  {
+    "key": "rubber",
+    "name": "橡胶",
+    "category": "材料",
+    "description": "具有高弹性的高分子材料，用于密封和绝缘。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "magnesium_fluoride",
+    "name": "氟化镁",
+    "category": "材料",
+    "description": "无机化合物，常用于光学镀膜和冶金助剂。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "samarium_fluoride",
+    "name": "氟化钐",
+    "category": "材料",
+    "description": "稀土氟化物，用于制备金属钐。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "europium_fluoride",
+    "name": "氟化铕",
+    "category": "材料",
+    "description": "稀土氟化物，用于制备金属铕。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "coal_tar",
+    "name": "煤焦油",
+    "category": "液体",
+    "description": "煤干馏过程中产生的黑色粘稠液体，是重要的化工原料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "argon",
+    "name": "氩气",
+    "category": "气体",
+    "description": "稀有气体，化学性质极不活泼，常用于保护气。",
+    "type": [
+      "material"
+    ],
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "neon",
+    "name": "氖气",
+    "category": "气体",
+    "description": "稀有气体，通电时发出橙红色的光，用于霓虹灯。",
+    "type": [
+      "material"
+    ],
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "krypton",
+    "name": "氪气",
+    "category": "气体",
+    "description": "稀有气体，化学性质非常不活泼，用于高功率激光器。",
+    "type": [
+      "material"
+    ],
+    "milestone": "rare_earth"
+  },
+  {
+    "key": "xenon",
+    "name": "氙气",
+    "category": "气体",
+    "description": "稀有气体，在特殊条件下可形成化合物，用于高强度放电灯。",
+    "type": [
+      "material"
+    ],
+    "milestone": "rare_earth"
   }
 ]

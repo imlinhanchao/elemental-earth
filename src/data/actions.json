@@ -941,6 +941,16 @@
           "cave",
           "deep_mine"
         ]
+      },
+      {
+        "key": "native_silver",
+        "quantity": 1,
+        "probability": 50,
+        "required_era": "alchemy",
+        "map": [
+          "mountain",
+          "river_side"
+        ]
       }
     ]
   },
@@ -3368,5 +3378,146 @@
     "required_techs": [
       "nuclear_physics"
     ]
+  },
+  {
+    "name": "制作铁铲",
+    "key": "craft_iron_shovel",
+    "category": "制作",
+    "description": "打造一把铁铲，用于挖掘泥土和沙子。",
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 1,
+        "use": 1
+      },
+      {
+        "key": "wood",
+        "quantity": 1,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "iron_shovel",
+        "quantity": 1
+      }
+    ],
+    "time_required": 10
+  },
+  {
+    "name": "制作铁斧",
+    "key": "craft_iron_axe",
+    "category": "制作",
+    "description": "打造一把铁斧，用于砍伐树木。",
+    "required_items": [
+      {
+        "key": "pig_iron",
+        "quantity": 2,
+        "use": 1
+      },
+      {
+        "key": "wood",
+        "quantity": 1,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "iron_tool_crafting"
+    ],
+    "rewards": [
+      {
+        "key": "iron_axe",
+        "quantity": 1
+      }
+    ],
+    "time_required": 10
+  },
+  {
+    "name": "组装真空泵",
+    "key": "craft_vacuum_pump",
+    "category": "制作",
+    "description": "依靠精密机械结构组装真空泵。",
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 2,
+        "use": 1
+      },
+      {
+        "key": "rubber",
+        "quantity": 1,
+        "use": 1
+      },
+      {
+        "key": "copper",
+        "quantity": 1,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ],
+    "rewards": [
+      {
+        "key": "vacuum_pump",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "key": "craft_steel_cylinder",
+    "name": "制作钢制气瓶",
+    "category": "制作",
+    "description": "制造用于储存高压气体的钢瓶。",
+    "time_required": 20,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 2,
+        "use": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "steel_cylinder",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ]
+  },
+  {
+    "name": "制作分馏柱/玻璃漏斗",
+    "key": "craft_lab_glassware",
+    "category": "制作",
+    "description": "吹制更加精细的实验室玻璃器皿。",
+    "required_items": [
+      {
+        "key": "glass",
+        "quantity": 2,
+        "use": 1
+      }
+    ],
+    "required_techs": [
+      "glassworking"
+    ],
+    "rewards": [
+      {
+        "key": "fractionating_column",
+        "quantity": 1,
+        "probability": 500
+      },
+      {
+        "key": "glass_funnel",
+        "quantity": 1,
+        "probability": 500
+      }
+    ],
+    "time_required": 20
   }
 ]
