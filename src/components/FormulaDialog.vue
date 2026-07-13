@@ -31,7 +31,7 @@
           <!-- 材料选择 -->
           <div class="form-row" v-for="(req, i) in formula?.required_items || []" :key="i">
             <label :class="{ 'label-insufficient': insufficientMaterials[i] }">
-              {{ getItem(Array.isArray(req.key) ? req.key[0] : req.key)?.name || `材料 ${i + 1}` }} x {{ req.quantity * batches }}
+              {{ getItem(Array.isArray(req.key) ? req.key[0] : req.key)?.name || `材料 ${i + 1}` }} x {{ req.quantity * (isReactantCatalyst(i) ? 1 : batches) }}
               <span v-if="insufficientMaterials[i]" class="insufficient-hint">不足</span>
             </label>
             <div class="material-select-row">
@@ -135,7 +135,7 @@
           <div class="product-preview">
             <span class="product-label">预计产物：</span>
             <span v-for="p in productList" :key="p.key" class="product-tag">
-              {{ p.name }} ×{{ p.qty * batches }}
+              {{ p.name }} ×{{ p.qty * (p.isCatalyst ? 1 : batches) }}
             </span>
             <span v-if="productList.length === 0" class="text-warning">（尚未确认配方，可能没有有用产物）</span>
           </div>
@@ -364,6 +364,28 @@ const neededBurnTime = computed(() => {
   return operation.value.time_required * batches.value
 })
 
+/** 判断某个 Reactant 是否为催化剂（即该物品也是产物且数量一致） */
+function isReactantCatalyst(index: number): boolean {
+  if (!formula.value) return false
+  const key = selectedMaterials.value[index]
+  if (!key) return false
+  const req = formula.value.required_items[index]
+  // 检查产物中是否存在相同 key 且 multiple 相等的项
+  return (formula.value.products || []).some(p => {
+    // 同时也需要考虑追加操作是否开启
+    if (p.required_chain_operation && !selectedChainOperations.value.has(p.required_chain_operation)) return false
+    return p.key === key && p.multiple === req.quantity
+  })
+}
+
+/** 判断某个 Product 是否为催化剂 */
+function isProductCatalyst(productKey: string, multiple: number): boolean {
+  if (!formula.value) return false
+  return (formula.value.required_items || []).some((req, i) => {
+    return selectedMaterials.value[i] === productKey && req.quantity === multiple
+  })
+}
+
 // ─── 产物预览 ──────────────────────────────────────────────────
 const productList = computed(() => {
   if (!formula.value) return []
@@ -377,6 +399,7 @@ const productList = computed(() => {
     key: p.key,
     name: getItem(p.key)?.name || p.key,
     qty: p.multiple,
+    isCatalyst: isProductCatalyst(p.key, p.multiple)
   }))
 })
 
@@ -390,7 +413,7 @@ const insufficientMaterials = computed(() => {
     if (!key) {
       result.push(true)
     } else {
-      const need = req.quantity * batches.value
+      const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
       const have = packStore.getItemQuantity(key)
       result.push(have < need)
     }
@@ -420,7 +443,8 @@ const canConfirm = computed(() => {
     const key = selectedMaterials.value[i]
     if (!key) return false
     const req = formula.value!.required_items[i]
-    if (!packStore.hasItem(key, req.quantity * batches.value)) return false
+    const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
+    if (!packStore.hasItem(key, need)) return false
   }
 
   // 需要容器时检查
@@ -458,7 +482,7 @@ function confirm() {
   for (let i = 0; i < formula.value.required_items.length; i++) {
     const key = selectedMaterials.value[i]!
     const req = formula.value.required_items[i]
-    consumedItems.push({ key, quantity: req.quantity * batches.value })
+    consumedItems.push({ key, quantity: req.quantity * (isReactantCatalyst(i) ? 1 : batches.value) })
   }
 
   // 2. 消耗容器耐久
@@ -503,11 +527,14 @@ function confirm() {
       if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
       return true
     })
-    .map(p => ({
-    key: p.key,
-    quantity: p.multiple * batches.value,
-    probability: 1,
-  }))
+    .map(p => {
+      const isCatalyst = isProductCatalyst(p.key, p.multiple)
+      return {
+        key: p.key,
+        quantity: p.multiple * (isCatalyst ? 1 : batches.value),
+        probability: 1,
+      }
+    })
 
   // 7. 推送任务
   taskStore.pushLabTask({
@@ -520,7 +547,7 @@ function confirm() {
   })
 
   const productNames = formula.value.products
-    .map(p => `${getItem(p.key)?.name || p.key} x${p.multiple * batches.value}`)
+    .map(p => `${getItem(p.key)?.name || p.key} x${p.multiple * (isProductCatalyst(p.key, p.multiple) ? 1 : batches.value)}`)
     .join('、')
   logStore.addLog(`配方执行: ${formula.value.name} x${batches.value}`, 'craft')
 
