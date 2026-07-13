@@ -3143,5 +3143,34 @@
       }
     ],
     "time_required": 60
+  },
+  {
+    "key": "collect_air",
+    "name": "收集空气",
+    "category": "采集",
+    "description": "使用集气瓶收集周围的空气。",
+    "time_required": 2,
+    "required_items": [
+      {
+        "key": "gas_bottle",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "rewards": [
+      {
+        "key": "air",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "map": [
+      "mountain",
+      "river_side",
+      "forest",
+      "basin",
+      "beach",
+      "island"
+    ]
   }
 ]

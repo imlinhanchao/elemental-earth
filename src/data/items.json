@@ -2963,5 +2963,23 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "key": "air",
+    "name": "空气",
+    "category": "气体",
+    "description": "包围地球的气体混合物，主要成分是氮气和氧气。",
+    "type": [
+      "gas"
+    ]
+  },
+  {
+    "key": "copper_oxide",
+    "name": "氧化铜",
+    "category": "材料",
+    "description": "黑色粉末，是铜的高价氧化物，微显两性，稍有吸湿性。",
+    "type": [
+      "material"
+    ]
   }
 ]

@@ -6342,5 +6342,77 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "空气制氮气",
+    "key": "nitrogen_from_air",
+    "description": "通过燃烧磷来消耗空气中的氧气，从而分离出氮气。",
+    "required_items": [
+      {
+        "key": "air",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "phosphorus",
+        "quantity": 1
+      }
+    ],
+    "required_container": "gas_bottle",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_techs": [
+      "gas_collection"
+    ],
+    "time_required": 10,
+    "products": [
+      {
+        "key": "nitrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ],
+    "fragment_description": "在密封环境将#air#与#phosphorus#进行$heating$反应以消耗氧气，收集析出的#nitrogen#。",
+    "required_era": "modern_chem"
+  },
+  {
+    "name": "铜粉除氧制氮",
+    "key": "nitrogen_from_air_copper",
+    "description": "使空气通过红热的铜粉，利用铜与氧气的反应分离出氮气。",
+    "required_items": [
+      {
+        "key": "air",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "copper",
+        "quantity": 1
+      }
+    ],
+    "required_container": "glass_distillation",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_techs": [
+      "gas_collection"
+    ],
+    "time_required": 15,
+    "products": [
+      {
+        "key": "nitrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      },
+      {
+        "key": "copper_oxide",
+        "multiple": 1
+      }
+    ],
+    "fragment_description": "将#air#通入装有#copper#的装置并进行$heating$，利用铜的氧化反应提取#nitrogen#，同时得到#copper_oxide#。",
+    "required_era": "modern_chem"
   }
 ]
