@@ -392,5 +392,21 @@
     ],
     "time_required": 60,
     "milestone": "crystallization_tech"
+  },
+  {
+    "key": "high_pressure_tech",
+    "name": "高压技术",
+    "description": "掌握了高压容器的密封与耐压原理，能够利用高压促进化学反应。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "manganese_steel",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "gas_collection",
+      "manganese_alloy_smithing"
+    ]
   }
 ]

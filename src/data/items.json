@@ -2922,5 +2922,46 @@
     "type": [
       "material"
     ]
+  },
+  {
+    "name": "高压釜",
+    "key": "autoclave",
+    "category": "容器",
+    "description": "由高强度钢制成的密封容器，能够承受极高的内部压力，用于高压化学反应。",
+    "type": [
+      "container"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "一氧化氮",
+    "key": "nitrogen_monoxide",
+    "category": "气体",
+    "description": "无色气体，遇空气迅速变红棕色，有刺激性气味。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 7
+  },
+  {
+    "name": "二氧化氮",
+    "key": "nitrogen_dioxide",
+    "category": "气体",
+    "description": "红棕色有刺激性气味的气体，易溶于水生成硝酸。",
+    "type": [
+      "material",
+      "gas"
+    ],
+    "elemental": 7
+  },
+  {
+    "name": "铂铑催化剂",
+    "key": "platinum_rhodium_catalyst",
+    "category": "材料",
+    "description": "铂铑合金制成的细网，外观银白闪亮，是氨氧化制硝酸的关键催化材料。",
+    "type": [
+      "material"
+    ]
   }
 ]

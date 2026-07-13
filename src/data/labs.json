@@ -256,5 +256,22 @@
     "required_techs": [
       "crystallization_tech"
     ]
+  },
+  {
+    "name": "高压反应",
+    "key": "high_pressure_reaction",
+    "description": "在高压釜内对气态或液态反应物施加高压，以加速反应或提高产率。",
+    "time_required": 20,
+    "required_item": [
+      {
+        "key": "autoclave",
+        "quantity": 1,
+        "use": 0.02
+      }
+    ],
+    "required_techs": [
+      "high_pressure_tech"
+    ],
+    "requires_burning": true
   }
 ]

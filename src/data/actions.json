@@ -3093,5 +3093,55 @@
     "required_techs": [
       "sifting_technology"
     ]
+  },
+  {
+    "name": "制作高压釜",
+    "key": "craft_autoclave",
+    "category": "制作",
+    "description": "利用钢材锻造密封耐压的高压釜。",
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 3
+      }
+    ],
+    "required_techs": [
+      "high_pressure_tech"
+    ],
+    "rewards": [
+      {
+        "key": "autoclave",
+        "quantity": 1
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "name": "制作铂铑催化剂",
+    "key": "craft_platinum_rhodium_catalyst",
+    "category": "制作",
+    "description": "将铂金锭和铑熔融拉丝制成催化网。",
+    "required_items": [
+      {
+        "key": "platinum_ingot",
+        "quantity": 1,
+        "use": 0.01
+      },
+      {
+        "key": "rhodium",
+        "quantity": 0.1,
+        "use": 0.01
+      }
+    ],
+    "required_techs": [
+      "catalysis"
+    ],
+    "rewards": [
+      {
+        "key": "platinum_rhodium_catalyst",
+        "quantity": 1
+      }
+    ],
+    "time_required": 60
   }
 ]

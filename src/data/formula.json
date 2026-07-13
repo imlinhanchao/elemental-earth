@@ -6185,5 +6185,162 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "key": "synthesis_ammonia",
+    "name": "合成氨",
+    "description": "在高压下使氮气和氢气反应生成氨。",
+    "fragment_description": "在#autoclave#中对#nitrogen#和#hydrogen#进行$high_pressure_reaction$，气体压力急剧升高，冷却后得到无色气体。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "autoclave",
+    "required_actions": {
+      "key": "high_pressure_reaction",
+      "min": 1,
+      "max": 3
+    },
+    "required_items": [
+      {
+        "key": "nitrogen",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "hydrogen",
+        "quantity": 3
+      },
+      {
+        "key": "osmium",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "ammonia",
+        "multiple": 2
+      },
+      {
+        "key": "osmium",
+        "multiple": 1
+      }
+    ],
+    "required_techs": [
+      "high_pressure_tech"
+    ]
+  },
+  {
+    "key": "ammonia_catalytic_oxidation_no",
+    "name": "氨催化氧化制一氧化氮",
+    "description": "氨气与氧气在铂催化剂作用下发生催化氧化，生成一氧化氮和水。",
+    "fragment_description": "将 #ammonia# 与 #oxygen# 混合通过 $catalytic_oxidation$，气体颜色逐渐变淡，收集到无色气体。",
+    "time_required": 30,
+    "required_era": "modern_chem",
+    "required_container": "gas_bottle",
+    "required_actions": {
+      "key": "catalytic_oxidation",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "ammonia",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "oxygen",
+        "quantity": 5
+      },
+      {
+        "key": "platinum_ingot",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "nitrogen_monoxide",
+        "multiple": 2
+      },
+      {
+        "key": "water",
+        "multiple": 3
+      },
+      {
+        "key": "platinum_ingot",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "no_oxidation_to_no2",
+    "name": "一氧化氮氧化制二氧化氮",
+    "description": "一氧化氮与氧气在常温下迅速反应生成红棕色二氧化氮。",
+    "fragment_description": "将 #nitrogen_monoxide# 与 #oxygen# 混合，气体颜色迅速变成红棕色。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "gas_bottle",
+    "required_actions": {
+      "key": "gas_collecting_air",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "nitrogen_monoxide",
+        "quantity": 2,
+        "isMain": true
+      },
+      {
+        "key": "oxygen",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "nitrogen_dioxide",
+        "multiple": 2
+      }
+    ],
+    "required_techs": [
+      "gas_collection"
+    ]
+  },
+  {
+    "name": "二氧化氮制硝酸",
+    "key": "no2_to_nitric_acid",
+    "description": "二氧化氮与水反应生成硝酸和一氧化氮。",
+    "required_items": [
+      {
+        "key": "nitrogen_dioxide",
+        "quantity": 3,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "glassworking"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 10,
+    "fragment_description": "将 #nitrogen_dioxide# 通入水中，红棕色褪去，得到无色酸性液体。",
+    "products": [
+      {
+        "key": "nitric_acid",
+        "multiple": 2
+      },
+      {
+        "key": "nitrogen_monoxide",
+        "multiple": 1
+      }
+    ]
   }
 ]
