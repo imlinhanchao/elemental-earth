@@ -116,6 +116,7 @@ export function loadGame(): boolean {
     // 恢复时代（旧存档可能没有此字段）
     if (data.state.currentEra) stateStore.state.currentEra = data.state.currentEra;
     if (Array.isArray(data.state.completedMilestones)) stateStore.state.completedMilestones = data.state.completedMilestones;
+    if (data.state.eraDetailsSeen !== undefined) stateStore.state.eraDetailsSeen = data.state.eraDetailsSeen;
 
     // 恢复手稿（碎片）
     fragmentStore.fragments = data.fragments || [];

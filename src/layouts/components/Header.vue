@@ -27,7 +27,7 @@ const eraProgress = computed(() => stateStore.eraProgress * 100)
 const eraBadgeStyle = computed(() => {
   const prog = eraProgress.value
   // 使用主题中的中性色（通常是深色）作为进度填充
-  const fillColor = 'var(--color-accent-content)'
+  const fillColor = 'var(--color-accent)'
   const baseColor = 'transparent'
   
   if (appStore.isMobile) {
@@ -70,6 +70,11 @@ function handleSelectMap(targetKey: string) {
   stateStore.startSwitch(targetKey)
   modalVisible.value = false
 }
+
+function openEraModal() {
+  eraModalVisible.value = true
+  stateStore.markEraDetailsSeen()
+}
 </script>
 <template>
     <header class="navbar bg-base-100 shadow-sm z-10 flex-none">
@@ -83,13 +88,17 @@ function handleSelectMap(targetKey: string) {
         <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
         <div 
           v-if="displayEra" 
-          class="badge badge-soft badge-accent gap-1 ml-2 cursor-pointer relative" 
-          :style="eraBadgeStyle"
-          @click="eraModalVisible = true"
-          title="点击查看纪元进度"
         >
-          <Icon :icon="displayEra.icon" class="text-sm z-1" />
-          <span v-if="!appStore.isMobile" class="z-1 font-bold">{{ displayEra.name }}</span>
+          <div 
+            class="badge badge-soft badge-accent border-accent gap-1 ml-2 cursor-pointer relative tooltip tooltip-bottom indicator overflow-hidden !bg-transparent" 
+            @click="openEraModal"
+            data-tip="点击查看纪元进度"
+          >
+            <span class="absolute top-0 left-0 flex w-full h-full opacity-20" :style="eraBadgeStyle"></span>
+            <Icon :icon="displayEra.icon" class="text-sm z-1" />
+            <span v-if="!appStore.isMobile" class="z-1 font-bold">{{ displayEra.name }}</span>
+            <span v-if="!stateStore.state.eraDetailsSeen" class="indicator-item status status-error animate-pulse mr-2 mt-1"></span>
+          </div>
         </div>
       </div>
       <div class="flex-none gap-2 flex items-center">

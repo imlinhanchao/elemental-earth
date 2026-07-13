@@ -17,6 +17,7 @@ export interface IGameState {
   currentEra: string; // 当前时代 key
   completedMilestones: string[]; // 已完成的里程碑 key 列表
   allowedMapKeys: string[] | null; // 允许显示的地图 key 列表（用于教程引导）
+  eraDetailsSeen?: boolean; // 是否已点击查看过纪元详情
 }
 
 export const useStateStore = defineStore('state', () => {
@@ -30,6 +31,7 @@ export const useStateStore = defineStore('state', () => {
     currentEra: 'stone',
     completedMilestones: [],
     allowedMapKeys: null,
+    eraDetailsSeen: false,
   });
 
   const getState = computed(() => state);
@@ -182,6 +184,10 @@ export const useStateStore = defineStore('state', () => {
     pendingEraTransition.value = null
   }
 
+  function markEraDetailsSeen() {
+    state.eraDetailsSeen = true
+  }
+
   /** 检查并完成里程碑（外部调用：物品获得、科技研究等） */
   function checkMilestone(milestoneKey: string) {
     if (!state.completedMilestones.includes(milestoneKey)) {
@@ -196,7 +202,7 @@ export const useStateStore = defineStore('state', () => {
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
     getElements, addElement, discoveryQueue, clearPendingDiscovery,
     currentEra, timePerDistance, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
-    pendingEraTransition, clearEraTransition, checkMilestone,
+    pendingEraTransition, clearEraTransition, checkMilestone, markEraDetailsSeen
   }
 })
 
