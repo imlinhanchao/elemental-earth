@@ -3624,5 +3624,34 @@
       "tool"
     ],
     "milestone": "rare_earth"
+  },
+  {
+    "key": "reactor_vessel",
+    "name": "核反应堆",
+    "category": "容器",
+    "description": "厚重的钢制容器，内壁衬有耐辐射材料，用于容纳核裂变反应。",
+    "type": [
+      "container"
+    ],
+    "durable": 1000
+  },
+  {
+    "name": "控制棒",
+    "key": "control_rod",
+    "category": "工具",
+    "description": "用硼或镉制成的棒状组件，插入反应堆可吸收中子，调节反应速率。",
+    "type": [
+      "tool"
+    ],
+    "durable": 1
+  },
+  {
+    "name": "核燃料棒",
+    "key": "nuclear_fuel_rod",
+    "category": "材料",
+    "description": "锆合金包壳内装有二氧化铀芯块，是反应堆的核心燃料。",
+    "type": [
+      "material"
+    ]
   }
 ]

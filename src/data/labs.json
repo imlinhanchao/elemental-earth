@@ -350,5 +350,22 @@
       }
     ],
     "requires_burning": true
+  },
+  {
+    "key": "neutron_irradiation",
+    "name": "中子辐照",
+    "description": "将样品放入核反应堆中，利用中子轰击诱发核反应。",
+    "time_required": 120,
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": "reactor_vessel",
+        "quantity": 1,
+        "use": 0.01
+      }
+    ],
+    "required_techs": [
+      "nuclear_reactor_tech"
+    ]
   }
 ]

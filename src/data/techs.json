@@ -441,5 +441,43 @@
       "glassworking",
       "high_pressure_tech"
     ]
+  },
+  {
+    "name": "核物理",
+    "key": "nuclear_physics",
+    "description": "掌握了原子核裂变、链式反应的基本原理。",
+    "required_items": [
+      {
+        "key": "uranium",
+        "quantity": 3
+      },
+      {
+        "key": "graphite",
+        "quantity": 5
+      }
+    ],
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ],
+    "time_required": 300
+  },
+  {
+    "key": "nuclear_reactor_tech",
+    "name": "核反应堆技术",
+    "description": "掌握了建造和控制核裂变反应堆的技术。",
+    "time_required": 600,
+    "required_items": [
+      {
+        "key": "nuclear_fuel_rod",
+        "quantity": 2
+      },
+      {
+        "key": "control_rod",
+        "quantity": 2
+      }
+    ],
+    "required_techs": [
+      "nuclear_physics"
+    ]
   }
 ]

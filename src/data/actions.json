@@ -2972,6 +2972,18 @@
           "mountain",
           "cave"
         ]
+      },
+      {
+        "key": "pitchblende",
+        "quantity": [
+          1,
+          3
+        ],
+        "probability": 100,
+        "map": [
+          "cave",
+          "mountain"
+        ]
       }
     ],
     "cooldown": 900,
@@ -3263,5 +3275,98 @@
       }
     ],
     "time_required": 150
+  },
+  {
+    "key": "craft_reactor_vessel",
+    "name": "制造核反应堆",
+    "category": "制作",
+    "description": "使用高强度钢材和铅衬里制作可承受高压和辐射的反应堆容器。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 10
+      },
+      {
+        "key": "lead",
+        "quantity": 5
+      },
+      {
+        "key": "stainless_steel",
+        "quantity": 3
+      },
+      {
+        "key": "uranium_oxide",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "reactor_vessel",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "nuclear_reactor_tech"
+    ]
+  },
+  {
+    "key": "craft_control_rod",
+    "name": "制造控制棒",
+    "category": "制作",
+    "description": "将硼或镉加工成棒状，用于核反应堆中子吸收控制。",
+    "time_required": 60,
+    "required_items": [
+      {
+        "key": [
+          "boron",
+          "cadmium"
+        ],
+        "quantity": 2
+      },
+      {
+        "key": "steel",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "control_rod",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "nuclear_physics"
+    ]
+  },
+  {
+    "key": "craft_nuclear_fuel_rod",
+    "name": "制造核燃料棒",
+    "category": "制作",
+    "description": "将二氧化铀粉末压制、烧结成芯块，并封装在锆合金包壳中。",
+    "time_required": 90,
+    "required_items": [
+      {
+        "key": "uranium_oxide",
+        "quantity": 5
+      },
+      {
+        "key": "zirconium",
+        "quantity": 1
+      },
+      {
+        "key": "graphite",
+        "quantity": 2
+      }
+    ],
+    "rewards": [
+      {
+        "key": "nuclear_fuel_rod",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "nuclear_physics"
+    ]
   }
 ]
