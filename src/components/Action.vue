@@ -5,7 +5,8 @@
   import { usePackStore } from '@/stores/modules/pack';
   import { useTaskStore } from '@/stores/modules/task';
   import { useStateStore } from '@/stores/modules/state';
-  import { computed, ref, reactive, onBeforeUnmount } from 'vue';
+  import { computed, ref, onBeforeUnmount } from 'vue';
+  import { useEventListener } from '@vueuse/core'
 
   const props = defineProps<{
     data: IAction;
@@ -187,6 +188,14 @@
   function onFormulaDialogClose() {
     showFormulaDialog.value = false;
   }
+
+  const actionButtonRef = ref<HTMLElement | null>(null);
+  useEventListener(document, 'click', (ev) => {
+    if (actionButtonRef.value && !actionButtonRef.value.contains(ev.target as Node)) {
+      showMaterialPicker.value = false;
+      showBatchPicker.value = false;
+    }
+  });
 </script>
 <template>
   <ActionTip v-if="isVisible"
@@ -196,7 +205,7 @@
     :required_techs="data.required_techs"
     :time_required="data.time_required"
   >
-    <div class="relative inline-flex">
+    <div class="relative inline-flex" ref="actionButtonRef">
       <button 
         class="btn btn-soft w-[10em]" 
         :disabled="!isEnabled" 
