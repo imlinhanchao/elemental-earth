@@ -516,5 +516,50 @@
     "required_techs": [
       "advanced_chemical_equipment"
     ]
+  },
+  {
+    "key": "radiochemistry_tech",
+    "name": "放射化学",
+    "description": "研究放射性成分的分离、提纯以及核衰变链规律的化学分支。",
+    "required_items": [
+      "lead_bricks",
+      "geiger_counter"
+    ],
+    "required_techs": [
+      "nuclear_physics_tech"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "particle_accelerator_tech",
+    "name": "粒子加速器技术",
+    "description": "掌握高能物理所需的电磁加速与真空探测技术。",
+    "required_items": [
+      "superconducting_magnet",
+      "vacuum_pump"
+    ],
+    "required_techs": [
+      "advanced_electromagnetism",
+      "nuclear_physics"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "nuclear_physics_tech",
+    "name": "原子核物理",
+    "description": "研究原子核的结构、性质及核转变规律的物理学分支。",
+    "required_techs": [
+      "nuclear_physics"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "advanced_electromagnetism",
+    "name": "高级电磁学",
+    "description": "研究复杂的电磁场相互作用及精密控制技术。",
+    "required_techs": [
+      "precision_machinery"
+    ],
+    "milestone": "atomic_age"
   }
 ]

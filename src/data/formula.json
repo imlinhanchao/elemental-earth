@@ -8269,7 +8269,7 @@
     "required_items": [
       {
         "key": "grinded_pitchblende",
-        "quantity": 10,
+        "quantity": 3,
         "isMain": true
       },
       {
@@ -8744,5 +8744,229 @@
       }
     ],
     "required_era": "modern_chem"
+  },
+  {
+    "key": "monazite_digestion",
+    "name": "独居石硫酸消解",
+    "description": "利用浓硫酸高温消解独居石，将钍和稀土元素转化为硫酸盐溶液。",
+    "time_required": 40,
+    "required_era": "rare_earth",
+    "required_container": "autoclave",
+    "required_actions": {
+      "key": "acid_leaching",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "monazite",
+        "quantity": 10,
+        "isMain": true
+      },
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 2
+      }
+    ],
+    "products": [
+      {
+        "key": "thorium_sulfate_solution",
+        "multiple": 0.8
+      },
+      {
+        "key": "rare_earth_mixture",
+        "multiple": 0.5
+      }
+    ]
+  },
+  {
+    "key": "thorium_extraction",
+    "name": "金属钍提取",
+    "description": "利用草酸沉淀与还原反应，从硫酸钍溶液中提取出纯净的金属钍。",
+    "time_required": 60,
+    "required_era": "atomic_age",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "electrolysis",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "thorium_sulfate_solution",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "oxalic_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "thorium",
+        "multiple": 0.9
+      }
+    ]
+  },
+  {
+    "key": "extract_actinium_and_protactinium",
+    "name": "铀残留放射性提纯",
+    "description": "利用离子交换与精密萃取技术，从铀矿处理残渣中提取痕量的锕与镤。",
+    "time_required": 180,
+    "required_era": "atomic_age",
+    "required_container": "distillation_flask",
+    "required_actions": {
+      "key": "aging",
+      "min": 2
+    },
+    "required_items": [
+      {
+        "key": "radioactive_acid_solution",
+        "quantity": 200,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "actinium",
+        "multiple": 1
+      },
+      {
+        "key": "protactinium",
+        "multiple": 1
+      },
+      {
+        "key": "radium",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "key": "bombard_radium_to_actinium",
+    "name": "中子轰击镭",
+    "description": "利用核反应堆产生的中子束轰击金属镭，使其经由β衰变转化为锕。",
+    "time_required": 120,
+    "required_era": "atomic_age",
+    "required_container": "reactor_vessel",
+    "required_actions": {
+      "key": "neutron_irradiation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radium",
+        "quantity": 10,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "actinium",
+        "multiple": 1
+      },
+      {
+        "key": "radium",
+        "multiple": 9
+      }
+    ]
+  },
+  {
+    "key": "extract_technetium_from_waste",
+    "name": "裂变产物提纯锝",
+    "description": "利用化学沉淀与萃取技术，从经过陈化的核反应堆废液中提取锝。",
+    "time_required": 120,
+    "required_era": "atomic_age",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "chemical_separation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "radioactive_acid_solution",
+        "quantity": 10,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "technetium",
+        "multiple": 0.005
+      }
+    ]
+  },
+  {
+    "key": "bombard_molybdenum_to_technetium",
+    "name": "中子轰击钼",
+    "description": "在反应堆中利用中子轰击金属钼，使其部分转化为锝-99。",
+    "time_required": 120,
+    "required_era": "atomic_age",
+    "required_container": "reactor_vessel",
+    "required_actions": {
+      "key": "neutron_irradiation",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "molybdenum",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "technetium",
+        "multiple": 0.1
+      }
+    ]
+  },
+  {
+    "key": "bombard_bismuth_to_astatine",
+    "name": "α粒子轰击铋",
+    "description": "利用加速器产生的α粒子流轰击金属铋靶，人工合成极短寿命的砹。",
+    "time_required": 240,
+    "required_era": "atomic_age",
+    "required_container": "reactor_vessel",
+    "required_actions": {
+      "key": "particle_acceleration",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "bismuth",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "astatine",
+        "multiple": 0.05
+      }
+    ]
+  },
+  {
+    "key": "decay_actinium_to_francium",
+    "name": "锕衰变捕获钫",
+    "description": "利用锕-227的α衰变过程，在极短时间内捕获产生的子核钫。",
+    "time_required": 180,
+    "required_era": "atomic_age",
+    "required_container": "reaction_kettle",
+    "required_actions": {
+      "key": "aging",
+      "min": 2
+    },
+    "required_items": [
+      {
+        "key": "actinium",
+        "quantity": 1,
+        "isMain": true
+      }
+    ],
+    "products": [
+      {
+        "key": "francium",
+        "multiple": 0.012
+      }
+    ]
   }
 ]

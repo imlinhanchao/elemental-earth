@@ -45,7 +45,6 @@
 import { ref } from 'vue'
 import PeriodicTable from '@/components/PeriodicTable.vue'
 import {
-  ELEMENTS,
   DEFAULT_CATEGORY_COLORS,
   CATEGORY_LABELS,
   type PeriodicElement,

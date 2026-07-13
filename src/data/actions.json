@@ -2588,74 +2588,6 @@
         "guaranteed": true
       },
       {
-        "key": "realgar",
-        "quantity": [
-          5,
-          8
-        ],
-        "probability": 300,
-        "required_era": "alchemy",
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 400
-          }
-        ]
-      },
-      {
-        "key": "orpiment",
-        "quantity": [
-          5,
-          8
-        ],
-        "probability": 250,
-        "required_era": "alchemy",
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 350
-          }
-        ]
-      },
-      {
-        "key": "stibnite",
-        "quantity": [
-          5,
-          8
-        ],
-        "probability": 300,
-        "required_era": "alchemy",
-        "map": [
-          {
-            "key": "cave",
-            "probability": 400
-          },
-          {
-            "key": "volcano",
-            "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "argentite",
-        "quantity": [
-          5,
-          8
-        ],
-        "probability": 350,
-        "required_era": "alchemy",
-        "map": [
-          {
-            "key": "cave",
-            "probability": 500
-          },
-          {
-            "key": "mountain",
-            "probability": 200
-          }
-        ]
-      },
-      {
         "key": "bismuthite",
         "quantity": [
           1,
@@ -2717,21 +2649,6 @@
           {
             "key": "mountain",
             "probability": 300
-          }
-        ]
-      },
-      {
-        "key": "cinnabar",
-        "quantity": [
-          3,
-          6
-        ],
-        "probability": 400,
-        "required_era": "modern_chem",
-        "map": [
-          {
-            "key": "volcano",
-            "probability": 600
           }
         ]
       },
@@ -2891,25 +2808,6 @@
         ]
       },
       {
-        "key": "magnesite",
-        "quantity": [
-          3,
-          8
-        ],
-        "probability": 500,
-        "required_era": "rare_earth",
-        "map": [
-          {
-            "key": "cave",
-            "probability": 500
-          },
-          {
-            "key": "mountain",
-            "probability": 400
-          }
-        ]
-      },
-      {
         "key": "pollucite",
         "quantity": [
           2,
@@ -2927,21 +2825,13 @@
           2,
           5
         ],
-        "probability": 150,
+        "probability": 200,
         "required_era": "rare_earth",
         "map": [
-          "basin"
-        ]
-      },
-      {
-        "key": "barite",
-        "quantity": [
-          5,
-          8
-        ],
-        "probability": 300,
-        "required_era": "modern_chem",
-        "map": [
+          {
+            "key": "basin",
+            "probability": 299
+          },
           "cave"
         ]
       },

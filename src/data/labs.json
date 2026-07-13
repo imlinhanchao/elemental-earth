@@ -388,5 +388,41 @@
       }
     ],
     "milestone": "atomic_age"
+  },
+  {
+    "key": "particle_acceleration",
+    "name": "粒子加速",
+    "description": "利用电磁场将带电粒子加速到极高能量，并轰击目标靶核诱发核转变。",
+    "time_required": 180,
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": "cyclotron",
+        "quantity": 1,
+        "use": 0.01
+      }
+    ],
+    "required_techs": [
+      "particle_accelerator_tech"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "chemical_separation",
+    "name": "化学分离",
+    "description": "综合利用萃取、离子交换、沉淀等多种化学手段对核燃料或废料进行深度分离。",
+    "time_required": 45,
+    "requires_burning": false,
+    "required_item": [
+      {
+        "key": "reaction_kettle",
+        "quantity": 1,
+        "use": 0.05
+      }
+    ],
+    "required_techs": [
+      "radiochemistry_tech"
+    ],
+    "milestone": "atomic_age"
   }
 ]

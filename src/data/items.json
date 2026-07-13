@@ -3965,5 +3965,118 @@
       "material"
     ],
     "milestone": "rare_earth"
+  },
+  {
+    "key": "thorium",
+    "name": "金属钍",
+    "category": "元素",
+    "description": "银白色放射性金属，化学性质较活泼。主要存在于独居石中，是未来核反应堆极具潜力的核燃料替代品。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "protactinium",
+    "name": "金属镤",
+    "category": "元素",
+    "description": "极罕见的放射性金属，是铀衰变过程中的中间产物。具有强放射性和高化学毒性，在黑暗中常伴有荧光。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "actinium",
+    "name": "金属锕",
+    "category": "元素",
+    "description": "银白色放射性元素，具有极强的放射性。其活性极高，在黑暗中会因激发空气分子而发出迷人的蓝色荧光。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "thorium_sulfate_solution",
+    "name": "硫酸钍溶液",
+    "category": "化工",
+    "description": "独居石经硫酸处理后获得的放射性溶液，富含钍离子。",
+    "type": [
+      "material"
+    ],
+    "isRealItem": true
+  },
+  {
+    "key": "technetium",
+    "name": "金属锝",
+    "category": "元素",
+    "description": "银灰色放射性金属，是第一个由人工合成的元素。在核燃料裂变产物中较为丰富。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "astatine",
+    "name": "砹",
+    "category": "元素",
+    "description": "极罕见的放射性卤素，是地球上最稀有的天然元素之一。由于其极短的半衰期，通常只能在实验室内制备。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "francium",
+    "name": "钫",
+    "category": "元素",
+    "description": "极不稳定的放射性碱金属，是自然界中发现的最后一种元素。它是已知电负性最低的元素。",
+    "type": [
+      "material",
+      "element"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "cyclotron",
+    "name": "回旋加速器",
+    "category": "装置",
+    "description": "利用磁场使带电粒子在回旋轨道中被电场反复加速的高能物理装置。",
+    "type": [
+      "tool"
+    ],
+    "milestone": "atomic_age"
+  },
+  {
+    "key": "lead_bricks",
+    "name": "铅砖",
+    "category": "材料",
+    "description": "高纯度的铅制成的砖块，用于屏蔽放射性射线。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "geiger_counter",
+    "name": "盖革计数器",
+    "category": "装置",
+    "description": "用于探测和测量电离辐射的监测装置。",
+    "type": [
+      "tool"
+    ]
+  },
+  {
+    "key": "superconducting_magnet",
+    "name": "超导磁体",
+    "category": "装置",
+    "description": "利用超导导线绕制的电磁铁，能产生极强的稳定磁场。",
+    "type": [
+      "tool"
+    ]
   }
 ]
