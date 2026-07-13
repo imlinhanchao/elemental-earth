@@ -951,6 +951,22 @@
           "mountain",
           "river_side"
         ]
+      },
+      {
+        "key": "argentite",
+        "quantity": 1,
+        "probability": 100,
+        "required_era": "modern_chemistry",
+        "required_item": [
+          "iron_pickaxe",
+          "manganese_pickaxe",
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "mountain",
+          "cave"
+        ]
       }
     ]
   },
@@ -3382,7 +3398,7 @@
     ]
   },
   {
-    "name": "制作分馏柱/玻璃漏斗",
+    "name": "制作分馏柱",
     "key": "craft_lab_glassware",
     "category": "制作",
     "description": "吹制更加精细的实验室玻璃器皿。",
@@ -3401,13 +3417,114 @@
         "key": "fractionating_column",
         "quantity": 1,
         "probability": 500
-      },
-      {
-        "key": "glass_funnel",
-        "quantity": 1,
-        "probability": 500
       }
     ],
     "time_required": 20
+  },
+  {
+    "key": "craft_cyclotron",
+    "name": "制造回旋加速器",
+    "category": "制作",
+    "description": "整合大型电磁铁、真空室和高频电源，搭建粒子加速装置。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "steel",
+        "quantity": 10
+      },
+      {
+        "key": "copper",
+        "quantity": 5
+      },
+      {
+        "key": "superconducting_magnet",
+        "quantity": 1,
+        "use": 0
+      }
+    ],
+    "rewards": [
+      {
+        "key": "cyclotron",
+        "quantity": 1
+      }
+    ],
+    "required_techs": [
+      "particle_accelerator_tech",
+      "precision_machinery"
+    ]
+  },
+  {
+    "key": "craft_superconducting_magnet",
+    "name": "制作超导磁体",
+    "category": "制作",
+    "description": "利用铌、钛、铜等材料，通过精密绕制和低温封装工艺，制造强磁场超导磁体。",
+    "time_required": 120,
+    "required_items": [
+      {
+        "key": "niobium",
+        "quantity": 5
+      },
+      {
+        "key": "titanium",
+        "quantity": 3
+      },
+      {
+        "key": "copper",
+        "quantity": 10
+      },
+      {
+        "key": "helium",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "superconducting_magnet",
+        "quantity": 1,
+        "probability": 200
+      }
+    ],
+    "required_techs": [
+      "particle_accelerator_tech"
+    ]
+  },
+  {
+    "key": "craft_geiger_counter",
+    "name": "组装盖革计数器",
+    "category": "制作",
+    "description": "将金属外壳、玻璃管、电池和氩气组装成能够探测电离辐射的仪器。",
+    "time_required": 5,
+    "required_items": [
+      {
+        "key": "copper",
+        "quantity": 2
+      },
+      {
+        "key": "steel",
+        "quantity": 1
+      },
+      {
+        "key": "glass",
+        "quantity": 1
+      },
+      {
+        "key": "lithium_ion_battery",
+        "quantity": 1
+      },
+      {
+        "key": "argon",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "geiger_counter",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "required_techs": [
+      "precision_machinery"
+    ]
   }
 ]

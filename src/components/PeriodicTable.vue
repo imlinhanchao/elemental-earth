@@ -69,6 +69,12 @@ interface Props {
    */
   categoryColors?: Partial<Record<ElementCategory, string>>
 
+  /**
+   * Atomic numbers of elements that exist in the game's item registry.
+   * Elements not in this list (and not lit) will be shown with lower opacity (20%).
+   */
+  implementedElements?: number[]
+
   /** Width (px) of each element cell. Default: 44 */
   cellSize?: number
 }
@@ -76,6 +82,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   litElements:    () => [],
   categoryColors: () => ({}),
+  implementedElements: () => [],
   cellSize:       44,
 })
 
@@ -87,6 +94,7 @@ const emit = defineEmits<{
 // ─── Derived state ────────────────────────────────────────────────────────────
 
 const litSet = computed(() => new Set(props.litElements))
+const implementedSet = computed(() => new Set(props.implementedElements))
 
 const mergedColors = computed(
   (): Record<ElementCategory, string> => ({
@@ -150,11 +158,12 @@ function cellStyle(el: PeriodicElement): Record<string, string> {
   }
 
   // unlit
+  const isImplemented = el.number > 0 && implementedSet.value.has(el.number)
   return {
     ...base,
     backgroundColor: 'oklch(var(--b3))',
     color: 'oklch(var(--bc))',
-    opacity: '0.45',
+    opacity: isImplemented ? '0.45' : '0.2',
     cursor: 'pointer',
   }
 }

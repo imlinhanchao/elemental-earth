@@ -1992,16 +1992,6 @@
     "durable": 1
   },
   {
-    "name": "玻璃漏斗",
-    "key": "glass_funnel",
-    "category": "工具",
-    "description": "圆锥形玻璃器具，内壁光滑，下端细长，常用于过滤和转移液体。",
-    "type": [
-      "tool"
-    ],
-    "durable": 1
-  },
-  {
     "name": "玻璃棒",
     "key": "glass_rod",
     "category": "工具",
@@ -3640,8 +3630,7 @@
       "tool"
     ],
     "category": "工具",
-    "durable": 50,
-    "milestone": "rare_earth"
+    "durable": 50
   },
   {
     "key": "reactor_vessel",
@@ -3728,7 +3717,6 @@
       "material",
       "element"
     ],
-    "milestone": "rare_earth",
     "elemental": 2
   },
   {
@@ -3837,8 +3825,7 @@
     "description": "用于抽取容器空气，制造真空环境。",
     "type": [
       "tool"
-    ],
-    "milestone": "rare_earth"
+    ]
   },
   {
     "key": "steel_cylinder",
@@ -3849,8 +3836,7 @@
       "tool",
       "durable"
     ],
-    "durable": 1,
-    "milestone": "rare_earth"
+    "durable": 1
   },
   {
     "key": "liquid_nitrogen",
@@ -3860,7 +3846,7 @@
     "type": [
       "material"
     ],
-    "milestone": "rare_earth"
+    "elemental": 7
   },
   {
     "key": "activated_charcoal",
@@ -3918,15 +3904,6 @@
     ]
   },
   {
-    "key": "coal_tar",
-    "name": "煤焦油",
-    "category": "液体",
-    "description": "煤干馏过程中产生的黑色粘稠液体，是重要的化工原料。",
-    "type": [
-      "material"
-    ]
-  },
-  {
     "key": "argon",
     "name": "氩气",
     "category": "气体",
@@ -3934,7 +3911,7 @@
     "type": [
       "material"
     ],
-    "milestone": "rare_earth"
+    "elemental": 18
   },
   {
     "key": "neon",
@@ -3944,7 +3921,7 @@
     "type": [
       "material"
     ],
-    "milestone": "rare_earth"
+    "elemental": 10
   },
   {
     "key": "krypton",
@@ -3954,7 +3931,7 @@
     "type": [
       "material"
     ],
-    "milestone": "rare_earth"
+    "elemental": 36
   },
   {
     "key": "xenon",
@@ -3964,7 +3941,7 @@
     "type": [
       "material"
     ],
-    "milestone": "rare_earth"
+    "elemental": 54
   },
   {
     "key": "thorium",
@@ -3975,7 +3952,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 90
   },
   {
     "key": "protactinium",
@@ -3986,7 +3963,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 91
   },
   {
     "key": "actinium",
@@ -3997,7 +3974,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 89
   },
   {
     "key": "thorium_sulfate_solution",
@@ -4006,8 +3983,7 @@
     "description": "独居石经硫酸处理后获得的放射性溶液，富含钍离子。",
     "type": [
       "material"
-    ],
-    "isRealItem": true
+    ]
   },
   {
     "key": "technetium",
@@ -4018,7 +3994,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 43
   },
   {
     "key": "astatine",
@@ -4029,7 +4005,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 85
   },
   {
     "key": "francium",
@@ -4040,7 +4016,7 @@
       "material",
       "element"
     ],
-    "milestone": "atomic_age"
+    "elemental": 87
   },
   {
     "key": "cyclotron",

@@ -8923,7 +8923,7 @@
     "key": "bombard_bismuth_to_astatine",
     "name": "α粒子轰击铋",
     "description": "利用加速器产生的α粒子流轰击金属铋靶，人工合成极短寿命的砹。",
-    "time_required": 240,
+    "time_required": 180,
     "required_era": "atomic_age",
     "required_container": "reactor_vessel",
     "required_actions": {
@@ -8940,8 +8940,11 @@
     "products": [
       {
         "key": "astatine",
-        "multiple": 0.05
+        "multiple": 1
       }
+    ],
+    "required_techs": [
+      "particle_accelerator_tech"
     ]
   },
   {

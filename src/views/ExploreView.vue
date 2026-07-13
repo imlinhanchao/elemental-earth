@@ -10,6 +10,7 @@
     <!-- ─── Periodic Table ──────────────────────────────────────────────────── -->
     <PeriodicTable
       :litElements="litElements"
+      :implementedElements="implementedElements"
       :categoryColors="categoryColors"
     />
 
@@ -45,12 +46,15 @@
 import { ref } from 'vue'
 import PeriodicTable from '@/components/PeriodicTable.vue'
 import {
+  ELEMENTS,
   DEFAULT_CATEGORY_COLORS,
   CATEGORY_LABELS,
   type PeriodicElement,
   type ElementCategory,
 } from '@/data/elements'
 import { useStateStore } from '@/stores/modules/state';
+import { Items } from '@/data/items';
+import { computed } from 'vue';
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Configuration variable — modify this array to control which elements are lit.
@@ -58,6 +62,14 @@ import { useStateStore } from '@/stores/modules/state';
 // ─────────────────────────────────────────────────────────────────────────────
 const stateStore = useStateStore();
 const litElements = ref<number[]>(stateStore.state.elements || []);
+
+// Find atomic numbers of elements that are implemented as items
+const implementedElements = computed(() => {
+  const itemKeys = new Set(Items.map(i => i.elemental).filter(Boolean));
+  return ELEMENTS
+    .filter(el => el.number > 0 && itemKeys.has(el.number))
+    .map(el => el.number);
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Optional: override category colours.
