@@ -72,7 +72,7 @@
   >
     <slot></slot>
     <section 
-      class="w-full absolute content p-2 bg-base-200/80 rounded border border-base-300 z-100 shadow-xl backdrop-blur-sm transition-all"
+      class="w-full absolute content p-2 bg-base-200/80 rounded border border-base-300 z-100 shadow-xl backdrop-blur-sm transition-all -mt-1"
       :class="[
         appStore.isMobile ? (mobileShow ? 'block animate-in fade-in zoom-in duration-200' : 'hidden') : 'hidden group-hover:block'
       ]"
@@ -85,15 +85,30 @@
         {{ time_required }}s
       </div>
       <div v-if="items.length" class="divider my-1 h-px"></div>
-      <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed group" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
-        {{ item.quantity }}x <span class="hidden group-hover:inline">{{ item.name }}</span><span class="group-hover:hidden">????</span>
+      <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
+        {{ item.quantity }}x 
+        <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
+        <span class="unknown" v-if="!item.known">????</span>
       </div>
     </section>
   </section>
 </template>
-<style scoped>
+<style scoped lang="less">
   .content {
     --size: calc(var(--size-field, 0.25rem) * 10 + 5px);
     top: var(--size);
+  }
+  .request-item {
+    .hidden {
+      display: none;
+    }
+    &:hover {
+      .item-name {
+        display: inline;
+      }
+      .unknown {
+        display: none;
+      }
+    }
   }
 </style>
