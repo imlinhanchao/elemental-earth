@@ -1372,14 +1372,14 @@
     "elemental": 22
   },
   {
-    "name": "钛镐",
     "key": "titanium_pickaxe",
+    "name": "钛镐",
     "category": "工具",
     "description": "用钛金属打造的镐子，轻巧而坚固，能高效破碎坚硬的岩石。",
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 500
   },
   {
     "name": "铬铁矿",
@@ -1420,14 +1420,14 @@
     ]
   },
   {
-    "name": "铬镐",
     "key": "chromium_pickaxe",
+    "name": "铬镐",
     "category": "工具",
     "description": "用铬合金锻造的镐头，镶嵌在硬木柄上，镐刃锋利坚硬，适合挖掘坚硬的岩石和矿物。",
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 1000
   },
   {
     "name": "绿柱石",
