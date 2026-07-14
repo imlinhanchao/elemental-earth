@@ -1085,7 +1085,8 @@
     "category": "工具",
     "description": "用锌片、铜片和稀硫酸制成的伏打电池，两根金属片浸在酸液中，能产生稳定的直流电。",
     "type": [
-      "tool"
+      "tool",
+      "battery"
     ],
     "durable": 1,
     "milestone": "craft_battery"
@@ -1889,7 +1890,8 @@
     "category": "工具",
     "description": "一种可充电电池，使用锂离子作为电荷载体，能量密度高，轻便且寿命长。",
     "type": [
-      "tool"
+      "tool",
+      "battery"
     ],
     "durable": 10
   },
@@ -3669,8 +3671,7 @@
       "material",
       "element"
     ],
-    "elemental": 61,
-    "milestone": "first_transmutation"
+    "elemental": 61
   },
   {
     "key": "radium",

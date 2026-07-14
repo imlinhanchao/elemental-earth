@@ -6648,8 +6648,8 @@
     "description": "浓硫酸高温分解独居石，冰水溶解后过滤除去放射性钍渣。",
     "required_container": "reaction_kettle",
     "required_actions": {
-      "key": "acid_leaching",
-      "min": 1
+      "key": "stirring",
+      "min": 5
     },
     "required_items": [
       {
@@ -6706,12 +6706,12 @@
   },
   {
     "key": "rare_earth_calcination",
-    "name": "混合草酸盐煅烧",
+    "name": "煅烧草酸盐",
     "description": "800℃煅烧使草酸盐分解为氧化物。",
     "required_container": "crucible",
     "required_actions": {
-      "key": "calcination",
-      "min": 1
+      "key": "roasting",
+      "min": 3
     },
     "required_items": [
       {
@@ -8272,8 +8272,8 @@
     "required_era": "rare_earth",
     "required_container": "autoclave",
     "required_actions": {
-      "key": "acid_leaching",
-      "min": 1
+      "key": "stirring",
+      "min": 5
     },
     "required_items": [
       {
@@ -8762,8 +8762,8 @@
     "required_era": "rare_earth",
     "required_container": "autoclave",
     "required_actions": {
-      "key": "acid_leaching",
-      "min": 1
+      "key": "stirring",
+      "min": 5
     },
     "required_items": [
       {
@@ -8879,33 +8879,8 @@
     ]
   },
   {
-    "key": "extract_technetium_from_waste",
-    "name": "裂变产物提纯锝",
-    "description": "利用化学沉淀与萃取技术，从经过陈化的核反应堆废液中提取锝。",
-    "time_required": 120,
-    "required_era": "atomic_age",
-    "required_container": "reaction_kettle",
-    "required_actions": {
-      "key": "chemical_separation",
-      "min": 1
-    },
-    "required_items": [
-      {
-        "key": "radioactive_acid_solution",
-        "quantity": 10,
-        "isMain": true
-      }
-    ],
-    "products": [
-      {
-        "key": "technetium",
-        "multiple": 0.005
-      }
-    ]
-  },
-  {
     "key": "bombard_molybdenum_to_technetium",
-    "name": "中子轰击钼",
+    "name": "中子轰击钼制备锝",
     "description": "在反应堆中利用中子轰击金属钼，使其部分转化为锝-99。",
     "time_required": 120,
     "required_era": "atomic_age",
@@ -8917,14 +8892,14 @@
     "required_items": [
       {
         "key": "molybdenum",
-        "quantity": 1,
+        "quantity": 5,
         "isMain": true
       }
     ],
     "products": [
       {
         "key": "technetium",
-        "multiple": 0.1
+        "multiple": 1
       }
     ]
   },

@@ -255,7 +255,6 @@
     "name": "分馏",
     "description": "利用液体混合物中各成分沸点不同，多次部分气化和冷凝，使其分离成纯净物。",
     "time_required": 40,
-    "milestone": "rare_earth",
     "requires_burning": true,
     "required_item": [
       {
@@ -313,23 +312,6 @@
     "requires_burning": true
   },
   {
-    "key": "acid_leaching",
-    "name": "酸浸",
-    "description": "使用酸性溶液将固体原料中的有用成分溶解出来。",
-    "time_required": 20,
-    "requires_burning": true,
-    "required_item": [
-      {
-        "key": [
-          "reaction_kettle",
-          "autoclave"
-        ],
-        "quantity": 1,
-        "use": 0.05
-      }
-    ]
-  },
-  {
     "key": "precipitation",
     "name": "沉淀",
     "description": "通过加入沉淀剂使溶液中的特定组分以固体形式析出。",
@@ -342,20 +324,6 @@
       }
     ],
     "requires_burning": false
-  },
-  {
-    "key": "calcination",
-    "name": "煅烧",
-    "description": "在高温（不熔化）下加热物质，使其分解或发生化学性质变化。",
-    "time_required": 15,
-    "required_item": [
-      {
-        "key": "crucible",
-        "quantity": 1,
-        "use": 0.05
-      }
-    ],
-    "requires_burning": true
   },
   {
     "key": "neutron_irradiation",
@@ -372,7 +340,8 @@
     ],
     "required_techs": [
       "nuclear_reactor_tech"
-    ]
+    ],
+    "milestone": "first_transmutation"
   },
   {
     "key": "aging",
@@ -387,7 +356,10 @@
         "use": 0.05
       }
     ],
-    "milestone": "atomic_age"
+    "milestone": "first_transmutation",
+    "required_techs": [
+      "nuclear_physics"
+    ]
   },
   {
     "key": "particle_acceleration",
@@ -405,24 +377,6 @@
     "required_techs": [
       "particle_accelerator_tech"
     ],
-    "milestone": "atomic_age"
-  },
-  {
-    "key": "chemical_separation",
-    "name": "化学分离",
-    "description": "综合利用萃取、离子交换、沉淀等多种化学手段对核燃料或废料进行深度分离。",
-    "time_required": 45,
-    "requires_burning": false,
-    "required_item": [
-      {
-        "key": "reaction_kettle",
-        "quantity": 1,
-        "use": 0.05
-      }
-    ],
-    "required_techs": [
-      "radiochemistry_tech"
-    ],
-    "milestone": "atomic_age"
+    "milestone": "first_transmutation"
   }
 ]

@@ -384,7 +384,7 @@ const electricityNeeded = computed(() => selectedOperation.value?.requires_elect
 const powerSourceItems = computed(() => {
   return packStore.items.filter(pItem => {
     const def = getItem(pItem.key)
-    return def && (def.key.includes('battery') || def.type.includes('tool')) && pItem.durable > 0
+    return def && def.type.includes('battery') && pItem.durable > 0
   })
 })
 
