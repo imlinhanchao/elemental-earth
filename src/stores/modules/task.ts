@@ -31,45 +31,79 @@ export const useTaskStore = defineStore('task', () => {
   const packStore = usePackStore();
   const logStore = useLogStore();
 
-  /** 获取考虑队列收益与支出的预期库存 */
-  const projectedInventory = computed(() => {
+  /** 获取考虑队列收益与支出的预期资源状态（包含数量与总耐久） */
+  const projectedState = computed(() => {
     const inv = new Map<string, number>();
-    // 基础库存
+    const dur = new Map<string, number>();
+    const durableKeys = new Set<string>();
+
+    // 基础库存初始化
     packStore.items.forEach(item => {
       inv.set(item.key, (inv.get(item.key) || 0) + item.quantity);
+      if (item.durable > 0) {
+        dur.set(item.key, (dur.get(item.key) || 0) + item.durable);
+        durableKeys.add(item.key);
+      }
     });
 
-    // 处理队列中的预计支出与收益
+    // 处理处理预计支出与收益
     for (const task of tasks) {
-      // 如果材料尚未锁定，扣除预计支出
+      // 支出项
       if (!task.materials_locked) {
         for (const req of task.required_items) {
           const k = Array.isArray(req.key) ? req.key[0] : req.key;
-          inv.set(k, (inv.get(k) || 0) - req.quantity);
+          // 如果该物品具有耐久属性（或明确要求耐久消耗）
+          if (durableKeys.has(k) || req.use) {
+            const currentDur = dur.get(k) || 0;
+            // 消耗数量 1 等于消耗 1.0 的总耐久（假设满耐久为 1.0，这是系统常态）
+            dur.set(k, currentDur - (req.quantity + (req.use || 0)));
+            if (!durableKeys.has(k)) durableKeys.add(k);
+          } else {
+            inv.set(k, (inv.get(k) || 0) - req.quantity);
+          }
         }
       }
-      // 加上所有必定掉落的奖励（简化的收益模型，仅计入 guaranteed 且不依赖地图/材料/时代的项，或者可以更复杂的逻辑）
-      // 为保持安全，这里仅计入 formula 产物（实验室任务通常有固定产物）和 action 的 guaranteed 奖励
+
+      // 收益项 (仅计入确定收益)
       if (task.type === 'lab' || task.type === 'action') {
         const rewards = task.rewards || [];
         for (const r of rewards) {
           if (r.guaranteed || task.type === 'lab') {
             const qty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
-            inv.set(r.key, (inv.get(r.key) || 0) + qty);
+            if (durableKeys.has(r.key)) {
+              dur.set(r.key, (dur.get(r.key) || 0) + qty);
+            } else {
+              inv.set(r.key, (inv.get(r.key) || 0) + qty);
+            }
           }
         }
       }
     }
-    return inv;
+
+    // 将总耐久映射为 UI 可见数量（向上取整，即只要有残余耐久就视为持有该物品）
+    dur.forEach((dVal, k) => {
+      inv.set(k, Math.max(0, Math.ceil(dVal)));
+    });
+
+    return { inv, dur };
   });
 
-  /** 检查是否可以执行（考虑预期收益） */
-  function canPerformWithProjection(requiredItems: { key: string | string[], quantity: number }[]): boolean {
-    const inv = projectedInventory.value;
+  /** 获取考虑队列收益与支出的预期库存 */
+  const projectedInventory = computed(() => projectedState.value.inv);
+
+  /** 检查是否可以执行（考虑预期收益及耐久要求） */
+  function canPerformWithProjection(requiredItems: { key: string | string[], quantity: number, use?: number }[]): boolean {
+    const { inv, dur } = projectedState.value;
     for (const req of requiredItems) {
       const keys = Array.isArray(req.key) ? req.key : [req.key];
-      // 只要有一种替代材料满足即可
-      const hasAny = keys.some(k => (inv.get(k) || 0) >= req.quantity);
+      // 满足任意一种替代方案即可
+      const hasAny = keys.some(k => {
+        // 数量检查
+        const qOk = (inv.get(k) || 0) >= req.quantity;
+        // 耐久检查（如果该项设置了 use）
+        const dOk = !req.use || (dur.get(k) || 0) >= req.use;
+        return qOk && dOk;
+      });
       if (!hasAny) return false;
     }
     return true;
@@ -149,7 +183,6 @@ export const useTaskStore = defineStore('task', () => {
       if (!task) return; // 没有任务，跳过检查
 
       // 检查并锁定材料（如果尚未锁定）
-      debugger;
       if (!task.materials_locked) {
         let canLock = true;
         if (task.required_items.length) {
