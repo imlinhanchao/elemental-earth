@@ -636,6 +636,7 @@ function startExperiment() {
   }
 
   // 有匹配配方时才扣除配方材料并记录已验证配方
+  const milestones: string[] = []
   if (matchedFormula.value) {
     for (const req of matchedFormula.value.required_items) {
       const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)
@@ -645,9 +646,9 @@ function startExperiment() {
     }
     // 实验室里程碑（从操作数据读取）
     const opMilestone = selectedOperation.value?.milestone
-    if (opMilestone) stateStore.checkMilestone(opMilestone)
+    if (opMilestone) milestones.push(opMilestone)
     const chainMilestone = selectedChainOperations.value.find(o => o.milestone)
-    if (chainMilestone) stateStore.checkMilestone(chainMilestone.milestone!)
+    if (chainMilestone) milestones.push(chainMilestone.milestone!)
   }
 
   if (burningNeeded.value) {
@@ -674,6 +675,7 @@ function startExperiment() {
     rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1 })),
     required_items: consumedItems,
     formulaKey: matchedFormula.value?.key,
+    milestones,
   })
 
   selectedContainerKey.value = null

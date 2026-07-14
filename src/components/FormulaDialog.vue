@@ -530,6 +530,14 @@ function confirm() {
 
   // 5. 构建奖励
   const chainOps = selectedChainOperations.value
+  const milestones: string[] = []
+  const opMilestone = operation.value?.milestone
+  if (opMilestone) milestones.push(opMilestone)
+  for (const k of chainOps) {
+    const cm = LabActions.find(a => a.key === k)?.milestone
+    if (cm) milestones.push(cm)
+  }
+
   const rewards = formula.value.products
     .filter(p => {
       if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
@@ -552,6 +560,8 @@ function confirm() {
     time_required: totalTime.value,
     rewards,
     required_items: consumedItems,
+    formulaKey: formula.value.key,
+    milestones,
   })
 
   const productNames = formula.value.products

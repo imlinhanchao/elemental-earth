@@ -23,6 +23,8 @@ export interface ITask extends IAction {
   cooldown?: number;
   /** 材料是否已锁定（已扣除） */
   materials_locked?: boolean;
+  /** 里程碑（任务完成后颁发） */
+  milestones?: string[];
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -340,6 +342,13 @@ export const useTaskStore = defineStore('task', () => {
             packStore.addProvenFormula(task.formulaKey)
           }
 
+          // 颁发里程碑（实验成功后颁发）
+          if (task.milestones) {
+            for (const ms of task.milestones) {
+              stateStore.checkMilestone(ms)
+            }
+          }
+
           if (!task.formulaKey && task.rewards.length === 0) {
             logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
             notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
@@ -412,6 +421,7 @@ export const useTaskStore = defineStore('task', () => {
     rewards: IReward[];
     required_items: { key: string; quantity: number; use?: number }[];
     formulaKey?: string;
+    milestones?: string[];
   }) {
     tasks.push({
       ...labTask,
