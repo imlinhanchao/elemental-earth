@@ -688,7 +688,7 @@
     "type": [
       "material"
     ],
-    "durable": 1,
+    "durable": 0,
     "is_discovery": true
   },
   {
@@ -699,7 +699,7 @@
     "type": [
       "material"
     ],
-    "durable": 1,
+    "durable": 0,
     "is_discovery": true
   },
   {
@@ -710,7 +710,7 @@
     "type": [
       "material"
     ],
-    "durable": 1,
+    "durable": 0,
     "is_discovery": true
   },
   {
@@ -721,7 +721,7 @@
     "type": [
       "material"
     ],
-    "durable": 1
+    "durable": 0
   },
   {
     "key": "arsenic",
@@ -2912,7 +2912,7 @@
     "type": [
       "container"
     ],
-    "durable": 1
+    "durable": 100
   },
   {
     "name": "一氧化氮",
@@ -3836,7 +3836,7 @@
       "tool",
       "durable"
     ],
-    "durable": 1
+    "durable": 10
   },
   {
     "key": "liquid_nitrogen",
