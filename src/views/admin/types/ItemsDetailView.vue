@@ -6,6 +6,7 @@ import elementsData from "@/data/elements.json";
 import DependencyNode from "./components/DependencyNode.vue";
 import RequirementSummary from "./components/RequirementSummary.vue";
 import { useProductionTree } from "@/hook/useProductionTree";
+import { watch } from "vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -48,6 +49,11 @@ onMounted(() => {
 const goBack = () => {
   router.push({ name: 'AdminItems' });
 };
+
+watch(() => route.params.id, (newId) => {
+  itemKey.value = newId as string;
+  buildTree();
+});
 </script>
 
 <template>

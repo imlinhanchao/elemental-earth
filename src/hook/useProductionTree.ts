@@ -3,6 +3,7 @@ import itemsData from "@/data/items.json";
 import formulasData from "@/data/formula.json";
 import actionsData from "@/data/actions.json";
 import techsData from "@/data/techs.json";
+import { isArray } from "@/utils/is";
 
 export interface TreeNode {
   type: 'item' | 'formula' | 'action' | 'tech';
@@ -125,7 +126,7 @@ export function useProductionTree(pathOverrides: any) {
   function resolveAction(a: any, targetItemKey: string, count: number, visited: Set<string>): TreeNode {
     const rw = a.rewards.find((r: any) => r.key === targetItemKey)!;
     const prob = ((rw as any).probability || 1000) / 1000;
-    const qty = (rw as any).quantity || 1;
+    const qty = isArray((rw as any).quantity) ? (rw as any).quantity[0] : (rw as any).quantity || 1;
     const executions = Math.ceil(count / (qty * prob));
 
     const actionNode: TreeNode = {

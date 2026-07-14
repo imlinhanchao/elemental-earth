@@ -185,4 +185,10 @@ watch([elementId, targetQuantity], () => {
   pathOverrides.value = {};
   buildTree(true);
 });
+
+watch(() => route.params.id, (newId) => {
+  elementId.value = newId as string;
+  pathOverrides.value = {};
+  buildTree(true);
+});
 </script>
