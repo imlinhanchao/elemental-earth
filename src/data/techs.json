@@ -481,23 +481,6 @@
     ]
   },
   {
-    "key": "steel_smelting",
-    "name": "炼钢技术",
-    "description": "掌握了将生铁精炼为钢的技术，可以制作更强力的工具。",
-    "required_items": [
-      {
-        "key": "pig_iron",
-        "quantity": 10
-      },
-      {
-        "key": "limestone",
-        "quantity": 10
-      }
-    ],
-    "time_required": 20,
-    "milestone": "modern_chem"
-  },
-  {
     "key": "precision_machinery",
     "name": "精密机械",
     "description": "掌握了制造精密零件和机械结构的技术，是现代工业的基石。",
