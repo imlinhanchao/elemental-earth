@@ -21,6 +21,8 @@ export interface ITask extends IAction {
   formulaKey?: string;
   /** 任务完成后的冷却时间（秒） */
   cooldown?: number;
+  /** 材料是否已锁定（已扣除） */
+  materials_locked?: boolean;
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -28,6 +30,50 @@ export const useTaskStore = defineStore('task', () => {
   const stateStore = useStateStore();
   const packStore = usePackStore();
   const logStore = useLogStore();
+
+  /** 获取考虑队列收益与支出的预期库存 */
+  const projectedInventory = computed(() => {
+    const inv = new Map<string, number>();
+    // 基础库存
+    packStore.items.forEach(item => {
+      inv.set(item.key, (inv.get(item.key) || 0) + item.quantity);
+    });
+
+    // 处理队列中的预计支出与收益
+    for (const task of tasks) {
+      // 如果材料尚未锁定，扣除预计支出
+      if (!task.materials_locked) {
+        for (const req of task.required_items) {
+          const k = Array.isArray(req.key) ? req.key[0] : req.key;
+          inv.set(k, (inv.get(k) || 0) - req.quantity);
+        }
+      }
+      // 加上所有必定掉落的奖励（简化的收益模型，仅计入 guaranteed 且不依赖地图/材料/时代的项，或者可以更复杂的逻辑）
+      // 为保持安全，这里仅计入 formula 产物（实验室任务通常有固定产物）和 action 的 guaranteed 奖励
+      if (task.type === 'lab' || task.type === 'action') {
+        const rewards = task.rewards || [];
+        for (const r of rewards) {
+          if (r.guaranteed || task.type === 'lab') {
+            const qty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
+            inv.set(r.key, (inv.get(r.key) || 0) + qty);
+          }
+        }
+      }
+    }
+    return inv;
+  });
+
+  /** 检查是否可以执行（考虑预期收益） */
+  function canPerformWithProjection(requiredItems: { key: string | string[], quantity: number }[]): boolean {
+    const inv = projectedInventory.value;
+    for (const req of requiredItems) {
+      const keys = Array.isArray(req.key) ? req.key : [req.key];
+      // 只要有一种替代材料满足即可
+      const hasAny = keys.some(k => (inv.get(k) || 0) >= req.quantity);
+      if (!hasAny) return false;
+    }
+    return true;
+  }
 
   // 按照奖励概率计算最终奖励
   function getReward(rewards: IReward[], consumedKeys?: string[]): IReward | null {
@@ -101,6 +147,52 @@ export const useTaskStore = defineStore('task', () => {
       const now = Date.now();
       const task = tasks[0];
       if (!task) return; // 没有任务，跳过检查
+
+      // 检查并锁定材料（如果尚未锁定）
+      debugger;
+      if (!task.materials_locked) {
+        let canLock = true;
+        if (task.required_items.length) {
+          for (const req of task.required_items) {
+            const k = Array.isArray(req.key) ? req.key[0] : req.key;
+            const hasQty = packStore.getItemQuantity(k);
+            const existing = packStore.items.find(i => i.key === k);
+            
+            // 数量检查
+            if (hasQty < req.quantity) {
+              canLock = false;
+              break;
+            }
+            // 耐久检查
+            if (req.use && (!existing || existing.durable < req.use)) {
+              canLock = false;
+              break;
+            }
+          }
+        }
+
+        if (canLock) {
+          // 锁定材料：扣除物品
+          if (task.required_items.length) {
+            for (const req of task.required_items) {
+              const k = Array.isArray(req.key) ? req.key[0] : req.key;
+              packStore.removeItem(k, req.quantity, req.use);
+            }
+          }
+          task.materials_locked = true;
+          // 锁定后重新计算时间，确保从现在开始计时
+          task.begin_time = Date.now();
+          recalculateStartTimes();
+        } else {
+          // 材料不足，销毁任务
+          logStore.addLog(`任务 ${task.name} 的资源在开始执行时已不足，任务已被销毁`, 'warning');
+          notifyTaskComplete('任务销毁', `资源不足: ${task.name}`);
+          tasks.splice(0, 1);
+          recalculateStartTimes();
+          return;
+        }
+      }
+
       if (now - task.begin_time >= task.time_required * 1000) {
         if (task.type === 'action') {
           // 标记行动为已执行
@@ -256,28 +348,20 @@ export const useTaskStore = defineStore('task', () => {
   const getTasks = computed(() => tasks);
   const pushTask = (task: IAction|ITech) => {
     if (task.required_items.length) {
-      for (const req of task.required_items) {
-        const k = Array.isArray(req.key) ? req.key[0] : req.key;
-        if (!packStore.hasItem(k, req.quantity)) {
-          logStore.addLog(`无法执行任务 ${task.name}，缺少物品: ${packStore.getDisplayName(k)} x${req.quantity}`, 'warning');
-          return;
-        }
-      }
-      // 扣除所需物品
-      for (const req of task.required_items) {
-        const k = Array.isArray(req.key) ? req.key[0] : req.key;
-        packStore.removeItem(k, req.quantity, req.use);
+      if (!canPerformWithProjection(task.required_items)) {
+        logStore.addLog(`无法将任务 ${task.name} 加入队列，预期材料不足`, 'warning');
+        return;
       }
     }
-    tasks.push({ ...task, begin_time: 0, id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined });
+    tasks.push({ ...task, begin_time: 0, id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined, materials_locked: false });
     recalculateStartTimes();
   }
   const removeTask = (id: number) => {
     const index = tasks.findIndex(task => task.id === id);
     if (index !== -1) {
       const [task] = tasks.splice(index, 1);
-      if (task.required_items.length) {
-        // 返还所需物品
+      if (task.materials_locked && task.required_items.length) {
+        // 仅在已锁定材料时返还
         for (const req of task.required_items) {
           const k = Array.isArray(req.key) ? req.key[0] : req.key;
           packStore.addItem(k, req.quantity, req.use);
@@ -286,7 +370,7 @@ export const useTaskStore = defineStore('task', () => {
       recalculateStartTimes();
     }
   }
-  /** 实验室专用：直接推入任务（物品已在 UI 层扣除，存入 required_items 用于取消时退还） */
+  /** 实验室专用：直接推入任务 */
   function pushLabTask(labTask: {
     name: string;
     key: string;
@@ -301,6 +385,7 @@ export const useTaskStore = defineStore('task', () => {
       begin_time: 0,
       id: Date.now(),
       type: 'lab',
+      materials_locked: false,
     } as ITask);
     recalculateStartTimes();
   }
@@ -315,7 +400,7 @@ export const useTaskStore = defineStore('task', () => {
 
   taskLoop();
 
-  return { tasks, getTasks, pushTask, removeTask, pushLabTask, clearTasks }
+  return { tasks, getTasks, projectedInventory, pushTask, removeTask, pushLabTask, clearTasks, canPerformWithProjection }
 })
 
 export const useTaskStoreWithOut = once(() => useTaskStore(store));

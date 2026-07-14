@@ -3,6 +3,7 @@
   import { Items } from '@/data/items';
   import { usePackStore } from '@/stores/modules/pack';
   import { useAppStore } from '@/stores/modules/app';
+  import { useTaskStore } from '@/stores/modules/task';
   import { computed, ref } from 'vue';
 
   const props = defineProps<{
@@ -13,18 +14,20 @@
   }>();
 
   const packStore = usePackStore();
+  const taskStore = useTaskStore();
   const appStore = useAppStore();
 
   const items = computed(() => {
     return props.required_items.map(item => {
       const itemData = Items.find(i => i.key === item.key);
       const known = packStore.hasEverHad(item.key);
+      const projectedQty = taskStore.projectedInventory.get(item.key) || 0;
       return {
         key: item.key,
         quantity: item.quantity,
         name: itemData?.name || item.key,
         known,
-        insufficient: known && item.quantity > packStore.getItemQuantity(item.key),
+        insufficient: known && item.quantity > projectedQty,
       };
     });
   });

@@ -43,14 +43,15 @@
 
   /** 获取当前行动各材料最终选定的 key（替代材料组取用户选择或默认第一个） */
   function resolveMaterials(): { key: string; quantity: number; use?: number }[] {
+    const inv = taskStore.projectedInventory;
     return props.data.required_items.map(r => {
       const keys = Array.isArray(r.key) ? r.key : [r.key];
       // 用户已选择 →
       const chosen = packStore.materialChoices[`${props.data.key}_${r.key}`];
-      if (chosen && keys.includes(chosen) && packStore.hasItem(chosen, r.quantity)) return { key: chosen, quantity: r.quantity, use: r.use };
+      if (chosen && keys.includes(chosen) && (inv.get(chosen) || 0) >= r.quantity) return { key: chosen, quantity: r.quantity, use: r.use };
       // 默认第一个可用的
       for (const k of keys) {
-        if (packStore.hasItem(k, r.quantity)) return { key: k, quantity: r.quantity, use: r.use };
+        if ((inv.get(k) || 0) >= r.quantity) return { key: k, quantity: r.quantity, use: r.use };
       }
       return { key: keys[0], quantity: r.quantity, use: r.use };
     });
@@ -58,19 +59,24 @@
 
   /** 替代材料组当前是否有多个可选 */
   function hasMultipleChoices(): boolean {
+    const inv = taskStore.projectedInventory;
     return props.data.required_items.some(r => {
       if (!Array.isArray(r.key)) return false;
-      const avail = r.key.filter(k => packStore.hasItem(k, r.quantity));
+      const avail = r.key.filter(k => (inv.get(k) || 0) >= r.quantity);
       return avail.length > 1;
     });
   }
 
   /** 获取某组替代材料的可用选项 */
   function getAvailableOptions(reqKey: string | string[]): { key: string; name: string }[] {
+    const inv = taskStore.projectedInventory;
     const keys = Array.isArray(reqKey) ? reqKey : [reqKey];
     return keys
       .map(k => ({ key: k, name: packStore.getDisplayName(k) }))
-      .filter(o => packStore.hasItem(o.key, props.data.required_items.find(r => (Array.isArray(r.key) ? r.key : [r.key]).includes(o.key))?.quantity ?? 1));
+      .filter(o => {
+        const req = props.data.required_items.find(r => (Array.isArray(r.key) ? r.key : [r.key]).includes(o.key));
+        return (inv.get(o.key) || 0) >= (req?.quantity ?? 1);
+      });
   }
 
   // ─── 选择弹窗 ────────────────────────────────────────────────
@@ -122,10 +128,7 @@
   const isEnabled = computed(() => {
     if (taskStore.tasks.length >= 100) return false;
     const mapOk = !props.data.map || props.data.map.includes(stateStore.state.map);
-    const itemsOk = props.data.required_items.every(r => {
-      const keys = Array.isArray(r.key) ? r.key : [r.key];
-      return keys.some(k => packStore.hasItem(k, r.quantity));
-    });
+    const itemsOk = taskStore.canPerformWithProjection(props.data.required_items);
     const cdOk = !props.data.cooldown || !packStore.isOnCooldown(props.data.key);
     return mapOk && itemsOk && cdOk && (!props.data.required_techs || props.data.required_techs.every(t => packStore.hasTech(t)));
   });

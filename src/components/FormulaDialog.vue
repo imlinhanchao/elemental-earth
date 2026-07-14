@@ -241,13 +241,14 @@ watch(() => props.visible, (v) => {
   }
 })
 
-/** 某组材料的可选选项（从玩家背包中查找匹配项） */
+/** 某组材料的可选选项（考虑预期收益） */
 function materialOptions(req: IFormula['required_items'][number]) {
   const keys = Array.isArray(req.key) ? req.key : [req.key]
+  const inv = taskStore.projectedInventory
   return keys
     .map(k => {
       const def = getItem(k)
-      const qty = packStore.getItemQuantity(k)
+      const qty = inv.get(k) || 0
       return { key: k, name: def?.name || k, qty }
     })
     .filter(o => o.qty > 0)
@@ -314,20 +315,20 @@ const fireSourceOptions = computed(() => {
 const fuelMap = ref(new Map<string, number>())
 
 const fuelOptions = computed(() => {
-  return packStore.items
-    .filter(i => {
-      const def = getItem(i.key)
-      return def?.type.includes('fuel') && def?.attrs?.burn_time && i.quantity > 0
-    })
-    .map(i => {
-      const def = getItem(i.key)!
-      return {
-        key: i.key,
+  const inv = taskStore.projectedInventory
+  const results: any[] = []
+  for (const [key, qty] of inv.entries()) {
+    const def = getItem(key)
+    if (def?.type.includes('fuel') && def?.attrs?.burn_time && qty > 0) {
+      results.push({
+        key,
         name: def.name,
-        qty: i.quantity,
-        burnTime: def.attrs!.burn_time as number,
-      }
-    })
+        qty,
+        burnTime: def.attrs.burn_time as number,
+      })
+    }
+  }
+  return results
 })
 
 function incFuel(key: string) {
@@ -403,10 +404,11 @@ const productList = computed(() => {
   }))
 })
 
-// ─── 材料充足校验（按当前次数）─────────────────────────────────
+// ─── 材料充足校验（按当前预期收益）────────────────────────────
 const insufficientMaterials = computed(() => {
   const result: boolean[] = []
   const items = formula.value?.required_items || []
+  const inv = taskStore.projectedInventory
   for (let i = 0; i < items.length; i++) {
     const key = selectedMaterials.value[i]
     const req = items[i]
@@ -414,7 +416,7 @@ const insufficientMaterials = computed(() => {
       result.push(true)
     } else {
       const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
-      const have = packStore.getItemQuantity(key)
+      const have = inv.get(key) || 0
       result.push(have < need)
     }
   }
@@ -438,26 +440,37 @@ const totalTime = computed(() => {
 
 // ─── 校验 ──────────────────────────────────────────────────────
 const canConfirm = computed(() => {
+  const inv = taskStore.projectedInventory
   // 所有材料必须已选择且数量充足
   for (let i = 0; i < (formula.value?.required_items.length || 0); i++) {
     const key = selectedMaterials.value[i]
     if (!key) return false
     const req = formula.value!.required_items[i]
     const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
-    if (!packStore.hasItem(key, need)) return false
+    if ((inv.get(key) || 0) < need) return false
   }
 
   // 需要容器时检查
   const accepted = acceptedContainerKeys()
   if (accepted.length > 0 && !selectedContainer.value) return false
   if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
+  // 容器预期耐久检查（此处简化，仅检查当前，因为耐久度较难精确预测）
+  if (selectedContainer.value && !packStore.items.find(i => i.key === selectedContainer.value && i.durable > 0)) return false
 
   // 需要燃烧时检查火种和燃料
   if (operation.value?.requires_burning) {
     if (!selectedFireSource.value) return false
     const fs = packStore.items.find(i => i.key === selectedFireSource.value)
     if (!fs || fs.durable < 0.01) return false
-    if (neededBurnTime.value > totalBurnTime.value) return false
+    
+    // 检查燃料预期总量
+    let burnTime = 0
+    for (const [key, qty] of fuelMap.value) {
+      const fuelVal = (inv.get(key) || 0)
+      if (fuelVal < qty) return false
+      burnTime += (getItem(key)?.attrs?.burn_time || 0) * qty
+    }
+    if (neededBurnTime.value > burnTime) return false
   }
 
   // 需要电力时检查
@@ -515,12 +528,7 @@ function confirm() {
     consumedItems.push({ key: selectedPowerSource.value!, quantity: 0, use: consumption * batches.value })
   }
 
-  // 5. 执行消耗
-  for (const item of consumedItems) {
-    packStore.removeItem(item.key, item.quantity, item.use)
-  }
-
-  // 6. 构建奖励
+  // 5. 构建奖励
   const chainOps = selectedChainOperations.value
   const rewards = formula.value.products
     .filter(p => {

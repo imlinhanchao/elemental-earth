@@ -8,9 +8,11 @@
   import FormulaDialog from '@/components/FormulaDialog.vue';
   import { usePackStore } from '@/stores/modules/pack';
   import { useStateStore } from '@/stores/modules/state';
+  import { useTaskStore } from '@/stores/modules/task';
 
   const packStore = usePackStore();
   const stateStore = useStateStore();
+  const taskStore = useTaskStore();
 
   const searchQuery = ref('');
 
@@ -118,10 +120,7 @@
   /** 配方是否至少有一种材料可执行 */
   function canPerformFormula(formula: typeof Formulas[number]): boolean {
     if (!formula.required_actions) return false
-    return formula.required_items.every(req => {
-      const keys = Array.isArray(req.key) ? req.key : [req.key]
-      return keys.some(k => packStore.hasItem(k, req.quantity))
-    })
+    return taskStore.canPerformWithProjection(formula.required_items)
   }
 
   function onFormulaDialogClose() {

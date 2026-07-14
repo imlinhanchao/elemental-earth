@@ -155,7 +155,9 @@
         "probability": 500,
         "required_era": "alchemy",
         "map": [
-          "mountain"
+          "mountain",
+          "cave",
+          "basin"
         ]
       },
       {

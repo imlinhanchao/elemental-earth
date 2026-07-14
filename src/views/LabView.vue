@@ -73,7 +73,20 @@ const availableContainers = computed(() => {
 })
 
 const availableMaterials = computed(() => {
-  return packStore.items.filter(pItem => pItem.key !== selectedContainerKey.value)
+  const inv = taskStore.projectedInventory
+  const results: any[] = []
+  for (const [key, qty] of inv.entries()) {
+    if (key === selectedContainerKey.value) continue
+    if (qty <= 0) continue
+    const def = getItem(key)
+    results.push({
+      key,
+      name: def?.name || key,
+      quantity: qty,
+      category: def?.category
+    })
+  }
+  return results
 })
 
 const availableCategories = computed(() => {
@@ -337,10 +350,19 @@ const containerCanHeat = computed(() => {
 })
 
 const fuelItems = computed(() => {
-  return packStore.items.filter(pItem => {
-    const def = getItem(pItem.key)
-    return def && def.type.includes('fuel') && def.attrs?.burn_time
-  })
+  const inv = taskStore.projectedInventory
+  const results: any[] = []
+  for (const [key, qty] of inv.entries()) {
+    const def = getItem(key)
+    if (def?.type.includes('fuel') && def?.attrs?.burn_time && qty > 0) {
+      results.push({
+        key,
+        name: def.name,
+        quantity: qty
+      })
+    }
+  }
+  return results
 })
 
 const fireSourceItems = computed(() => {
@@ -642,10 +664,6 @@ function startExperiment() {
       const consumption = matchedFormula.value?.power_consumption ?? 0.1
       consumedItems.push({ key: selectedPowerSourcePack.value.key, quantity: 0, use: consumption * cycles.value })
     }
-  }
-
-  for (const item of consumedItems) {
-    packStore.removeItem(item.key, item.quantity, item.use)
   }
 
   taskStore.pushLabTask({
