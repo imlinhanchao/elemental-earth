@@ -3398,19 +3398,17 @@
     ]
   },
   {
-    "name": "制作分馏柱",
     "key": "craft_lab_glassware",
+    "name": "制作分馏柱",
     "category": "制作",
     "description": "吹制更加精细的实验室玻璃器皿。",
+    "time_required": 20,
     "required_items": [
       {
         "key": "glass",
         "quantity": 2,
         "use": 1
       }
-    ],
-    "required_techs": [
-      "glassworking"
     ],
     "rewards": [
       {
@@ -3419,7 +3417,9 @@
         "probability": 500
       }
     ],
-    "time_required": 20
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ]
   },
   {
     "key": "craft_cyclotron",
