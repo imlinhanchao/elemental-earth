@@ -1326,9 +1326,17 @@
     ]
   },
   {
-    "name": "硝石制硝酸",
     "key": "nitric_acid_from_niter",
+    "name": "硝石制硝酸",
     "description": "用浓硫酸与硝石反应，蒸馏冷凝得到硝酸。",
+    "fragment_description": "利用#concentrated_sulfuric_acid#与#niter#反应，通过强酸制弱酸的原理制备#nitric_acid#。",
+    "time_required": 30,
+    "required_era": "modern_chem",
+    "required_container": "distilling_flask",
+    "required_actions": {
+      "key": "distillation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "niter",
@@ -1340,23 +1348,15 @@
         "quantity": 1
       }
     ],
-    "required_container": "brass_condenser",
-    "required_actions": {
-      "key": "distillation",
-      "min": 1
-    },
-    "required_techs": [
-      "gas_collection"
-    ],
-    "time_required": 60,
     "products": [
       {
         "key": "nitric_acid",
         "multiple": 1
       }
     ],
-    "fragment_description": "利用#concentrated_sulfuric_acid#与#niter#反应，通过强酸制弱酸的原理制备#nitric_acid#。",
-    "required_era": "modern_chem"
+    "required_techs": [
+      "gas_collection"
+    ]
   },
   {
     "key": "gunpowder_production",
@@ -1601,9 +1601,17 @@
     ]
   },
   {
-    "name": "合成盐酸",
     "key": "hydrochloric_acid_synthesis",
+    "name": "合成盐酸",
     "description": "将氯气和氢气混合点燃生成氯化氢，再溶于水得到盐酸。",
+    "fragment_description": "使#chlorine#与#hydrogen#在受控条件下反应生成氯化氢，溶于水后得到#hydrochloric_acid#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "chlorine",
@@ -1614,23 +1622,14 @@
         "key": "hydrogen",
         "quantity": 1,
         "isMain": true
-      },
-      {
-        "key": "fire_seed",
-        "quantity": 1,
-        "use": 0.1
       }
     ],
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "hydrochloric_acid",
         "multiple": 1
       }
-    ],
-    "fragment_description": "使#chlorine#与#hydrogen#在受控条件下反应生成氯化氢，溶于水后得到#hydrochloric_acid#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "name": "制备漂白粉",
@@ -3621,39 +3620,6 @@
     ],
     "fragment_description": "以#silica_sand#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "required_era": "alchemy"
-  },
-  {
-    "name": "玻璃蒸馏浓缩稀硫酸",
-    "key": "concentrate_sulfuric_acid_glass",
-    "description": "利用玻璃蒸馏装置加热浓缩稀硫酸，得到浓硫酸。",
-    "required_items": [
-      {
-        "key": "dilute_sulfuric_acid",
-        "quantity": 3,
-        "isMain": true
-      }
-    ],
-    "required_container": "distilling_flask",
-    "required_actions": {
-      "key": "glass_distillation",
-      "min": 1
-    },
-    "required_techs": [
-      "glassworking"
-    ],
-    "time_required": 60,
-    "products": [
-      {
-        "key": "concentrated_sulfuric_acid",
-        "multiple": 1
-      },
-      {
-        "key": "water",
-        "multiple": 1
-      }
-    ],
-    "fragment_description": "以#dilute_sulfuric_acid#为基础原料，在进行$glass_distillation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "modern_chem"
   },
   {
     "name": "拜耳法制氢氧化铝",

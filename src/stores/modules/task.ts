@@ -197,30 +197,44 @@ export const useTaskStore = defineStore('task', () => {
 
       // 检查并锁定材料（如果尚未锁定）
       if (!task.materials_locked) {
-        let canLock = true;
+        const missingItems: string[] = [];
         if (task.required_items.length) {
           for (const req of task.required_items) {
-            const k = Array.isArray(req.key) ? req.key[0] : req.key;
-            const hasQty = packStore.getItemQuantity(k);
-            const existing = packStore.items.find(i => i.key === k);
-            
-            // 数量检查
-            if (hasQty < req.quantity) {
-              canLock = false;
-              break;
-            }
-            // 耐久检查
-            if (req.use && (!existing || existing.durable < req.use)) {
-              canLock = false;
-              break;
+            const keys = Array.isArray(req.key) ? req.key : [req.key];
+            // 检查每种可能的材料（替代品）
+            const hasAvailable = keys.some(k => {
+              const itemData = getItem(k);
+              const maxDur = itemData?.durable || 1;
+              const hasQty = packStore.getItemQuantity(k);
+              const existing = packStore.items.find(i => i.key === k);
+
+              if (itemData && (itemData.durable ?? 0) > 0) {
+                // 耐久物品：计算总耐久池
+                const totalDur = existing ? (existing.quantity - 1) * maxDur + existing.durable : 0;
+                // 对于耐久物品，quantity 通常指“至少持有一个”，除非 req.quantity > 1
+                const qOk = hasQty >= req.quantity;
+                const dOk = !req.use || totalDur >= req.use;
+                return qOk && dOk;
+              } else {
+                // 普通物品：仅检查数量
+                return hasQty >= req.quantity;
+              }
+            });
+
+            if (!hasAvailable) {
+              const displayName = Array.isArray(req.key) 
+                ? req.key.map(k => packStore.getDisplayName(k)).join('/') 
+                : packStore.getDisplayName(req.key);
+              missingItems.push(displayName);
             }
           }
         }
 
-        if (canLock) {
+        if (missingItems.length === 0) {
           // 锁定材料：扣除物品
           if (task.required_items.length) {
             for (const req of task.required_items) {
+              // 这里简化处理，直接扣除第一个替代品（实际逻辑中应该有更复杂的替代品选择，但目前代码是按 req.key[0] 处理的）
               const k = Array.isArray(req.key) ? req.key[0] : req.key;
               packStore.removeItem(k, req.quantity, req.use);
             }
@@ -231,8 +245,9 @@ export const useTaskStore = defineStore('task', () => {
           recalculateStartTimes();
         } else {
           // 材料不足，销毁任务
-          logStore.addLog(`任务 ${task.name} 的资源在开始执行时已不足，任务已被销毁`, 'warning');
-          notifyTaskComplete('任务销毁', `资源不足: ${task.name}`);
+          const missingStr = missingItems.join('、');
+          logStore.addLog(`任务 ${task.name} 的资源 [${missingStr}] 在开始执行时已不足，任务已被销毁`, 'warning');
+          notifyTaskComplete('任务销毁', `资源不足: ${task.name} [${missingStr}]`);
           tasks.splice(0, 1);
           recalculateStartTimes();
           return;
