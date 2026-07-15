@@ -42,8 +42,12 @@ export const useTaskStore = defineStore('task', () => {
     // 基础库存初始化
     packStore.items.forEach(item => {
       inv.set(item.key, (inv.get(item.key) || 0) + item.quantity);
-      if (item.durable > 0) {
-        dur.set(item.key, (dur.get(item.key) || 0) + item.durable);
+      const itemData = getItem(item.key);
+      if (itemData && (itemData.durable ?? 0) > 0) {
+        // 总耐久 = (持有数量 - 1) * 单个满耐久 + 当前物品残余耐久
+        // 实际上 packStore 里的 durable 存储的就是当前物品的残余耐久
+        const maxDur = itemData.durable || 1;
+        dur.set(item.key, (dur.get(item.key) || 0) + (item.quantity - 1) * maxDur + item.durable);
         durableKeys.add(item.key);
       }
     });
@@ -57,8 +61,10 @@ export const useTaskStore = defineStore('task', () => {
           // 如果该物品具有耐久属性（或明确要求耐久消耗）
           if (durableKeys.has(k) || req.use) {
             const currentDur = dur.get(k) || 0;
-            // 消耗数量 1 等于消耗 1.0 的总耐久（假设满耐久为 1.0，这是系统常态）
-            dur.set(k, currentDur - (req.quantity + (req.use || 0)));
+            // 如果存在耐久消耗，则只扣除耐久值部分
+            // 如果不存在耐久消耗但具有耐久属性，则扣除数量对应的总耐久
+            const cost = req.use ? req.use : req.quantity;
+            dur.set(k, currentDur - cost);
             if (!durableKeys.has(k)) durableKeys.add(k);
           } else {
             inv.set(k, (inv.get(k) || 0) - req.quantity);
@@ -72,7 +78,10 @@ export const useTaskStore = defineStore('task', () => {
         for (const r of rewards) {
           if (r.guaranteed || task.type === 'lab') {
             const qty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
-            if (durableKeys.has(r.key)) {
+            const itemData = getItem(r.key);
+            // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
+            if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {
+              if (!durableKeys.has(r.key)) durableKeys.add(r.key);
               dur.set(r.key, (dur.get(r.key) || 0) + qty);
             } else {
               inv.set(r.key, (inv.get(r.key) || 0) + qty);
@@ -84,7 +93,9 @@ export const useTaskStore = defineStore('task', () => {
 
     // 将总耐久映射为 UI 可见数量（向上取整，即只要有残余耐久就视为持有该物品）
     dur.forEach((dVal, k) => {
-      inv.set(k, Math.max(0, Math.ceil(dVal)));
+      const itemData = getItem(k);
+      const maxDur = itemData?.durable || 1;
+      inv.set(k, Math.max(0, Math.ceil(dVal / maxDur)));
     });
 
     return { inv, dur };
