@@ -258,6 +258,8 @@ export const useTaskStore = defineStore('task', () => {
         if (task.type === 'action') {
           // 标记行动为已执行
           packStore.addPerformedAction(task.key);
+          // 记录统计数据
+          stateStore.recordAction(task.key);
 
           // 必定掉落的奖励（并行，不受随机抽选影响）
           const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);

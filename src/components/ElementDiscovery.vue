@@ -85,6 +85,9 @@
 
         <!-- 跳过提示 -->
         <div class="skip-hint">点击任意处跳过</div>
+
+        <!-- 通关动画专门组件 -->
+        <WinAnimation :visible="showWinAnimation" @close="onWinAnimationDone" />
       </div>
     </Transition>
   </Teleport>
@@ -93,8 +96,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStateStore } from '@/stores/modules/state'
 import { ELEMENTS, getElementById, CATEGORY_LABELS, DEFAULT_CATEGORY_COLORS } from '@/data/elements'
 import type { PeriodicElement, ElementCategory } from '@/data/elements'
+import WinAnimation from './WinAnimation.vue'
 
 const props = defineProps<{
   /** 是否可见 */
@@ -113,6 +118,7 @@ const router = useRouter()
 const stage = ref(0)      // 0=hidden, 1=title, 2=card, 3=fly, 4=done
 const cardFlipped = ref(false)
 const waitingForClick = ref(false)
+const showWinAnimation = ref(false)
 
 const element = computed<PeriodicElement | undefined>(() =>
   props.elementNumber ? getElementById(props.elementNumber) : undefined
@@ -274,10 +280,28 @@ async function reveal() {
   stage.value = 4
   await sleep(1500)
 
+  // 检查是否全元素收集完成
+  const stateStore = useStateStore()
+  const discoveredCount = stateStore.state.elements?.length || 0
+  const totalElementsCount = ELEMENTS.filter(e => e.category !== 'placeholder').length
+
+  if (discoveredCount >= totalElementsCount) {
+    await sleep(800)
+    showWinAnimation.value = true
+    // 通关动画由 WinAnimation 处理关闭
+    return
+  }
+
+  emit('done')
+}
+
+function onWinAnimationDone() {
+  showWinAnimation.value = false
   emit('done')
 }
 
 function skip() {
+  if (showWinAnimation.value) return // 通关中不能直接 skip
   emit('done')
 }
 </script>
@@ -576,4 +600,51 @@ function skip() {
 
 .fade-up-enter-active { transition: all 0.4s ease-out; }
 .fade-up-enter-from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Transitions & Animations
+   ────────────────────────────────────────────────────────────────────────── */
+
+.win-title {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.15em;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: win-glow 2s ease-in-out infinite alternate;
+}
+
+.win-divider {
+  height: 2px;
+  width: 100%;
+  margin: 1.5rem auto;
+  background: linear-gradient(to right, transparent, #fff, transparent);
+  opacity: 0.5;
+}
+
+.win-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.5em;
+  margin-bottom: 2rem;
+}
+
+.win-stats {
+  opacity: 0.6;
+}
+
+@keyframes win-glow {
+  from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+  to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5); }
+}
+
+.win-fade-enter-active,
+.win-fade-leave-active {
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.win-fade-enter-from {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+}
 </style>
