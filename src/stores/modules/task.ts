@@ -114,7 +114,7 @@ export const useTaskStore = defineStore('task', () => {
         // 数量检查
         const qOk = (inv.get(k) || 0) >= req.quantity;
         // 耐久检查（如果该项设置了 use）
-        const dOk = !req.use || (dur.get(k) || 0) >= req.use;
+        const dOk = !req.use || (dur.get(k) || 1) >= req.use;
         return qOk && dOk;
       });
       if (!hasAny) return false;
