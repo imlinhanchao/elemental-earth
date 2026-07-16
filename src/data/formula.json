@@ -4085,9 +4085,17 @@
     ]
   },
   {
-    "name": "还原氧化铋",
     "key": "reduce_bismuth_oxide",
+    "name": "还原氧化铋",
     "description": "用木炭还原氧化铋，得到金属铋和二氧化碳。",
+    "fragment_description": "以#bismuth_oxide#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "bismuth_oxide",
@@ -4103,14 +4111,6 @@
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "time_required": 15,
     "products": [
       {
         "key": "bismuth",
@@ -4122,8 +4122,9 @@
         "required_chain_operation": "gas_collecting_air"
       }
     ],
-    "fragment_description": "以#bismuth_oxide#为基础原料，在进行$heating$的过程中，利用还原剂夺取氧或其他负电性元素，提取金属单质。",
-    "required_era": "alchemy"
+    "required_techs": [
+      "high_temp_furnace"
+    ]
   },
   {
     "name": "蒸发海水",
