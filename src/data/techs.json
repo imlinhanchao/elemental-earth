@@ -126,7 +126,8 @@
       }
     ],
     "required_techs": [
-      "refractory_materials"
+      "refractory_materials",
+      "bronze_tool_crafting"
     ]
   },
   {

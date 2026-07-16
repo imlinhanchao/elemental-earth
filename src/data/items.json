@@ -2907,14 +2907,17 @@
     ]
   },
   {
-    "name": "高压釜",
     "key": "autoclave",
+    "name": "高压釜",
     "category": "容器",
     "description": "由高强度钢制成的密封容器，能够承受极高的内部压力，用于高压化学反应。",
     "type": [
       "container"
     ],
-    "durable": 100
+    "durable": 100,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "name": "一氧化氮",
