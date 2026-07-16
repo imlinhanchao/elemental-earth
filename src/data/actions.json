@@ -2157,14 +2157,14 @@
         "quantity": 1
       },
       {
-        "key": "nitroglycerin",
+        "key": "pig_iron",
         "quantity": 1
       }
     ],
     "rewards": [
       {
         "key": "dynamite",
-        "quantity": 1,
+        "quantity": 3,
         "probability": 1000,
         "guaranteed": true
       }
