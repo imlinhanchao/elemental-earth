@@ -1702,12 +1702,15 @@
   },
   {
     "key": "smelt_manganese_steel",
-    "name": "熔炼锰钢",
+    "name": "锻造高锰钢",
     "description": "将锰与钢在坩埚中高温熔炼，得到锰钢。",
+    "fragment_description": "将金属#manganese#与#steel#共同熔炼，利用高温$roasting$制得具有极高韧性和耐磨性的#manganese_steel#。",
     "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "crucible",
     "required_actions": {
-      "key": "roasting"
+      "key": "roasting",
+      "min": 1
     },
     "required_items": [
       {
@@ -1725,9 +1728,7 @@
         "key": "manganese_steel",
         "multiple": 3
       }
-    ],
-    "fragment_description": "将金属#manganese#与#steel#共同熔炼，利用高温$roasting$制得具有极高韧性和耐磨性的#manganese_steel#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "steel_smelting",
@@ -2349,9 +2350,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "熔炼不锈钢",
     "key": "smelt_stainless_steel",
+    "name": "熔炼不锈钢",
     "description": "将钢、铬和镍按比例在高温下熔炼，形成耐腐蚀的不锈钢合金。",
+    "fragment_description": "将#steel#、#chromium#及#nickel#按特定比例熔炼，利用合金化效应制备具有强抗氧化性能的#stainless_steel#。",
+    "time_required": 30,
+    "required_era": "modern_chem",
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "blowing",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "steel",
@@ -2368,15 +2377,6 @@
         "isMain": true
       }
     ],
-    "required_container": "blast_furnace",
-    "required_actions": {
-      "key": "blowing",
-      "min": 1
-    },
-    "required_techs": [
-      "chrome_alloy_smithing"
-    ],
-    "time_required": 40,
     "products": [
       {
         "key": "stainless_steel",
@@ -2386,9 +2386,7 @@
         "key": "slag",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#steel#、#chromium#及#nickel#按特定比例熔炼，利用合金化效应制备具有强抗氧化性能的#stainless_steel#。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "name": "焙烧绿柱石",
@@ -5699,9 +5697,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "软锰矿制硫酸锰",
     "key": "manganese_sulfate_from_pyrolusite",
+    "name": "软锰矿制硫酸锰",
     "description": "将软锰矿与木炭粉混合，加入稀硫酸共热，还原溶解后过滤结晶。",
+    "fragment_description": "将 #pyrolusite# 和 #charcoal# 投入 #beaker#，加入 #dilute_sulfuric_acid# 后 $heating$，溶液渐呈淡粉色，趁热 $filtering$ 得清液。",
+    "time_required": 15,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "pyrolusite",
@@ -5717,17 +5723,6 @@
         "quantity": 3
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "dissolving",
-      "min": 1
-    },
-    "required_techs": [
-      "glassworking"
-    ],
-    "required_era": "modern_chem",
-    "time_required": 120,
-    "fragment_description": "将 #pyrolusite# 和 #charcoal# 投入 #beaker#，加入 #dilute_sulfuric_acid# 后 $heating$，溶液渐呈淡粉色，趁热 $filtering$ 得清液。",
     "products": [
       {
         "key": "manganese_sulfate",
@@ -5772,15 +5767,20 @@
         "key": "hydrochloric_acid",
         "multiple": 1
       }
-    ],
-    "required_techs": [
-      "glassworking"
     ]
   },
   {
-    "name": "硫酸氢钾热分解",
     "key": "potassium_pyrosulfate_decomposition",
+    "name": "硫酸氢钾热分解",
     "description": "将硫酸氢钾加热至熔融，分解释放出水，生成焦硫酸钾。",
+    "fragment_description": "将 #potassium_bisulfate# 放入 #crucible# 中 $heating$ 至红热，固体融化成粘稠液体，表面冒出白色蒸汽。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "crucible",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "potassium_bisulfate",
@@ -5788,17 +5788,6 @@
         "isMain": true
       }
     ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "glassworking"
-    ],
-    "required_era": "modern_chem",
-    "time_required": 60,
-    "fragment_description": "将 #potassium_bisulfate# 放入 #crucible# 中 $heating$ 至红热，固体融化成粘稠液体，表面冒出白色蒸汽。",
     "products": [
       {
         "key": "potassium_pyrosulfate",
