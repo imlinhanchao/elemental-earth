@@ -5067,9 +5067,17 @@
     ]
   },
   {
-    "name": "配置王水",
     "key": "mix_aqua_regia",
+    "name": "配置王水",
     "description": "将浓盐酸与浓硝酸按3:1的比例小心混合。产生的溶液具有极强的氧化能力。",
+    "fragment_description": "以#hydrochloric_acid#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "hydrochloric_acid",
@@ -5082,16 +5090,12 @@
         "isMain": true
       }
     ],
-    "required_container": "beaker",
-    "time_required": 5,
     "products": [
       {
         "key": "aqua_regia",
         "multiple": 4
       }
-    ],
-    "fragment_description": "以#hydrochloric_acid#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "dissolve_platinum_sand",
