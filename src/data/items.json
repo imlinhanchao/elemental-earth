@@ -420,18 +420,19 @@
     "is_discovery": true
   },
   {
-    "name": "集气瓶",
     "key": "gas_bottle",
+    "name": "集气瓶",
     "category": "容器",
     "description": "一种带有密封盖的玻璃容器，用于收集和储存气体。",
     "type": [
       "container"
     ],
     "durable": 1,
+    "milestone": "craft_gas_bottle",
     "attrs": {
+      "can_heat": true,
       "save_gas": true
-    },
-    "milestone": "craft_gas_bottle"
+    }
   },
   {
     "name": "氢气",
