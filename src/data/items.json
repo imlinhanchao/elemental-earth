@@ -1886,15 +1886,15 @@
     "elemental": 3
   },
   {
-    "name": "锂离子电池",
     "key": "lithium_ion_battery",
+    "name": "锂离子电池",
     "category": "工具",
     "description": "一种可充电电池，使用锂离子作为电荷载体，能量密度高，轻便且寿命长。",
     "type": [
       "tool",
       "battery"
     ],
-    "durable": 10
+    "durable": 100
   },
   {
     "name": "碳酸锂",
