@@ -1320,8 +1320,7 @@
     "products": [
       {
         "key": "concentrated_sulfuric_acid",
-        "multiple": 1,
-        "required_chain_operation": "condensation"
+        "multiple": 1
       }
     ]
   },
