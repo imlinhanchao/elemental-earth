@@ -6338,9 +6338,17 @@
     "required_era": "modern_chem"
   },
   {
-    "name": "铜粉除氧制氮",
     "key": "nitrogen_from_air_copper",
+    "name": "铜粉除氧制氮",
     "description": "使空气通过红热的铜粉，利用铜与氧气的反应分离出氮气。",
+    "fragment_description": "将#air#通入装有#copper#的装置并进行$heating$，利用铜的氧化反应提取#nitrogen#，同时得到#copper_oxide#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "autoclave",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "air",
@@ -6352,15 +6360,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "glass_distillation",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "gas_collection"
-    ],
-    "time_required": 15,
     "products": [
       {
         "key": "nitrogen",
@@ -6372,70 +6371,9 @@
         "multiple": 1
       }
     ],
-    "fragment_description": "将#air#通入装有#copper#的装置并进行$heating$，利用铜的氧化反应提取#nitrogen#，同时得到#copper_oxide#。",
-    "required_era": "modern_chem"
-  },
-  {
-    "key": "lanthanum_oxalate_precipitation",
-    "name": "草酸沉淀镧",
-    "description": "向镧富集液中加入草酸，使镧离子以草酸盐粉末的形式沉淀析出。",
-    "required_items": [
-      {
-        "key": "lanthanum_solution",
-        "quantity": 1,
-        "isMain": true
-      },
-      {
-        "key": "oxalic_acid",
-        "quantity": 2
-      }
-    ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
     "required_techs": [
-      "crystallization_tech"
-    ],
-    "time_required": 20,
-    "products": [
-      {
-        "key": "lanthanum_oxalate",
-        "multiple": 1
-      }
-    ],
-    "fragment_description": "将#lanthanum_solution#与#oxalic_acid#混合后进行$stirring$，析出#lanthanum_oxalate#。",
-    "required_era": "modern_chem"
-  },
-  {
-    "key": "calcine_lanthanum",
-    "name": "草酸镧煅烧",
-    "description": "在高温下煅烧草酸镧，分解产生氧化镧固体。",
-    "required_items": [
-      {
-        "key": "lanthanum_oxalate",
-        "quantity": 1,
-        "isMain": true
-      }
-    ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "crystallization_tech"
-    ],
-    "time_required": 40,
-    "products": [
-      {
-        "key": "lanthanum_oxide",
-        "multiple": 1
-      }
-    ],
-    "fragment_description": "将#lanthanum_oxalate#置于容器中进行$roasting$反应，分解得到#lanthanum_oxide#。",
-    "required_era": "modern_chem"
+      "gas_collection"
+    ]
   },
   {
     "key": "reduce_lanthanum",
@@ -6506,68 +6444,6 @@
     "required_techs": [
       "crystallization_tech"
     ]
-  },
-  {
-    "key": "cerium_oxalate_precipitation",
-    "name": "草酸沉淀铈",
-    "description": "向铈富集液中加入草酸，使铈离子以草酸盐粉末的形式沉淀析出。",
-    "required_items": [
-      {
-        "key": "cerium_solution",
-        "quantity": 1,
-        "isMain": true
-      },
-      {
-        "key": "oxalic_acid",
-        "quantity": 2
-      }
-    ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [
-      "crystallization_tech"
-    ],
-    "time_required": 20,
-    "products": [
-      {
-        "key": "cerium_oxalate",
-        "multiple": 1
-      }
-    ],
-    "fragment_description": "将#cerium_solution#与#oxalic_acid#混合后进行$stirring$，析出#cerium_oxalate#。",
-    "required_era": "modern_chem"
-  },
-  {
-    "key": "calcine_cerium",
-    "name": "草酸铈煅烧",
-    "description": "在高温下煅烧草酸铈，分解产生氧化铈固体。",
-    "required_items": [
-      {
-        "key": "cerium_oxalate",
-        "quantity": 1,
-        "isMain": true
-      }
-    ],
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [
-      "crystallization_tech"
-    ],
-    "time_required": 40,
-    "products": [
-      {
-        "key": "cerium_oxide",
-        "multiple": 1
-      }
-    ],
-    "fragment_description": "将#cerium_oxalate#置于容器中进行$roasting$反应，分解得到#cerium_oxide#。",
-    "required_era": "modern_chem"
   },
   {
     "key": "reduce_cerium",
@@ -6923,6 +6799,9 @@
         "key": "yttrium_nitrate",
         "multiple": 0.3
       }
+    ],
+    "required_techs": [
+      "crystallization_tech"
     ]
   },
   {

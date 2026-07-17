@@ -3088,14 +3088,6 @@
         "quantity": 1,
         "probability": 1000
       }
-    ],
-    "map": [
-      "mountain",
-      "river_side",
-      "forest",
-      "basin",
-      "beach",
-      "island"
     ]
   },
   {
