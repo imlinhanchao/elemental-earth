@@ -348,15 +348,8 @@
     "name": "静置/衰变",
     "description": "将物质在密封容器中长期静置，利用放射性元素的自然衰变产生子体产物。",
     "time_required": 300,
-    "requires_burning": false,
-    "required_item": [
-      {
-        "key": "gas_bottle",
-        "quantity": 1,
-        "use": 0.05
-      }
-    ],
     "milestone": "first_transmutation",
+    "requires_burning": false,
     "required_techs": [
       "nuclear_physics"
     ]

@@ -1121,7 +1121,7 @@
     "description": "将三氧化硫气体通入水中，生成稀硫酸。",
     "fragment_description": "将#sulfur_trioxide#通入水中进行吸收，利用水合反应生成强酸#dilute_sulfuric_acid#。",
     "time_required": 15,
-    "required_era": "stone",
+    "required_era": "modern_chem",
     "required_actions": {
       "key": "dissolving",
       "min": 1
@@ -1363,7 +1363,7 @@
     "description": "将硫磺、硝石和木炭按适当比例混合并碾磨，制成火药。",
     "fragment_description": "将#niter#、#charcoal#与#sulfur#按特定比例混合均匀并进行$grinding$处理，制得具有爆炸性的#gunpowder#。",
     "time_required": 20,
-    "required_era": "stone",
+    "required_era": "alchemy",
     "required_actions": {
       "key": "grinding",
       "min": 1
@@ -1426,9 +1426,16 @@
     "required_era": "alchemy"
   },
   {
-    "name": "熟化石灰",
     "key": "slake_lime",
+    "name": "熟化石灰",
     "description": "生石灰与水反应，放出大量热，生成熟石灰。",
+    "fragment_description": "将#quicklime#与#water#混合，利用剧烈的放热反应生成#slaked_lime#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "quicklime",
@@ -1440,25 +1447,25 @@
         "quantity": 1
       }
     ],
-    "required_container": null,
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 10,
     "products": [
       {
         "key": "slaked_lime",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#quicklime#与#water#混合，利用剧烈的放热反应生成#slaked_lime#。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "石灰石制取石膏",
     "key": "limestone_acid_reaction",
+    "name": "石灰石制取石膏",
     "description": "石灰石与稀硫酸反应，生成石膏和二氧化碳气体。",
+    "fragment_description": "使#limestone#与#dilute_sulfuric_acid#发生反应，生成#gypsum#并释放#carbon_dioxide#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "limestone",
@@ -1471,12 +1478,6 @@
         "isMain": true
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 15,
     "products": [
       {
         "key": "gypsum",
@@ -1487,9 +1488,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "使#limestone#与#dilute_sulfuric_acid#发生反应，生成#gypsum#并释放#carbon_dioxide#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "水泥制造",
@@ -1631,9 +1630,16 @@
     ]
   },
   {
-    "name": "制备漂白粉",
     "key": "bleaching_powder_production",
+    "name": "制备漂白粉",
     "description": "氯气与熟石灰反应生成漂白粉。",
+    "fragment_description": "利用#chlorine#与#slaked_lime#发生吸收反应，制备具有强氧化性的#bleaching_powder#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "chlorine",
@@ -1646,20 +1652,12 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "bleaching_powder",
         "multiple": 1
       }
-    ],
-    "fragment_description": "利用#chlorine#与#slaked_lime#发生吸收反应，制备具有强氧化性的#bleaching_powder#。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "reduce_pyrolusite",
@@ -2593,7 +2591,7 @@
     "description": "将钠投入水中，剧烈反应生成氢氧化钠和氢气。",
     "fragment_description": "使#sodium#单质与#water#接触，发生极剧烈的放热置换反应，生成#sodium_hydroxide#并释放大量#hydrogen#。",
     "time_required": 15,
-    "required_era": "stone",
+    "required_era": "electrochem",
     "required_actions": {
       "key": "dissolving",
       "min": 1
@@ -2622,9 +2620,16 @@
     ]
   },
   {
-    "name": "氢氧化钠与二氧化碳制碳酸钠",
     "key": "sodium_carbonate_from_hydroxide",
+    "name": "氢氧化钠与二氧化碳制碳酸钠",
     "description": "氢氧化钠溶液吸收二氧化碳，生成碳酸钠和水。",
+    "fragment_description": "将#carbon_dioxide#通入#sodium_hydroxide#溶液中，通过中和反应合成#sodium_carbonate#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "sodium_hydroxide",
@@ -2633,15 +2638,9 @@
       },
       {
         "key": "carbon_dioxide",
-        "quantity": 1,
-        "required_chain_operation": "gas_collecting_air"
+        "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 15,
     "products": [
       {
         "key": "sodium_carbonate",
@@ -2651,14 +2650,20 @@
         "key": "water",
         "multiple": 1
       }
-    ],
-    "fragment_description": "将#carbon_dioxide#通入#sodium_hydroxide#溶液中，通过中和反应合成#sodium_carbonate#。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "石灰石制氯化钙",
     "key": "calcium_chloride_from_limestone",
+    "name": "石灰石制氯化钙",
     "description": "将石灰石与盐酸反应，生成氯化钙、二氧化碳和水。",
+    "fragment_description": "使#limestone#充分溶解于#hydrochloric_acid#中，利用酸碱中和原理制备易溶的#calcium_chloride#。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "limestone",
@@ -2670,12 +2675,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 5,
     "products": [
       {
         "key": "calcium_chloride",
@@ -2690,9 +2689,7 @@
         "key": "water",
         "multiple": 1
       }
-    ],
-    "fragment_description": "使#limestone#充分溶解于#hydrochloric_acid#中，利用酸碱中和原理制备易溶的#calcium_chloride#。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "calcium_electrolysis",
@@ -2769,9 +2766,17 @@
     ]
   },
   {
-    "name": "碳酸化硫化钡",
     "key": "carbonate_barium_sulfide",
+    "name": "碳酸化硫化钡",
     "description": "将硫化钡与碳酸钠溶液混合，沉淀出碳酸钡。",
+    "fragment_description": "通过对#barium_sulfide#进行碳酸化处理，利用溶度积差异转化生成沉淀#barium_carbonate#。",
+    "time_required": 15,
+    "required_era": "electrochem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barium_sulfide",
@@ -2783,26 +2788,25 @@
         "quantity": 1
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "dissolving",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 20,
     "products": [
       {
         "key": "barium_carbonate",
         "multiple": 1
       }
-    ],
-    "fragment_description": "通过对#barium_sulfide#进行碳酸化处理，利用溶度积差异转化生成沉淀#barium_carbonate#。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "焙烧碳酸钡",
     "key": "roast_barium_carbonate",
+    "name": "焙烧碳酸钡",
     "description": "高温焙烧碳酸钡，分解得到氧化钡和二氧化碳。",
+    "fragment_description": "对#barium_carbonate#进行高温$roasting$热分解，使其转化为化学性质更稳定的#barium_oxide#。",
+    "time_required": 20,
+    "required_era": "electrochem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barium_carbonate",
@@ -2810,13 +2814,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "barium_oxide",
@@ -2827,14 +2824,20 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "对#barium_carbonate#进行高温$roasting$热分解，使其转化为化学性质更稳定的#barium_oxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
-    "name": "碳酸钡与盐酸反应",
     "key": "barium_carbonate_hcl",
+    "name": "碳酸钡与盐酸反应",
     "description": "碳酸钡与盐酸反应生成氯化钡、水和二氧化碳。",
+    "fragment_description": "使#barium_carbonate#充分溶于#hydrochloric_acid#，通过置换反应生成#barium_chloride#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "barium_carbonate",
@@ -2846,13 +2849,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 15,
     "products": [
       {
         "key": "barium_chloride",
@@ -2863,9 +2859,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "使#barium_carbonate#充分溶于#hydrochloric_acid#，通过置换反应生成#barium_chloride#。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "electrolysis_barium_chloride",
@@ -2908,7 +2902,7 @@
     "description": "碳酸钡与硝酸反应生成硝酸钡、水和二氧化碳。",
     "fragment_description": "利用#nitric_acid#溶解#barium_carbonate#，通过复分解反应制备可溶性强的#barium_nitrate#。",
     "time_required": 10,
-    "required_era": "stone",
+    "required_era": "modern_chem",
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
@@ -2972,7 +2966,9 @@
     "key": "saponification",
     "name": "皂化反应",
     "description": "将动物脂肪与碱水混合加热并搅拌，发生皂化反应生成甘油和肥皂。",
-    "time_required": 60,
+    "fragment_description": "利用强碱（如#sodium_hydroxide#）对#animal_fat#进行$stirring$碱性水解，发生皂化反应生成#soap#与甘油。",
+    "time_required": 10,
+    "required_era": "modern_chem",
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
@@ -2999,14 +2995,20 @@
         "key": "soap",
         "multiple": 1
       }
-    ],
-    "fragment_description": "利用强碱（如#sodium_hydroxide#）对#animal_fat#进行$stirring$碱性水解，发生皂化反应生成#soap#与甘油。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "硝化甘油制备",
     "key": "nitration",
+    "name": "硝化甘油制备",
     "description": "在低温下将甘油缓慢滴入浓硝酸和浓硫酸的混合酸中，经硝化反应生成硝化甘油的粗品，再用水洗涤得到纯品。",
+    "fragment_description": "在#concentrated_sulfuric_acid#的催化和吸水作用下，利用#nitric_acid#对有机物进行$stirring$硝化反应，生成#nitrocellulose#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "glycerol",
@@ -3024,12 +3026,6 @@
         "isMain": true
       }
     ],
-    "required_container": "clay_pot",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "nitroglycerin",
@@ -3039,9 +3035,7 @@
         "key": "water",
         "multiple": 2
       }
-    ],
-    "fragment_description": "在#concentrated_sulfuric_acid#的催化和吸水作用下，利用#nitric_acid#对有机物进行$stirring$硝化反应，生成#nitrocellulose#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "焙烧天青石制氧化锶",
@@ -3234,7 +3228,7 @@
     "description": "用盐酸溶解菱镁矿，生成氯化镁、水和二氧化碳。",
     "fragment_description": "使#magnesite#与#hydrochloric_acid#反应，通过溶解与反应制备电解所需的#magnesium_chloride#。",
     "time_required": 10,
-    "required_era": "stone",
+    "required_era": "electrochem",
     "required_container": "clay_pot",
     "required_actions": {
       "key": "stirring",
@@ -3439,9 +3433,16 @@
     "required_era": "rare_earth"
   },
   {
-    "name": "碳酸锂制备",
     "key": "lithium_carbonate_from_sulfate",
+    "name": "碳酸锂制备",
     "description": "硫酸锂溶液与碳酸钠反应，生成碳酸锂沉淀和硫酸钠。",
+    "fragment_description": "向#lithium_sulfate#溶液中加入碳酸钠，利用溶解度差异沉淀制取高纯度的#lithium_carbonate#。",
+    "time_required": 10,
+    "required_era": "electrochem",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lithium_sulfate",
@@ -3453,12 +3454,6 @@
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "lithium_carbonate",
@@ -3468,9 +3463,7 @@
         "key": "mirabilite",
         "multiple": 1
       }
-    ],
-    "fragment_description": "向#lithium_sulfate#溶液中加入碳酸钠，利用溶解度差异沉淀制取高纯度的#lithium_carbonate#。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "氢氧化锂制备",
@@ -3770,9 +3763,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "酸浸铯榴石制氯化铯溶液",
     "key": "leach_pollucite",
+    "name": "酸浸铯榴石制氯化铯溶液",
     "description": "将铯榴石与盐酸反应，生成氯化铯溶液和残渣。",
+    "fragment_description": "以#pollucite#为基础原料，在进行$dissolving$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 15,
+    "required_era": "electrochem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "dissolving",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "pollucite",
@@ -3784,12 +3785,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "dissolving",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "cesium_chloride_solution",
@@ -3799,14 +3794,20 @@
         "key": "silica_sand",
         "multiple": 0.5
       }
-    ],
-    "fragment_description": "以#pollucite#为基础原料，在进行$dissolving$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "蒸发氯化铯溶液",
     "key": "evaporate_cesium_chloride",
+    "name": "蒸发氯化铯溶液",
     "description": "加热蒸发氯化铯溶液，得到固体氯化铯。",
+    "fragment_description": "以#cesium_chloride_solution#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 100,
+    "required_era": "electrochem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "evaporation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "cesium_chloride_solution",
@@ -3814,20 +3815,12 @@
         "isMain": true
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "evaporation",
-      "min": 1
-    },
-    "time_required": 20,
     "products": [
       {
         "key": "cesium_chloride",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#cesium_chloride_solution#为基础原料，在进行$evaporation$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "electrolyze_cesium_chloride",
@@ -3870,7 +3863,7 @@
     "description": "将金属铯投入水中，剧烈反应生成氢氧化铯和氢气。",
     "fragment_description": "以#cesium#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
     "time_required": 10,
-    "required_era": "stone",
+    "required_era": "electrochem",
     "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
@@ -3900,9 +3893,17 @@
     ]
   },
   {
-    "name": "硼砂制硼酸",
     "key": "borax_to_boric_acid",
+    "name": "硼砂制硼酸",
     "description": "将硼砂溶于水，加入盐酸，搅拌后析出硼酸晶体。",
+    "fragment_description": "以#borax#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "borax",
@@ -3914,13 +3915,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "boric_acid",
@@ -3930,9 +3924,7 @@
         "key": "rock_salt",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#borax#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "钾还原硼酸",
@@ -4154,14 +4146,17 @@
     "required_era": "stone"
   },
   {
-    "name": "氯气置换溴",
     "key": "extract_bromine",
+    "name": "氯气置换溴",
     "description": "向浓缩卤水中通入氯气，氯气将溴离子氧化为溴单质。",
+    "fragment_description": "以#bittern#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
       "min": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "bittern",
@@ -4174,15 +4169,12 @@
         "isMain": true
       }
     ],
-    "time_required": 15,
     "products": [
       {
         "key": "bromine",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#bittern#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "extract_selenium_from_slime",
@@ -4352,14 +4344,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "初步处理钒铅矿",
     "key": "process_vanadinite",
+    "name": "初步处理钒铅矿",
     "description": "利用酸处理钒铅矿，初步分离出其中的铅并回收含钒的中间产物。",
+    "fragment_description": "以#vanadinite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
       "min": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "vanadinite",
@@ -4371,7 +4366,6 @@
         "quantity": 1
       }
     ],
-    "time_required": 40,
     "products": [
       {
         "key": "lead_oxide",
@@ -4381,20 +4375,20 @@
         "key": "vanadium",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#vanadinite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "硫酸浸出锌焙砂",
     "key": "leaching_zinc_oxide",
+    "name": "硫酸浸出锌焙砂",
     "description": "用稀硫酸浸出焙烧后的锌焙砂，得到含有硫酸锌及杂质的溶液。",
+    "fragment_description": "以#zinc_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
       "min": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "zinc_oxide",
@@ -4406,7 +4400,6 @@
         "quantity": 2
       }
     ],
-    "time_required": 30,
     "products": [
       {
         "key": "zinc_leaching_solution",
@@ -4416,20 +4409,20 @@
         "key": "zinc_leaching_residue",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#zinc_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "湿法置换提镉",
     "key": "cadmium_wet_displacement",
+    "name": "湿法置换提镉",
     "description": "向含有镉杂质的锌酸浸出液中加入锌粉，利用金属活动性差异将镉置换析出，并获得纯净的硫酸锌溶液。",
+    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
     "required_actions": {
       "key": "stirring",
       "min": 1
     },
-    "required_container": "beaker",
     "required_items": [
       {
         "key": "zinc_leaching_solution",
@@ -4441,7 +4434,6 @@
         "quantity": 1
       }
     ],
-    "time_required": 40,
     "products": [
       {
         "key": "cadmium",
@@ -4451,10 +4443,7 @@
         "key": "zinc_sulfate",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "锂云母酸解",
@@ -4567,9 +4556,17 @@
     ]
   },
   {
-    "name": "提炼硫酸铊",
     "key": "extract_thallium_sulfate",
+    "name": "提炼硫酸铊",
     "description": "用稀硫酸溶解红铊矿或工业烟尘中的铊，生成可溶的硫酸铊溶液。",
+    "fragment_description": "以#lorandite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lorandite",
@@ -4581,26 +4578,25 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 50,
     "products": [
       {
         "key": "thallium_sulfate",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#lorandite#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "置换沉铊",
     "key": "thallium_displacement",
+    "name": "置换沉铊",
     "description": "在硫酸铊溶液中加入锌片，利用置换反应将金属铊析出。注意：铊及其盐类具有剧毒。",
+    "fragment_description": "以#thallium_sulfate#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "thallium_sulfate",
@@ -4612,12 +4608,6 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 40,
     "products": [
       {
         "key": "thallium",
@@ -4627,10 +4617,7 @@
         "key": "zinc_sulfate",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#thallium_sulfate#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "thallium_electrolysis",
@@ -4671,9 +4658,17 @@
     ]
   },
   {
-    "name": "从溶液提铟",
     "key": "extract_indium",
+    "name": "从溶液提铟",
     "description": "向锌酸浸出液中加入还原铁粉或利用萃取法，将溶解在溶液中的铟离子分离提纯。",
+    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "zinc_leaching_solution",
@@ -4681,25 +4676,16 @@
         "isMain": true
       },
       {
-        "key": "iron",
+        "key": "pig_iron",
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 60,
     "products": [
       {
         "key": "indium",
         "multiple": 0.5
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#zinc_leaching_solution#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "extract_gallium",
@@ -4791,9 +4777,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "四氯化锗水解",
     "key": "germanium_hydrolysis",
+    "name": "四氯化锗水解",
     "description": "将四氯化锗液体加入水中进行水解反应，生成高纯度的二氧化锗沉淀。",
+    "fragment_description": "以#germanium_tetrachloride#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "germanium_tetrachloride",
@@ -4805,21 +4799,12 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "germanium_oxide",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#germanium_tetrachloride#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "氢还原提锗",
@@ -4853,9 +4838,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "提炼氧化钪",
     "key": "extract_scandium_oxide",
+    "name": "提炼氧化钪",
     "description": "从拜耳法处理铝土矿后的赤泥残渣中，通过强酸浸出和溶剂萃取，分离出高纯度的氧化钪。",
+    "fragment_description": "以#bauxite_residue#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "bauxite_residue",
@@ -4867,26 +4860,25 @@
         "quantity": 1
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 80,
     "products": [
       {
         "key": "scandium_oxide",
         "multiple": 0.2
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#bauxite_residue#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
-    "name": "氟化法制氟化钪",
     "key": "scandium_fluorination",
+    "name": "氟化法制氟化钪",
     "description": "将氧化钪与氢氟酸反应，转化为氟化钪，为后续的金属还原做准备。",
+    "fragment_description": "以#scandium_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "iron_tank",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "scandium_oxide",
@@ -4898,21 +4890,12 @@
         "quantity": 1
       }
     ],
-    "required_container": "iron_tank",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "time_required": 40,
     "products": [
       {
         "key": "scandium_fluoride",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#scandium_oxide#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "name": "镁还原提钪",
@@ -5169,10 +5152,13 @@
     "key": "produce_ferrous_sulfate",
     "name": "生产硫酸亚铁",
     "description": "利用铁屑与稀硫酸反应制备硫酸亚铁。",
-    "time_required": 20,
+    "fragment_description": "以#pig_iron#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
     "required_container": "beaker",
     "required_actions": {
-      "key": "stirring"
+      "key": "stirring",
+      "min": 1
     },
     "required_items": [
       {
@@ -5190,19 +5176,19 @@
         "key": "ferrous_sulfate",
         "multiple": 2
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#pig_iron#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "produce_ammonium_chloride",
     "name": "生产氯化铵",
     "description": "氨水与盐酸反应制备氯化铵。",
-    "time_required": 15,
+    "fragment_description": "以#ammonia#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "modern_chem",
     "required_container": "beaker",
     "required_actions": {
-      "key": "stirring"
+      "key": "stirring",
+      "min": 1
     },
     "required_items": [
       {
@@ -5220,10 +5206,7 @@
         "key": "ammonium_chloride",
         "multiple": 2
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#ammonia#为基础原料，在进行$stirring$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "stone"
+    ]
   },
   {
     "key": "refine_gold_step",
@@ -6481,6 +6464,8 @@
     "key": "monazite_leaching",
     "name": "独居石酸浸处理",
     "description": "浓硫酸高温分解独居石，冰水溶解后过滤除去放射性钍渣。",
+    "time_required": 50,
+    "required_era": "rare_earth",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "stirring",
@@ -6493,7 +6478,7 @@
         "isMain": true
       },
       {
-        "key": "sulfuric_acid",
+        "key": "concentrated_sulfuric_acid",
         "quantity": 2
       }
     ],
@@ -6506,9 +6491,7 @@
         "key": "thorium_residue",
         "multiple": 1
       }
-    ],
-    "time_required": 20,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "rare_earth_oxalate_pp",
@@ -6832,6 +6815,8 @@
     "key": "chlorinate_lanthanum_oxide",
     "name": "氧化镧氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "time_required": 30,
+    "required_era": "rare_earth",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -6844,7 +6829,7 @@
         "isMain": true
       },
       {
-        "key": "activated_carbon",
+        "key": "activated_charcoal",
         "quantity": 1
       },
       {
@@ -6857,9 +6842,7 @@
         "key": "lanthanum_chloride",
         "multiple": 1.2
       }
-    ],
-    "time_required": 40,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "electrolyze_lanthanum_chloride",
@@ -6916,6 +6899,8 @@
     "key": "chlorinate_cerium_oxide",
     "name": "氧化铈氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "time_required": 30,
+    "required_era": "rare_earth",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -6928,7 +6913,7 @@
         "isMain": true
       },
       {
-        "key": "activated_carbon",
+        "key": "activated_charcoal",
         "quantity": 1
       },
       {
@@ -6941,9 +6926,7 @@
         "key": "cerium_chloride",
         "multiple": 1.2
       }
-    ],
-    "time_required": 40,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "electrolyze_cerium_chloride",
@@ -7000,6 +6983,8 @@
     "key": "chlorinate_praseodymium_oxide",
     "name": "氧化镨氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "time_required": 30,
+    "required_era": "rare_earth",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -7012,7 +6997,7 @@
         "isMain": true
       },
       {
-        "key": "activated_carbon",
+        "key": "activated_charcoal",
         "quantity": 1
       },
       {
@@ -7025,9 +7010,7 @@
         "key": "praseodymium_chloride",
         "multiple": 1.2
       }
-    ],
-    "time_required": 40,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "electrolyze_praseodymium_chloride",
@@ -7084,6 +7067,8 @@
     "key": "chlorinate_neodymium_oxide",
     "name": "氧化钕氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "time_required": 30,
+    "required_era": "rare_earth",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -7096,7 +7081,7 @@
         "isMain": true
       },
       {
-        "key": "activated_carbon",
+        "key": "activated_charcoal",
         "quantity": 1
       },
       {
@@ -7109,9 +7094,7 @@
         "key": "neodymium_chloride",
         "multiple": 1.2
       }
-    ],
-    "time_required": 40,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "electrolyze_neodymium_chloride",
