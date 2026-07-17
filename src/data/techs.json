@@ -478,7 +478,6 @@
     "name": "精密机械",
     "description": "掌握了制造精密零件和机械结构的技术，是现代工业的基石。",
     "time_required": 30,
-    "milestone": "rare_earth",
     "required_items": [
       {
         "key": "steel",

@@ -12,7 +12,7 @@ const items = packStore.getItems;
 const techs = packStore.getTechs;
 
 /** 分类显示顺序 */
-const categoryOrder = ["材料", "矿石", "燃料", "火源", "工具", "容器", "气体", "液体"];
+const categoryOrder = ["材料", "矿石", "气体", "液体", "燃料", "火源", "容器", "工具"];
 const searchQuery = ref("");
 const enableSearch = ref(false);
 

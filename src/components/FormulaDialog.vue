@@ -225,22 +225,6 @@ const neededChainOperations = computed(() => {
   })
 })
 
-watch(() => props.visible, (v) => {
-  if (v) {
-    batches.value = 1
-    // 默认选中每一项材料的第一个可用选项
-    selectedMaterials.value = (formula.value?.required_items || []).map(req => {
-      const opts = materialOptions(req)
-      return opts.length > 0 ? opts[0].key : null
-    })
-    selectedContainer.value = null
-    selectedFireSource.value = null
-    selectedPowerSource.value = null
-    selectedChainOperations.value = new Set()
-    fuelMap.value = new Map()
-  }
-})
-
 /** 某组材料的可选选项（考虑预期收益） */
 function materialOptions(req: IFormula['required_items'][number]) {
   const keys = Array.isArray(req.key) ? req.key : [req.key]
@@ -436,6 +420,24 @@ const totalTime = computed(() => {
     if (op) t += op.time_required * batches.value
   }
   return t
+})
+
+watch(() => props.visible, (v) => {
+  if (v) {
+    batches.value = 1
+    // 默认选中每一项材料的第一个可用选项
+    selectedMaterials.value = (formula.value?.required_items || []).map(req => {
+      const opts = materialOptions(req)
+      return opts.length > 0 ? opts[0].key : null
+    })
+    // 自动选中容器、火种及电源（如果有的话）
+    selectedContainer.value = containerOptions.value.length > 0 ? containerOptions.value[0].key : null
+    selectedFireSource.value = fireSourceOptions.value.length > 0 ? fireSourceOptions.value[0].key : null
+    selectedPowerSource.value = powerSourceOptions.value.length > 0 ? powerSourceOptions.value[0].key : null
+    
+    selectedChainOperations.value = new Set()
+    fuelMap.value = new Map()
+  }
 })
 
 // ─── 校验 ──────────────────────────────────────────────────────
