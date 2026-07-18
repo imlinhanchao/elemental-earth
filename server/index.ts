@@ -80,44 +80,41 @@ app.use((_req: Request, res: Response, next) => {
 // Admin 认证
 // ============================================================
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
-const ADMIN_TOKEN = ADMIN_PASSWORD ? createHmac('sha256', 'admin-salt').update(ADMIN_PASSWORD).digest('hex') : '';
+const BASE_URL = 'http://127.0.0.1:5174';
 
 /** 验证 admin 请求的 token */
-function requireAdmin(req: Request, res: Response, next: () => void) {
-  if (!ADMIN_TOKEN) {
-    res.status(503).json({ error: '后台未配置密码（ADMIN_PASSWORD）' });
-    return;
-  }
+async function requireAdmin(req: Request, res: Response, next: () => void) {
   const auth = req.headers.authorization || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
+
+  if (!token) {
+    res.status(401).json({ error: '未认证' });
+    return;
+  }
+
   try {
-    const buf1 = Buffer.from(token);
-    const buf2 = Buffer.from(ADMIN_TOKEN);
-    if (buf1.length !== buf2.length || !timingSafeEqual(buf1, buf2)) {
+    // 调用平台接口验证 Token & 获取用户信息
+    const verifyRes = await fetch(`${BASE_URL}/api/user/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    if (!verifyRes.ok) {
       res.status(401).json({ error: '认证失败' });
       return;
     }
-  } catch {
-    res.status(401).json({ error: '认证失败' });
-    return;
-  }
-  next();
-}
 
-/** 登录 */
-app.post('/api/admin/login', (req: Request, res: Response) => {
-  const { password } = req.body as { password?: string };
-  if (!password || !ADMIN_PASSWORD) {
-    res.status(401).json({ error: '认证失败' });
-    return;
+    const user = await verifyRes.json() as { isAdmin?: boolean };
+    if (!user.isAdmin) {
+      res.status(403).json({ error: '无权操作：需要管理员权限' });
+      return;
+    }
+
+    next();
+  } catch (e) {
+    console.error('鉴权中心连接失败:', e);
+    res.status(503).json({ error: '鉴权服务不可用' });
   }
-  if (password !== ADMIN_PASSWORD) {
-    res.status(401).json({ error: '密码错误' });
-    return;
-  }
-  res.json({ success: true, token: ADMIN_TOKEN });
-});
+}
 
 // ============================================================
 // API 路由

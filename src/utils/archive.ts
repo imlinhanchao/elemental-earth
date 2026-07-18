@@ -10,6 +10,7 @@ import type { ITask } from '@/stores/modules/task';
 import type { ILog } from '@/stores/modules/log';
 import { ref } from 'vue';
 import { shortTime } from './date';
+import { gameSDK } from './sdk';
 
 const storage = new EncryptedStorage();
 const SAVE_KEY = 'game_save_data';
@@ -77,6 +78,7 @@ export function saveGame(): boolean {
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
+
     return true;
   } catch (e) {
     console.error('保存游戏失败:', e);
@@ -232,22 +234,24 @@ export function downloadSaveData(): void {
 }
 
 /** 从 base64 字符串导入存档 */
-export function importSaveDataFromText(text: string): boolean {
+export function importSaveDataFromText(text: string, silent: boolean = false): boolean {
   try {
     const raw = decodeURIComponent(escape(atob(text.trim())));
     // 校验：AES 加密数据以 "U2FsdGVkX1" 的 base64 形式开头
     if (!raw.startsWith('U2FsdGVkX1')) {
-      alert('无效的存档数据：格式不正确');
+      if (!silent) alert('无效的存档数据：格式不正确');
       return false;
     }
     stopAutoSave();
     const fullKey = 'es_' + SAVE_KEY;
     localStorage.setItem(fullKey, raw);
-    alert('存档已导入，页面将重新加载');
+    if (!silent) {
+      alert('存档已导入，页面将重新加载');
+    }
     window.location.reload();
     return true;
   } catch (e) {
-    alert('导入失败: ' + (e as Error).message);
+    if (!silent) alert('导入失败: ' + (e as Error).message);
     return false;
   }
 }
@@ -299,6 +303,107 @@ export function getLastSavedLabel(): string {
   const elapsed = Math.floor((Date.now() - lastSavedTime.value) / 1000);
   if (elapsed < 5) return '刚刚保存';
   return `${shortTime(elapsed)}前保存`;
+}
+
+/** 手动上传存档到云端 */
+export async function uploadCloudArchive(): Promise<boolean> {
+  if (!gameSDK.getToken()) {
+    alert('请先登录后再进行云端同步');
+    return false;
+  }
+  
+  try {
+    // 确保本地先保存一次最新的
+    saveGame();
+    
+    const encrypted = localStorage.getItem('es_' + SAVE_KEY);
+    if (!encrypted) {
+      alert('没有本地存档可供上传');
+      return false;
+    }
+    
+    const base64 = btoa(unescape(encodeURIComponent(encrypted)));
+    await gameSDK.saveArchive(base64);
+    alert('存档云端同步成功');
+    return true;
+  } catch (e) {
+    console.error('上传存档失败:', e);
+    alert('上传失败: ' + (e as Error).message);
+    return false;
+  }
+}
+
+/** 手动从云端拉取存档 */
+export async function pullCloudArchive(): Promise<boolean> {
+  if (!gameSDK.getToken()) {
+    alert('请先登录后再进行云端同步');
+    return false;
+  }
+  
+  try {
+    const cloudArchive = await gameSDK.getArchive();
+    if (!cloudArchive) {
+      alert('云端没有找到存档记录');
+      return false;
+    }
+    
+    const { content: cloudBase64, updatedAt } = cloudArchive;
+    const timeStr = new Date(updatedAt).toLocaleString();
+    
+    if (confirm(`确定要从云端拉取存档吗？\n\n云端时间：${timeStr}\n注意：拉取后将覆盖当前本地进度并重新加载页面。`)) {
+      return importSaveDataFromText(cloudBase64, false);
+    }
+    return false;
+  } catch (e) {
+    console.error('拉取存档失败:', e);
+    alert('拉取失败: ' + (e as Error).message);
+    return false;
+  }
+}
+
+/**
+ * 同步云端存档
+ * @param silent - 是否静默同步。若为 true (自动同步)，仅当云端更新时静默拉取；若为 false (刚登录)，只要有差异就弹窗提醒。
+ */
+export async function syncCloudArchive(silent: boolean = false): Promise<void> {
+  if (!gameSDK.getToken()) return;
+
+  try {
+    const cloudArchive = await gameSDK.getArchive();
+    if (!cloudArchive) {
+      // 云端没有存档，将当前本地存档上传
+      if (!silent) saveGame();
+      return;
+    }
+
+    const { content: cloudBase64, updatedAt } = cloudArchive;
+    const cloudTime = new Date(updatedAt).getTime();
+    
+    // 获取本地状态用于对比
+    const localEncrypted = localStorage.getItem('es_' + SAVE_KEY);
+    const localBase64 = localEncrypted ? btoa(unescape(encodeURIComponent(localEncrypted))) : null;
+    const localData = storage.getItem<SaveData>(SAVE_KEY);
+    const localTime = localData ? localData.timestamp : 0;
+
+    // 如果内容一致，无需任何操作
+    if (cloudBase64 === localBase64) return;
+
+    if (!silent) {
+      // 刚登录情况：无论时间戳，只要内容不同就提醒
+      const timeStr = new Date(cloudTime).toLocaleString();
+      if (confirm(`发现云端有存档（更新于 ${timeStr}），是否同步到本地？\n\n注意：此操作将覆盖当前本地进度。`)) {
+        importSaveDataFromText(cloudBase64, false);
+      }
+    } else {
+      // 页面加载自动同步：只有云端比本地新时才静默同步
+      if (cloudTime > localTime) {
+        console.log('检测到云端存档较新，正在静默同步...');
+        importSaveDataFromText(cloudBase64, true);
+      }
+    }
+  } catch (e) {
+    console.error('同步云端存档失败:', e);
+  }
 }
 
 let autoSaveTimer: ReturnType<typeof setInterval> | null = null;

@@ -90,7 +90,7 @@ function openEraModal() {
           v-if="displayEra" 
         >
           <div 
-            class="badge badge-soft badge-accent border-accent gap-1 ml-2 cursor-pointer relative tooltip tooltip-bottom indicator overflow-hidden !bg-transparent" 
+            class="badge badge-soft badge-accent border-accent gap-1 ml-2 cursor-pointer relative tooltip tooltip-bottom indicator overflow-hidden bg-transparent!"
             @click="openEraModal"
             data-tip="点击查看纪元进度"
           >

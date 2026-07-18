@@ -6,6 +6,9 @@ import Icon from "@/components/Icon.vue";
 import { setupStore } from '@/stores/'
 import 'virtual:svg-icons-register'
 import { registerSW } from 'virtual:pwa-register'
+import { gameSDK } from '@/utils/sdk'
+
+export { gameSDK }
 
 const updateServiceWorker = registerSW({
   onNeedRefresh() {

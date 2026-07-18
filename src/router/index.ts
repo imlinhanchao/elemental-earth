@@ -56,7 +56,6 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../layouts/AdminLayout.vue'),
     redirect: '/admin/dashboard',
     children: [
-      { path: 'login',     name: 'AdminLogin',     component: () => import('../views/admin/AdminLogin.vue') },
       { path: 'dashboard', name: 'AdminDashboard',  component: () => import('../views/admin/AdminDashboard.vue') },
       { path: 'ai',        name: 'AdminAi',         component: () => import('../views/admin/AiGenerator.vue') },
       // 每种数据类型独立路由和组件
@@ -73,6 +72,13 @@ export const routes: RouteRecordRaw[] = [
       { path: 'tips',      name: 'AdminTips',       component: () => import('../views/admin/types/TipsView.vue') },
     ],
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginView.vue'),
+    meta: { tab: 'login', label: '登录', hidden: true },
+  },
+
 ]
 
 const router = createRouter({
@@ -83,8 +89,7 @@ const router = createRouter({
 // ─── 路由守卫：未登录时跳转登录页 ────────────────────────────
 router.beforeEach((to) => {
   if (to.path.startsWith('/admin')) {
-    if (to.name === 'AdminLogin') return true
-    if (!isAdminLoggedIn()) return { name: 'AdminLogin' }
+    if (!isAdminLoggedIn()) return { name: 'Login' }
   }
   return true
 })

@@ -5,6 +5,54 @@
       设置
     </h2>
 
+    <!-- Account -->
+    <div class="card bg-base-200 shadow">
+      <div class="card-body">
+        <h2 class="card-title text-base">账户</h2>
+        <div v-if="accountLoading" class="flex justify-center py-2">
+          <span class="loading loading-spinner loading-sm"></span>
+        </div>
+        <div v-else-if="user" class="space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img :src="user.avatar" />
+              </div>
+            </div>
+            <div class="grow">
+              <div class="font-bold text-sm">{{ user.nickname }}</div>
+              <div class="text-xs text-base-content/60">@{{ user.username }}</div>
+            </div>
+            <button class="btn btn-ghost btn-sm text-error" @click="handleLogout">退出</button>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="btn btn-primary btn-sm gap-2" @click="handleUploadCloud">
+              <Icon icon="tabler:cloud-upload" />
+              上传存档
+            </button>
+            <button class="btn btn-outline btn-sm gap-2" @click="handlePullCloud">
+              <Icon icon="tabler:cloud-download" />
+              拉取存档
+            </button>
+          </div>
+          
+          <div v-if="user.isAdmin" class="pt-2 border-t border-base-300">
+            <router-link to="/admin" class="btn btn-neutral btn-sm w-full gap-2">
+              <Icon icon="material-symbols:admin-panel-settings" />
+              进入后台管理
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <p class="text-xs text-base-content/60 mb-3">登录后可将存档同步至云端，多端同步进度。</p>
+          <button class="btn btn-primary btn-sm w-full gap-2" @click="handleLogin">
+            <Icon icon="tabler:login" />
+            通过摸鱼派登录
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Theme -->
     <div class="card bg-base-200 shadow">
       <div class="card-body">
@@ -150,11 +198,61 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useAppStore } from '../stores/modules/app'
-import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave } from '@/utils/archive'
+import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave, syncCloudArchive, uploadCloudArchive, pullCloudArchive } from '@/utils/archive'
+import { gameSDK as sdk } from '@/utils/sdk'
+import type { UserInfo } from 'fish-ball-sdk'
 
 const appStore = useAppStore()
+
+// ─── 账户 ────────────────────────────────────────────────
+const user = ref<UserInfo | null>(null)
+const accountLoading = ref(true)
+
+async function checkLogin() {
+  accountLoading.value = true
+  try {
+    if (await sdk.isAuthenticated()) {
+      user.value = await sdk.getUserProfile()
+    } else {
+      user.value = null
+    }
+  } catch (e) {
+    console.error('检查登录状态失败:', e)
+  } finally {
+    accountLoading.value = false
+  }
+}
+
+onMounted(async () => {
+  // App.vue 已经负责处理了 initAuth 和全局同步
+  // 这里仅刷新 UI
+  await checkLogin()
+})
+
+async function handleLogin() {
+  try {
+    await sdk.login()
+  } catch (e) {
+    alert('登录失败: ' + (e as Error).message)
+  }
+}
+
+async function handleLogout() {
+  if (confirm('确定要退出登录吗？')) {
+    sdk.logout()
+    user.value = null
+  }
+}
+
+async function handleUploadCloud() {
+  await uploadCloudArchive()
+}
+
+async function handlePullCloud() {
+  await pullCloudArchive()
+}
 
 // ─── 导出 ────────────────────────────────────────────────
 const showExport = ref(false)

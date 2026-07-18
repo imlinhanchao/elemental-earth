@@ -38,6 +38,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdminStore } from '@/stores/modules/admin'
+import { gameSDK } from '@/main'
 
 const router = useRouter()
 const admin = useAdminStore()
@@ -48,5 +49,5 @@ onMounted(async () => {
   models.value = await res.json()
 })
 
-function logout() { admin.logout(); router.push('/admin') }
+function logout() { gameSDK.logout(); router.push('/login') }
 </script>
