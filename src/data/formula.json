@@ -3729,9 +3729,17 @@
     ]
   },
   {
-    "name": "制备雷酸汞",
     "key": "produce_mercury_fulminate",
+    "name": "制备雷酸汞",
     "description": "将汞与硝酸反应，再经加热处理得到雷酸汞。",
+    "fragment_description": "以#mercury#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "mercury",
@@ -3744,23 +3752,12 @@
         "isMain": true
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "required_techs": [
-      "detonation_tech"
-    ],
-    "time_required": 20,
     "products": [
       {
         "key": "mercury_fulminate",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#mercury#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "leach_pollucite",
