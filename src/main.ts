@@ -42,7 +42,10 @@ const updateServiceWorker = registerSW({
 
 // 每 60 分钟检查一次更新
 setInterval(() => {
-  updateServiceWorker();
+  // 仅在非开发环境下自动检查
+  if (import.meta.env.PROD) {
+    updateServiceWorker();
+  }
 }, 60 * 60 * 1000);
 
 async function bootstrap() {
