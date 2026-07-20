@@ -35,10 +35,11 @@ const eraTabs = computed(() => [
 ]);
 
 const allFragments = computed(() => {
-    let frags = fragmentStore.fragments.map(key => {
+    let frags = fragmentStore.fragments.map((key, index) => {
         const formula = Formulas.find(f => f.key === key);
         return {
             key,
+            index,
             formula,
             isUnread: fragmentStore.isUnread(key),
             isProven: packStore.hasProvenFormula(key)
@@ -51,12 +52,16 @@ const allFragments = computed(() => {
     }
 
     frags = frags.sort((a, b) => {
-        // 先按是否已解锁排序，未解锁的在前
+        // 1. 未读的手稿放在最前 (新解锁)
+        if (a.isUnread !== b.isUnread) {
+            return a.isUnread ? -1 : 1;
+        }
+        // 2. 未实验成功的放在前面
         if (a.isProven !== b.isProven) {
             return a.isProven ? 1 : -1;
         }
-        // 如果状态相同，保持原有顺序（或可以按 key 排序）
-        return 0;
+        // 3. 同样的各种状态下，按获取顺序倒序（新获得的在前）
+        return b.index - a.index;
     });
 
     if (!searchQuery.value.trim()) return frags;
@@ -211,7 +216,7 @@ onMounted(() => {
 
 <template>
   <div class="manuscripts-view flex flex-col h-full overflow-hidden">
-    <header class="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-3 flex-none">
+    <header class="my-4 flex flex-col md:flex-row md:items-center justify-between gap-3 flex-none">
       <div class="flex items-center justify-between">
         <h1 class="text-xl font-bold flex items-center gap-2">
           <Icon icon="mingcute:document-fill" class="text-primary" />
@@ -268,7 +273,7 @@ onMounted(() => {
 
     <div v-else class="flex-1 flex gap-4 overflow-hidden min-h-0">
       <!-- 列表侧栏 -->
-      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto px-1 pb-1 custom-scrollbar">
+      <div class="w-1/3 lg:w-1/4 flex flex-col gap-2 overflow-y-auto px-1 py-1 custom-scrollbar">
         <div 
           v-for="frag in allFragments" 
           :key="frag.key"
