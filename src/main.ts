@@ -12,8 +12,12 @@ export { gameSDK }
 
 const updateServiceWorker = registerSW({
   onNeedRefresh() {
+    // 如果已经存在提示，则不再创建
+    if (document.getElementById('pwa-refresh-toast')) return;
+
     // 创建一个提示框
     const toast = document.createElement('div');
+    toast.id = 'pwa-refresh-toast';
     toast.className = 'toast toast-top toast-center z-[10000]';
     toast.innerHTML = `
       <div class="alert shadow-2xl bg-base-100 border-2 border-info items-center">
@@ -34,6 +38,11 @@ const updateServiceWorker = registerSW({
     console.log('离线环境已就绪');
   },
 })
+
+// 每 60 分钟检查一次更新
+setInterval(() => {
+  updateServiceWorker();
+}, 60 * 60 * 1000);
 
 async function bootstrap() {
   const app = createApp(App)

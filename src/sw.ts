@@ -1,7 +1,15 @@
 /// <reference lib="webworker" />
-import { precacheAndRoute } from 'workbox-precaching'
+import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
+import { clientsClaim } from 'workbox-core'
 
 declare let self: ServiceWorkerGlobalScope
+
+// 跳过等待，立即激活
+self.skipWaiting()
+clientsClaim()
+
+// 清理旧版本的缓存
+cleanupOutdatedCaches()
 
 // 预缓存由 VitePWA 自动生成的静态资源
 precacheAndRoute(self.__WB_MANIFEST)
