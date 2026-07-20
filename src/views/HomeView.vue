@@ -130,24 +130,26 @@
 <template>
   <div class="flex flex-col gap-3">
     <!-- 搜索栏 -->
-    <div class="relative w-full mb-1 input input-sm input-bordered ">
-      <div class="flex items-center pointer-events-none opacity-50">
-        <Icon icon="tabler:search" class="text-sm" />
+    <header class="sticky bg-base-100 py-2 -top-6 z-1000">
+      <div class="w-full mb-1 input input-sm input-bordered">
+         <div class="flex items-center pointer-events-none opacity-50">
+           <Icon icon="tabler:search" class="text-sm" />
+         </div>
+         <input 
+           v-model="searchQuery" 
+           type="text" 
+           placeholder="搜索行动或配方..." 
+           class="w-full"
+         />
+         <button 
+           v-if="searchQuery" 
+           class="flex items-center opacity-50 hover:opacity-100 transition-opacity"
+           @click="searchQuery = ''"
+         >
+           <Icon icon="tabler:x" class="text-xs" />
+         </button>
       </div>
-      <input 
-        v-model="searchQuery" 
-        type="text" 
-        placeholder="搜索行动或配方..." 
-        class="w-full"
-      />
-      <button 
-        v-if="searchQuery" 
-        class="flex items-center opacity-50 hover:opacity-100 transition-opacity"
-        @click="searchQuery = ''"
-      >
-        <Icon icon="tabler:x" class="text-xs" />
-      </button>
-    </div>
+    </header>
 
     <div v-if="provenFormulas.length === 0 && groupedActions.length === 0 && searchQuery" class="py-12 text-center opacity-50">
       <Icon icon="tabler:search-off" class="text-3xl mx-auto mb-2" />
