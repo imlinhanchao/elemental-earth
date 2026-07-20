@@ -11,7 +11,9 @@ import { gameSDK } from '@/utils/sdk'
 export { gameSDK }
 
 const updateServiceWorker = registerSW({
+  immediate: true,
   onNeedRefresh() {
+    debugger;
     // 如果已经存在提示，则不再创建
     if (document.getElementById('pwa-refresh-toast')) return;
 

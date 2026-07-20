@@ -23,6 +23,7 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.ts',
       registerType: 'prompt',
+      injectRegister: 'script',
       includeAssets: ['icons.svg'],
       manifest: {
         name: '元素纪元',
