@@ -13,7 +13,6 @@ export { gameSDK }
 const updateServiceWorker = registerSW({
   immediate: true,
   onNeedRefresh() {
-    debugger;
     // 如果已经存在提示，则不再创建
     if (document.getElementById('pwa-refresh-toast')) return;
 
@@ -26,7 +25,7 @@ const updateServiceWorker = registerSW({
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         <div class="flex items-center gap-4">
           <span class="text-sm font-bold">发现新版本内容，立即刷新以同步最新版本！</span>
-          <button class="btn btn-sm btn-info text-white rounded-md px-4" id="pwa-refresh-btn">立即更新</button>
+          <button class="btn btn-sm btn-primary rounded-md px-4" id="pwa-refresh-btn">立即更新</button>
         </div>
       </div>
     `;

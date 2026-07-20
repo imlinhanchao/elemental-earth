@@ -4,8 +4,13 @@ import { clientsClaim } from 'workbox-core'
 
 declare let self: ServiceWorkerGlobalScope
 
-// 跳过等待，立即激活
-self.skipWaiting()
+// 监听消息，配合 registerSW({ registerType: 'prompt' }) 实现手动更新
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
+})
+
 clientsClaim()
 
 // 清理旧版本的缓存
