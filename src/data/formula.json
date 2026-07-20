@@ -8773,5 +8773,40 @@
         "multiple": 0.012
       }
     ]
+  },
+  {
+    "key": "sulfur_dioxide_catalytic_oxidation",
+    "name": "二氧化硫催化氧化",
+    "description": "在铂铑催化剂存在下，将二氧化硫与氧气加热反应生成三氧化硫。",
+    "time_required": 10,
+    "required_container": "sealed_tube",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "sulfur_dioxide",
+        "quantity": 2
+      },
+      {
+        "key": "oxygen",
+        "quantity": 1
+      },
+      {
+        "key": "platinum_rhodium_catalyst",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "sulfur_trioxide",
+        "multiple": 2
+      },
+      {
+        "key": "platinum_rhodium_catalyst",
+        "multiple": 1
+      }
+    ]
   }
 ]

@@ -2943,10 +2943,11 @@
     "time_required": 30
   },
   {
-    "name": "制作铂铑催化剂",
     "key": "craft_platinum_rhodium_catalyst",
+    "name": "制作铂铑催化剂",
     "category": "制作",
     "description": "将铂金锭和铑熔融拉丝制成催化网。",
+    "time_required": 60,
     "required_items": [
       {
         "key": "platinum_ingot",
@@ -2959,16 +2960,12 @@
         "use": 0.01
       }
     ],
-    "required_techs": [
-      "catalysis"
-    ],
     "rewards": [
       {
         "key": "platinum_rhodium_catalyst",
         "quantity": 1
       }
-    ],
-    "time_required": 60
+    ]
   },
   {
     "key": "collect_air",
