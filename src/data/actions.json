@@ -1586,8 +1586,7 @@
           5,
           10
         ],
-        "probability": 900,
-        "guaranteed": true
+        "probability": 900
       },
       {
         "key": "gold_sand",
@@ -1601,6 +1600,13 @@
         "quantity": 1,
         "probability": 20,
         "required_era": "rare_earth",
+        "map": [
+          "beach"
+        ]
+      },
+      {
+        "key": "quartz",
+        "probability": 500,
         "map": [
           "beach"
         ]
