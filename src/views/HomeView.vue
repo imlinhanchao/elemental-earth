@@ -130,7 +130,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <!-- 搜索栏 -->
-    <header class="sticky bg-base-100 py-2 -top-6 z-1000">
+    <header class="sticky bg-base-100 py-2 -top-6 z-99">
       <div class="w-full mb-1 input input-sm input-bordered">
          <div class="flex items-center pointer-events-none opacity-50">
            <Icon icon="tabler:search" class="text-sm" />
