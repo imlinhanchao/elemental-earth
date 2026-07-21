@@ -34,7 +34,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'production',
         name: 'Production',
         component: () => import('../views/ProductionView.vue'),
-        meta: { tab: 'production', label: '生产线', icon: 'fluent:factory-16-filled' },
+        meta: { tab: 'production', label: '生产线', icon: 'hugeicons:factory' },
       },
       {
         path: 'explore',

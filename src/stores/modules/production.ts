@@ -6,6 +6,7 @@ import { useStateStore } from './state'
 import { useToastStore } from './toast'
 import { Formulas } from '@/data/formula'
 import { Actions } from '@/data/actions'
+import { Items } from '@/data/items'
 
 export interface IProductionLineStep {
   type: 'action' | 'formula';
@@ -30,6 +31,10 @@ export const useProductionStore = defineStore('production', () => {
   const packStore = usePackStore();
   const stateStore = useStateStore();
   const toastStore = useToastStore();
+
+  function getItem(key: string) {
+    return Items.find(i => i.key === key)
+  }
 
   function addStepToDraft(step: Omit<IProductionLineStep, 'count'>, count: number = 1) {
     draftSteps.push({ ...step, count });
@@ -62,6 +67,71 @@ export const useProductionStore = defineStore('production', () => {
     }
   }
 
+  function editProductionLine(line: IProductionLine) {
+    clearDraft();
+    draftSteps.push(...JSON.parse(JSON.stringify(line.steps)));
+    toastStore.addToast(`已加载生产线 ${line.name} 到草稿区`);
+  }
+
+  function getNetRequirements(steps: IProductionLineStep[], multiplier: number = 1) {
+    const net: Record<string, { name: string, quantity: number, totalUse: number, isDurable: boolean }> = {};
+
+    for (const step of steps) {
+      const stepMultiplier = (step.count || 1) * multiplier;
+      
+      // Add requirements
+      const requirements = step.payload?.required_items || [];
+      for (const req of requirements) {
+        const key = req.key;
+        if (!net[key]) {
+          const itemDef = getItem(key);
+          net[key] = { 
+            name: packStore.getDisplayName(key), 
+            quantity: 0, 
+            totalUse: 0,
+            isDurable: itemDef?.type.some(t => ['tool', 'container', 'battery'].includes(t)) || false
+          };
+        }
+        
+        if (req.use) {
+          net[key].totalUse += req.use * stepMultiplier;
+        } else {
+          net[key].quantity += req.quantity * stepMultiplier;
+        }
+      }
+
+      // Subtract guaranteed outputs
+      if (step.type === 'action') {
+        const action = Actions.find(a => a.key === step.key);
+        if (action) {
+          const guaranteed = action.rewards.filter(r => r.guaranteed);
+          for (const g of guaranteed) {
+            if (!net[g.key]) {
+              net[g.key] = { name: packStore.getDisplayName(g.key), quantity: 0, totalUse: 0, isDurable: false };
+            }
+            const qty = Array.isArray(g.quantity) ? g.quantity[0] : (g.quantity || 1);
+            net[g.key].quantity -= qty * stepMultiplier;
+          }
+        }
+      } else if (step.type === 'formula') {
+        const products = step.payload?.rewards || [];
+        for (const p of products) {
+          if (!net[p.key]) {
+            net[p.key] = { name: packStore.getDisplayName(p.key), quantity: 0, totalUse: 0, isDurable: false };
+          }
+          const qty = Array.isArray(p.quantity) ? p.quantity[0] : (p.quantity || 1);
+          net[p.key].quantity -= qty * stepMultiplier;
+        }
+      }
+    }
+
+    // Filter out materials with key ending in _fire
+    return Object.fromEntries(
+      Object.entries(net)
+        .filter(([k, v]) => (v.quantity > 0 || v.totalUse > 0) && !k.endsWith('_fire'))
+    );
+  }
+
   function executeProductionLine(id: string, multiplier: number = 1) {
     const line = productionLines.find(l => l.id === id);
     if (!line) return;
@@ -86,6 +156,7 @@ export const useProductionStore = defineStore('production', () => {
           // Since we want reproducibility, we should have saved the materials in payload
           taskStore.pushTask({
             ...action,
+            id: `prod-${line.id}-${step.key}-${Date.now()}-${i}-${Math.random().toString(36).slice(2, 7)}`,
             required_items: step.payload?.required_items || action.required_items
           });
           addedCount++;
@@ -97,7 +168,10 @@ export const useProductionStore = defineStore('production', () => {
         for (let i = 0; i < totalCount; i++) {
           if (taskStore.tasks.length >= 100) break;
           if (step.payload) {
-            taskStore.pushLabTask(step.payload);
+            taskStore.pushLabTask({
+              ...step.payload,
+              id: `prod-${line.id}-${step.key}-${Date.now()}-${i}-${Math.random().toString(36).slice(2, 7)}`
+            });
             addedCount++;
           }
         }
@@ -134,6 +208,8 @@ export const useProductionStore = defineStore('production', () => {
     saveProductionLine,
     removeProductionLine,
     executeProductionLine,
-    validateMapCompatibility
+    validateMapCompatibility,
+    editProductionLine,
+    getNetRequirements
   }
 })

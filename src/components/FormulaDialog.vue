@@ -151,6 +151,7 @@
                 v-if="packStore.hasTech('production_tech')"
                 class="btn btn-outline btn-secondary"
                 @click="addToProductionLine"
+                :disabled="!canConfirm"
               >
                 + 生产线
               </button>
@@ -273,7 +274,6 @@ function addToProductionLine() {
     payload
   }, batches.value)
 
-  emit('close')
 }
 
 // ─── 基础数据 ──────────────────────────────────────────────────
@@ -684,8 +684,7 @@ function cancel() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.3);
   padding: 16px;
 }
 

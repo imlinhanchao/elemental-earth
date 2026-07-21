@@ -415,7 +415,7 @@ export const useTaskStore = defineStore('task', () => {
     }, 100); // 每秒检查一次任务状态
   }
   const getTasks = computed(() => tasks);
-  const pushTask = (task: IAction|ITech) => {
+  const pushTask = (task: IAction|ITech & { id?: string }) => {
     if (task.required_items.length) {
       if (!canPerformWithProjection(task.required_items)) {
         logStore.addLog(`无法将任务 ${task.name} 加入队列，预期材料不足`, 'warning');

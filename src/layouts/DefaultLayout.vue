@@ -13,13 +13,13 @@
       ></div>
 
       <!-- Left Sidebar -->
-      <Left :class="{ 'absolute inset-y-0 left-0 z-30 shadow-2xl': appStore.isMobile }" />
+      <Left :class="{ 'absolute inset-y-0 left-0 z-99 shadow-2xl': appStore.isMobile }" />
 
       <!-- Main / Center Column -->
       <Content />
 
       <!-- Right Sidebar -->
-      <Right :class="{ 'absolute inset-y-0 right-0 z-30 shadow-2xl': appStore.isMobile }" />
+      <Right :class="{ 'absolute inset-y-0 right-0 z-99 shadow-2xl': appStore.isMobile }" />
     </div>
 
     <!-- 游戏特效/弹窗/引导/日志 -->

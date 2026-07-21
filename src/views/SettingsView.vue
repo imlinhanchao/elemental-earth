@@ -202,7 +202,7 @@ import { ref, watch, onMounted } from 'vue'
 import { useAppStore } from '../stores/modules/app'
 import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave, syncCloudArchive, uploadCloudArchive, pullCloudArchive } from '@/utils/archive'
 import { gameSDK as sdk } from '@/utils/sdk'
-import type { UserInfo } from 'fish-ball-sdk'
+import type { UserInfo } from 'fishpi-play'
 
 const appStore = useAppStore()
 

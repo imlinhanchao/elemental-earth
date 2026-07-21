@@ -5,12 +5,17 @@ import { useAppStore } from '@/stores/modules/app'
 import { useTaskStore, type ITask } from '@/stores/modules/task'
 import { useLogStore } from '@/stores/modules/log'
 import { useTutorialStore } from '@/stores/modules/tutorial'
+import { useProductionStore } from '@/stores/modules/production'
 import { watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router'
 
 const appStore = useAppStore()
 const taskStore = useTaskStore()
 const logStore = useLogStore()
 const tutorialStore = useTutorialStore()
+const productionStore = useProductionStore()
+const router = useRouter()
+const route = useRoute()
 const tasks = taskStore.getTasks
 
 watch(
@@ -93,6 +98,10 @@ const typeEntries = computed(() =>
     logStore.logs.some(l => l.type === type)
   )
 )
+
+const showDraftModule = computed(() => {
+  return productionStore.draftSteps.length > 0 && route.name !== 'Production'
+})
 </script>
 
 <template>
@@ -103,6 +112,30 @@ const typeEntries = computed(() =>
             tutorialStore.isTutorialActive ? 'z-[100]' : ''
         ]"
     >
+        <!-- 核心草稿提示 -->
+        <section v-if="showDraftModule" class="mb-4 bg-primary/5 rounded-xl border border-primary/20 overflow-hidden shrink-0">
+          <header class="bg-primary/10 px-3 py-2 flex items-center justify-between">
+            <div class="text-[10px] font-bold text-primary flex items-center gap-1.5 uppercase tracking-wider">
+              <Icon icon="icon-park-outline:robot-two" />
+              <span>生产线草稿</span>
+            </div>
+            <button @click="router.push('/production')" class="btn btn-ghost btn-xs text-primary scale-90">
+              去保存
+            </button>
+          </header>
+          <div class="p-2 space-y-1">
+            <div v-for="(step, idx) in productionStore.draftSteps.slice(0, 5)" :key="idx" class="flex items-center gap-2 text-[10px] opacity-70">
+              <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
+                    class="text-[9px]" :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
+              <span class="truncate">{{ step.name }}</span>
+              <span v-if="step.count > 1" class="font-bold">x{{ step.count }}</span>
+            </div>
+            <div v-if="productionStore.draftSteps.length > 5" class="text-[9px] opacity-40 italic pl-4">
+              等 {{ productionStore.draftSteps.length }} 个步骤...
+            </div>
+          </div>
+        </section>
+
         <!-- 上半：任务队列 -->
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
             <header class="bg-base-100 sticky top-0 z-10 flex items-center justify-between">

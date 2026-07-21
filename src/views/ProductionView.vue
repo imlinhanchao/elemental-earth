@@ -5,6 +5,7 @@ import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
 import { Maps } from '@/data/maps'
+import { Items } from '@/data/items'
 import Icon from '@/components/Icon.vue'
 
 const productionStore = useProductionStore()
@@ -14,6 +15,37 @@ const taskStore = useTaskStore()
 
 const newName = ref('')
 const selectedCycles = ref(1)
+
+const draftNetRequirements = computed(() => {
+  return productionStore.getNetRequirements(productionStore.draftSteps, 1)
+})
+
+function isInsufficient(key: string, req: { quantity: number, totalUse: number, isDurable: boolean }) {
+  const item = packStore.items.find(i => i.key === key)
+  if (!item) return true
+
+  if (req.isDurable && req.totalUse > 0) {
+    const itemDef = Items.find(i => i.key === key)
+    const maxDurable = itemDef?.durable || 1
+    // Total available durability = (full stacks) * maxDurable + current active item durability
+    const totalAvailable = (item.quantity - 1) * maxDurable + item.durable
+    if (totalAvailable < req.totalUse) return true
+  }
+
+  // If quantity is required (including cases where totalUse was satisfied or not applicable)
+  if (req.quantity > 0 && item.quantity < req.quantity) return true
+
+  return false
+}
+
+function handleEdit(line: any) {
+  productionStore.editProductionLine(line)
+  if (!newName.value) {
+    newName.value = line.name
+  }
+  // Scroll to draft areas
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 function handleSaveDraft() {
   if (!newName.value || productionStore.draftSteps.length === 0) return
@@ -35,7 +67,7 @@ function getMapName(key: string) {
     <!-- 头部说明 -->
     <div class="flex items-center gap-4 mb-4 lg:mb-8 mt-2">
       <div class="bg-primary px-3 py-3 rounded-2xl flex items-center justify-center">
-        <Icon icon="fluent:factory-16-filled" class="text-3xl text-primary-content" />
+        <Icon icon="icon-park-outline:robot-two" class="text-3xl text-primary-content" />
       </div>
       <div>
         <h1 class="text-2xl lg:text-3xl font-bold">自动化生产线</h1>
@@ -83,6 +115,23 @@ function getMapName(key: string) {
             </li>
           </ul>
 
+          <!-- 合计需求 -->
+          <div v-if="Object.keys(draftNetRequirements).length > 0" class="bg-base-300/30 rounded-xl p-3 border border-base-300/50">
+            <div class="text-[10px] uppercase tracking-wider font-bold opacity-40 mb-2">预估单次循环净需求 (含容器/能源)</div>
+            <div class="flex flex-wrap gap-2">
+              <div v-for="(req, key) in draftNetRequirements" :key="key" 
+                   class="badge badge-sm gap-1.5 py-2.5 transition-colors"
+                   :class="isInsufficient(key as string, req) ? 'badge-error text-error-content' : 'badge-neutral'">
+                <span class="opacity-70">{{ req.name }}</span>
+                <span class="font-mono font-bold">
+                  {{ req.quantity > 0 ? '×' + req.quantity : '' }}
+                  {{ req.totalUse > 0 ? '(耐' + req.totalUse.toFixed(2) + ')' : '' }}
+                </span>
+                <Icon v-if="isInsufficient(key as string, req)" icon="fluent:warning-12-filled" class="text-[10px]" />
+              </div>
+            </div>
+          </div>
+
           <!-- 保存表单 -->
           <div class="flex flex-col sm:flex-row gap-3 items-end pt-4">
             <label class="floating-label grow w-full">
@@ -125,19 +174,52 @@ function getMapName(key: string) {
                 {{ line.name }}
               </h3>
               <div class="flex gap-1">
+                <button @click="handleEdit(line)" class="btn btn-ghost btn-xs btn-square text-primary/60 hover:text-primary tooltip" data-tip="编辑">
+                   <Icon icon="fluent:edit-12-regular" />
+                </button>
                 <button @click="productionStore.removeProductionLine(line.id)" class="btn btn-ghost btn-xs btn-square text-error/60 hover:text-error">
                    <Icon icon="fluent:delete-12-regular" />
                 </button>
               </div>
             </div>
 
-            <!-- 步骤展示 -->
-            <div class="text-xs space-y-1 mb-4 opacity-70">
-              <div v-for="(step, idx) in line.steps.slice(0, 3)" :key="idx" class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-base-300 flex items-center justify-center text-[8px] font-bold">{{ idx+1 }}</span>
-                <span class="truncate">{{ step.name }}</span>
+            <!-- 需求展示 (已创建产线) -->
+            <div class="mb-4">
+              <div class="collapse collapse-arrow bg-base-200/50 rounded-xl border border-base-300">
+                <input type="checkbox" />
+                <div class="collapse-title py-2 px-4 min-h-0 text-[11px] font-bold opacity-60">
+                  预估总量物料清单 (循环 {{ selectedCycles }} 次)
+                </div>
+                <div class="collapse-content px-4 pb-3">
+                  <div class="flex flex-wrap gap-1.5 pt-2">
+                    <template v-for="(req, key) in productionStore.getNetRequirements(line.steps, selectedCycles)" :key="key">
+                      <div class="flex items-center gap-1 bg-base-100 px-2 py-0.5 rounded border border-base-300 text-[10px] transition-colors"
+                           :class="isInsufficient(key as string, req) ? 'text-error border-error/50 bg-error/5' : ''">
+                        <span>{{ req.name }}</span>
+                        <span class="font-mono font-bold" :class="isInsufficient(key as string, req) ? '' : 'text-primary'">
+                          {{ req.quantity > 0 ? '×' + req.quantity : '' }}
+                          {{ req.totalUse > 0 ? '(耐' + req.totalUse.toFixed(2) + ')' : '' }}
+                        </span>
+                        <Icon v-if="isInsufficient(key as string, req)" icon="fluent:warning-12-filled" />
+                      </div>
+                    </template>
+                    <div v-if="Object.keys(productionStore.getNetRequirements(line.steps, selectedCycles)).length === 0" class="text-[10px] opacity-40 italic">
+                      无净物料需求
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div v-if="line.steps.length > 3" class="pl-5 italic">等 {{ line.steps.length }} 个步骤...</div>
+            </div>
+
+            <!-- 步骤展示 (缩减版) -->
+            <div class="text-[10px] space-y-1 mb-3 opacity-60">
+              <div v-for="(step, idx) in line.steps.slice(0, 3)" :key="idx" class="flex items-center gap-1.5">
+                <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
+                      class="text-[10px]" :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
+                <span class="truncate">{{ step.name }}</span>
+                <span v-if="step.count > 1" class="text-primary font-bold">x{{ step.count }}</span>
+              </div>
+              <div v-if="line.steps.length > 3" class="pl-4 italic">等 {{ line.steps.length }} 个步骤...</div>
             </div>
 
             <!-- 地图适配警示 -->
