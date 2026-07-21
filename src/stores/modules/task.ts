@@ -277,9 +277,6 @@ export const useTaskStore = defineStore('task', () => {
             }
         }
         task.materials_locked = true;
-        // 锁定后重新计算时间，确保从现在开始计时
-        task.begin_time = Date.now();
-        recalculateStartTimes();
       } else {
         // 材料不足，销毁任务
         const missingStr = missingItems.join('、');
