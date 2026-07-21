@@ -584,7 +584,7 @@ const canConfirm = computed(() => {
           break
         }
       }
-      if (packStore.getTotalDurability(selectedContainer.value) < containerUse * batches.value) return false
+      if (packStore.getTotalDurability(selectedContainer.value) <= containerUse * batches.value) return false
     }
   }
 
