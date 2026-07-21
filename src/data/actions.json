@@ -1537,7 +1537,7 @@
     "key": "craft_brass_condenser",
     "name": "制作冷凝管",
     "category": "制作",
-    "description": "将黄铜锻造成螺旋冷凝管，用于实验室蒸馏。",
+    "description": "将黄铜或玻璃锻造成螺旋冷凝管，用于实验室蒸馏。",
     "time_required": 45,
     "required_items": [
       {
