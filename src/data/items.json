@@ -3588,13 +3588,16 @@
   {
     "key": "evaporating_dish",
     "name": "蒸发皿",
+    "category": "工具",
+    "description": "用于浓缩溶液的瓷质器皿。",
     "type": [
       "tool",
       "container"
     ],
-    "category": "工具",
-    "description": "用于浓缩溶液的瓷质器皿。",
-    "durable": 50
+    "durable": 50,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "key": "sealed_tube",
@@ -4059,5 +4062,43 @@
     "type": [
       "tool"
     ]
+  },
+  {
+    "name": "硫酸镉",
+    "key": "cadmium_sulfate",
+    "category": "材料",
+    "description": "白色晶体粉末，易溶于水，溶液有甜味但剧毒。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氢氧化镍",
+    "key": "nickel_hydroxide",
+    "category": "材料",
+    "description": "翠绿色粉末，不溶于水，常用于电池正极材料。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "name": "氢氧化镉",
+    "key": "cadmium_hydroxide",
+    "category": "材料",
+    "description": "白色粉末，不溶于水，遇酸分解，用于电池负极。",
+    "type": [
+      "material"
+    ]
+  },
+  {
+    "key": "nickel_cadmium_battery",
+    "name": "镍镉电池",
+    "category": "工具",
+    "description": "一种可充电电池，正极为氢氧化镍，负极为镉，电解液为氢氧化钾。耐用且能承受大电流放电。",
+    "type": [
+      "tool",
+      "battery"
+    ],
+    "durable": 50
   }
 ]

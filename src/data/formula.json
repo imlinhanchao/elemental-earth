@@ -8807,5 +8807,112 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "name": "制取硫酸镉",
+    "key": "cadmium_sulfate_production",
+    "description": "将镉与稀硫酸反应，生成硫酸镉和氢气。",
+    "required_items": [
+      {
+        "key": "cadmium",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 30,
+    "fragment_description": "将 #cadmium# 碎块投入盛有 #dilute_sulfuric_acid# 的烧杯中，$stirring$，金属溶解并冒出气泡，溶液变为无色。",
+    "products": [
+      {
+        "key": "cadmium_sulfate",
+        "multiple": 1
+      },
+      {
+        "key": "hydrogen",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "沉淀氢氧化镍",
+    "key": "nickel_hydroxide_precipitation",
+    "description": "向硫酸镍溶液中加入氢氧化钾，生成氢氧化镍沉淀。",
+    "required_items": [
+      {
+        "key": "nickel_sulfate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 30,
+    "fragment_description": "将 #nickel_sulfate# 溶液与 #potassium_hydroxide# 混合，$stirring$，立即生成翠绿色沉淀。",
+    "products": [
+      {
+        "key": "nickel_hydroxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "沉淀氢氧化镉",
+    "key": "cadmium_hydroxide_precipitation",
+    "description": "向硫酸镉溶液中加入氢氧化钾，生成氢氧化镉沉淀。",
+    "required_items": [
+      {
+        "key": "cadmium_sulfate",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 2
+      }
+    ],
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "electrochemistry"
+    ],
+    "required_era": "modern_chem",
+    "time_required": 30,
+    "fragment_description": "将 #cadmium_sulfate# 溶液与 #potassium_hydroxide# 混合，$stirring$，产生白色沉淀。",
+    "products": [
+      {
+        "key": "cadmium_hydroxide",
+        "multiple": 1
+      }
+    ]
   }
 ]

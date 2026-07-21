@@ -3428,5 +3428,65 @@
     "required_techs": [
       "precision_machinery"
     ]
+  },
+  {
+    "name": "制作镍镉电池",
+    "key": "craft_nickel_cadmium_battery",
+    "category": "制作",
+    "description": "将氢氧化镍、镉粉和氢氧化钾电解液组装成镍镉电池。",
+    "required_items": [
+      {
+        "key": "nickel_hydroxide",
+        "quantity": 2,
+        "use": 0
+      },
+      {
+        "key": "cadmium",
+        "quantity": 1,
+        "use": 0
+      },
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 1,
+        "use": 0
+      }
+    ],
+    "required_techs": [
+      "nickel_cadmium_battery_tech"
+    ],
+    "rewards": [
+      {
+        "key": "nickel_cadmium_battery",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ],
+    "time_required": 30
+  },
+  {
+    "key": "nickel_chrome_battery_charging",
+    "name": "镍铬电池充电",
+    "category": "制作",
+    "description": "可对镍铬充电电池进行充电，恢复满电",
+    "time_required": 100,
+    "required_items": [
+      {
+        "key": "nickel_cadmium_battery",
+        "quantity": 1,
+        "use": 1
+      },
+      {
+        "key": "battery",
+        "quantity": 5,
+        "use": 1.02
+      }
+    ],
+    "rewards": [
+      {
+        "key": "nickel_cadmium_battery",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ]
   }
 ]
