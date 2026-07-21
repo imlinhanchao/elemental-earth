@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { useTaskStore, type ITask } from '@/stores/modules/task';
+  import { useAppStore } from '@/stores/modules/app';
   import { shortTime } from '@/utils/date';
-  import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   const props = defineProps<{
     task: ITask;
@@ -11,15 +12,8 @@
   }>();
 
   const taskStore = useTaskStore();
-  const now = ref(Date.now());
-  onMounted(() => {
-    const timer = setInterval(() => {
-      now.value = Date.now();
-    }, 1000);
-    onBeforeUnmount(() => {
-      clearInterval(timer);
-    });
-  });
+  const appStore = useAppStore();
+  const now = computed(() => appStore.tick);
 
   const cost = computed(() => {
     if (!props.task) return 0;

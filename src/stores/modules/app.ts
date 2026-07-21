@@ -46,6 +46,31 @@ export const useAppStore = defineStore('app', () => {
   const hardMode = ref<boolean>(config?.hardMode ?? false)
   const foldTasks = ref<boolean>(config?.foldTasks ?? true)
 
+  // 全局计时器 (Worker)
+  const tick = ref(Date.now())
+  const tickCallbacks = new Set<(time: number) => void>()
+  let worker: Worker | null = null
+  
+  if (typeof window !== 'undefined') {
+    const blob = new Blob([`
+      setInterval(() => {
+        self.postMessage(Date.now());
+      }, 1000);
+    `], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    worker = new Worker(url);
+    worker.onmessage = (e) => {
+      const time = e.data;
+      tick.value = time;
+      tickCallbacks.forEach(cb => cb(time));
+    };
+  }
+
+  function onTick(cb: (time: number) => void) {
+    tickCallbacks.add(cb);
+    return () => tickCallbacks.delete(cb);
+  }
+
   // 动画状态
   const showLabSuccess = ref(false)
   const labSuccessFormula = ref<string | null>(null)
@@ -123,7 +148,8 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     theme, isDarkTheme, leftSidebarOpen, rightSidebarOpen, isMobile, isReady,
-    taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode, foldTasks,
+    taskNotifyMode, desktopPush, notifyOnlyHidden, hardMode, foldTasks, tick,
+    onTick,
     showLabSuccess, labSuccessFormula, labSuccessProducts,
     toggleTheme, toggleLeftSidebar, toggleRightSidebar, toggleFoldTasks,
     toggleDesktopPush, setTaskNotifyMode, toggleNotifyOnlyHidden, toggleHardMode,

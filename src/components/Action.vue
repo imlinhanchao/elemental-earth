@@ -6,6 +6,7 @@
   import { useTaskStore } from '@/stores/modules/task';
   import { useStateStore } from '@/stores/modules/state';
   import { useProductionStore } from '@/stores/modules/production';
+  import { useAppStore } from '@/stores/modules/app';
   import { computed, ref, onBeforeUnmount } from 'vue';
   import { useEventListener } from '@vueuse/core'
 
@@ -17,20 +18,21 @@
   const taskStore = useTaskStore();
   const stateStore = useStateStore();
   const productionStore = useProductionStore();
+  const appStore = useAppStore();
 
   // ─── 冷却时间 ────────────────────────────────────────────────
   const cooldownRemaining = ref(0)
-  let cooldownTimer: ReturnType<typeof setInterval> | null = null
 
   function updateCooldown() {
     cooldownRemaining.value = packStore.getCooldownRemaining(props.data.key)
   }
 
-  // 每秒刷新冷却倒计时
-  if (cooldownTimer) clearInterval(cooldownTimer)
-  cooldownTimer = setInterval(updateCooldown, 1000)
+  // 接入全局 Worker 计时器
+  const cleanupTick = appStore.onTick(() => {
+    updateCooldown();
+  });
   updateCooldown()
-  onBeforeUnmount(() => { if (cooldownTimer) clearInterval(cooldownTimer) })
+  onBeforeUnmount(() => { cleanupTick() })
 
   // ─── 替代材料选择 ────────────────────────────────────────────
   /** 是否有替代材料配置 */

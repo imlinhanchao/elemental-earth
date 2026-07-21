@@ -29,9 +29,12 @@ export interface ITask extends IAction {
 
 export const useTaskStore = defineStore('task', () => {
   const tasks = reactive<ITask[]>([]);
+  const appStore = useAppStore();
   const stateStore = useStateStore();
   const packStore = usePackStore();
   const logStore = useLogStore();
+
+  const now = computed(() => appStore.tick);
 
   /** 时代进度带来的时间减免倍率 */
   const timeMultiplier = computed(() => {
@@ -214,17 +217,17 @@ export const useTaskStore = defineStore('task', () => {
     recalculateStartTimes();
   });
 
-  function taskLoop() {
-    setInterval(async () => {
-      const now = Date.now();
-      const task = tasks[0];
-      if (!task) return; // 没有任务，跳过检查
+  /** 检查并处理任务完成 */
+  async function checkAndProcessTasks(currentTime?: number) {
+    const now = currentTime || Date.now();
+    const task = tasks[0];
+    if (!task) return; // 没有任务，跳过检查
 
-      // 检查并锁定材料（如果尚未锁定）
-      if (!task.materials_locked) {
-        const missingItems: string[] = [];
-        const finalK: string[] = []; // 存储实际选择的替代品 key
-        if (task.required_items.length) {
+    // 检查并锁定材料（如果尚未锁定）
+    if (!task.materials_locked) {
+      const missingItems: string[] = [];
+      const finalK: string[] = []; // 存储实际选择的替代品 key
+      if (task.required_items.length) {
           for (const req of task.required_items) {
             const keys = Array.isArray(req.key) ? req.key : [req.key];
             // 检查每种可能的材料（替代品）
@@ -262,165 +265,164 @@ export const useTaskStore = defineStore('task', () => {
               finalK.push(matchedKey);
             }
           }
-        }
+      }
 
-        if (missingItems.length === 0) {
-          // 锁定材料：扣除物品
-          if (task.required_items.length) {
+      if (missingItems.length === 0) {
+        // 锁定材料：扣除物品
+        if (task.required_items.length) {
             for (let i = 0; i < task.required_items.length; i++) {
               const req = task.required_items[i];
               const k = finalK[i];
               packStore.removeItem(k, req.quantity, req.use);
             }
-          }
-          task.materials_locked = true;
-          // 锁定后重新计算时间，确保从现在开始计时
-          task.begin_time = Date.now();
-          recalculateStartTimes();
-        } else {
-          // 材料不足，销毁任务
-          const missingStr = missingItems.join('、');
-          logStore.addLog(`任务 ${task.name} 的资源 [${missingStr}] 在开始执行时已不足，任务已被销毁`, 'warning');
-          notifyTaskComplete('任务销毁', `资源不足: ${task.name} [${missingStr}]`);
-          tasks.splice(0, 1);
-          recalculateStartTimes();
-          return;
         }
+        task.materials_locked = true;
+        // 锁定后重新计算时间，确保从现在开始计时
+        task.begin_time = Date.now();
+        recalculateStartTimes();
+      } else {
+        // 材料不足，销毁任务
+        const missingStr = missingItems.join('、');
+        logStore.addLog(`任务 ${task.name} 的资源 [${missingStr}] 在开始执行时已不足，任务已被销毁`, 'warning');
+        notifyTaskComplete('任务销毁', `资源不足: ${task.name} [${missingStr}]`);
+        tasks.splice(0, 1);
+        recalculateStartTimes();
+        return;
       }
+  }
 
-      if (now - task.begin_time >= task.time_required * timeMultiplier.value * 1000) {
-        if (task.type === 'action') {
-          // 标记行动为已执行
-          packStore.addPerformedAction(task.key);
-          // 记录统计数据
-          stateStore.recordAction(task.key);
+    if (now - task.begin_time >= task.time_required * timeMultiplier.value * 1000) {
+      if (task.type === 'action') {
+        // 标记行动为已执行
+        packStore.addPerformedAction(task.key);
+        // 记录统计数据
+        stateStore.recordAction(task.key);
 
-          // 必定掉落的奖励（并行，不受随机抽选影响）
-          const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);
-          const currentMap = stateStore.getMap?.key || '';
-          const guaranteedRewards = task.rewards.filter(r => {
-            if (!r.guaranteed) return false;
-            // 地图限制
-            if (r.map) {
-              const onMap = r.map.some(m => {
-                const mapKey = typeof m === 'string' ? m : m.key;
-                return mapKey === currentMap;
+        // 必定掉落的奖励（并行，不受随机抽选影响）
+        const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);
+        const currentMap = stateStore.getMap?.key || '';
+        const guaranteedRewards = task.rewards.filter(r => {
+          if (!r.guaranteed) return false;
+          // 地图限制
+          if (r.map) {
+            const onMap = r.map.some(m => {
+              const mapKey = typeof m === 'string' ? m : m.key;
+              return mapKey === currentMap;
+            });
+            if (!onMap) return false;
+          }
+          // 消耗品限制
+          if (r.required_item) {
+            const required = Array.isArray(r.required_item) ? r.required_item : [r.required_item];
+            const met = required.some(k => consumedKeys.includes(k));
+            if (!met) return false;
+          }
+          // 时代限制
+          if (r.required_era) {
+            const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+            const currentEraOrder = currentEraObj?.order ?? 0;
+            const reqEra = Eras.find(e => e.key === r.required_era);
+            if (reqEra && currentEraOrder < reqEra.order) return false;
+          }
+          return true;
+      });
+
+        for (const gr of guaranteedRewards) {
+          const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity || 1;
+          if (packStore.addItem(gr.key, qty)) {
+            logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
+          }
+        }
+        // 设置冷却
+        if (task.cooldown) {
+          packStore.setCooldown(task.key, task.cooldown)
+        }
+        const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
+        if (reward) {
+          const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
+          if (packStore.addItem(reward.key, quantity)) {
+            logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+          }
+          notifyTaskComplete(task.name, `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
+        } else {
+          logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
+          notifyTaskComplete(task.name, '未获得奖励');
+        }
+
+        // 手稿（碎片）掉落逻辑
+        if (stateStore.state.currentEra !== 'stone' && ['挖掘', '爆破', '定向爆破'].includes(task.name)) {
+          const chance = 0.1 + Math.random() * 0.05; // 10%-15%
+          if (Math.random() < chance) {
+            const fragmentStore = useFragmentStore();
+            const { Formulas } = await import('@/data/formula');
+
+            const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+            const currentOrder = currentEraObj?.order ?? 0;
+
+            const eligibleFormulas = Formulas.filter(f => {
+              const fEraObj = Eras.find(e => e.key === f.required_era);
+              const fEraOrder = fEraObj?.order ?? 0;
+
+              const mainItems = (f.required_items || []).filter(item => item.isMain);
+              const mainMaterialCheck = mainItems.length === 0 || mainItems.some(req => {
+                const keys = Array.isArray(req.key) ? req.key : [req.key];
+                return keys.some(k => packStore.hasEverHad(k));
               });
-              if (!onMap) return false;
-            }
-            // 消耗品限制
-            if (r.required_item) {
-              const required = Array.isArray(r.required_item) ? r.required_item : [r.required_item];
-              const met = required.some(k => consumedKeys.includes(k));
-              if (!met) return false;
-            }
-            // 时代限制
-            if (r.required_era) {
-              const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-              const currentEraOrder = currentEraObj?.order ?? 0;
-              const reqEra = Eras.find(e => e.key === r.required_era);
-              if (reqEra && currentEraOrder < reqEra.order) return false;
-            }
-            return true;
-          });
 
-          for (const gr of guaranteedRewards) {
-            const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity || 1;
-            if (packStore.addItem(gr.key, qty)) {
-              logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
-            }
-          }
-          // 设置冷却
-          if (task.cooldown) {
-            packStore.setCooldown(task.key, task.cooldown)
-          }
-          const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
-          if (reward) {
-            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
-            if (packStore.addItem(reward.key, quantity)) {
-              logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
-            }
-            notifyTaskComplete(task.name, `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
-          } else {
-            logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
-            notifyTaskComplete(task.name, '未获得奖励');
-          }
-
-          // 手稿（碎片）掉落逻辑
-          if (stateStore.state.currentEra !== 'stone' && ['挖掘', '爆破', '定向爆破'].includes(task.name)) {
-            const chance = 0.1 + Math.random() * 0.05; // 10%-15%
-            if (Math.random() < chance) {
-              const fragmentStore = useFragmentStore();
-              const { Formulas } = await import('@/data/formula');
-
-              const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-              const currentOrder = currentEraObj?.order ?? 0;
-
-              const eligibleFormulas = Formulas.filter(f => {
-                const fEraObj = Eras.find(e => e.key === f.required_era);
-                const fEraOrder = fEraObj?.order ?? 0;
-
-                const mainItems = (f.required_items || []).filter(item => item.isMain);
-                const mainMaterialCheck = mainItems.length === 0 || mainItems.some(req => {
-                  const keys = Array.isArray(req.key) ? req.key : [req.key];
-                  return keys.some(k => packStore.hasEverHad(k));
-                });
-
-                return !packStore.hasProvenFormula(f.key) &&
-                  !fragmentStore.hasFragment(f.key) &&
-                  fEraOrder <= currentOrder &&
-                  mainMaterialCheck;
-              });
-              if (eligibleFormulas.length > 0) {
-                const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];
-                if (fragmentStore.unlockFragment(picked.key)) {
-                  logStore.addLog(`在${task.name}过程中意外发现了一份「手稿」：${picked.name} 的残片`, 'reward');
-                  notifyTaskComplete('获得手稿', `${picked.name} 的残片`);
-                }
+              return !packStore.hasProvenFormula(f.key) &&
+                !fragmentStore.hasFragment(f.key) &&
+                fEraOrder <= currentOrder &&
+                mainMaterialCheck;
+            });
+            if (eligibleFormulas.length > 0) {
+              const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];
+              if (fragmentStore.unlockFragment(picked.key)) {
+                logStore.addLog(`在${task.name}过程中意外发现了一份「手稿」：${picked.name} 的残片`, 'reward');
+                notifyTaskComplete('获得手稿', `${picked.name} 的残片`);
               }
             }
           }
-        } else if (task.type === 'lab') {
-          const appStore = useAppStore();
-          // lab 类型：给予所有产物
-          const obtainedProducts: { key: string; quantity: number }[] = [];
-          for (const reward of task.rewards) {
-            const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
-            if (packStore.addItem(reward.key, quantity)) {
-              obtainedProducts.push({ key: reward.key, quantity });
-              logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
-              notifyTaskComplete('实验室', `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
-            }
+        }
+      } else if (task.type === 'lab') {
+        const appStore = useAppStore();
+        // lab 类型：给予所有产物
+        const obtainedProducts: { key: string; quantity: number }[] = [];
+        for (const reward of task.rewards) {
+          const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
+          if (packStore.addItem(reward.key, quantity)) {
+            obtainedProducts.push({ key: reward.key, quantity });
+            logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+            notifyTaskComplete('实验室', `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
           }
-          // 发现新配方日志（任务完成时记录）
-          if ('formulaKey' in task && task.formulaKey && !packStore.hasProvenFormula(task.formulaKey)) {
-            const { Formulas } = await import('@/data/formula')
-            const f = Formulas.find(fm => fm.key === task.formulaKey)
-            
-            if (f) {
-              logStore.addLog(`发现新配方: ${f.name}`, 'lab')
-              appStore.triggerLabSuccess(task.formulaKey, obtainedProducts)
-            }
-            packStore.addProvenFormula(task.formulaKey)
+        }
+        // 发现新配方日志（任务完成时记录）
+        if ('formulaKey' in task && task.formulaKey && !packStore.hasProvenFormula(task.formulaKey)) {
+          const { Formulas } = await import('@/data/formula')
+          const f = Formulas.find(fm => fm.key === task.formulaKey)
+          
+          if (f) {
+            logStore.addLog(`发现新配方: ${f.name}`, 'lab')
+            appStore.triggerLabSuccess(task.formulaKey, obtainedProducts)
           }
-
-          // 颁发里程碑（实验成功后颁发）
-          if (task.milestones) {
-            for (const ms of task.milestones) {
-              stateStore.checkMilestone(ms)
-            }
-          }
-
-          if (!task.formulaKey && task.rewards.length === 0) {
-            logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
-            notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
-          }
-        } else {
-          packStore.addTech(task.key);
-          logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
-          notifyTaskComplete(task.name, '科技研究完成');
+          packStore.addProvenFormula(task.formulaKey)
         }
 
+        // 颁发里程碑（实验成功后颁发）
+        if (task.milestones) {
+          for (const ms of task.milestones) {
+            stateStore.checkMilestone(ms)
+          }
+        }
+
+        if (!task.formulaKey && task.rewards.length === 0) {
+          logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
+          notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
+        }
+      } else {
+        packStore.addTech(task.key);
+        logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
+        notifyTaskComplete(task.name, '科技研究完成');
+      }
         // 1% 概率在 Log 中添加小贴士
         if (Math.random() < 0.01) {
           const currentEra = Eras.find(e => e.key === stateStore.state.currentEra)
@@ -438,16 +440,31 @@ export const useTaskStore = defineStore('task', () => {
             const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)]
             logStore.addLog(`${randomTip.content}`, 'tip')
           }
-        }
-
-        tasks.splice(0, 1); // 从任务列表中移除完成的任务
-        if (tasks.length == 0) {
-          notifyAllTasksDone();
-          document.title = '元素纪元';
-        }
       }
-    }, 100); // 每秒检查一次任务状态
+
+      tasks.splice(0, 1); // 从任务列表中移除完成的任务
+      if (tasks.length == 0) {
+        notifyAllTasksDone();
+        document.title = '元素纪元';
+      }
+    }
   }
+
+  // 使用全局 Worker 触发的 tick 处理任务
+  appStore.onTick((time) => {
+    checkAndProcessTasks(time);
+  });
+
+  // 监听页面可见性变化
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        // 页面重新可见时，立即检查任务状态
+        checkAndProcessTasks();
+      }
+    });
+  }
+
   const getTasks = computed(() => tasks);
   const pushTask = (task: IAction|ITech & { id?: string }) => {
     if (task.required_items.length) {
@@ -501,8 +518,6 @@ export const useTaskStore = defineStore('task', () => {
     }
     tasks.splice(0, tasks.length);
   }
-
-  taskLoop();
 
   return {
     tasks,

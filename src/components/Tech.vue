@@ -5,7 +5,7 @@
   import { usePackStore } from '@/stores/modules/pack';
   import { useTaskStore } from '@/stores/modules/task';
   import { shortTime } from '@/utils/date';
-  import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+  import { computed } from 'vue';
 
   const props = defineProps<{
     data: ITech;
@@ -15,16 +15,7 @@
   const packStore = usePackStore();
   const taskStore = useTaskStore();
 
-  const now = ref(Date.now());
-  let timer: any = null;
-  onMounted(() => {
-    timer = setInterval(() => {
-      now.value = Date.now();
-    }, 1000);
-  });
-  onBeforeUnmount(() => {
-    if (timer) clearInterval(timer);
-  });
+  const now = computed(() => appStore.tick);
 
   const matchingTaskIndex = computed(() => taskStore.tasks.findIndex(t => t.key === props.data.key && t.type === 'tech'))
   const matchingTask = computed(() => taskStore.tasks[matchingTaskIndex.value])
