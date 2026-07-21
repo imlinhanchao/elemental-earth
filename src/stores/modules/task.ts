@@ -409,6 +409,7 @@ export const useTaskStore = defineStore('task', () => {
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
         if (tasks.length == 0) {
           notifyAllTasksDone();
+          document.title = '元素纪元';
         }
       }
     }, 100); // 每秒检查一次任务状态

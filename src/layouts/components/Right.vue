@@ -115,11 +115,12 @@ const typeEntries = computed(() =>
             <div v-if="tasks.length === 0" class="text-[11px] text-base-content/20 px-1">空闲中</div>
             <div v-else class="flex gap-1 flex-wrap">
                 <Task 
-                    v-for="item in displayTasks" 
+                    v-for="(item, i) in displayTasks" 
                     :key="item.task.id" 
                     :task="item.task" 
                     :ids="item.ids"
                     :count="item.count"
+                    :show-in-title="i === 0"
                 />
             </div>
         </section>
