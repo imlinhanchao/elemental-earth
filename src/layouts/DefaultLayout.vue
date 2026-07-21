@@ -153,4 +153,15 @@ const tabs: Tab[] = [
   { name: 'Explore', path: '/explore', label: '发现', icon: '🔍' },
   { name: 'Settings', path: '/settings', label: '设置', icon: '⚙️' },
 ]
+
+let wakeLock = null;
+const requestWakeLock = async () => {
+   try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      console.log('屏幕已锁定为常亮状态');
+   } catch (err: any) {
+      console.error(`请求失败: ${err.name}, ${err.message}`);
+   }
+};
+requestWakeLock();
 </script>
