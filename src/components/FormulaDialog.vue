@@ -570,20 +570,22 @@ const canConfirm = computed(() => {
   }
 
   // 需要容器时检查
-  const accepted = acceptedContainerKeys()
-  if (accepted.length > 0 && !selectedContainer.value) return false
-  if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
-  // 容器预期耐久检查
-  if (selectedContainer.value) {
-    let containerUse = 0.05
-    for (const req of operation.value?.required_item || []) {
-      const rks = Array.isArray(req.key) ? req.key : [req.key]
-      if (rks.includes(selectedContainer.value) && req.use) {
-        containerUse = req.use
-        break
+  if (formula.value?.required_container) {
+    const accepted = acceptedContainerKeys()
+    if (accepted.length > 0 && !selectedContainer.value) return false
+    if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
+    // 容器预期耐久检查
+    if (selectedContainer.value) {
+      let containerUse = 0.05
+      for (const req of operation.value?.required_item || []) {
+        const rks = Array.isArray(req.key) ? req.key : [req.key]
+        if (rks.includes(selectedContainer.value) && req.use) {
+          containerUse = req.use
+          break
+        }
       }
+      if (packStore.getTotalDurability(selectedContainer.value) < containerUse * batches.value) return false
     }
-    if (packStore.getTotalDurability(selectedContainer.value) < containerUse * batches.value) return false
   }
 
   // 需要燃烧时检查火种和燃料
