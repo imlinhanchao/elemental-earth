@@ -57,14 +57,25 @@ export const useTaskStore = defineStore('task', () => {
       // 支出项
       if (!task.materials_locked) {
         for (const req of task.required_items) {
-          const k = Array.isArray(req.key) ? req.key[0] : req.key;
-          // 如果该物品具有耐久属性（或明确要求耐久消耗）
-          if (durableKeys.has(k) || req.use) {
+          const keys = Array.isArray(req.key) ? req.key : [req.key];
+          // 寻找第一个满足预期的替代品
+          const k = keys.find(key => {
+            const hasQty = inv.get(key) || 0;
+            const hasDur = dur.get(key) || 0;
+            const itemData = getItem(key);
+            if (itemData && (itemData.durable ?? 0) > 0) {
+              return hasQty >= req.quantity && (!req.use || hasDur >= req.use);
+            }
+            return hasQty >= req.quantity;
+          }) || keys[0];
+
+          const itemData = getItem(k);
+          if (itemData && (itemData.durable ?? 0) > 0) {
             const currentDur = dur.get(k) || 0;
-            // 如果存在耐久消耗，则只扣除耐久值部分
-            // 如果不存在耐久消耗但具有耐久属性，则扣除数量对应的总耐久
-            const cost = req.use ? req.use : req.quantity;
-            dur.set(k, currentDur - cost);
+            const maxDur = itemData.durable || 1;
+            // 如果存在耐久消耗，则只扣除耐久值部分；否则视为消耗整块
+            const cost = req.use !== undefined ? req.use : req.quantity * maxDur;
+            dur.set(k, Math.max(0, currentDur - cost));
             if (!durableKeys.has(k)) durableKeys.add(k);
           } else {
             inv.set(k, (inv.get(k) || 0) - req.quantity);
@@ -198,11 +209,13 @@ export const useTaskStore = defineStore('task', () => {
       // 检查并锁定材料（如果尚未锁定）
       if (!task.materials_locked) {
         const missingItems: string[] = [];
+        const finalK: string[] = []; // 存储实际选择的替代品 key
         if (task.required_items.length) {
           for (const req of task.required_items) {
             const keys = Array.isArray(req.key) ? req.key : [req.key];
             // 检查每种可能的材料（替代品）
-            const hasAvailable = keys.some(k => {
+            let matchedKey: string | null = null;
+            for (const k of keys) {
               const itemData = getItem(k);
               const maxDur = itemData?.durable || 1;
               const hasQty = packStore.getItemQuantity(k);
@@ -211,21 +224,28 @@ export const useTaskStore = defineStore('task', () => {
               if (itemData && (itemData.durable ?? 0) > 0) {
                 // 耐久物品：计算总耐久池
                 const totalDur = existing ? (existing.quantity - 1) * maxDur + existing.durable : 0;
-                // 对于耐久物品，quantity 通常指“至少持有一个”，除非 req.quantity > 1
                 const qOk = hasQty >= req.quantity;
                 const dOk = !req.use || totalDur >= req.use;
-                return qOk && dOk;
+                if (qOk && dOk) {
+                  matchedKey = k;
+                  break;
+                }
               } else {
                 // 普通物品：仅检查数量
-                return hasQty >= req.quantity;
+                if (hasQty >= req.quantity) {
+                  matchedKey = k;
+                  break;
+                }
               }
-            });
+            }
 
-            if (!hasAvailable) {
+            if (!matchedKey) {
               const displayName = Array.isArray(req.key) 
                 ? req.key.map(k => packStore.getDisplayName(k)).join('/') 
                 : packStore.getDisplayName(req.key);
               missingItems.push(displayName);
+            } else {
+              finalK.push(matchedKey);
             }
           }
         }
@@ -233,9 +253,9 @@ export const useTaskStore = defineStore('task', () => {
         if (missingItems.length === 0) {
           // 锁定材料：扣除物品
           if (task.required_items.length) {
-            for (const req of task.required_items) {
-              // 这里简化处理，直接扣除第一个替代品（实际逻辑中应该有更复杂的替代品选择，但目前代码是按 req.key[0] 处理的）
-              const k = Array.isArray(req.key) ? req.key[0] : req.key;
+            for (let i = 0; i < task.required_items.length; i++) {
+              const req = task.required_items[i];
+              const k = finalK[i];
               packStore.removeItem(k, req.quantity, req.use);
             }
           }
@@ -470,7 +490,7 @@ export const useTaskStore = defineStore('task', () => {
 
   taskLoop();
 
-  return { tasks, getTasks, projectedInventory, pushTask, removeTask, pushLabTask, clearTasks, canPerformWithProjection }
+  return { tasks, getTasks, projectedState, projectedInventory, pushTask, removeTask, pushLabTask, clearTasks, canPerformWithProjection }
 })
 
 export const useTaskStoreWithOut = once(() => useTaskStore(store));

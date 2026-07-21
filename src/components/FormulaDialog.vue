@@ -378,9 +378,9 @@ const powerSourceOptions = computed(() => {
 })
 
 const maxCyclesByPower = computed(() => {
-  if (!selectedPowerSourcePack.value) return 0
+  if (!selectedPowerSource.value) return 0
   const consumption = formula.value?.power_consumption ?? 0.1
-  return Math.floor(selectedPowerSourcePack.value.durable / consumption)
+  return Math.floor(packStore.getTotalDurability(selectedPowerSource.value) / consumption)
 })
 
 const fireSourceOptions = computed(() => {
@@ -553,14 +553,23 @@ const canConfirm = computed(() => {
   const accepted = acceptedContainerKeys()
   if (accepted.length > 0 && !selectedContainer.value) return false
   if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
-  // 容器预期耐久检查（此处简化，仅检查当前，因为耐久度较难精确预测）
-  if (selectedContainer.value && !packStore.items.find(i => i.key === selectedContainer.value && i.durable > 0)) return false
+  // 容器预期耐久检查
+  if (selectedContainer.value) {
+    let containerUse = 0.05
+    for (const req of operation.value?.required_item || []) {
+      const rks = Array.isArray(req.key) ? req.key : [req.key]
+      if (rks.includes(selectedContainer.value) && req.use) {
+        containerUse = req.use
+        break
+      }
+    }
+    if (packStore.getTotalDurability(selectedContainer.value) < containerUse * batches.value) return false
+  }
 
   // 需要燃烧时检查火种和燃料
   if (operation.value?.requires_burning) {
     if (!selectedFireSource.value) return false
-    const fs = packStore.items.find(i => i.key === selectedFireSource.value)
-    if (!fs || fs.durable < 0.01) return false
+    if (packStore.getTotalDurability(selectedFireSource.value) < 0.01 * batches.value) return false
     
     // 检查燃料预期总量
     let burnTime = 0
@@ -576,8 +585,7 @@ const canConfirm = computed(() => {
   if (operation.value?.requires_electricity) {
     if (!selectedPowerSource.value) return false
     const consumption = formula.value?.power_consumption ?? 0.1
-    const ps = selectedPowerSourcePack.value
-    if (!ps || ps.durable < consumption * batches.value) return false
+    if (packStore.getTotalDurability(selectedPowerSource.value) < consumption * batches.value) return false
   }
 
   if (taskStore.tasks.length >= 100) return false
@@ -617,7 +625,7 @@ function confirm() {
       consumedItems.push({ key, quantity: qty })
     }
     if (selectedFireSource.value) {
-      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 })
+      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 * batches.value })
     }
   }
 

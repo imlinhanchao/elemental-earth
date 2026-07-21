@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
-import { Items } from '@/data/items';
+import { getItem, Items } from '@/data/items';
 import { Techs } from '@/data/techs';
 import { useStateStore } from './state';
 import { useLogStore } from './log';
@@ -113,12 +113,17 @@ export const usePackStore = defineStore('pack', () => {
       if (itemDef?.type.includes('gas')) {
         addItem('gas_bottle', 1);
       }
-      if (use) {
-        existingItem.durable -= use;
-        if (existingItem.durable <= 0.0001) {
-          existingItem.quantity -= quantity;
-          // 重置耐久度为该物品的最大耐久值
-          existingItem.durable = itemDef?.durable ?? 1;
+      if (use > 0 && itemDef && itemDef.durable) {
+        const maxDur = itemDef.durable;
+        // 总计可用耐久为 (quantity - 1) * maxDur + currentDur
+        let totalDur = (existingItem.quantity - 1) * maxDur + existingItem.durable;
+        totalDur -= use;
+        
+        if (totalDur <= 0.0001) {
+          existingItem.quantity = 0;
+        } else {
+          existingItem.quantity = Math.ceil(totalDur / maxDur);
+          existingItem.durable = totalDur % maxDur || maxDur;
         }
       } else {
         existingItem.quantity -= quantity;
@@ -138,6 +143,15 @@ export const usePackStore = defineStore('pack', () => {
   const getItemQuantity = (key: string) => {
     const existingItem = items.find(i => i.key === key);
     return existingItem ? existingItem.quantity : 0;
+  }
+
+  const getTotalDurability = (key: string) => {
+    const existingItem = items.find(i => i.key === key);
+    if (!existingItem) return 0;
+    const itemData = getItem(key);
+    if (!itemData || (!itemData.durable && itemData.durable !== 0)) return existingItem.quantity;
+    const maxDur = itemData.durable || 1;
+    return (existingItem.quantity - 1) * maxDur + existingItem.durable;
   }
 
   const getTechs = computed(() => techs);
@@ -228,7 +242,7 @@ export const usePackStore = defineStore('pack', () => {
   return { 
     items, techs, provenFormulas, discoveredItems, performedActions, itemRenames, discoveryQueue, cooldowns,
     materialChoices, batchCounts,
-    getItems, addItem, removeItem, hasItem, getItemQuantity, hasGasContainer,
+    getItems, addItem, removeItem, hasItem, getItemQuantity, getTotalDurability, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
     addPerformedAction, hasPerformedAction,

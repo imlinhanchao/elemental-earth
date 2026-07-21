@@ -45,15 +45,21 @@
 
   /** 获取当前行动各材料最终选定的 key（替代材料组取用户选择或默认第一个） */
   function resolveMaterials(): { key: string; quantity: number; use?: number }[] {
-    const inv = taskStore.projectedInventory;
+    const { inv, dur } = taskStore.projectedState;
     return props.data.required_items.map(r => {
       const keys = Array.isArray(r.key) ? r.key : [r.key];
       // 用户已选择 →
       const chosen = packStore.materialChoices[`${props.data.key}_${r.key}`];
-      if (chosen && keys.includes(chosen) && (inv.get(chosen) || 0) >= r.quantity) return { key: chosen, quantity: r.quantity, use: r.use };
+      if (chosen && keys.includes(chosen)) {
+        const qOk = (inv.get(chosen) || 0) >= r.quantity;
+        const dOk = !r.use || (dur.get(chosen) || 0) >= r.use;
+        if (qOk && dOk) return { key: chosen, quantity: r.quantity, use: r.use };
+      }
       // 默认第一个可用的
       for (const k of keys) {
-        if ((inv.get(k) || 0) >= r.quantity) return { key: k, quantity: r.quantity, use: r.use };
+        const qOk = (inv.get(k) || 0) >= r.quantity;
+        const dOk = !r.use || (dur.get(k) || 0) >= r.use;
+        if (qOk && dOk) return { key: k, quantity: r.quantity, use: r.use };
       }
       return { key: keys[0], quantity: r.quantity, use: r.use };
     });
@@ -61,23 +67,30 @@
 
   /** 替代材料组当前是否有多个可选 */
   function hasMultipleChoices(): boolean {
-    const inv = taskStore.projectedInventory;
+    const { inv, dur } = taskStore.projectedState;
     return props.data.required_items.some(r => {
       if (!Array.isArray(r.key)) return false;
-      const avail = r.key.filter(k => (inv.get(k) || 0) >= r.quantity);
-      return avail.length > 1;
+      const available = r.key.filter(k => {
+        const qOk = (inv.get(k) || 0) >= r.quantity;
+        const dOk = !r.use || (dur.get(k) || 0) >= r.use;
+        return qOk && dOk;
+      });
+      return available.length > 1;
     });
   }
 
   /** 获取某组替代材料的可用选项 */
   function getAvailableOptions(reqKey: string | string[]): { key: string; name: string }[] {
-    const inv = taskStore.projectedInventory;
+    const { inv, dur } = taskStore.projectedState;
     const keys = Array.isArray(reqKey) ? reqKey : [reqKey];
     return keys
       .map(k => ({ key: k, name: packStore.getDisplayName(k) }))
       .filter(o => {
         const req = props.data.required_items.find(r => (Array.isArray(r.key) ? r.key : [r.key]).includes(o.key));
-        return (inv.get(o.key) || 0) >= (req?.quantity ?? 1);
+        if (!req) return false;
+        const qOk = (inv.get(o.key) || 0) >= req.quantity;
+        const dOk = !req.use || (dur.get(o.key) || 0) >= req.use;
+        return qOk && dOk;
       });
   }
 

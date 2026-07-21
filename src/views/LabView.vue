@@ -395,16 +395,15 @@ const selectedPowerSourcePack = computed(() => {
 
 // 最大周期：电源耐久限制
 const maxCyclesByPower = computed(() => {
-  if (!electricityNeeded.value || !selectedPowerSourcePack.value) return 0
-  // 如果配方没有定义消耗，则假设默认消耗 0.1
+  if (!electricityNeeded.value || !selectedPowerSourceKey.value) return 0
   const consumption = matchedFormula.value?.power_consumption ?? 0.1
-  return Math.floor(selectedPowerSourcePack.value.durable / consumption)
+  return Math.floor(packStore.getTotalDurability(selectedPowerSourceKey.value) / consumption)
 })
 
 // 最大周期：引火物耐久限制
 const maxCyclesByFire = computed(() => {
-  if (!burningNeeded.value || !selectedFireSourcePack.value) return 0
-  return Math.floor(selectedFireSourcePack.value.durable / 0.01)
+  if (!burningNeeded.value || !selectedFireSourceKey.value) return 0
+  return Math.floor(packStore.getTotalDurability(selectedFireSourceKey.value) / 0.01)
 })
 
 // 最大周期：燃料总燃烧时间限制
@@ -424,14 +423,13 @@ const cycleOptionsAll = [1, 2, 3, 5, 10]
 // 各维度最大可用次数
 const maxByContainer = computed(() => {
   if (!selectedOperation.value?.required_item) return null
-  const pack = selectedContainerPack.value
-  if (!pack) return null
+  if (!selectedContainerKey.value) return null
   let max = Infinity
   for (const req of selectedOperation.value.required_item) {
     const keys = reqKeys(req.key)
-    if (!selectedContainerKey.value || !keys.includes(selectedContainerKey.value)) continue
+    if (!keys.includes(selectedContainerKey.value)) continue
     if (req.use) {
-      max = Math.min(max, Math.floor(pack.durable / req.use))
+      max = Math.min(max, Math.floor(packStore.getTotalDurability(selectedContainerKey.value) / req.use))
     }
   }
   return max === Infinity ? null : max
