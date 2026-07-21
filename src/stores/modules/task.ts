@@ -407,9 +407,7 @@ export const useTaskStore = defineStore('task', () => {
         }
 
         tasks.splice(0, 1); // 从任务列表中移除完成的任务
-        if (tasks.length > 0) {
-          recalculateStartTimes();
-        } else {
+        if (tasks.length == 0) {
           notifyAllTasksDone();
         }
       }
