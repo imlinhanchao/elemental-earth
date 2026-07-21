@@ -7,18 +7,42 @@ import { useTaskStore } from '@/stores/modules/task'
 import { Maps } from '@/data/maps'
 import { Items } from '@/data/items'
 import Icon from '@/components/Icon.vue'
+import { useToastStore } from '@/stores/modules/toast'
 
 const productionStore = useProductionStore()
 const stateStore = useStateStore()
 const packStore = usePackStore()
 const taskStore = useTaskStore()
+const toastStore = useToastStore()
 
 const newName = ref('')
 const selectedCycles = ref(1)
+const importCode = ref('')
 
 const draftNetRequirements = computed(() => {
   return productionStore.getNetRequirements(productionStore.draftSteps, 1)
 })
+
+function handleCopy(id: string) {
+  const code = productionStore.exportLine(id)
+  navigator.clipboard.writeText(code).then(() => {
+    toastStore.addToast('生产线代码已复制到剪贴板', 'success')
+  })
+}
+
+function handleImport() {
+  if (!importCode.value) return
+  const res = productionStore.importLine(importCode.value.trim())
+  if (res.success) {
+    newName.value = res.message
+    importCode.value = ''
+    toastStore.addToast('已将代码导入到草稿', 'success')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  } else {
+    // 强制显示错误消息
+    toastStore.addToast(res.message, 'error')
+  }
+}
 
 function isInsufficient(key: string, req: { quantity: number, totalUse: number, isDurable: boolean }) {
   const projectedQty = taskStore.projectedInventory.get(key) || 0;
@@ -157,6 +181,22 @@ function getMapName(key: string) {
       </div>
     </div>
 
+    <!-- 导入区域 -->
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body p-5">
+        <h3 class="font-bold text-sm flex items-center gap-2 mb-3">
+          <Icon icon="fluent:share-16-filled" class="text-primary" />
+          导入生产线
+        </h3>
+        <div class="flex gap-2">
+          <input v-model="importCode" type="text" placeholder="在此粘贴分享代码 (EAPv1:...)" class="input input-sm grow" />
+          <button @click="handleImport" class="btn btn-sm btn-primary px-4" :disabled="!importCode">
+            导入到草稿
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- 已保存的生产线 -->
     <div class="space-y-4">
       <h2 class="text-xl font-bold flex items-center gap-2 px-2">
@@ -178,6 +218,9 @@ function getMapName(key: string) {
                 {{ line.name }}
               </h3>
               <div class="flex gap-1">
+                <button @click="handleCopy(line.id)" class="btn btn-ghost btn-xs btn-square text-base-content/40 hover:text-primary tooltip" data-tip="复制分享代码">
+                   <Icon icon="fluent:copy-16-regular" />
+                </button>
                 <button @click="handleEdit(line)" class="btn btn-ghost btn-xs btn-square text-primary/60 hover:text-primary tooltip" data-tip="编辑">
                    <Icon icon="fluent:edit-12-regular" />
                 </button>

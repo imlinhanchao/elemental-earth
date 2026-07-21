@@ -6174,11 +6174,11 @@
     "name": "氨催化氧化制一氧化氮",
     "description": "氨气与氧气在铂催化剂作用下发生催化氧化，生成一氧化氮和水。",
     "fragment_description": "将 #ammonia# 与 #oxygen# 混合通过 $catalytic_oxidation$，气体颜色逐渐变淡，收集到无色气体。",
-    "time_required": 30,
+    "time_required": 10,
     "required_era": "modern_chem",
     "required_container": "gas_bottle",
     "required_actions": {
-      "key": "catalytic_oxidation",
+      "key": "heating",
       "min": 1
     },
     "required_items": [

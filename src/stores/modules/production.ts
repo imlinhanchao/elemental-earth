@@ -232,6 +232,97 @@ export const useProductionStore = defineStore('production', () => {
     };
   }
 
+  /**
+   * 导出生产线为压缩字符串
+   * 格式: EAPv1|Name|JSON
+   */
+  function exportLine(id: string): string {
+    const line = productionLines.find(l => l.id === id)
+    if (!line) return ''
+    
+    // 简化步骤数据以减小体积
+    const data = line.steps.map(s => ({
+      t: s.type === 'action' ? 0 : 1,
+      k: s.key,
+      c: s.count,
+      p: s.payload
+    }))
+
+    const json = JSON.stringify({ n: line.name, s: data })
+    // 使用简单的 Base64，后续如有需求可引入更高效的压缩
+    return 'EAPv1:' + btoa(encodeURIComponent(json))
+  }
+
+  /**
+   * 导入生产线
+   * 返回 { success: boolean, message: string }
+   */
+  function importLine(code: string): { success: boolean, message: string } {
+    if (!code.startsWith('EAPv1:')) {
+      return { success: false, message: '无效的生产线代码格式' }
+    }
+
+    try {
+      const jsonStr = decodeURIComponent(atob(code.substring(6)))
+      const data = JSON.parse(jsonStr)
+      
+      const missingKeys: string[] = []
+      const steps: IProductionLineStep[] = []
+
+      for (const s of data.s) {
+        const type = s.t === 0 ? 'action' : 'formula'
+        const key = s.k
+        
+        let name = ''
+        let isUnlocked = false
+
+        if (type === 'action') {
+          const action = Actions.find(a => a.key === key)
+          if (action) {
+            name = action.name
+            // 检查已解锁状态: 拥有对应技术且已尝试执行过(或产物已全解锁)
+            const techsOk = !action.required_techs || action.required_techs.every(t => packStore.hasTech(t))
+            const performedOk = packStore.performedActions.has(key)
+            isUnlocked = techsOk && performedOk
+          }
+        } else {
+          const formula = Formulas.find(f => f.key === key)
+          if (formula) {
+            name = formula.name
+            isUnlocked = packStore.provenFormulas.includes(key)
+          }
+        }
+
+        if (!isUnlocked) {
+          missingKeys.push(name || key)
+        }
+
+        steps.push({
+          type,
+          key,
+          name: name || key,
+          count: s.c,
+          payload: s.p
+        })
+      }
+
+      if (missingKeys.length > 0) {
+        return { 
+          success: false, 
+          message: `导入失败：以下内容未解锁 - ${missingKeys.join(', ')}` 
+        }
+      }
+
+      // 导入到草稿
+      draftSteps.splice(0, draftSteps.length, ...steps)
+      // 如果有名字，尝试填入 (由 UI 处理比较好，或者这里直接返回名字)
+      return { success: true, message: data.n }
+
+    } catch (e) {
+      return { success: false, message: '代码解析失败，请检查输入' }
+    }
+  }
+
   return {
     productionLines,
     draftSteps,
@@ -245,6 +336,8 @@ export const useProductionStore = defineStore('production', () => {
     editProductionLine,
     getNetRequirements,
     collapseSteps,
-    getTotalTime
+    getTotalTime,
+    exportLine,
+    importLine
   }
 })
