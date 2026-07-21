@@ -5,12 +5,22 @@ import { useAppStore } from '@/stores/modules/app'
 import { useTaskStore, type ITask } from '@/stores/modules/task'
 import { useLogStore } from '@/stores/modules/log'
 import { useTutorialStore } from '@/stores/modules/tutorial'
+import { watch } from 'vue';
 
 const appStore = useAppStore()
 const taskStore = useTaskStore()
 const logStore = useLogStore()
 const tutorialStore = useTutorialStore()
 const tasks = taskStore.getTasks
+
+watch(
+  () => tasks.length,
+  (newLength) => {
+    if (newLength === 0) {
+      document.title = '元素纪元';
+    }
+  }
+);
 
 const logStyles: Record<string, { icon: string; iconColor: string }> = {
   process:     { icon: 'tabler:arrows-right',  iconColor: 'text-base-content' },
