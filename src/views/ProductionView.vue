@@ -106,7 +106,8 @@ function getMapName(key: string) {
                   <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
                         :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
                   <span class="font-medium text-sm">{{ step.name }}</span>
-                  <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded">{{ step.type === 'action' ? '行动' : '实验室' }}</span>
+                  <span v-if="step.count > 1" class="text-primary font-bold text-xs ml-1">x{{ step.count }}</span>
+                  <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded ml-1">{{ step.type === 'action' ? '行动' : '实验室' }}</span>
                 </div>
               </div>
               <button @click="productionStore.removeStepFromDraft(idx)" class="btn btn-ghost btn-sm text-error btn-square">
@@ -213,13 +214,13 @@ function getMapName(key: string) {
 
             <!-- 步骤展示 (缩减版) -->
             <div class="text-[10px] space-y-1 mb-3 opacity-60">
-              <div v-for="(step, idx) in line.steps.slice(0, 3)" :key="idx" class="flex items-center gap-1.5">
+              <div v-for="(step, idx) in productionStore.collapseSteps(line.steps).slice(0, 3)" :key="idx" class="flex items-center gap-1.5">
                 <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
                       class="text-[10px]" :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
                 <span class="truncate">{{ step.name }}</span>
                 <span v-if="step.count > 1" class="text-primary font-bold">x{{ step.count }}</span>
               </div>
-              <div v-if="line.steps.length > 3" class="pl-4 italic">等 {{ line.steps.length }} 个步骤...</div>
+              <div v-if="productionStore.collapseSteps(line.steps).length > 3" class="pl-4 italic">等 {{ productionStore.collapseSteps(line.steps).length }} 个步骤...</div>
             </div>
 
             <!-- 地图适配警示 -->

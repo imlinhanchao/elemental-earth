@@ -36,8 +36,26 @@ export const useProductionStore = defineStore('production', () => {
     return Items.find(i => i.key === key)
   }
 
+  function collapseSteps(steps: IProductionLineStep[]) {
+    const result: IProductionLineStep[] = [];
+    for (const step of steps) {
+      const last = result[result.length - 1];
+      if (last && last.key === step.key && last.type === step.type && JSON.stringify(last.payload) === JSON.stringify(step.payload)) {
+        last.count += step.count;
+      } else {
+        result.push({ ...step });
+      }
+    }
+    return result;
+  }
+
   function addStepToDraft(step: Omit<IProductionLineStep, 'count'>, count: number = 1) {
-    draftSteps.push({ ...step, count });
+    const last = draftSteps[draftSteps.length - 1];
+    if (last && last.key === step.key && last.type === step.type && JSON.stringify(last.payload) === JSON.stringify(step.payload)) {
+      last.count += count;
+    } else {
+      draftSteps.push({ ...step, count });
+    }
     toastStore.addToast(`已添加 ${step.name} 到生产线草稿`, 'success');
   }
 
@@ -210,6 +228,7 @@ export const useProductionStore = defineStore('production', () => {
     executeProductionLine,
     validateMapCompatibility,
     editProductionLine,
-    getNetRequirements
+    getNetRequirements,
+    collapseSteps
   }
 })

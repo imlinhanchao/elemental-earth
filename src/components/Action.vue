@@ -5,6 +5,7 @@
   import { usePackStore } from '@/stores/modules/pack';
   import { useTaskStore } from '@/stores/modules/task';
   import { useStateStore } from '@/stores/modules/state';
+  import { useProductionStore } from '@/stores/modules/production';
   import { computed, ref, onBeforeUnmount } from 'vue';
   import { useEventListener } from '@vueuse/core'
 
@@ -15,6 +16,7 @@
   const packStore = usePackStore();
   const taskStore = useTaskStore();
   const stateStore = useStateStore();
+  const productionStore = useProductionStore();
 
   // ─── 冷却时间 ────────────────────────────────────────────────
   const cooldownRemaining = ref(0)
@@ -158,11 +160,8 @@
   // ─── 执行 ──────────────────────────────────────────────────
   const showFormulaDialog = ref(false);
 
-  import { useProductionStore } from '@/stores/modules/production';
-  const productionStore = useProductionStore();
-
-  function addToProductionLine() {
-    if (!isEnabled.value) return;
+  function addToProductionLine(e: Event) {
+    e.stopPropagation();
     const resolved = resolveMaterials();
     productionStore.addStepToDraft({
       type: 'action',
