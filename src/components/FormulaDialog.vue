@@ -47,8 +47,12 @@
 
           <!-- 容器选择 -->
           <div v-if="formula?.required_container" class="form-row">
-            <label>容器（需 {{ containerName }}）</label>
-            <select v-model="selectedContainer" class="select select-bordered select-sm w-full">
+            <label :class="{ 'label-insufficient': isContainerInsufficient }">
+              容器（需 {{ containerName }}）
+              <span v-if="isContainerInsufficient" class="insufficient-hint">耐久不足</span>
+            </label>
+            <select v-model="selectedContainer" class="select select-bordered select-sm w-full"
+              :class="{ 'select-warning': isContainerInsufficient }">
               <option :value="null" disabled>-- 请选择 --</option>
               <option v-for="c in containerOptions" :key="c.key" :value="c.key">
                 {{ c.name }}（耐久 {{ c.durable.toFixed(2) }}）
@@ -362,6 +366,23 @@ const containerOptions = computed(() => {
     .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: packStore.getTotalDurability(i.key) }))
 })
 
+/** 容器耐久是否不足 */
+const isContainerInsufficient = computed(() => {
+  if (!formula.value?.required_container || !selectedContainer.value) return false
+  
+  let containerUse = 0.05
+  for (const req of operation.value?.required_item || []) {
+    const rks = Array.isArray(req.key) ? req.key : [req.key]
+    if (rks.includes(selectedContainer.value) && req.use) {
+      containerUse = req.use
+      break
+    }
+  }
+  
+  const have = packStore.getTotalDurability(selectedContainer.value)
+  return have <= containerUse * batches.value
+})
+
 // ─── 火种选择 ──────────────────────────────────────────────────
 const selectedFireSource = ref<string | null>(null)
 
@@ -575,17 +596,7 @@ const canConfirm = computed(() => {
     if (accepted.length > 0 && !selectedContainer.value) return false
     if (selectedContainer.value && accepted.length > 0 && !accepted.includes(selectedContainer.value)) return false
     // 容器预期耐久检查
-    if (selectedContainer.value) {
-      let containerUse = 0.05
-      for (const req of operation.value?.required_item || []) {
-        const rks = Array.isArray(req.key) ? req.key : [req.key]
-        if (rks.includes(selectedContainer.value) && req.use) {
-          containerUse = req.use
-          break
-        }
-      }
-      if (packStore.getTotalDurability(selectedContainer.value) <= containerUse * batches.value) return false
-    }
+    if (isContainerInsufficient.value) return false
   }
 
   // 需要燃烧时检查火种和燃料
@@ -628,17 +639,19 @@ function confirm() {
   }
 
   // 2. 消耗容器耐久
-  if (selectedContainer.value) {
-    // 检查操作是否有针对容器的耐久消耗
-    let containerUse = 0.05 // 默认消耗
-    for (const req of operation.value?.required_item || []) {
-      const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
-      if (reqKeys.includes(selectedContainer.value) && req.use) {
-        containerUse = req.use
-        break
+  if (formula.value?.required_container) {
+    if (selectedContainer.value) {
+      // 检查操作是否有针对容器的耐久消耗
+      let containerUse = 0.05 // 默认消耗
+      for (const req of operation.value?.required_item || []) {
+        const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
+        if (reqKeys.includes(selectedContainer.value) && req.use) {
+          containerUse = req.use
+          break
+        }
       }
+      consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
     }
-    consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
   }
 
   // 3. 消耗燃料和火种
