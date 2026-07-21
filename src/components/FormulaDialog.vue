@@ -105,7 +105,7 @@
               <select v-model="selectedPowerSource" class="select select-bordered select-sm w-full">
                 <option :value="null" disabled>-- 请选择 --</option>
                 <option v-for="ps in powerSourceOptions" :key="ps.key" :value="ps.key">
-                  {{ ps.name }} (耐久/电量: {{ Math.round(ps.durable * 100) / 100 }})
+                {{ ps.name }} (耐久/电量: {{ ps.durable.toFixed(2) }})
                 </option>
               </select>
               <div v-if="selectedPowerSourcePack" class="text-xs text-base-content/50 mt-1 pl-1">
@@ -223,7 +223,7 @@ function addToProductionLine() {
       if (fQty > 0) consumedItems.push({ key: fKey, quantity: fQty })
     }
     if (selectedFireSource.value) {
-      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 })
+      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 * batches.value })
     }
   }
 
@@ -356,10 +356,10 @@ function acceptedContainerKeys(): string[] {
 
 const containerOptions = computed(() => {
   const accepted = acceptedContainerKeys()
-  if (accepted.length === 0) return packStore.items.filter(i => { const d = getItem(i.key); return d?.type.includes('container') && i.durable > 0 }).map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: i.durable }))
+  if (accepted.length === 0) return packStore.items.filter(i => { const d = getItem(i.key); return d?.type.includes('container') && packStore.getTotalDurability(i.key) > 0 }).map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: packStore.getTotalDurability(i.key) }))
   return packStore.items
-    .filter(i => accepted.includes(i.key) && i.durable > 0)
-    .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: i.durable }))
+    .filter(i => accepted.includes(i.key) && packStore.getTotalDurability(i.key) > 0)
+    .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: packStore.getTotalDurability(i.key) }))
 })
 
 // ─── 火种选择 ──────────────────────────────────────────────────
@@ -373,8 +373,12 @@ const selectedPowerSourcePack = computed(() => {
 const powerSourceOptions = computed(() => {
   return packStore.items.filter(pItem => {
     const def = getItem(pItem.key)
-    return def && def.type.includes('battery') && pItem.durable > 0
-  })
+    return def && def.type.includes('battery') && packStore.getTotalDurability(pItem.key) > 0
+  }).map(i => ({
+    key: i.key,
+    name: getItem(i.key)?.name || i.key,
+    durable: packStore.getTotalDurability(i.key)
+  }))
 })
 
 const maxCyclesByPower = computed(() => {
@@ -387,9 +391,9 @@ const fireSourceOptions = computed(() => {
   return packStore.items
     .filter(i => {
       const def = getItem(i.key)
-      return def?.type.includes('fire_source') && i.durable > 0
+      return def?.type.includes('fire_source') && packStore.getTotalDurability(i.key) > 0
     })
-    .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: i.durable }))
+    .map(i => ({ key: i.key, name: getItem(i.key)?.name || i.key, durable: packStore.getTotalDurability(i.key) }))
 })
 
 // ─── 燃料选择 ──────────────────────────────────────────────────

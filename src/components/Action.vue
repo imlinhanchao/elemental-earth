@@ -143,7 +143,7 @@
   const isEnabled = computed(() => {
     if (taskStore.tasks.length >= 100) return false;
     const mapOk = !props.data.map || props.data.map.includes(stateStore.state.map);
-    const itemsOk = taskStore.canPerformWithProjection(props.data.required_items, batchCount.value);
+    const itemsOk = taskStore.canPerformWithProjection(props.data.required_items);
     const cdOk = !props.data.cooldown || !packStore.isOnCooldown(props.data.key);
     return mapOk && itemsOk && cdOk && (!props.data.required_techs || props.data.required_techs.every(t => packStore.hasTech(t)));
   });

@@ -62,14 +62,16 @@ const draftMaterials = ref<Map<string, number>>(new Map())
 
 // ---- 可用容器 ----
 const availableContainers = computed(() => {
-  const map = new Map<string, typeof packStore.items[0]>()
+  const keys = new Set<string>()
   for (const pItem of packStore.items) {
     const def = getItem(pItem.key)
-    if (!def?.type.includes('container')) continue
-    const existing = map.get(pItem.key)
-    if (!existing || pItem.durable > existing.durable) map.set(pItem.key, pItem)
+    if (def?.type.includes('container')) keys.add(pItem.key)
   }
-  return Array.from(map.values())
+  return Array.from(keys).map(key => ({
+    key,
+    name: packStore.getDisplayName(key),
+    durable: packStore.getTotalDurability(key)
+  }))
 })
 
 const availableMaterials = computed(() => {
@@ -366,10 +368,16 @@ const fuelItems = computed(() => {
 })
 
 const fireSourceItems = computed(() => {
-  return packStore.items.filter(pItem => {
+  const keys = new Set<string>()
+  for (const pItem of packStore.items) {
     const def = getItem(pItem.key)
-    return def && def.type.includes('fire_source')
-  })
+    if (def?.type.includes('fire_source')) keys.add(pItem.key)
+  }
+  return Array.from(keys).map(key => ({
+    key,
+    name: packStore.getDisplayName(key),
+    durable: packStore.getTotalDurability(key)
+  }))
 })
 
 // 选中的引火物数据
@@ -382,10 +390,16 @@ const selectedFireSourcePack = computed(() => {
 const electricityNeeded = computed(() => selectedOperation.value?.requires_electricity ?? false)
 
 const powerSourceItems = computed(() => {
-  return packStore.items.filter(pItem => {
+  const keys = new Set<string>()
+  for (const pItem of packStore.items) {
     const def = getItem(pItem.key)
-    return def && def.type.includes('battery') && pItem.durable > 0
-  })
+    if (def?.type.includes('battery')) keys.add(pItem.key)
+  }
+  return Array.from(keys).map(key => ({
+    key,
+    name: packStore.getDisplayName(key),
+    durable: packStore.getTotalDurability(key)
+  }))
 })
 
 const selectedPowerSourcePack = computed(() => {
