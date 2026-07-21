@@ -158,6 +158,22 @@
   // ─── 执行 ──────────────────────────────────────────────────
   const showFormulaDialog = ref(false);
 
+  import { useProductionStore } from '@/stores/modules/production';
+  const productionStore = useProductionStore();
+
+  function addToProductionLine() {
+    if (!isEnabled.value) return;
+    const resolved = resolveMaterials();
+    productionStore.addStepToDraft({
+      type: 'action',
+      key: props.data.key,
+      name: props.data.name,
+      payload: {
+        required_items: resolved
+      }
+    }, batchCount.value);
+  }
+
   function performAction() {
     if (!isEnabled.value) return;
     const f = props.data.formula;
@@ -270,6 +286,17 @@
             </template>
           </div>
         </div>
+      </div>
+
+      <!-- 添加到生产线（右下） -->
+      <div v-if="packStore.hasTech('production_tech')" class="absolute -bottom-2 -right-2 z-10">
+        <button
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
+          title="添加到生产线"
+          @click.stop="addToProductionLine"
+        >
+          <Icon icon="mdi:plus" />
+        </button>
       </div>
     </div>
   </ActionTip>

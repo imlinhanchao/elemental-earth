@@ -2,9 +2,14 @@
     import { routes } from '@/router';
     import { computed } from 'vue';
     import { useFragmentStore } from '@/stores/modules/fragment';
+    import { usePackStore } from '@/stores/modules/pack';
 
+    const packStore = usePackStore();
     const fragmentStore = useFragmentStore();
-    const tabs = computed(() => routes[0].children?.map(r => ({
+    const tabs = computed(() => routes[0].children?.filter(r => {
+        if (r.name === 'Production' && !packStore.hasTech('production_tech')) return false;
+        return true;
+    }).map(r => ({
         name: r.name, path: r.path || '/', label: r.meta?.label, icon: r.meta?.icon
     })))
 </script>

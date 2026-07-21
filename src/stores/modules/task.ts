@@ -422,7 +422,7 @@ export const useTaskStore = defineStore('task', () => {
         return;
       }
     }
-    tasks.push({ ...task, begin_time: 0, id: Date.now(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined, materials_locked: false });
+    tasks.push({ ...task, begin_time: 0, id: Date.now() + Math.random(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined, materials_locked: false });
     recalculateStartTimes();
   }
   const removeTask = (id: number) => {
@@ -453,7 +453,7 @@ export const useTaskStore = defineStore('task', () => {
     tasks.push({
       ...labTask,
       begin_time: 0,
-      id: Date.now(),
+      id: Date.now() + Math.random(),
       type: 'lab',
       materials_locked: false,
     } as ITask);

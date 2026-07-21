@@ -4,10 +4,12 @@ import { useStateStore } from '@/stores/modules/state';
 import { useTaskStore } from '@/stores/modules/task';
 import { useLogStore } from '@/stores/modules/log';
 import { useFragmentStore } from '@/stores/modules/fragment';
+import { useProductionStore } from '@/stores/modules/production';
 import type { IPackItem } from '@/stores/modules/pack';
 import type { IGameState } from '@/stores/modules/state';
 import type { ITask } from '@/stores/modules/task';
 import type { ILog } from '@/stores/modules/log';
+import type { IProductionLine } from '@/stores/modules/production';
 import { ref } from 'vue';
 import { shortTime } from './date';
 import { gameSDK } from './sdk';
@@ -42,6 +44,8 @@ export interface SaveData {
   fragments: string[];
   /** 未读手稿列表 */
   unreadFragments: string[];
+  /** 生产线列表（v5 新增） */
+  productionLines?: IProductionLine[];
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -57,6 +61,7 @@ export function saveGame(): boolean {
     const taskStore = useTaskStore();
     const logStore = useLogStore();
     const fragmentStore = useFragmentStore();
+    const productionStore = useProductionStore();
 
     const data: SaveData = {
       version: SAVE_VERSION,
@@ -75,6 +80,7 @@ export function saveGame(): boolean {
       performedActions: Array.from(packStore.performedActions),
       fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
+      productionLines: JSON.parse(JSON.stringify(productionStore.productionLines)),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -104,6 +110,7 @@ export function loadGame(): boolean {
     const taskStore = useTaskStore();
     const logStore = useLogStore();
     const fragmentStore = useFragmentStore();
+    const productionStore = useProductionStore();
 
     // 恢复地图状态
     stateStore.state.map = data.state.map;
@@ -178,6 +185,11 @@ export function loadGame(): boolean {
     }
     if (data.batchCounts) {
       Object.assign(packStore.batchCounts, data.batchCounts)
+    }
+
+    // 恢复生产线（v5 新增）
+    if (Array.isArray(data.productionLines)) {
+      productionStore.productionLines.splice(0, productionStore.productionLines.length, ...data.productionLines);
     }
 
     lastSavedTime.value = data.timestamp;

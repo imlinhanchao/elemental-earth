@@ -144,11 +144,20 @@
           <div class="total-time">⏱ 预计耗时：{{ totalTime }} 秒</div>
 
           <!-- 操作按钮 -->
-          <div class="dialog-footer">
+          <div class="dialog-footer flex justify-between">
             <button class="btn btn-ghost" @click="cancel">取消</button>
-            <button class="btn btn-primary" :disabled="!canConfirm" @click="confirm">
-              ⚡ 开始执行
-            </button>
+            <div class="flex gap-2">
+              <button
+                v-if="packStore.hasTech('production_tech')"
+                class="btn btn-outline btn-secondary"
+                @click="addToProductionLine"
+              >
+                + 生产线
+              </button>
+              <button class="btn btn-primary" :disabled="!canConfirm" @click="confirm">
+                ⚡ 开始执行
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -164,6 +173,7 @@ import { getItem } from '@/data/items'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
 import { useLogStore } from '@/stores/modules/log'
+import { useProductionStore } from '@/stores/modules/production'
 
 const props = defineProps<{
   visible: boolean
@@ -178,6 +188,93 @@ const emit = defineEmits<{
 const packStore = usePackStore()
 const taskStore = useTaskStore()
 const logStore = useLogStore()
+const productionStore = useProductionStore()
+
+function addToProductionLine() {
+  if (!canConfirm.value || !formula.value) return
+  
+  const consumedItems: { key: string; quantity: number; use?: number }[] = []
+
+  // 1. 消耗材料
+  for (let i = 0; i < formula.value.required_items.length; i++) {
+    const key = selectedMaterials.value[i]!
+    const req = formula.value.required_items[i]
+    consumedItems.push({ key, quantity: req.quantity * (isReactantCatalyst(i) ? 1 : batches.value) })
+  }
+
+  // 2. 消耗容器耐久
+  if (selectedContainer.value) {
+    // 检查操作是否有针对容器的耐久消耗
+    let containerUse = 0.05 // 默认消耗
+    for (const req of operation.value?.required_item || []) {
+      const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
+      if (reqKeys.includes(selectedContainer.value) && req.use) {
+        containerUse = req.use
+        break
+      }
+    }
+    consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
+  }
+  
+  // 3. 消耗燃料和火种
+  if (operation.value?.requires_burning) {
+    for (const [fKey, fQty] of fuelMap.value.entries()) {
+      if (fQty > 0) consumedItems.push({ key: fKey, quantity: fQty })
+    }
+    if (selectedFireSource.value) {
+      consumedItems.push({ key: selectedFireSource.value, quantity: 0, use: 0.01 })
+    }
+  }
+
+  // 4. 消耗电源耐久
+  if (operation.value?.requires_electricity && selectedPowerSource.value) {
+    const consumption = formula.value?.power_consumption ?? 0.1
+    consumedItems.push({ key: selectedPowerSource.value, quantity: 0, use: consumption * batches.value })
+  }
+
+  const chainOps = selectedChainOperations.value
+  const milestones: string[] = []
+  const opMilestone = operation.value?.milestone
+  if (opMilestone) milestones.push(opMilestone)
+  for (const k of chainOps) {
+    const cm = LabActions.find(a => a.key === k)?.milestone
+    if (cm) milestones.push(cm)
+  }
+
+  const rewards = formula.value.products
+    .filter(p => {
+      if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      return true
+    })
+    .map(p => {
+      const isCatalyst = isProductCatalyst(p.key, p.multiple)
+      return {
+        key: p.key,
+        quantity: p.multiple * (isCatalyst ? 1 : batches.value),
+        probability: 1,
+      }
+    })
+
+  const payload = {
+    name: `${formula.value.name}${[...selectedChainOperations.value].map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
+    key: `action_formula_${formula.value.key}_production`,
+    description: formula.value.description,
+    time_required: totalTime.value,
+    rewards,
+    required_items: consumedItems,
+    formulaKey: formula.value.key,
+    milestones,
+  }
+
+  productionStore.addStepToDraft({
+    type: 'formula',
+    key: formula.value.key,
+    name: formula.value.name,
+    payload
+  }, batches.value)
+
+  emit('close')
+}
 
 // ─── 基础数据 ──────────────────────────────────────────────────
 const formula = computed<IFormula | undefined>(() =>

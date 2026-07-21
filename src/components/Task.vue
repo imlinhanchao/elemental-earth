@@ -59,11 +59,11 @@
   }
 </script>
 <template>
-  <span class="badge inline-flex p-1 group items-center relative group hover:bg-error/10 hover:text-error transition-colors cursor-pointer" :title="task.name" @click="remove">
-    <span class="group-hover:opacity-50">
-      {{ task.name }}
-      <template v-if="count && count > 1">x{{ count }}</template>
-      [{{ shortTime(cost) }}]
+  <span class="badge inline-flex p-1 group items-center relative truncate group hover:bg-error/10 hover:text-error transition-colors cursor-pointer" :title="task.name" @click="remove">
+    <span class="group-hover:opacity-50 truncate inline-flex items-center">
+      <span class="truncate">{{ task.name }}</span>
+      <span v-if="count && count > 1">x{{ count }}</span>
+      <span>[{{ shortTime(cost) }}]</span>
     </span>
     <span class="inline-flex absolute left-0 right-0 transition-transform translate-y-0.5 items-center justify-center">
       <Icon icon="tabler:x" class="text-sm hidden group-hover:inline" />
