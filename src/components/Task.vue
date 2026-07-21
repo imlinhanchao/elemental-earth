@@ -24,13 +24,13 @@
   const cost = computed(() => {
     if (!props.task) return 0;
     
-    // 任务预计完成时间 = 开始时间 + 持续时间
-    const finishTime = props.task.begin_time + (props.task.time_required * 1000);
+    // 任务预计完成时间 = 开始时间 + (持续时间 * 倍率)
+    const finishTime = props.task.begin_time + (props.task.time_required * taskStore.timeMultiplier * 1000);
     let timeToFinish = (finishTime - now.value) / 1000;
 
     // 如果是折叠任务，加上组内剩余相同任务的总时间
     if (props.count && props.count > 1) {
-      timeToFinish += (props.count - 1) * props.task.time_required;
+      timeToFinish += (props.count - 1) * props.task.time_required * taskStore.timeMultiplier;
     }
 
     if (props.showInTitle) {

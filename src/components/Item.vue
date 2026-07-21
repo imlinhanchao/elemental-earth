@@ -65,7 +65,7 @@
         >
           <Icon icon="icon-park-outline:edit" class="text-base" />
         </button>
-        <span class="badge badge-soft badge-primary badge-xs">{{ data.quantity }}</span>
+        <span class="badge badge-soft badge-primary badge-xs">{{ Number(data.quantity.toFixed(2)) }}</span>
       </div>
     </div>
     <InlineTooltip v-if="itemData?.durable" :text="`耐久度: ${Math.round((data.durable / (itemData?.durable ?? 1)) * 100)}%`">

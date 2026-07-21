@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue';
+import { computed, reactive, watch } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { usePackStore } from '@/stores/modules/pack';
@@ -32,6 +32,14 @@ export const useTaskStore = defineStore('task', () => {
   const stateStore = useStateStore();
   const packStore = usePackStore();
   const logStore = useLogStore();
+
+  /** 时代进度带来的时间减免倍率 */
+  const timeMultiplier = computed(() => {
+    const currentEra = Eras.find(e => e.key === stateStore.state.currentEra);
+    const order = currentEra?.order ?? 0;
+    // 从近代化学 (order 2) 开始，每级减少 15%
+    return Math.max(0.1, 1.0 - Math.max(0, order - 1) * 0.15);
+  });
 
   /** 获取考虑队列收益与支出的预期资源状态（包含数量与总耐久） */
   const projectedState = computed(() => {
@@ -114,18 +122,19 @@ export const useTaskStore = defineStore('task', () => {
 
   /** 获取考虑队列收益与支出的预期库存 */
   const projectedInventory = computed(() => projectedState.value.inv);
+  const projectedDurability = computed(() => projectedState.value.dur);
 
   /** 检查是否可以执行（考虑预期收益及耐久要求） */
-  function canPerformWithProjection(requiredItems: { key: string | string[], quantity: number, use?: number }[]): boolean {
+  function canPerformWithProjection(requiredItems: { key: string | string[], quantity: number, use?: number }[], multiplier = 1): boolean {
     const { inv, dur } = projectedState.value;
     for (const req of requiredItems) {
       const keys = Array.isArray(req.key) ? req.key : [req.key];
       // 满足任意一种替代方案即可
       const hasAny = keys.some(k => {
         // 数量检查
-        const qOk = (inv.get(k) || 0) >= req.quantity;
+        const qOk = (inv.get(k) || 0) >= req.quantity * multiplier;
         // 耐久检查（如果该项设置了 use）
-        const dOk = !req.use || (dur.get(k) || 1) >= req.use;
+        const dOk = !req.use || (dur.get(k) || 0) >= req.use * multiplier;
         return qOk && dOk;
       });
       if (!hasAny) return false;
@@ -193,12 +202,17 @@ export const useTaskStore = defineStore('task', () => {
     if (tasks[0].begin_time <= 0 || tasks[0].begin_time > now) {
       tasks[0].begin_time = now;
     }
-    let lastFinishTime = tasks[0].begin_time + (tasks[0].time_required * 1000);
+    let lastFinishTime = tasks[0].begin_time + (tasks[0].time_required * timeMultiplier.value * 1000);
     for (let i = 1; i < tasks.length; i++) {
       tasks[i].begin_time = lastFinishTime;
-      lastFinishTime += (tasks[i].time_required * 1000);
+      lastFinishTime += (tasks[i].time_required * timeMultiplier.value * 1000);
     }
   };
+
+  // 当时代倍率变化时，立即重计划所有任务的时间
+  watch(timeMultiplier, () => {
+    recalculateStartTimes();
+  });
 
   function taskLoop() {
     setInterval(async () => {
@@ -274,7 +288,7 @@ export const useTaskStore = defineStore('task', () => {
         }
       }
 
-      if (now - task.begin_time >= task.time_required * 1000) {
+      if (now - task.begin_time >= task.time_required * timeMultiplier.value * 1000) {
         if (task.type === 'action') {
           // 标记行动为已执行
           packStore.addPerformedAction(task.key);
@@ -490,7 +504,19 @@ export const useTaskStore = defineStore('task', () => {
 
   taskLoop();
 
-  return { tasks, getTasks, projectedState, projectedInventory, pushTask, removeTask, pushLabTask, clearTasks, canPerformWithProjection }
+  return {
+    tasks,
+    getTasks,
+    timeMultiplier,
+    projectedState,
+    projectedInventory,
+    projectedDurability,
+    pushTask,
+    removeTask,
+    pushLabTask,
+    clearTasks,
+    canPerformWithProjection
+  }
 })
 
 export const useTaskStoreWithOut = once(() => useTaskStore(store));

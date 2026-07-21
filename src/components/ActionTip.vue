@@ -8,7 +8,7 @@
 
   const props = defineProps<{
     description: string;
-    required_items: { key: string; quantity: number }[];
+    required_items: { key: string | string[]; quantity: number, use?: number }[];
     required_techs?: string[];
     time_required?: number;
   }>();
@@ -19,17 +19,46 @@
 
   const items = computed(() => {
     return props.required_items.map(item => {
-      const itemData = Items.find(i => i.key === item.key);
-      const known = packStore.hasEverHad(item.key);
-      const projectedQty = taskStore.projectedInventory.get(item.key) || 0;
+      const keys = Array.isArray(item.key) ? item.key : [item.key]
+      const known = keys.some(k => packStore.hasEverHad(k))
+      
+      // 尝试匹配当前有货的材料
+      let targetKey = keys[0]
+      const quantityCost = item.quantity || 0;
+      const durabilityCost = item.use || 0;
+
+      if (keys.length > 1) {
+         const found = keys.find(k => {
+           const itemDef = Items.find(i => i.key === k);
+           const isDurable = itemDef?.type.some(t => ['tool', 'container', 'battery'].includes(t)) || false;
+           if (isDurable && durabilityCost > 0) {
+             return (taskStore.projectedDurability.get(k) || 0) >= durabilityCost;
+           }
+           return (taskStore.projectedInventory.get(k) || 0) >= quantityCost;
+         })
+         if (found) targetKey = found
+      }
+      
+      const itemData = Items.find(i => i.key === targetKey);
+      const isDurable = itemData?.type.some(t => ['tool', 'container', 'battery'].includes(t)) || false;
+      const projectedQty = taskStore.projectedInventory.get(targetKey) || 0;
+      const projectedDur = taskStore.projectedDurability.get(targetKey) || 0;
+
       return {
-        key: item.key,
+        key: targetKey,
         quantity: item.quantity,
-        name: itemData?.name || item.key,
+        use: item.use || 0,
+        name: itemData?.name || targetKey,
         known,
-        insufficient: known && item.quantity > projectedQty,
+        insufficient: known && (isDurable && item.use ? item.use > projectedDur : item.quantity > projectedQty),
       };
     });
+  });
+
+  const actualTime = computed(() => {
+    if (!props.time_required) return 0;
+    const t = props.time_required * taskStore.timeMultiplier;
+    return t < 1 ? t.toFixed(1) : Math.round(t);
   });
 
   // 移动端长按显示
@@ -85,11 +114,12 @@
       </div>
       <div v-if="time_required" class="text-[10px] opacity-60 whitespace-nowrap flex items-center gap-0.5">
         <Icon icon="tabler:clock" />
-        {{ time_required }}s
+        {{ actualTime }}s
       </div>
       <div v-if="items.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
-        {{ item.quantity }}x 
+        <template v-if="item.quantity > 0">{{ item.quantity }}x </template>
+        <template v-else-if="item.use > 0">{{ item.use }}耐 </template>
         <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
         <span class="unknown" v-if="!item.known">????</span>
       </div>

@@ -21,21 +21,21 @@ const draftNetRequirements = computed(() => {
 })
 
 function isInsufficient(key: string, req: { quantity: number, totalUse: number, isDurable: boolean }) {
-  const item = packStore.items.find(i => i.key === key)
-  if (!item) return true
+  const projectedQty = taskStore.projectedInventory.get(key) || 0;
+  const projectedDur = taskStore.projectedDurability.get(key) || 0;
 
   if (req.isDurable && req.totalUse > 0) {
-    const itemDef = Items.find(i => i.key === key)
-    const maxDurable = itemDef?.durable || 1
-    // Total available durability = (full stacks) * maxDurable + current active item durability
-    const totalAvailable = (item.quantity - 1) * maxDurable + item.durable
-    if (totalAvailable < req.totalUse) return true
+    if (projectedDur < req.totalUse) return true
   }
 
-  // If quantity is required (including cases where totalUse was satisfied or not applicable)
-  if (req.quantity > 0 && item.quantity < req.quantity) return true
+  if (req.quantity > 0 && projectedQty < req.quantity) return true
 
   return false
+}
+
+function getActualTime(t: number) {
+  const actual = t * taskStore.timeMultiplier
+  return actual < 1 ? actual.toFixed(1) : Math.round(actual)
 }
 
 function handleEdit(line: any) {
@@ -118,7 +118,10 @@ function getMapName(key: string) {
 
           <!-- 合计需求 -->
           <div v-if="Object.keys(draftNetRequirements).length > 0" class="bg-base-300/30 rounded-xl p-3 border border-base-300/50">
-            <div class="text-[10px] uppercase tracking-wider font-bold opacity-40 mb-2">预估单次循环净需求 (含容器/能源)</div>
+            <div class="text-[10px] uppercase tracking-wider font-bold opacity-40 mb-2 flex justify-between">
+              <span>预估单次循环净需求 (含容器/能源)</span>
+              <span class="text-primary">预计耗时: {{ getActualTime(productionStore.getTotalTime(productionStore.draftSteps)) }}秒</span>
+            </div>
             <div class="flex flex-wrap gap-2">
               <div v-for="(req, key) in draftNetRequirements" :key="key" 
                    class="badge badge-sm gap-1.5 py-2.5 transition-colors"
@@ -188,8 +191,9 @@ function getMapName(key: string) {
             <div class="mb-4">
               <div class="collapse collapse-arrow bg-base-200/50 rounded-xl border border-base-300">
                 <input type="checkbox" />
-                <div class="collapse-title py-2 px-4 min-h-0 text-[11px] font-bold opacity-60">
-                  预估总量物料清单 (循环 {{ selectedCycles }} 次)
+                <div class="collapse-title py-2 px-4 min-h-0 text-[11px] font-bold opacity-60 flex justify-between items-center pr-10">
+                  <span>预估总量物料清单 (循环 {{ selectedCycles }} 次)</span>
+                  <span class="text-primary font-mono font-bold">总耗时: {{ getActualTime(productionStore.getTotalTime(line.steps, selectedCycles)) }}s</span>
                 </div>
                 <div class="collapse-content px-4 pb-3">
                   <div class="flex flex-wrap gap-1.5 pt-2">

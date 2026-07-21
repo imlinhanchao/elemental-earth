@@ -141,7 +141,7 @@
           </div>
 
           <!-- 总耗时 -->
-          <div class="total-time">⏱ 预计耗时：{{ totalTime }} 秒</div>
+          <div class="total-time">⏱ 预计耗时：{{ displayTotalTime }} 秒</div>
 
           <!-- 操作按钮 -->
           <div class="dialog-footer flex justify-between">
@@ -260,7 +260,7 @@ function addToProductionLine() {
     name: `${formula.value.name}${[...selectedChainOperations.value].map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
     key: `action_formula_${formula.value.key}_production`,
     description: formula.value.description,
-    time_required: totalTime.value,
+    time_required: baseTotalTime.value,
     rewards,
     required_items: consumedItems,
     formulaKey: formula.value.key,
@@ -490,24 +490,35 @@ const insufficientMaterials = computed(() => {
   const result: boolean[] = []
   const items = formula.value?.required_items || []
   const inv = taskStore.projectedInventory
+  const dur = taskStore.projectedDurability
+  
   for (let i = 0; i < items.length; i++) {
     const key = selectedMaterials.value[i]
     const req = items[i]
     if (!key) {
       result.push(true)
     } else {
-      const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
-      const have = inv.get(key) || 0
-      result.push(have < need)
+      const itemData = getItem(key);
+      const isDurable = itemData?.type.some(t => ['tool', 'container', 'battery'].includes(t)) || false;
+      const multiplier = isReactantCatalyst(i) ? 1 : batches.value;
+      
+      if (isDurable && req.use) {
+        const need = req.use * multiplier;
+        const have = dur.get(key) || 0;
+        result.push(have < need)
+      } else {
+        const need = req.quantity * multiplier;
+        const have = inv.get(key) || 0;
+        result.push(have < need)
+      }
     }
   }
   return result
 })
 
 // ─── 总耗时 ────────────────────────────────────────────────────
-const totalTime = computed(() => {
+const baseTotalTime = computed(() => {
   if (!formula.value) return 0
-  // 使用操作时间 * 最小操作次数作为基础时间
   const opTime = operation.value?.time_required ?? formula.value.time_required
   const minOps = formula.value.required_actions?.min || 1
   let t = opTime * minOps * batches.value
@@ -517,6 +528,11 @@ const totalTime = computed(() => {
     if (op) t += op.time_required * batches.value
   }
   return t
+})
+
+const displayTotalTime = computed(() => {
+  const t = baseTotalTime.value * taskStore.timeMultiplier
+  return t < 1 ? parseFloat(t.toFixed(1)) : Math.round(t)
 })
 
 watch(() => props.visible, (v) => {
@@ -664,7 +680,7 @@ function confirm() {
     name: `${formula.value.name}${[...selectedChainOperations.value].map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
     key: `action_formula_${formula.value.key}_${Date.now()}`,
     description: formula.value.description,
-    time_required: totalTime.value,
+    time_required: baseTotalTime.value,
     rewards,
     required_items: consumedItems,
     formulaKey: formula.value.key,

@@ -150,6 +150,21 @@ export const useProductionStore = defineStore('production', () => {
     );
   }
 
+  function getTotalTime(steps: IProductionLineStep[], multiplier: number = 1) {
+    let total = 0;
+    for (const step of steps) {
+      const stepMultiplier = (step.count || 1) * multiplier;
+      if (step.type === 'action') {
+        const action = Actions.find(a => a.key === step.key);
+        if (action) total += action.time_required * stepMultiplier;
+      } else if (step.type === 'formula') {
+        const formula = Formulas.find(f => f.key === step.key);
+        if (formula) total += formula.time_required * stepMultiplier;
+      }
+    }
+    return total;
+  }
+
   function executeProductionLine(id: string, multiplier: number = 1) {
     const line = productionLines.find(l => l.id === id);
     if (!line) return;
@@ -229,6 +244,7 @@ export const useProductionStore = defineStore('production', () => {
     validateMapCompatibility,
     editProductionLine,
     getNetRequirements,
-    collapseSteps
+    collapseSteps,
+    getTotalTime
   }
 })

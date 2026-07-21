@@ -158,6 +158,14 @@ function getEraProgress(era: any) {
 
               <p class="text-sm opacity-70 mb-6 min-h-[3em]">{{ viewingEra.description }}</p>
 
+              <!-- 时代特质 -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <div v-if="viewingEra.order > 0" class="badge badge-outline border-primary/30 text-primary text-[10px] py-2 gap-1 px-2 font-bold">
+                  <Icon icon="tabler:bolt" />
+                  效率提升 +{{ viewingEra.order * 10 }}%
+                </div>
+              </div>
+
               <!-- 进度指示 -->
               <div class="space-y-2 mb-6">
                 <div class="flex justify-between text-[10px] uppercase font-bold tracking-widest opacity-40">

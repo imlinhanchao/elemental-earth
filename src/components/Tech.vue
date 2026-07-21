@@ -30,20 +30,21 @@
   const matchingTask = computed(() => taskStore.tasks[matchingTaskIndex.value])
 
   const remainingTime = computed(() => {
-    if (matchingTaskIndex.value === -1) return 0;
+    if (matchingTaskIndex.value === -1 || !matchingTask.value) return 0;
+    
+    const multiplier = taskStore.timeMultiplier;
+    
+    // 如果任务已经有预计开始时间，则 总剩余时间 = (开始时间 + 持续时间 - 现在时间)
+    if (matchingTask.value.begin_time > 0) {
+      const finishTime = matchingTask.value.begin_time + (matchingTask.value.time_required * multiplier * 1000);
+      return Math.max(0, (finishTime - now.value) / 1000);
+    }
+    
+    // 如果任务还没排进开始时间（理论上 push 后立刻 recalculate 会有值，但作为兜底）
+    // 累加前面所有任务的耗时 + 自身耗时
     const preTasks = taskStore.tasks.slice(0, matchingTaskIndex.value);
-    const currentTaskRemaining = matchingTask.value.begin_time > 0
-      ? (matchingTask.value.time_required * 1000 + matchingTask.value.begin_time - now.value) / 1000
-      : matchingTask.value.time_required;
-
-    const preTasksTotal = preTasks.reduce((total, preTask) => {
-      if (preTask.begin_time > 0) {
-        return total + (preTask.time_required * 1000 + preTask.begin_time - now.value) / 1000;
-      }
-      return total + preTask.time_required;
-    }, 0);
-
-    return Math.max(0, preTasksTotal + currentTaskRemaining);
+    const preTasksTotal = preTasks.reduce((total, t) => total + t.time_required * multiplier, 0);
+    return preTasksTotal + matchingTask.value.time_required * multiplier;
   });
 
   const isEnabled = computed(() => {
@@ -70,10 +71,7 @@
     v-if="isVisible"
     :id="`tech-${data.key}`"
     :description="data.description"
-    :required_items="data.required_items.map(req => ({
-      key: Array.isArray(req.key) ? req.key[0] : req.key,
-      quantity: req.quantity,
-    }))" 
+    :required_items="data.required_items" 
     :required_techs="data.required_techs"
     :time_required="data.time_required"
   >

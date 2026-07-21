@@ -70,13 +70,12 @@ export const usePackStore = defineStore('pack', () => {
         const stateStore = useStateStore();
         stateStore.addElement(itemData.elemental);
       }
-      if (use) {
-        const durable = itemData?.durable ?? 1;
-        existingItem.durable += use;
-        if (existingItem.durable > durable) {
-          existingItem.durable = existingItem.durable - durable;
-          existingItem.quantity += 1;
-        }
+      if (use > 0) {
+        const maxDur = itemData?.durable ?? 1;
+        const currentTotal = (existingItem.quantity - 1) * maxDur + existingItem.durable;
+        const newTotal = currentTotal + use;
+        existingItem.quantity = Math.ceil(newTotal / maxDur);
+        existingItem.durable = newTotal % maxDur || maxDur;
       } else {
         existingItem.quantity += quantity;
       }
@@ -84,7 +83,14 @@ export const usePackStore = defineStore('pack', () => {
     } else {
       const itemData = Items.find(i => i.key === itemKey);
       if (itemData) {
-        items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
+        if (use > 0) {
+          const maxDur = itemData.durable ?? 1;
+          const newQty = Math.ceil(use / maxDur);
+          const newDur = use % maxDur || maxDur;
+          items.push({ name: itemData.name, key: itemKey, quantity: newQty, durable: newDur });
+        } else {
+          items.push({ name: itemData.name, key: itemKey, quantity, durable: itemData.durable ?? 1 });
+        }
         discoveredItems.add(itemKey);
         // 重大发现物品：触发命名弹窗（仅硬核模式开启时触发）
         if (itemData.is_discovery && !itemRenames[itemKey]) {

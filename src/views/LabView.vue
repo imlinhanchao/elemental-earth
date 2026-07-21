@@ -158,8 +158,8 @@ const operationRequirementMet = computed(() => {
       if (isContainerMatched) {
         // 如果容器匹配，检查其耐久（仅当配方已验证且存在时，执行严格检查）
         if (matchedFormula.value && formulaProven.value) {
-          const pack = selectedContainerPack.value
-          if (!pack || pack.durable < (req.use ?? 1) * cycles.value) return false
+          const totalDur = packStore.getTotalDurability(selectedContainerKey.value!)
+          if (totalDur < (req.use ?? 1) * cycles.value) return false
         }
         continue
       }
@@ -171,8 +171,8 @@ const operationRequirementMet = computed(() => {
         if ((selectedMaterials.value.get(materialKey) || 0) < req.quantity) return false
         // 工具类耐久检查（配方已验证时）
         if (matchedFormula.value && formulaProven.value && req.use !== undefined) {
-          const pack = packStore.items.find(i => i.key === materialKey)
-          if (!pack || pack.durable < req.use * cycles.value) return false
+          const totalDur = packStore.getTotalDurability(materialKey)
+          if (totalDur < req.use * cycles.value) return false
         }
         continue
       }
@@ -427,9 +427,9 @@ const maxByContainer = computed(() => {
   let max = Infinity
   for (const req of selectedOperation.value.required_item) {
     const keys = reqKeys(req.key)
-    if (!keys.includes(selectedContainerKey.value)) continue
+    if (!keys.includes(selectedContainerKey.value!)) continue
     if (req.use) {
-      max = Math.min(max, Math.floor(packStore.getTotalDurability(selectedContainerKey.value) / req.use))
+      max = Math.min(max, Math.floor(packStore.getTotalDurability(selectedContainerKey.value!) / req.use))
     }
   }
   return max === Infinity ? null : max
@@ -528,25 +528,30 @@ const hasEnoughFuel = computed(() => {
 })
 
 const fireSourceAvailable = computed(() => {
-  if (!burningNeeded.value || !selectedFireSourcePack.value) return false
-  return selectedFireSourcePack.value.durable >= 0.01 * cycles.value
+  if (!burningNeeded.value || !selectedFireSourceKey.value) return false
+  return packStore.getTotalDurability(selectedFireSourceKey.value) >= 0.01 * cycles.value
 })
 
 const hasEnoughPower = computed(() => {
   if (!electricityNeeded.value) return true
-  if (!selectedPowerSourcePack.value) return false
+  if (!selectedPowerSourceKey.value) return false
   const consumption = matchedFormula.value?.power_consumption ?? 0.1
-  return selectedPowerSourcePack.value.durable >= consumption * cycles.value
+  return packStore.getTotalDurability(selectedPowerSourceKey.value) >= consumption * cycles.value
 })
 
 // ---- 总耗时 ----
-const totalTime = computed(() => {
+const baseTotalTime = computed(() => {
   if (!selectedOperation.value) return 0
   let t = selectedOperation.value.time_required * cycles.value
   for (const op of selectedChainOperations.value) {
     t += op.time_required * cycles.value
   }
   return t
+})
+
+const displayTotalTime = computed(() => {
+  const actualT = baseTotalTime.value * taskStore.timeMultiplier
+  return actualT < 1 ? parseFloat(actualT.toFixed(1)) : Math.round(actualT)
 })
 
 // ---- 能否开始 ----
@@ -669,7 +674,7 @@ function startExperiment() {
     name: `实验室 - ${selectedOperation.value.name}${selectedChainOperations.value.map(o => ' → ' + o.name).join('')}`,
     key: `lab_${selectedOperation.value.key}_${Date.now()}`,
     description: selectedOperation.value.description,
-    time_required: totalTime.value,
+    time_required: baseTotalTime.value,
     rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1 })),
     required_items: consumedItems,
     formulaKey: matchedFormula.value?.key,
@@ -905,7 +910,7 @@ function startExperiment() {
             >{{ n }}×</button>
           </div>
           <span class="text-xs text-base-content/60">
-            总耗时: {{ totalTime > 60 ? Math.floor(totalTime / 60) + '分' + (totalTime % 60) + '秒' : totalTime + '秒' }}
+            总耗时: {{ displayTotalTime > 60 ? Math.floor(displayTotalTime / 60) + '分' + (displayTotalTime % 60) + '秒' : displayTotalTime + '秒' }}
           </span>
           <!-- 超出限制警告 -->
           <span v-if="cyclesExceedsLimit && limitLabel" class="text-xs text-error w-full">
