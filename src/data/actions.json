@@ -3488,5 +3488,31 @@
         "probability": 1000
       }
     ]
+  },
+  {
+    "key": "charging_lithium_battery",
+    "name": "锂电池充电",
+    "category": "制作",
+    "description": "给锂离子电池充电，使其恢复满电",
+    "time_required": 10,
+    "required_items": [
+      {
+        "key": "lithium_ion_battery",
+        "quantity": 1,
+        "use": 1
+      },
+      {
+        "key": "battery",
+        "quantity": 7,
+        "use": 1
+      }
+    ],
+    "rewards": [
+      {
+        "key": "lithium_ion_battery",
+        "quantity": 1,
+        "probability": 1000
+      }
+    ]
   }
 ]
