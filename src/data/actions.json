@@ -1034,6 +1034,16 @@
           3
         ],
         "probability": 5
+      },
+      {
+        "key": "resin",
+        "quantity": [
+          1,
+          2,
+          3
+        ],
+        "probability": 6,
+        "required_era": "alchemy"
       }
     ],
     "map": [
