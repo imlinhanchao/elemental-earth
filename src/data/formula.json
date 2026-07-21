@@ -4742,9 +4742,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "氯化法提锗",
     "key": "germanium_chlorination",
+    "name": "氯化法提锗",
     "description": "向锌浸出渣或含锗烟尘中加入浓盐酸并加热蒸馏，由于四氯化锗沸点低，可将其转化为气体蒸出分离。",
+    "fragment_description": "以#zinc_leaching_residue#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "distilling_flask",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "zinc_leaching_residue",
@@ -4752,26 +4760,17 @@
         "isMain": true
       },
       {
-        "key": "concentrated_hydrochloric_acid",
+        "key": "hydrochloric_acid",
         "quantity": 1
       }
     ],
-    "required_container": "distillation_flask",
-    "required_actions": {
-      "key": "heating",
-      "min": 1
-    },
-    "time_required": 60,
     "products": [
       {
         "key": "germanium_tetrachloride",
         "multiple": 1,
         "required_chain_operation": "condensation"
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#zinc_leaching_residue#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "germanium_hydrolysis",
