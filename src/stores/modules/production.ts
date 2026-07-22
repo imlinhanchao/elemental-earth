@@ -371,12 +371,19 @@ export const useProductionStore = defineStore('production', () => {
     if (!line) return ''
     
     // 简化步骤数据以减小体积
-    const data = line.steps.map(s => ({
-      t: s.type === 'action' ? 0 : 1,
-      k: s.key,
-      c: s.count,
-      p: s.payload
-    }))
+    const data = line.steps.map(s => {
+      let t = 0;
+      if (s.type === 'formula') t = 1;
+      if (s.type === 'line') t = 2;
+
+      return {
+        t,
+        k: s.key,
+        c: s.count,
+        p: s.payload,
+        cd: s.condition // 增加执行条件
+      }
+    })
 
     const json = JSON.stringify({ n: line.name, s: data })
     // 使用简单的 Base64，后续如有需求可引入更高效的压缩
@@ -400,7 +407,10 @@ export const useProductionStore = defineStore('production', () => {
       const steps: IProductionLineStep[] = []
 
       for (const s of data.s) {
-        const type = s.t === 0 ? 'action' : 'formula'
+        let type: 'action' | 'formula' | 'line' = 'action';
+        if (s.t === 1) type = 'formula';
+        else if (s.t === 2) type = 'line';
+
         const key = s.k
         
         let name = ''
@@ -415,12 +425,17 @@ export const useProductionStore = defineStore('production', () => {
             const performedOk = packStore.performedActions.has(key)
             isUnlocked = techsOk && performedOk
           }
-        } else {
+        } else if (type === 'formula') {
           const formula = Formulas.find(f => f.key === key)
           if (formula) {
             name = formula.name
             isUnlocked = packStore.provenFormulas.includes(key)
           }
+        } else if (type === 'line') {
+          // 嵌套生产线：只检查本地是否存在
+          const line = productionLines.find(l => l.id === key);
+          name = line ? line.name : '未知生产线';
+          isUnlocked = !!line;
         }
 
         if (!isUnlocked) {
@@ -432,14 +447,15 @@ export const useProductionStore = defineStore('production', () => {
           key,
           name: name || key,
           count: s.c,
-          payload: s.p
+          payload: s.p,
+          condition: s.cd // 恢复执行条件
         })
       }
 
       if (missingKeys.length > 0) {
         return { 
           success: false, 
-          message: `导入失败：以下内容未解锁 - ${missingKeys.join(', ')}` 
+          message: `导入失败：以下内容未解锁或不存在 - ${missingKeys.join(', ')}` 
         }
       }
 
