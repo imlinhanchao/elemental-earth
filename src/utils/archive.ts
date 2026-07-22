@@ -9,7 +9,7 @@ import type { IPackItem } from '@/stores/modules/pack';
 import type { IGameState } from '@/stores/modules/state';
 import type { ITask } from '@/stores/modules/task';
 import type { ILog } from '@/stores/modules/log';
-import type { IProductionLine } from '@/stores/modules/production';
+import type { IProductionLine, IProductionLineStep } from '@/stores/modules/production';
 import { ref } from 'vue';
 import { shortTime } from './date';
 import { gameSDK } from './sdk';
@@ -44,6 +44,8 @@ export interface SaveData {
   fragments: string[];
   /** 未读手稿列表 */
   unreadFragments: string[];
+  /** 生产线草稿（v6 新增） */
+  productionDraft?: IProductionLineStep[];
   /** 生产线列表（v5 新增） */
   productionLines?: IProductionLine[];
 }
@@ -80,6 +82,7 @@ export function saveGame(): boolean {
       performedActions: Array.from(packStore.performedActions),
       fragments: JSON.parse(JSON.stringify(fragmentStore.fragments)),
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
+      productionDraft: JSON.parse(JSON.stringify(productionStore.draftSteps)),
       productionLines: JSON.parse(JSON.stringify(productionStore.productionLines)),
     };
     storage.setItem(SAVE_KEY, data);
@@ -190,6 +193,38 @@ export function loadGame(): boolean {
     // 恢复生产线（v5 新增）
     if (Array.isArray(data.productionLines)) {
       productionStore.productionLines.splice(0, productionStore.productionLines.length, ...data.productionLines);
+    }
+
+    // 恢复生产线草稿（v6 新增）
+    if (Array.isArray(data.productionDraft)) {
+      productionStore.draftSteps.splice(0, productionStore.draftSteps.length, ...data.productionDraft);
+    }
+
+    // --- 迁移之前的遗留生产线数据 (如果有) ---
+    const legacyProductionKey = 'production_lines';
+    const legacyData = localStorage.getItem(legacyProductionKey);
+    if (legacyData) {
+      try {
+        const parsed = JSON.parse(legacyData);
+        if (Array.isArray(parsed)) {
+          // 合并到当前生产线列表中，避免 ID 重复
+          const existingIds = new Set(productionStore.productionLines.map(l => l.id));
+          for (const line of parsed) {
+            if (line && line.id && Array.isArray(line.steps)) {
+              if (existingIds.has(line.id)) {
+                line.id = Date.now() + Math.random().toString(36).substr(2, 9);
+              }
+              productionStore.productionLines.push(line);
+              existingIds.add(line.id);
+            }
+          }
+          console.log(`成功从 localStorage 迁移了 ${parsed.length} 条生产线数据`);
+        }
+        // 迁移完成后删除旧数据
+        localStorage.removeItem(legacyProductionKey);
+      } catch (e) {
+        console.error('迁移遗留生产线数据失败:', e);
+      }
     }
 
     lastSavedTime.value = data.timestamp;

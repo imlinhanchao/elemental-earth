@@ -1,11 +1,14 @@
 <template>
-  <div class="explore-view">
-    <div class="mb-4 flex items-center gap-3 flex-wrap">
-      <h1 class="text-xl font-bold">元素周期表</h1>
+  <div class="p-4 mx-auto space-y-4 inline-flex flex-col">
+    <header class="mb-4 flex items-center gap-3 flex-wrap">
+      <h1 class="text-xl font-bold flex items-center gap-2">
+        <Icon icon="tabler:atom" class="text-2xl" />
+        元素周期表
+      </h1>
       <span class="badge badge-outline text-xs">
         已点亮 {{ litElements.length }} / 118 个元素
       </span>
-    </div>
+    </header>
 
     <!-- ─── Periodic Table ──────────────────────────────────────────────────── -->
     <PeriodicTable

@@ -191,7 +191,8 @@
         "key": [
           "crucible",
           "evaporating_dish",
-          "clay_pot"
+          "clay_pot",
+          "beaker"
         ],
         "quantity": 1,
         "use": 0.05

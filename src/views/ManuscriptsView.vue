@@ -219,7 +219,7 @@ onMounted(() => {
     <header class="my-4 flex flex-col md:flex-row md:items-center justify-between gap-3 flex-none">
       <div class="flex items-center justify-between">
         <h1 class="text-xl font-bold flex items-center gap-2">
-          <Icon icon="mingcute:document-fill" class="text-primary" />
+          <Icon icon="mingcute:document-fill" class="text-2xl" />
           研究手稿
         </h1>
         <span class="badge badge-outline text-xs md:hidden">

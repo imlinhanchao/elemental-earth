@@ -89,15 +89,13 @@ function getMapName(key: string) {
 <template>
   <div class="p-4 max-w-4xl mx-auto space-y-6 pb-24">
     <!-- 头部说明 -->
-    <div class="flex items-center gap-4 mb-4 lg:mb-8 mt-2">
-      <div class="bg-primary px-3 py-3 rounded-2xl flex items-center justify-center">
-        <Icon icon="icon-park-outline:robot-two" class="text-3xl text-primary-content" />
-      </div>
-      <div>
-        <h1 class="text-2xl lg:text-3xl font-bold">自动化生产线</h1>
-        <p class="text-xs lg:text-sm text-base-content/60">组合已完成的行动与配方，实现大规模自动化执行。</p>
-      </div>
-    </div>
+    <header>
+      <h1 class="text-xl font-bold flex items-center gap-2">
+        <Icon icon="icon-park-outline:robot-two" class="text-2xl" />
+        自动化生产线
+      </h1>
+      <p class="text-xs text-base-content/60">组合已完成的行动与配方，实现大规模自动化执行。</p>
+    </header>
 
     <!-- 正在编辑的草稿 -->
     <div class="card bg-base-100 border border-base-300 shadow-sm overflow-hidden">

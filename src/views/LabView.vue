@@ -705,11 +705,16 @@ function startExperiment() {
 }
 </script>
 <template>
-  <div class="p-4 max-w-2xl mx-auto space-y-4">
-    <h2 class="text-xl font-bold flex items-center gap-2">
-      <Icon icon="fluent:beaker-16-filled" class="text-2xl" />
-      实验室
-    </h2>
+  <div class="p-4 mx-auto space-y-4">
+    <header>
+      <h1 class="text-xl font-bold flex items-center gap-2">
+        <Icon icon="fluent:beaker-16-filled" class="text-2xl" />
+        实验室
+      </h1>
+      <p class="text-xs text-base-content/60">
+        通过实验室可以对材料进行加工、提纯、合成等操作。实验室操作需要消耗时间和材料，部分操作还需要火源或电源。
+      </p>
+    </header>
 
     <!-- 1. 容器选择 -->
     <div id="lab-step-1" class="card bg-base-200">

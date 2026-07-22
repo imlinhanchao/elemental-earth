@@ -2386,9 +2386,17 @@
     ]
   },
   {
-    "name": "焙烧绿柱石",
     "key": "roast_beryl",
+    "name": "焙烧绿柱石",
     "description": "在窑炉中高温焙烧绿柱石，分解得到氧化铍和炉渣。",
+    "fragment_description": "将#beryl#与碱性熔剂混合进行$roasting$处理，使其铝硅酸盐结构解离，产出#beryllium_oxide#。",
+    "time_required": 20,
+    "required_era": "atomic_age",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "beryl",
@@ -2396,9 +2404,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_techs": [],
-    "time_required": 10,
     "products": [
       {
         "key": "beryllium_oxide",
@@ -2408,18 +2413,20 @@
         "key": "slag",
         "multiple": 2
       }
-    ],
-    "fragment_description": "将#beryl#与碱性熔剂混合进行$roasting$处理，使其铝硅酸盐结构解离，产出#beryllium_oxide#。",
-    "required_era": "atomic_age"
+    ]
   },
   {
     "key": "reduce_beryllium_oxide",
     "name": "还原氧化铍",
     "description": "在坩埚中用碳高温还原氧化铍，得到金属铍和一氧化碳。",
     "fragment_description": "在高温真空气氛下利用碳还原#beryllium_oxide#，沉淀出轻质金属#beryllium#。",
-    "time_required": 20,
+    "time_required": 30,
     "required_era": "atomic_age",
     "required_container": "crucible",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "beryllium_oxide",
@@ -5500,8 +5507,14 @@
     "key": "digest_xenotime",
     "name": "酸解磷钇矿",
     "description": "使用浓硫酸在加热条件下处理磷钇矿，使其中的稀土元素转化为可溶性的硫酸盐。",
-    "time_required": 40,
+    "fragment_description": "以#xenotime#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
     "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "xenotime",
@@ -5509,7 +5522,7 @@
         "isMain": true
       },
       {
-        "key": "sulfuric_acid",
+        "key": "concentrated_sulfuric_acid",
         "quantity": 1
       }
     ],
@@ -5518,17 +5531,20 @@
         "key": "yttrium_solution",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#xenotime#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "precipitate_yttrium",
     "name": "沉淀草酸钇",
     "description": "向钇富集液中加入草酸，使钇离子以草酸盐的形式沉淀析出，从而实现初步纯化。",
-    "time_required": 30,
+    "fragment_description": "以#yttrium_solution#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
     "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "yttrium_solution",
@@ -5545,10 +5561,7 @@
         "key": "yttrium_oxalate",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#yttrium_solution#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "calcine_yttrium",
@@ -5616,8 +5629,14 @@
     "key": "leach_zircon_frit",
     "name": "浸出锆砂熔块",
     "description": "使用盐酸浸出焙烧后的锆砂熔块，经过滤与沉淀获得初级氧化锆（含铪）。",
-    "time_required": 40,
+    "fragment_description": "以#unrefined_zirconia#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
     "required_container": "beaker",
+    "required_actions": {
+      "key": "precipitation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "unrefined_zirconia",
@@ -5634,10 +5653,7 @@
         "key": "unpurified_zirconia",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#unrefined_zirconia#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "reduce_hafnium",
@@ -5781,9 +5797,13 @@
     "key": "lithium_chloride_from_carbonate",
     "name": "氯化锂制备（碳酸锂法）",
     "description": "碳酸锂与盐酸反应，经过量蒸发结晶得到氯化锂。",
-    "time_required": 30,
+    "time_required": 10,
     "required_era": "modern_chem",
     "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lithium_carbonate",
@@ -5811,9 +5831,13 @@
     "key": "lithium_chloride_from_hydroxide",
     "name": "氯化锂制备（氢氧化锂法）",
     "description": "氢氧化锂与盐酸中和反应，通过蒸发浓缩提取氯化锂晶体。",
-    "time_required": 25,
+    "time_required": 100,
     "required_era": "modern_chem",
     "required_container": "beaker",
+    "required_actions": {
+      "key": "evaporation",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lithium_hydroxide",

@@ -370,7 +370,7 @@ const containerOptions = computed(() => {
 const isContainerInsufficient = computed(() => {
   if (!formula.value?.required_container || !selectedContainer.value) return false
   
-  let containerUse = 0.05
+  let containerUse = 0;
   for (const req of operation.value?.required_item || []) {
     const rks = Array.isArray(req.key) ? req.key : [req.key]
     if (rks.includes(selectedContainer.value) && req.use) {
