@@ -9,25 +9,28 @@
     </button>
 
     <!-- 下拉面板 -->
-    <div v-if="open" class="absolute inset-0 z-1000" @click="close" @contextmenu.prevent="close"></div>
-    <div v-if="open" ref="panelRef"
-      class="absolute z-1004 bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden">
-      <!-- 搜索框 -->
-      <div class="p-1.5 border-b border-base-300">
-        <input ref="searchRef" v-model="query" class="input input-bordered input-sm w-full" placeholder="搜索…" @keydown.escape="close" @keydown.enter="selectFirst" />
+    <Teleport to="body">
+      <div v-if="open" class="fixed inset-0 z-[1000]" @click="close" @contextmenu.prevent="close"></div>
+      <div v-if="open" ref="panelRef"
+        class="fixed z-[1004] bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden flex flex-col"
+        :style="panelStyle">
+        <!-- 搜索框 -->
+        <div class="p-1.5 border-b border-base-300 shrink-0">
+          <input ref="searchRef" v-model="query" class="input input-bordered input-sm w-full" placeholder="搜索…" @keydown.escape="close" @keydown.enter="selectFirst" />
+        </div>
+        <!-- 选项列表 -->
+        <div class="overflow-y-auto grow">
+          <button v-for="opt in filteredOptions" :key="getValue(opt)"
+            class="w-full text-left px-3 py-1.5 text-sm hover:bg-base-200 transition-colors flex items-center justify-between gap-2"
+            :class="{ 'bg-primary/10 text-primary font-bold': getValue(opt) === selected }"
+            @click="pick(opt)">
+            <span class="truncate">{{ getLabel(opt) }}</span>
+            <span class="text-[10px] opacity-40 shrink-0 font-mono">{{ getValue(opt) }}</span>
+          </button>
+          <div v-if="filteredOptions.length === 0" class="px-3 py-4 text-xs text-base-content/40 text-center">无匹配</div>
+        </div>
       </div>
-      <!-- 选项列表 -->
-      <div class="max-h-48 overflow-y-auto">
-        <button v-for="opt in filteredOptions" :key="getValue(opt)"
-          class="w-full text-left px-3 py-1.5 text-sm hover:bg-base-200 transition-colors flex items-center gap-2"
-          :class="{ 'bg-primary/10 text-primary': getValue(opt) === selected }"
-          @click="pick(opt)">
-          <span class="truncate">{{ getLabel(opt) }}</span>
-          <span class="text-[10px] opacity-40 shrink-0 font-mono">{{ getValue(opt) }}</span>
-        </button>
-        <div v-if="filteredOptions.length === 0" class="px-3 py-4 text-xs text-base-content/40 text-center">无匹配</div>
-      </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
@@ -102,7 +105,7 @@ function positionPanel() {
 
 function pick(opt: any) {
   emit('update:modelValue', getValue(opt))
-  //close()
+  close()
 }
 
 function selectFirst() {

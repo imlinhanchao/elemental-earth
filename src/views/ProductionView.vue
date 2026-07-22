@@ -8,6 +8,8 @@ import { Maps } from '@/data/maps'
 import { Items } from '@/data/items'
 import Icon from '@/components/Icon.vue'
 import { useToastStore } from '@/stores/modules/toast'
+import ProductionActionModal from '@/components/ProductionActionModal.vue'
+import ProductionFormulaModal from '@/components/ProductionFormulaModal.vue'
 
 const productionStore = useProductionStore()
 const stateStore = useStateStore()
@@ -18,6 +20,9 @@ const toastStore = useToastStore()
 const newName = ref('')
 const selectedCycles = ref(1)
 const importCode = ref('')
+
+const showActionModal = ref(false)
+const showFormulaModal = ref(false)
 
 const draftNetRequirements = computed(() => {
   return productionStore.getNetRequirements(productionStore.draftSteps, 1)
@@ -104,9 +109,19 @@ function getMapName(key: string) {
           <Icon icon="fluent:edit-16-filled" />
           当前设计草稿
         </h2>
-        <span class="badge badge-sm badge-neutral" v-if="productionStore.draftSteps.length > 0">
-          {{ productionStore.draftSteps.length }} 个步骤
-        </span>
+        <div class="flex items-center gap-2">
+          <button @click="showActionModal = true" class="btn btn-xs btn-primary gap-1">
+            <Icon icon="fluent:add-16-filled" />
+            添加行动
+          </button>
+          <button @click="showFormulaModal = true" class="btn btn-xs btn-secondary gap-1">
+            <Icon icon="fluent:add-16-filled" />
+            添加配方
+          </button>
+          <span class="badge badge-sm badge-neutral" v-if="productionStore.draftSteps.length > 0">
+            {{ productionStore.draftSteps.length }} 个步骤
+          </span>
+        </div>
       </div>
       
       <div class="p-6">
@@ -303,6 +318,10 @@ function getMapName(key: string) {
         </ul>
       </div>
     </div>
+
+    <!-- 弹窗 -->
+    <ProductionActionModal :visible="showActionModal" @close="showActionModal = false" />
+    <ProductionFormulaModal :visible="showFormulaModal" @close="showFormulaModal = false" />
   </div>
 </template>
 
