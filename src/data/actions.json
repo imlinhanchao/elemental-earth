@@ -941,7 +941,9 @@
         ],
         "map": [
           "cave",
-          "deep_mine"
+          "mountain",
+          "meteor_crater",
+          "basin"
         ]
       },
       {

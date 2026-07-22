@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useProductionStore } from '@/stores/modules/production'
+import { useProductionStore, type IProductionLineStep } from '@/stores/modules/production'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
@@ -10,6 +10,7 @@ import Icon from '@/components/Icon.vue'
 import { useToastStore } from '@/stores/modules/toast'
 import ProductionActionModal from '@/components/ProductionActionModal.vue'
 import ProductionFormulaModal from '@/components/ProductionFormulaModal.vue'
+import SearchableSelect from '@/components/SearchableSelect.vue'
 
 const productionStore = useProductionStore()
 const stateStore = useStateStore()
@@ -23,6 +24,68 @@ const importCode = ref('')
 
 const showActionModal = ref(false)
 const showFormulaModal = ref(false)
+const showLineModal = ref(false)
+const showConditionModal = ref(false)
+
+// Drag and drop state
+const draggedIndex = ref<number | null>(null)
+
+function onDragStart(index: number, event: DragEvent) {
+  draggedIndex.value = index
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+  }
+}
+
+function onDragEnd() {
+  draggedIndex.value = null
+}
+
+function onDragOver(event: DragEvent) {
+  event.preventDefault()
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move'
+  }
+}
+
+function onDrop(index: number) {
+  if (draggedIndex.value !== null && draggedIndex.value !== index) {
+    productionStore.moveStepInDraft(draggedIndex.value, index)
+  }
+  draggedIndex.value = null
+}
+
+const editingConditionIndex = ref<number | null>(null)
+const conditionInput = ref<NonNullable<IProductionLineStep['condition']>>({
+  key: '',
+  operator: '>' as any,
+  value: 0,
+  loopUntil: false
+})
+
+function openConditionModal(index: number) {
+  editingConditionIndex.value = index
+  const step = productionStore.draftSteps[index]
+  if (step.condition) {
+    conditionInput.value = { ...step.condition }
+  } else {
+    conditionInput.value = { key: '', operator: '>', value: 0, loopUntil: false }
+  }
+  showConditionModal.value = true
+}
+
+function saveCondition() {
+  if (editingConditionIndex.value !== null) {
+    const step = productionStore.draftSteps[editingConditionIndex.value]
+    if (conditionInput.value.key) {
+      step.condition = { ...conditionInput.value }
+    } else {
+      delete step.condition
+    }
+  }
+  editingConditionIndex.value = null
+  showConditionModal.value = false
+}
 
 const draftNetRequirements = computed(() => {
   return productionStore.getNetRequirements(productionStore.draftSteps, 1)
@@ -112,14 +175,18 @@ function getMapName(key: string) {
         <div class="flex items-center gap-2">
           <button @click="showActionModal = true" class="btn btn-xs btn-primary gap-1">
             <Icon icon="fluent:add-16-filled" />
-            添加行动
+            行动
           </button>
           <button @click="showFormulaModal = true" class="btn btn-xs btn-secondary gap-1">
             <Icon icon="fluent:add-16-filled" />
-            添加配方
+            配方
+          </button>
+          <button @click="showLineModal = true" class="btn btn-xs btn-accent gap-1">
+            <Icon icon="fluent:add-16-filled" />
+            嵌套
           </button>
           <span class="badge badge-sm badge-neutral" v-if="productionStore.draftSteps.length > 0">
-            {{ productionStore.draftSteps.length }} 个步骤
+            {{ productionStore.draftSteps.length }}
           </span>
         </div>
       </div>
@@ -129,27 +196,56 @@ function getMapName(key: string) {
           <Icon icon="fluent:box-20-regular" class="text-5xl opacity-20" />
           <div class="space-y-1">
             <p class="text-sm">尚未添加任何步骤</p>
-            <p class="text-[10px] opacity-70">在“制造”页面的行动或“实验室”的配方中选择“加入生产线”</p>
+            <p class="text-[10px] opacity-70">添加行动、配方或嵌套现有的生产线</p>
           </div>
         </div>
 
         <div v-else class="space-y-4">
           <!-- 步骤列表 -->
           <ul class="list bg-base-200/30 rounded-box border border-base-300 divide-y divide-base-300">
-            <li v-for="(step, idx) in productionStore.draftSteps" :key="idx" class="list-row items-center p-3">
-              <div class="text-base-content/30 font-mono w-8 text-center text-xs">{{ idx + 1 }}</div>
+            <li v-for="(step, idx) in productionStore.draftSteps" :key="idx" 
+                class="list-row items-center p-3 cursor-move active:bg-base-300 transition-colors"
+                draggable="true"
+                @dragstart="onDragStart(idx, $event)"
+                @dragend="onDragEnd"
+                @dragover="onDragOver($event)"
+                @drop="onDrop(idx)">
+              <div class="text-base-content/30 font-mono w-8 text-center text-xs flex flex-col items-center">
+                <Icon icon="fluent:re-order-16-regular" class="opacity-50" />
+                <span>{{ idx + 1 }}</span>
+              </div>
               <div class="list-col-grow">
-                <div class="flex items-center gap-2">
-                  <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
-                        :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
-                  <span class="font-medium text-sm">{{ step.name }}</span>
-                  <span v-if="step.count > 1" class="text-primary font-bold text-xs ml-1">x{{ step.count }}</span>
-                  <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded ml-1">{{ step.type === 'action' ? '行动' : '实验室' }}</span>
+                <div class="flex flex-col gap-1">
+                  <div class="flex items-center gap-2">
+                    <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : (step.type === 'formula' ? 'fluent:beaker-16-filled' : 'fluent:factory-16-filled')" 
+                          :class="step.type === 'action' ? 'text-primary' : (step.type === 'formula' ? 'text-secondary' : 'text-accent')" />
+                    <span class="font-medium text-sm">{{ step.name }}</span>
+                    <span v-if="step.count > 1" class="text-primary font-bold text-xs ml-1">x{{ step.count }}</span>
+                    <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded ml-1">
+                      {{ step.type === 'action' ? '行动' : (step.type === 'formula' ? '实验室' : '生产线') }}
+                    </span>
+                  </div>
+                  <!-- Condition Display -->
+                  <div v-if="step.condition" class="flex items-center gap-1 text-[10px] opacity-60">
+                    <Icon icon="fluent:flash-16-regular" class="text-warning" />
+                    <span>条件: {{ packStore.getDisplayName(step.condition.key) }} {{ step.condition.operator }} {{ step.condition.value }}</span>
+                    <span v-if="step.condition.loopUntil" class="badge badge-warning badge-xs scale-[0.8] origin-left">循环</span>
+                  </div>
                 </div>
               </div>
-              <button @click="productionStore.removeStepFromDraft(idx)" class="btn btn-ghost btn-sm text-error btn-square">
-                <Icon icon="fluent:delete-16-regular" />
-              </button>
+              <div class="flex gap-1">
+                <button @click="openConditionModal(idx)" class="btn btn-ghost btn-sm btn-square tooltip" data-tip="设置执行条件">
+                  <Icon icon="fluent:flash-settings-20-filled" :class="step.condition ? 'text-warning' : 'text-base-content/30'" />
+                </button>
+                <div class="join">
+                  <button @click="step.count = Math.max(1, step.count - 1)" class="btn btn-ghost btn-xs join-item">-</button>
+                  <input v-model.number="step.count" type="number" class="w-10 text-center bg-transparent text-xs font-mono join-item" min="1" />
+                  <button @click="step.count++" class="btn btn-ghost btn-xs join-item">+</button>
+                </div>
+                <button @click="productionStore.removeStepFromDraft(idx)" class="btn btn-ghost btn-sm text-error btn-square">
+                  <Icon icon="fluent:delete-16-regular" />
+                </button>
+              </div>
             </li>
           </ul>
 
@@ -320,8 +416,106 @@ function getMapName(key: string) {
     </div>
 
     <!-- 弹窗 -->
-    <ProductionActionModal :visible="showActionModal" @close="showActionModal = false" />
-    <ProductionFormulaModal :visible="showFormulaModal" @close="showFormulaModal = false" />
+    <ProductionActionModal 
+      :visible="showActionModal" 
+      @close="showActionModal = false" 
+    />
+    <ProductionFormulaModal 
+      :visible="showFormulaModal" 
+      @close="showFormulaModal = false"
+    />
+
+    <!-- 嵌套生产线选择 -->
+    <dialog v-if="showLineModal" class="modal modal-open">
+      <div class="modal-box max-w-lg">
+        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+          <Icon icon="fluent:factory-16-filled" class="text-accent" />
+          选择嵌套生产线
+        </h3>
+        
+        <div class="space-y-2 max-h-80 overflow-y-auto">
+          <div v-for="line in productionStore.productionLines.filter(l => l.id !== productionStore.currentEditingId)" :key="line.id" 
+               @click="productionStore.addStepToDraft({ type: 'line', key: line.id, name: line.name }, 1); showLineModal = false"
+               class="p-3 border border-base-300 rounded-xl hover:bg-base-200 cursor-pointer flex justify-between items-center transition-colors">
+            <div>
+              <div class="font-medium text-sm">{{ line.name }}</div>
+              <div class="text-[10px] opacity-40">{{ line.steps.length }} 个内部步骤</div>
+            </div>
+            <Icon icon="fluent:add-12-filled" class="opacity-30" />
+          </div>
+          <div v-if="productionStore.productionLines.filter(l => l.id !== productionStore.currentEditingId).length === 0" class="text-center py-6 text-base-content/40 text-xs">
+            暂无其他生产线
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <button @click="showLineModal = false" class="btn">取消</button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop" @click="showLineModal = false">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <!-- 执行条件设置对话框 -->
+    <Teleport to="body">
+      <div v-if="showConditionModal" class="modal modal-open">
+        <div class="modal-box">
+          <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+            <Icon icon="fluent:flash-settings-20-filled" class="text-warning" />
+            设置执行条件
+          </h3>
+          
+          <div class="space-y-4">
+            <div class="form-control">
+              <span class="label text-xs opacity-60">条件触发物品 (例如：煤)</span>
+              <SearchableSelect
+                v-model="conditionInput.key"
+                :options="Items.map(i => ({ label: i.name, value: i.key }))"
+                placeholder="选择物品..."
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="form-control">
+                <span class="label text-xs opacity-60">比较方式</span>
+                <select v-model="conditionInput.operator" class="select select-bordered w-full">
+                  <option value=">">大于 (&gt;)</option>
+                  <option value="<">小于 (&lt;)</option>
+                  <option value=">=">大于等于 (&gt;=)</option>
+                  <option value="<=">小于等于 (&lt;=)</option>
+                  <option value="==">等于 (=)</option>
+                  <option value="!=">不等于 (≠)</option>
+                </select>
+              </div>
+              <div class="form-control">
+                <span class="label text-xs opacity-60">数值 (背包数量)</span>
+                <input v-model.number="conditionInput.value" type="number" class="input input-bordered w-full" />
+              </div>
+            </div>
+
+            <div class="form-control bg-base-200/50 p-3 rounded-xl border border-base-300">
+              <label class="label cursor-pointer py-0">
+                <div class="space-y-0.5">
+                  <span class="label-text font-bold">循环直到条件满足</span>
+                  <div class="text-[10px] opacity-50">如果条件不满足，将持续添加任务直到满足或达到次数上限</div>
+                </div>
+                <input type="checkbox" v-model="conditionInput.loopUntil" class="toggle toggle-primary" />
+              </label>
+            </div>
+
+            <p class="text-[10px] opacity-50 italic">
+              * 满足上述条件时，该步骤才会被加入执行队列。如果不选择物品，则条件为空，表示总是执行。
+            </p>
+          </div>
+
+          <div class="modal-action">
+            <button @click="saveCondition" class="btn btn-primary">确定</button>
+            <button @click="showConditionModal = false" class="btn">取消</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 

@@ -10,9 +10,9 @@
 
     <!-- 下拉面板 -->
     <Teleport to="body">
-      <div v-if="open" class="fixed inset-0 z-[1000]" @click="close" @contextmenu.prevent="close"></div>
+      <div v-if="open" class="fixed inset-0 z-[1999]" @click="close" @contextmenu.prevent="close"></div>
       <div v-if="open" ref="panelRef"
-        class="fixed z-[1004] bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden flex flex-col"
+        class="fixed z-[2000] bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden flex flex-col"
         :style="panelStyle">
         <!-- 搜索框 -->
         <div class="p-1.5 border-b border-base-300 shrink-0">

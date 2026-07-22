@@ -6414,7 +6414,7 @@
     "key": "oxalic_acid_synthesis",
     "name": "木材氧化制草酸",
     "description": "利用浓硝酸氧化木材（纤维素）来制备草酸。这是早期工业制取草酸的方法之一。",
-    "fragment_description": "在容器中将#wood#与#nitric_acid#混合后进行$heating$氧化反应，随后过滤、冷却结晶得到#oxalic_acid#。",
+    "fragment_description": "在容器中将#wood#与#concentrated_sulfuric_acid#混合后进行$heating$氧化反应，随后过滤、冷却结晶得到#oxalic_acid#。",
     "time_required": 100,
     "required_era": "modern_chem",
     "required_container": "beaker",

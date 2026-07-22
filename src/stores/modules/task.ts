@@ -14,8 +14,16 @@ import { useLogStore } from './log';
 import { getItem } from '@/data/items';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
 
+export interface ITaskCondition {
+  key: string;
+  operator: '>' | '<' | '>=' | '<=' | '==' | '!=';
+  value: number;
+  /** 循环执行直至条件满足 */
+  loopUntil?: boolean;
+}
+
 export interface ITask extends IAction {
-  id: number;
+  id: string | number;
   begin_time: number; // timestamp
   type: 'action' | 'tech' | 'lab';
   formulaKey?: string;
@@ -25,6 +33,8 @@ export interface ITask extends IAction {
   materials_locked?: boolean;
   /** 里程碑（任务完成后颁发） */
   milestones?: string[];
+  /** 执行条件 */
+  condition?: ITaskCondition;
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -137,7 +147,7 @@ export const useTaskStore = defineStore('task', () => {
         // 数量检查
         const qOk = (inv.get(k) || 0) >= req.quantity * multiplier;
         // 耐久检查（如果该项设置了 use）
-        const dOk = !req.use || (dur.get(k) || 0) >= req.use * multiplier;
+        const dOk = !req.use || (dur.get(k) || 1 * (inv.get(k) || 0)) >= req.use * multiplier;
         return qOk && dOk;
       });
       if (!hasAny) return false;
@@ -216,6 +226,30 @@ export const useTaskStore = defineStore('task', () => {
   watch(timeMultiplier, () => {
     recalculateStartTimes();
   });
+
+  const canPerform = (required_items: { key: string | string[], quantity: number, use?: number }[]): boolean => {
+    for (const req of required_items) {
+      if (packStore.getItemQuantity(req.key as string) < req.quantity) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  const checkStepCondition = (condition?: ITaskCondition) => {
+    if (!condition) return true;
+    const { key, operator, value } = condition;
+    const count = packStore.getItemQuantity(key);
+    switch (operator) {
+      case '>': return count > value;
+      case '<': return count < value;
+      case '>=': return count >= value;
+      case '<=': return count <= value;
+      case '==': return count == value;
+      case '!=': return count != value;
+    }
+    return true;
+  };
 
   /** 检查并处理任务完成 */
   async function checkAndProcessTasks(currentTime?: number) {
@@ -439,6 +473,22 @@ export const useTaskStore = defineStore('task', () => {
           }
       }
 
+      // 检查循环执行逻辑
+      if (task.condition?.loopUntil && !checkStepCondition(task.condition)) {
+        // 条件未满足，检查能否再次执行
+        // 注意：此处检查的是当前背包，因为 materials_locked 已为 true (刚完成的任务已扣除材料)
+        // 我们需要看剩余材料是否足够开启下一轮
+        if (canPerform(task.required_items)) {
+          // 重置任务状态，以便下一轮重新锁定材料和计时
+          task.begin_time = 0; 
+          task.materials_locked = false;
+          recalculateStartTimes();
+          return; // 保持在队列首位，等待下次 Tick 启动
+        } else {
+          logStore.addLog(`任务 ${task.name} 的循环执行因材料不足而终止`, 'warning');
+        }
+      }
+
       tasks.splice(0, 1); // 从任务列表中移除完成的任务
       if (tasks.length == 0) {
         notifyAllTasksDone();
@@ -463,17 +513,32 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   const getTasks = computed(() => tasks);
-  const pushTask = (task: IAction|ITech & { id?: string }) => {
+
+  const pushTask = (task: (IAction|ITech) & { id?: string | number, condition?: ITaskCondition }): boolean => {
     if (task.required_items.length) {
       if (!canPerformWithProjection(task.required_items)) {
         logStore.addLog(`无法将任务 ${task.name} 加入队列，预期材料不足`, 'warning');
-        return;
+        return false;
       }
     }
-    tasks.push({ ...task, begin_time: 0, id: Date.now() + Math.random(), rewards: 'rewards' in task ? task.rewards : [], type: 'rewards' in task ? 'action' : 'tech', category: 'category' in task ? task.category : '', cooldown: 'cooldown' in task ? task.cooldown : undefined, materials_locked: false });
+    
+    tasks.push({ 
+      ...task, 
+      begin_time: 0, 
+      id: task.id || (Date.now() + Math.random()), 
+      rewards: 'rewards' in task ? task.rewards : [], 
+      type: 'rewards' in task ? 'action' : 'tech', 
+      category: 'category' in task ? task.category : '', 
+      cooldown: 'cooldown' in task ? task.cooldown : undefined, 
+      materials_locked: false,
+      condition: task.condition
+    } as ITask);
+    
     recalculateStartTimes();
+    return true;
   }
-  const removeTask = (id: number) => {
+
+  const removeTask = (id: string | number) => {
     const index = tasks.findIndex(task => task.id === id);
     if (index !== -1) {
       const [task] = tasks.splice(index, 1);
@@ -494,18 +559,29 @@ export const useTaskStore = defineStore('task', () => {
     description: string;
     time_required: number;
     rewards: IReward[];
-    required_items: { key: string; quantity: number; use?: number }[];
+    required_items: { key: string | string[]; quantity: number; use?: number }[];
     formulaKey?: string;
     milestones?: string[];
-  }) {
+    id?: string | number;
+    condition?: ITaskCondition;
+  }): boolean {
+    if (labTask.required_items.length) {
+      if (!canPerformWithProjection(labTask.required_items)) {
+        logStore.addLog(`无法将任务 ${labTask.name} 加入队列，预期材料不足`, 'warning');
+        return false;
+      }
+    }
+
     tasks.push({
       ...labTask,
       begin_time: 0,
-      id: Date.now() + Math.random(),
+      id: labTask.id || (Date.now() + Math.random()),
       type: 'lab',
       materials_locked: false,
+      condition: labTask.condition
     } as ITask);
     recalculateStartTimes();
+    return true;
   }
 
   function clearTasks() {

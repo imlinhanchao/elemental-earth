@@ -55,6 +55,7 @@
 <template>
   <span class="badge inline-flex p-1 group items-center relative truncate group hover:bg-error/10 hover:text-error transition-colors cursor-pointer" :title="task.name" @click="remove">
     <span class="group-hover:opacity-50 truncate inline-flex items-center">
+      <Icon v-if="task.condition?.loopUntil" icon="tabler:repeat" class="text-xs mr-0.5 text-primary" />
       <span class="truncate">{{ task.name }}</span>
       <span v-if="count && count > 1">x{{ count }}</span>
       <span>[{{ shortTime(cost) }}]</span>
