@@ -3049,18 +3049,16 @@
     "time_required": 60
   },
   {
-    "name": "制作封管",
     "key": "craft_sealed_tube",
+    "name": "制作封管",
     "category": "制作",
-    "description": "制作能够承受一定压力的厚壁玻璃封管，用于高温高压密闭反应。",
+    "description": "制作能够承受一定压力的厚壁石英反应管，用于高温高压密闭反应。",
+    "time_required": 45,
     "required_items": [
       {
         "key": "glass",
         "quantity": 1
       }
-    ],
-    "required_techs": [
-      "advanced_chemical_equipment"
     ],
     "rewards": [
       {
@@ -3068,7 +3066,9 @@
         "quantity": 1
       }
     ],
-    "time_required": 45
+    "required_techs": [
+      "advanced_chemical_equipment"
+    ]
   },
   {
     "name": "制造石墨电解槽",

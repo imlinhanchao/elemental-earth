@@ -105,10 +105,6 @@ export const useStateStore = defineStore('state', () => {
   function startSwitch(targetKey: string) {
     if (targetKey === state.map) return
     const { tasks } = useTaskStore()
-    if (tasks.length > 0) {
-      logStore.addLog('有任务进行中，无法切换地图', 'warning')
-      return
-    }
     const duration = calcSwitchDuration(state.map, targetKey)
     state.switchingTarget = targetKey
     state.switchStartTime = Date.now()

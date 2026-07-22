@@ -26,6 +26,7 @@ export interface SaveData {
   items: IPackItem[];
   techs: string[];
   tasks: ITask[];
+  tasksMap?: Record<string, ITask[]>;
   logs: ILog[];
   formulas: string[];
   /** 玩家曾拥有过的物品 key 列表（v1 新增） */
@@ -71,7 +72,8 @@ export function saveGame(): boolean {
       state: { ...stateStore.state },
       items: JSON.parse(JSON.stringify(packStore.items)),
       techs: JSON.parse(JSON.stringify(packStore.techs)),
-      tasks: JSON.parse(JSON.stringify(taskStore.tasks)),
+      tasks: [], // 保持向下兼容
+      tasksMap: JSON.parse(JSON.stringify(taskStore.tasksMap)),
       logs: JSON.parse(JSON.stringify(logStore.logs)),
       formulas: JSON.parse(JSON.stringify(packStore.provenFormulas)),
       discovered: Array.from(packStore.discoveredItems),
@@ -140,8 +142,21 @@ export function loadGame(): boolean {
     // 恢复已解锁科技
     packStore.techs.splice(0, packStore.techs.length, ...data.techs);
 
-    // 恢复任务队列
-    taskStore.tasks.splice(0, taskStore.tasks.length, ...data.tasks);
+    // 恢复任务队列（支持多地图任务迁移）
+    if (data.tasksMap) {
+      // 清空旧任务
+      for (const key in taskStore.tasksMap) {
+        delete taskStore.tasksMap[key];
+      }
+      Object.assign(taskStore.tasksMap, data.tasksMap);
+    } else if (data.tasks) {
+      // 旧版本迁移到当前地图
+      for (const key in taskStore.tasksMap) {
+        delete taskStore.tasksMap[key];
+      }
+      const currentMap = data.state.map || stateStore.state.map || 'woods';
+      taskStore.tasksMap[currentMap] = data.tasks;
+    }
 
     // 恢复日志
     logStore.logs.splice(0, logStore.logs.length, ...data.logs);

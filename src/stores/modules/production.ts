@@ -300,7 +300,7 @@ export const useProductionStore = defineStore('production', () => {
         // 3. 普通任务/嵌套生产线展开
         const cycles = step.count * m;
         for (let j = 0; j < cycles; j++) {
-          if (taskStore.tasks.length >= 100) break;
+          if (taskStore.currentMapTasks.length >= 100) break;
 
           let pushSuccess = false;
           if (step.type === 'action') {

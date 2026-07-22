@@ -621,7 +621,7 @@ const canConfirm = computed(() => {
     if (packStore.getTotalDurability(selectedPowerSource.value) < consumption * batches.value) return false
   }
 
-  if (taskStore.tasks.length >= 100) return false
+  if (taskStore.currentMapTasks.length >= 100) return false
   return true
 })
 

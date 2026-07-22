@@ -391,7 +391,7 @@ function getMapName(key: string) {
                 <input v-model.number="selectedCycles" type="number" min="1" max="100" class="join-item input input-sm w-full text-center border-base-300" />
               </div>
               <button @click="handleExecute(line.id)" class="btn btn-sm btn-primary px-6"
-                      :disabled="!productionStore.validateMapCompatibility(line).ok || taskStore.tasks.length >= 100">
+                      :disabled="!productionStore.validateMapCompatibility(line).ok || taskStore.currentMapTasks.length >= 100">
                 <Icon icon="fluent:play-16-filled" />
                 启动
               </button>

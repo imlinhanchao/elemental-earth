@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useStateStore } from '@/stores/modules/state'
-import { Maps } from '@/data/maps'
 
 const emit = defineEmits<{
   (e: 'select', mapKey: string): void

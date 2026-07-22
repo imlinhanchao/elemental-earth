@@ -17,30 +17,32 @@
 
   const now = computed(() => appStore.tick);
 
-  const matchingTaskIndex = computed(() => taskStore.tasks.findIndex(t => t.key === props.data.key && t.type === 'tech'))
-  const matchingTask = computed(() => taskStore.tasks[matchingTaskIndex.value])
+  const globalResult = computed(() => taskStore.findTaskGlobal(props.data.key, 'tech'))
+  const matchingTask = computed(() => globalResult.value?.task)
 
   const remainingTime = computed(() => {
-    if (matchingTaskIndex.value === -1 || !matchingTask.value) return 0;
+    if (!globalResult.value) return 0;
+    const { task, index, mapKey } = globalResult.value;
+    const list = taskStore.tasksMap[mapKey] || [];
     
     const multiplier = taskStore.timeMultiplier;
     
     // 如果任务已经有预计开始时间，则 总剩余时间 = (开始时间 + 持续时间 - 现在时间)
-    if (matchingTask.value.begin_time > 0) {
-      const finishTime = matchingTask.value.begin_time + (matchingTask.value.time_required * multiplier * 1000);
+    if (task.begin_time > 0) {
+      const finishTime = task.begin_time + (task.time_required * multiplier * 1000);
       return Math.max(0, (finishTime - now.value) / 1000);
     }
     
     // 如果任务还没排进开始时间（理论上 push 后立刻 recalculate 会有值，但作为兜底）
     // 累加前面所有任务的耗时 + 自身耗时
-    const preTasks = taskStore.tasks.slice(0, matchingTaskIndex.value);
+    const preTasks = list.slice(0, index);
     const preTasksTotal = preTasks.reduce((total, t) => total + t.time_required * multiplier, 0);
-    return preTasksTotal + matchingTask.value.time_required * multiplier;
+    return preTasksTotal + task.time_required * multiplier;
   });
 
   const isEnabled = computed(() => {
-    // 如果科技已经在任务队列中，则禁止再次点击
-    if (taskStore.tasks.some(t => t.key === props.data.key && t.type === 'tech')) return false;
+    // 如果科技已经在任何地图的任务队列中，则禁止再次点击
+    if (globalResult.value) return false;
     const itemsOk = taskStore.canPerformWithProjection(props.data.required_items);
     const techsOk = !props.data.required_techs || props.data.required_techs.every((tech) => packStore.hasTech(tech));
     return itemsOk && techsOk;

@@ -9,6 +9,7 @@
     ids?: (number | string)[];
     count?: number;
     showInTitle?: boolean;
+    readOnly?: boolean;
   }>();
 
   const taskStore = useTaskStore();
@@ -35,6 +36,8 @@
   });
 
   function remove() {
+    if (props.readOnly) return;
+
     const taskName = props.task.name;
     const isBatch = props.ids && props.ids.length > 1;
     const confirmMsg = isBatch 
@@ -53,14 +56,21 @@
   }
 </script>
 <template>
-  <span class="badge inline-flex p-1 group items-center relative truncate group hover:bg-error/10 hover:text-error transition-colors cursor-pointer" :title="task.name" @click="remove">
-    <span class="group-hover:opacity-50 truncate inline-flex items-center">
+  <span 
+    class="badge inline-flex p-1 group items-center relative truncate transition-colors" 
+    :class="[
+      readOnly ? 'opacity-80 grayscale active:scale-100' : 'group hover:bg-error/10 hover:text-error cursor-pointer'
+    ]"
+    :title="readOnly ? `${task.name} (查看模式)` : task.name" 
+    @click="remove"
+  >
+    <span class="truncate inline-flex items-center" :class="{ 'group-hover:opacity-50': !readOnly }">
       <Icon v-if="task.condition?.loopUntil" icon="tabler:repeat" class="text-xs mr-0.5 text-primary" />
       <span class="truncate">{{ task.name }}</span>
       <span v-if="count && count > 1">x{{ count }}</span>
       <span>[{{ shortTime(cost) }}]</span>
     </span>
-    <span class="inline-flex absolute left-0 right-0 transition-transform translate-y-0.5 items-center justify-center">
+    <span v-if="!readOnly" class="inline-flex absolute left-0 right-0 transition-transform translate-y-0.5 items-center justify-center">
       <Icon icon="tabler:x" class="text-sm hidden group-hover:inline" />
     </span>
   </span>

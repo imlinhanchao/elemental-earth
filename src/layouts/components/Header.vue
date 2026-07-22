@@ -61,7 +61,6 @@ function handleSave() {
 
 function openSwitchModal() {
   if (stateStore.isSwitching) return
-  if (taskStore.tasks.length > 0) return
   modalVisible.value = true
 }
 
@@ -105,7 +104,7 @@ function openEraModal() {
 
         <!-- 当前地图 -->
         <div id="header-map-switch" class="flex items-center gap-1">
-          <button class="btn btn-ghost btn-sm gap-1 pl-1" :disabled="stateStore.isSwitching || taskStore.tasks.length > 0" @click="openSwitchModal" title="点击切换地图">
+          <button class="btn btn-ghost btn-sm gap-1 pl-1" :disabled="stateStore.isSwitching" @click="openSwitchModal" title="点击切换地图">
             <Icon :icon="stateStore.getMap?.icon || 'tabler:map-filled'" class="text-xl" />
             <span :class="{ 'hidden': appStore.isMobile }">{{ stateStore.getMap?.name }}</span>
             <Icon icon="tabler:chevron-down" class="text-sm opacity-60" />

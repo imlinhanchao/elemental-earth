@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { store } from '@/stores/';
 import { once } from '@/utils/function';
 import { usePackStore } from '@/stores/modules/pack';
@@ -38,11 +38,29 @@ export interface ITask extends IAction {
 }
 
 export const useTaskStore = defineStore('task', () => {
-  const tasks = reactive<ITask[]>([]);
+  const tasksMap = reactive<Record<string, ITask[]>>({});
+  const viewingMap = ref<string>('');
+
   const appStore = useAppStore();
   const stateStore = useStateStore();
   const packStore = usePackStore();
   const logStore = useLogStore();
+
+  const tasks = computed(() => {
+    const key = viewingMap.value || stateStore.state.map;
+    if (!tasksMap[key]) {
+      tasksMap[key] = [];
+    }
+    return tasksMap[key];
+  });
+
+  /** 当前实际所在地图的任务列表 */
+  const currentMapTasks = computed(() => tasksMap[stateStore.state.map] || []);
+
+  /** 所有地图的任务总数 */
+  const totalTaskCount = computed(() => {
+    return Object.values(tasksMap).reduce((acc, list) => acc + list.length, 0);
+  });
 
   /** 获取时代奖励加成倍率 */
   const getEraBonus = (reward: IReward): number => {
@@ -56,7 +74,7 @@ export const useTaskStore = defineStore('task', () => {
     const reqOrder = reqEraObj?.order ?? 1;
 
     if (currentOrder > reqOrder) {
-      return 1 + (currentOrder - reqOrder) * 0.15;
+      return 1 + (currentOrder - reqOrder) * 0.80;
     }
     return 1;
   };
@@ -67,7 +85,7 @@ export const useTaskStore = defineStore('task', () => {
       ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] 
       : (reward.quantity || 1);
 
-    return Math.max(1, Math.floor(qty * getEraBonus(reward)));
+    return Math.max(1, Number((qty * getEraBonus(reward)).toFixed(1)));
   };
 
   const now = computed(() => appStore.tick);
@@ -100,50 +118,52 @@ export const useTaskStore = defineStore('task', () => {
     });
 
     // 处理处理预计支出与收益
-    for (const task of tasks) {
-      // 支出项
-      if (!task.materials_locked) {
-        for (const req of task.required_items) {
-          const keys = Array.isArray(req.key) ? req.key : [req.key];
-          // 寻找第一个满足预期的替代品
-          const k = keys.find(key => {
-            const hasQty = inv.get(key) || 0;
-            const hasDur = dur.get(key) || 0;
-            const itemData = getItem(key);
-            if (itemData && (itemData.durable ?? 0) > 0) {
-              return hasQty >= req.quantity && (!req.use || hasDur >= req.use);
-            }
-            return hasQty >= req.quantity;
-          }) || keys[0];
+    for (const mapKey in tasksMap) {
+      for (const task of tasksMap[mapKey]) {
+        // 支出项
+        if (!task.materials_locked) {
+          for (const req of task.required_items) {
+            const keys = Array.isArray(req.key) ? req.key : [req.key];
+            // 寻找第一个满足预期的替代品
+            const k = keys.find(key => {
+              const hasQty = inv.get(key) || 0;
+              const hasDur = dur.get(key) || 0;
+              const itemData = getItem(key);
+              if (itemData && (itemData.durable ?? 0) > 0) {
+                return hasQty >= req.quantity && (!req.use || hasDur >= req.use);
+              }
+              return hasQty >= req.quantity;
+            }) || keys[0];
 
-          const itemData = getItem(k);
-          if (itemData && (itemData.durable ?? 0) > 0) {
-            const currentDur = dur.get(k) || 0;
-            const maxDur = itemData.durable || 1;
-            // 如果存在耐久消耗，则只扣除耐久值部分；否则视为消耗整块
-            const cost = req.use !== undefined ? req.use : req.quantity * maxDur;
-            dur.set(k, Math.max(0, currentDur - cost));
-            if (!durableKeys.has(k)) durableKeys.add(k);
-          } else {
-            inv.set(k, (inv.get(k) || 0) - req.quantity);
+            const itemData = getItem(k);
+            if (itemData && (itemData.durable ?? 0) > 0) {
+              const currentDur = dur.get(k) || 0;
+              const maxDur = itemData.durable || 1;
+              // 如果存在耐久消耗，则只扣除耐久值部分；否则视为消耗整块
+              const cost = req.use !== undefined ? req.use : req.quantity * maxDur;
+              dur.set(k, Math.max(0, currentDur - cost));
+              if (!durableKeys.has(k)) durableKeys.add(k);
+            } else {
+              inv.set(k, (inv.get(k) || 0) - req.quantity);
+            }
           }
         }
-      }
 
-      // 收益项 (仅计入确定收益)
-      if (task.type === 'lab' || task.type === 'action') {
-        const rewards = task.rewards || [];
-        for (const r of rewards) {
-          if (r.guaranteed || task.type === 'lab') {
-            const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
-            const qty = Math.floor(baseQty * getEraBonus(r));
-            const itemData = getItem(r.key);
-            // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
-            if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {
-              if (!durableKeys.has(r.key)) durableKeys.add(r.key);
-              dur.set(r.key, (dur.get(r.key) || 0) + qty);
-            } else {
-              inv.set(r.key, (inv.get(r.key) || 0) + qty);
+        // 收益项 (仅计入确定收益)
+        if (task.type === 'lab' || task.type === 'action') {
+          const rewards = task.rewards || [];
+          for (const r of rewards) {
+            if (r.guaranteed || task.type === 'lab') {
+              const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
+              const qty = Math.floor(baseQty * getEraBonus(r));
+              const itemData = getItem(r.key);
+              // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
+              if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {
+                if (!durableKeys.has(r.key)) durableKeys.add(r.key);
+                dur.set(r.key, (dur.get(r.key) || 0) + qty);
+              } else {
+                inv.set(r.key, (inv.get(r.key) || 0) + qty);
+              }
             }
           }
         }
@@ -183,8 +203,8 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   // 按照奖励概率计算最终奖励
-  function getReward(rewards: IReward[], consumedKeys?: string[]): IReward | null {
-    const currentMap = stateStore.getMap?.key || '';
+  function getReward(rewards: IReward[], mapKey: string, consumedKeys?: string[]): IReward | null {
+    const currentMap = mapKey || '';
     let rewardsList = rewards.filter(r => {
       if (!r.map) return true;
       return r.map.some(m => {
@@ -235,23 +255,28 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   /** 重新计算任务队列中所有任务的预计开始时间 */
-  const recalculateStartTimes = () => {
-    if (tasks.length === 0) return;
+  const recalculateStartTimes = (mapKey?: string) => {
+    const targetMap = mapKey || stateStore.state.map;
+    const mapTasks = tasksMap[targetMap];
+    if (!mapTasks || mapTasks.length === 0) return;
+
     const now = Date.now();
     // 第一个任务：如果还没开始，或者被提前到首位（开始时间在未来），则从现在开始算起
-    if (tasks[0].begin_time <= 0 || tasks[0].begin_time > now) {
-      tasks[0].begin_time = now;
+    if (mapTasks[0].begin_time <= 0 || mapTasks[0].begin_time > now) {
+      mapTasks[0].begin_time = now;
     }
-    let lastFinishTime = tasks[0].begin_time + (tasks[0].time_required * timeMultiplier.value * 1000);
-    for (let i = 1; i < tasks.length; i++) {
-      tasks[i].begin_time = lastFinishTime;
-      lastFinishTime += (tasks[i].time_required * timeMultiplier.value * 1000);
+    let lastFinishTime = mapTasks[0].begin_time + (mapTasks[0].time_required * timeMultiplier.value * 1000);
+    for (let i = 1; i < mapTasks.length; i++) {
+      mapTasks[i].begin_time = lastFinishTime;
+      lastFinishTime += (mapTasks[i].time_required * timeMultiplier.value * 1000);
     }
   };
 
   // 当时代倍率变化时，立即重计划所有任务的时间
   watch(timeMultiplier, () => {
-    recalculateStartTimes();
+    for (const mapKey in tasksMap) {
+      recalculateStartTimes(mapKey);
+    }
   });
 
   const canPerform = (required_items: { key: string | string[], quantity: number, use?: number }[]): boolean => {
@@ -278,11 +303,11 @@ export const useTaskStore = defineStore('task', () => {
     return true;
   };
 
-  /** 检查并处理任务完成 */
-  async function checkAndProcessTasks(currentTime?: number) {
-    const now = currentTime || Date.now();
-    const task = tasks[0];
-    if (!task) return; // 没有任务，跳过检查
+  /** 检查并处理单个地图的任务完成 */
+  async function processMapTasks(mapKey: string, now: number) {
+    const mapTasks = tasksMap[mapKey];
+    if (!mapTasks || mapTasks.length === 0) return;
+    const task = mapTasks[0];
 
     // 检查并锁定材料（如果尚未锁定）
     if (!task.materials_locked) {
@@ -343,11 +368,11 @@ export const useTaskStore = defineStore('task', () => {
         const missingStr = missingItems.join('、');
         logStore.addLog(`任务 ${task.name} 的资源 [${missingStr}] 在开始执行时已不足，任务已被销毁`, 'warning');
         notifyTaskComplete('任务销毁', `资源不足: ${task.name} [${missingStr}]`);
-        tasks.splice(0, 1);
-        recalculateStartTimes();
+        mapTasks.splice(0, 1);
+        recalculateStartTimes(mapKey);
         return;
       }
-  }
+    }
 
     if (now - task.begin_time >= task.time_required * timeMultiplier.value * 1000) {
       if (task.type === 'action') {
@@ -358,7 +383,7 @@ export const useTaskStore = defineStore('task', () => {
 
         // 必定掉落的奖励（并行，不受随机抽选影响）
         const consumedKeys = task.required_items.map(r => Array.isArray(r.key) ? r.key[0] : r.key);
-        const currentMap = stateStore.getMap?.key || '';
+        const currentMap = mapKey || '';
         const guaranteedRewards = task.rewards.filter(r => {
           if (!r.guaranteed) return false;
           // 地图限制
@@ -383,7 +408,7 @@ export const useTaskStore = defineStore('task', () => {
             if (reqEra && currentEraOrder < reqEra.order) return false;
           }
           return true;
-      });
+        });
 
         for (const gr of guaranteedRewards) {
           const qty = getFinalQuantity(gr);
@@ -395,7 +420,7 @@ export const useTaskStore = defineStore('task', () => {
         if (task.cooldown) {
           packStore.setCooldown(task.key, task.cooldown)
         }
-        const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
+        const reward = getReward(task.rewards.filter(r => !r.guaranteed), mapKey, consumedKeys);
         if (reward) {
           const quantity = getFinalQuantity(reward);
           if (packStore.addItem(reward.key, quantity)) {
@@ -509,18 +534,30 @@ export const useTaskStore = defineStore('task', () => {
           // 重置任务状态，以便下一轮重新锁定材料和计时
           task.begin_time = 0; 
           task.materials_locked = false;
-          recalculateStartTimes();
+          recalculateStartTimes(mapKey);
           return; // 保持在队列首位，等待下次 Tick 启动
         } else {
           logStore.addLog(`任务 ${task.name} 的循环执行因材料不足而终止`, 'warning');
         }
       }
 
-      tasks.splice(0, 1); // 从任务列表中移除完成的任务
-      if (tasks.length == 0) {
-        notifyAllTasksDone();
-        document.title = '元素纪元';
+      mapTasks.splice(0, 1); // 从任务列表中移除完成的任务
+      if (mapTasks.length == 0) {
+        // 检查是否所有地图的任务都完成了
+        const allDone = Object.values(tasksMap).every(q => q.length === 0);
+        if (allDone) {
+          notifyAllTasksDone();
+          document.title = '元素纪元';
+        }
       }
+    }
+  }
+
+  /** 检查并处理任务完成 */
+  async function checkAndProcessTasks(currentTime?: number) {
+    const now = currentTime || Date.now();
+    for (const mapKey in tasksMap) {
+      await processMapTasks(mapKey, now);
     }
   }
 
@@ -542,6 +579,11 @@ export const useTaskStore = defineStore('task', () => {
   const getTasks = computed(() => tasks);
 
   const pushTask = (task: (IAction|ITech) & { id?: string | number, condition?: ITaskCondition }): boolean => {
+    const mapKey = stateStore.state.map;
+    if (!tasksMap[mapKey]) {
+      tasksMap[mapKey] = [];
+    }
+
     if (task.required_items.length) {
       if (!canPerformWithProjection(task.required_items)) {
         logStore.addLog(`无法将任务 ${task.name} 加入队列，预期材料不足`, 'warning');
@@ -549,7 +591,7 @@ export const useTaskStore = defineStore('task', () => {
       }
     }
     
-    tasks.push({ 
+    tasksMap[mapKey].push({ 
       ...task, 
       begin_time: 0, 
       id: task.id || (Date.now() + Math.random()), 
@@ -561,14 +603,18 @@ export const useTaskStore = defineStore('task', () => {
       condition: task.condition
     } as ITask);
     
-    recalculateStartTimes();
+    recalculateStartTimes(mapKey);
     return true;
   }
 
-  const removeTask = (id: string | number) => {
-    const index = tasks.findIndex(task => task.id === id);
+  const removeTask = (id: string | number, mapKey?: string) => {
+    const targetMap = mapKey || viewingMap.value || stateStore.state.map;
+    const mapTasks = tasksMap[targetMap];
+    if (!mapTasks) return;
+
+    const index = mapTasks.findIndex(task => task.id === id);
     if (index !== -1) {
-      const [task] = tasks.splice(index, 1);
+      const [task] = mapTasks.splice(index, 1);
       if (task.materials_locked && task.required_items.length) {
         // 仅在已锁定材料时返还
         for (const req of task.required_items) {
@@ -576,7 +622,7 @@ export const useTaskStore = defineStore('task', () => {
           packStore.addItem(k, req.quantity, req.use);
         }
       }
-      recalculateStartTimes();
+      recalculateStartTimes(targetMap);
     }
   }
   /** 实验室专用：直接推入任务 */
@@ -592,6 +638,11 @@ export const useTaskStore = defineStore('task', () => {
     id?: string | number;
     condition?: ITaskCondition;
   }): boolean {
+    const mapKey = stateStore.state.map;
+    if (!tasksMap[mapKey]) {
+      tasksMap[mapKey] = [];
+    }
+
     if (labTask.required_items.length) {
       if (!canPerformWithProjection(labTask.required_items)) {
         logStore.addLog(`无法将任务 ${labTask.name} 加入队列，预期材料不足`, 'warning');
@@ -599,7 +650,7 @@ export const useTaskStore = defineStore('task', () => {
       }
     }
 
-    tasks.push({
+    tasksMap[mapKey].push({
       ...labTask,
       begin_time: 0,
       id: labTask.id || (Date.now() + Math.random()),
@@ -607,20 +658,38 @@ export const useTaskStore = defineStore('task', () => {
       materials_locked: false,
       condition: labTask.condition
     } as ITask);
-    recalculateStartTimes();
+    recalculateStartTimes(mapKey);
     return true;
   }
 
   function clearTasks() {
+    const mapKey = viewingMap.value || stateStore.state.map;
+    const mapTasks = tasksMap[mapKey];
+    if (!mapTasks) return;
+
     // 返还所有任务的所需物品
-    for (const task of tasks) {
-      removeTask(task.id);
+    while (mapTasks.length > 0) {
+      removeTask(mapTasks[0].id, mapKey);
     }
-    tasks.splice(0, tasks.length);
   }
+
+  /** 在所有地图中查找特定类型的任务及其所属地图 */
+  const findTaskGlobal = (key: string, type?: string) => {
+    for (const [mapKey, mapTasks] of Object.entries(tasksMap)) {
+      const index = mapTasks.findIndex(t => t.key === key && (!type || t.type === type));
+      if (index !== -1) {
+        return { task: mapTasks[index], index, mapKey };
+      }
+    }
+    return null;
+  };
 
   return {
     tasks,
+    currentMapTasks,
+    totalTaskCount,
+    tasksMap,
+    viewingMap,
     getTasks,
     timeMultiplier,
     projectedState,
@@ -630,7 +699,8 @@ export const useTaskStore = defineStore('task', () => {
     removeTask,
     pushLabTask,
     clearTasks,
-    canPerformWithProjection
+    canPerformWithProjection,
+    findTaskGlobal
   }
 })
 

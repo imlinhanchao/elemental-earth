@@ -42,7 +42,7 @@
 
   /** 行动是否有任务正在执行 */
   const isRunning = computed(() =>
-    taskStore.tasks.some(t => t.key === props.data.key)
+    taskStore.currentMapTasks.some(t => t.key === props.data.key)
   );
 
   /** 获取当前行动各材料最终选定的 key（替代材料组取用户选择或默认第一个） */
@@ -115,7 +115,7 @@
   const showBatchPicker = ref(false);
 
   const maxBatch = computed(() => {
-    const slots = 100 - taskStore.tasks.length;
+    const slots = 100 - taskStore.currentMapTasks.length;
     return Math.min(20, Math.max(1, slots));
   });
 
@@ -143,7 +143,7 @@
 
   // ─── 可见/可用 ──────────────────────────────────────────────
   const isEnabled = computed(() => {
-    if (taskStore.tasks.length >= 100) return false;
+    if (taskStore.currentMapTasks.length >= 100) return false;
     const mapOk = !props.data.map || props.data.map.includes(stateStore.state.map);
     const itemsOk = taskStore.canPerformWithProjection(props.data.required_items);
     const cdOk = !props.data.cooldown || !packStore.isOnCooldown(props.data.key);
@@ -202,7 +202,7 @@
     // 批量推送
     const count = Math.min(batchCount.value, maxBatch.value);
     for (let i = 0; i < count; i++) {
-      if (taskStore.tasks.length >= 100) break;
+      if (taskStore.currentMapTasks.length >= 100) break;
       // 用当前选定的材料替换替代项
       const resolved = resolveMaterials();
       // 创建一个修改过的 action 数据，替换 required_items
