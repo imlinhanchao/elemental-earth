@@ -128,7 +128,7 @@
   }
 </script>
 <template>
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3 pb-30">
     <!-- 搜索栏 -->
     <header class="sticky bg-base-100 py-2 -top-6 z-50">
       <div class="w-full mb-1 input input-sm input-bordered">
@@ -160,7 +160,7 @@
     <!-- 已习得的配方 -->
     <details
       v-if="provenFormulas.length > 0"
-      class="collapse collapse-arrow bg-base-200/40 shadow overflow-visible isolation-auto"
+      class="collapse collapse-arrow bg-base-200/60 shadow overflow-visible isolation-auto"
       open
     >
       <summary class="collapse-title font-bold text-lg">
@@ -170,7 +170,7 @@
         </span>
       </summary>
       <div class="collapse-content">
-        <div class="flex gap-4 flex-wrap">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 flex-wrap">
           <ActionTip
             v-for="f in provenFormulas"
             :key="f.key"
@@ -184,7 +184,7 @@
             :time_required="getFormulaTime(f)"
           >
             <button
-              class="btn btn-soft w-[10em]"
+              class="btn btn-soft w-full"
               :disabled="!canPerformFormula(f)"
               @click="openFormulaDialog(f)"
             >
@@ -206,7 +206,7 @@
     <details
       v-for="group in groupedActions"
       :key="group.category"
-      class="collapse collapse-arrow bg-base-200/40 shadow overflow-visible isolation-auto"
+      class="collapse collapse-arrow bg-base-200/60 shadow overflow-visible isolation-auto"
       :id="group.category === '采集' ? 'home-actions-collect' : group.category === '制作' ? 'home-actions-craft' : undefined"
       open
     >

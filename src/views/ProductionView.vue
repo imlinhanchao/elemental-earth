@@ -322,7 +322,7 @@ function getMapName(key: string) {
              class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all">
           <div class="card-body p-5">
             <div class="flex justify-between items-start mb-3">
-              <h3 class="card-title text-lg font-bold flex items-center gap-2">
+              <h3 class="card-title text-lg font-bold flex items-center gap-2 truncate">
                 <Icon icon="fluent:factory-16-regular" class="text-primary" />
                 {{ line.name }}
               </h3>

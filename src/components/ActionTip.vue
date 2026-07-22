@@ -123,7 +123,7 @@
         <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
         <span class="unknown" v-if="!item.known">????</span>
         <span v-if="item.known" class="opacity-40 italic ml-1">
-          (持有: {{ taskStore.projectedInventory.get(item.key) || 0 }}{{ Items.find(i => i.key === item.key)?.durable ? ', 耐久: ' + (taskStore.projectedDurability.get(item.key) || 0).toFixed(1) : '' }})
+          (持有: {{ taskStore.projectedInventory.get(item.key) || 0 }}{{ Number(Items.find(i => i.key === item.key)?.durable?.toFixed(2)) ? ', 耐久: ' + (taskStore.projectedDurability.get(item.key) || 0).toFixed(1) : '' }})
         </span>
       </div>
     </section>

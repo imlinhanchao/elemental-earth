@@ -19,7 +19,7 @@
           <input ref="searchRef" v-model="query" class="input input-bordered input-sm w-full" placeholder="搜索…" @keydown.escape="close" @keydown.enter="selectFirst" />
         </div>
         <!-- 选项列表 -->
-        <div class="overflow-y-auto grow">
+        <div class="overflow-y-auto grow max-h-[260px]">
           <button v-for="opt in filteredOptions" :key="getValue(opt)"
             class="w-full text-left px-3 py-1.5 text-sm hover:bg-base-200 transition-colors flex items-center justify-between gap-2"
             :class="{ 'bg-primary/10 text-primary font-bold': getValue(opt) === selected }"
