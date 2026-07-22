@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
 import { useStateStore } from '@/stores/modules/state'
@@ -48,10 +48,10 @@ const materialModalOpen = ref(false)
 const materialSearchQuery = ref('')
 const selectedCategory = ref<string | null>(null)
 
-// 切换操作时重置引火/燃料/chain选择
+// 切换操作时重置引火/燃料/chain选择并尝试自动选中
 watch(selectedOperationKey, () => {
-  selectedFireSourceKey.value = null
-  selectedPowerSourceKey.value = null
+  selectedFireSourceKey.value = fireSourceItems.value.length > 0 ? fireSourceItems.value[0].key : null
+  selectedPowerSourceKey.value = powerSourceItems.value.length > 0 ? powerSourceItems.value[0].key : null
   selectedFuels.value = new Map()
   selectedChainOperationKey.value = new Set()
   cycles.value = 1
@@ -703,6 +703,18 @@ function startExperiment() {
   selectedFuels.value = new Map()
   cycles.value = 1
 }
+
+onMounted(() => {
+  if (!selectedContainerKey.value && availableContainers.value.length > 0) {
+    selectedContainerKey.value = availableContainers.value[0].key
+  }
+  if (!selectedFireSourceKey.value && fireSourceItems.value.length > 0) {
+    selectedFireSourceKey.value = fireSourceItems.value[0].key
+  }
+  if (!selectedPowerSourceKey.value && powerSourceItems.value.length > 0) {
+    selectedPowerSourceKey.value = powerSourceItems.value[0].key
+  }
+})
 </script>
 <template>
   <div class="p-4 mx-auto space-y-4">
