@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { Actions } from '@/data/actions'
-import { Items } from '@/data/items'
+import { Items, getItem } from '@/data/items'
 import { usePackStore } from '@/stores/modules/pack'
 import { useProductionStore } from '@/stores/modules/production'
 import { useStateStore } from '@/stores/modules/state'
@@ -70,7 +70,7 @@ watch(selectedActionKey, () => {
 })
 
 function getItemName(key: string) {
-  return Items.find(i => i.key === key)?.name || key
+  return getItem(key)?.name || key
 }
 
 function handleAdd() {

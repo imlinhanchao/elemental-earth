@@ -5,7 +5,7 @@ import { useFragmentStore } from '@/stores/modules/fragment';
 import { usePackStore } from '@/stores/modules/pack';
 import { useStateStore } from '@/stores/modules/state';
 import { useLabStore } from '@/stores/modules/lab';
-import { Formulas } from '@/data/formula';
+import { Formulas, getFormula } from '@/data/formula';
 import { Items, getItem } from '@/data/items';
 import { LabActions as Labs } from '@/data/labs';
 import { Eras } from '@/data/eras';
@@ -36,7 +36,7 @@ const eraTabs = computed(() => [
 
 const allFragments = computed(() => {
     let frags = fragmentStore.fragments.map((key, index) => {
-        const formula = Formulas.find(f => f.key === key);
+        const formula = getFormula(key);
         return {
             key,
             index,

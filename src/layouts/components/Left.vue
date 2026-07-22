@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import Item from "@/components/Item.vue";
 import { useAppStore } from "@/stores/modules/app";
 import { usePackStore } from "@/stores/modules/pack";
-import { Items } from "@/data/items";
+import { getItem } from "@/data/items";
 import { Techs } from "@/data/techs";
 
 const appStore = useAppStore();
@@ -22,7 +22,7 @@ const groupedItems = computed(() => {
   const map = new Map<string, typeof items>();
   const filteredItems = items.filter((item) => {
     const name = packStore.getDisplayName(item.key);
-    const itemData = Items.find((i) => i.key === item.key);
+    const itemData = getItem(item.key);
     const itemNote = packStore.getItemNote(item.key);
 
     return (
@@ -34,7 +34,7 @@ const groupedItems = computed(() => {
   });
 
   for (const item of filteredItems) {
-    const itemData = Items.find((i) => i.key === item.key);
+    const itemData = getItem(item.key);
     const cat = itemData?.category || "未分类";
     if (!map.has(cat)) map.set(cat, []);
     map.get(cat)!.push(item);

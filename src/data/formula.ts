@@ -56,3 +56,10 @@ export interface IFormula {
 }
 
 export const Formulas: IFormula[] = data as IFormula[];
+
+const formulaMap = new Map<string, IFormula>(Formulas.map(f => [f.key, f]));
+
+export function getFormula(key: string) {
+    return formulaMap.get(key);
+}
+

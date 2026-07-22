@@ -47,3 +47,9 @@ export interface ILabAction {
 }
 
 export const LabActions: ILabAction[] = data as ILabAction[];
+
+const labMap = new Map<string, ILabAction>(LabActions.map(l => [l.key, l]));
+
+export function getLab(key: string) {
+    return labMap.get(key);
+}

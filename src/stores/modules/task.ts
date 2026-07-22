@@ -9,9 +9,11 @@ import { useFragmentStore } from '@/stores/modules/fragment';
 import type { IAction, IReward } from '@/data/actions';
 import type { ITech } from '@/data/techs';
 import { tips } from '@/data/tips';
-import { Eras } from '@/data/eras';
+import { Eras, getEra } from '@/data/eras';
 import { useLogStore } from './log';
 import { getItem } from '@/data/items';
+import { Formulas, getFormula } from '@/data/formula';
+import { LabActions, getLab } from '@/data/labs';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
 
 export interface ITaskCondition {
@@ -57,21 +59,52 @@ export const useTaskStore = defineStore('task', () => {
   /** 当前实际所在地图的任务列表 */
   const currentMapTasks = computed(() => tasksMap[stateStore.state.map] || []);
 
+  const currentEraOrder = computed(() => {
+    return getEra(stateStore.state.currentEra)?.order ?? 0;
+  });
+
   /** 所有地图的任务总数 */
   const totalTaskCount = computed(() => {
     return Object.values(tasksMap).reduce((acc, list) => acc + list.length, 0);
   });
 
+  /** 所有作为碎片掉落候选者的配方列表 (有碎片描述的配方) */
+  const allFragmentCandidates = computed(() => Formulas.filter(f => !!f.fragment_description));
+
+  /** 当前时代及已发现材料下，可能掉落的碎片列表 */
+  const potentialFragments = computed(() => {
+    const currentOrder = currentEraOrder.value;
+    return allFragmentCandidates.value.filter(f => {
+      // 时代检查
+      const fEraOrder = getEra(f.required_era || '')?.order ?? 0;
+      if (fEraOrder > currentOrder) return false;
+
+      // 主材料发现检查
+      const mainItems = (f.required_items || []).filter(item => item.isMain);
+      if (mainItems.length === 0) return true;
+
+      return mainItems.some(req => {
+        const keys = Array.isArray(req.key) ? req.key : [req.key];
+        return keys.some(k => packStore.hasEverHad(k));
+      });
+    });
+  });
+
+  const availableTips = computed(() => {
+    const currentOrder = currentEraOrder.value;
+    return tips.filter(t => {
+      if (t.item && packStore.hasEverHad(t.item)) return false;
+      const reqOrder = t.era ? (getEra(t.era)?.order ?? 0) : 0;
+      return reqOrder <= currentOrder;
+    });
+  });
+
   /** 获取时代奖励加成倍率 */
   const getEraBonus = (reward: IReward): number => {
-    const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-    const currentOrder = currentEraObj?.order ?? 0;
+    const currentOrder = currentEraOrder.value;
     
     // 若无时代限制，则当作炼金术时代 (order 1) 处理
-    const reqEraObj = reward.required_era 
-      ? Eras.find(e => e.key === reward.required_era) 
-      : Eras.find(e => e.key === 'alchemy');
-    const reqOrder = reqEraObj?.order ?? 1;
+    const reqOrder = reward.required_era ? (getEra(reward.required_era)?.order ?? 1) : 1;
 
     if (currentOrder > reqOrder) {
       return 1 + (currentOrder - reqOrder) * 0.80;
@@ -92,8 +125,7 @@ export const useTaskStore = defineStore('task', () => {
 
   /** 时代进度带来的时间减免倍率 */
   const timeMultiplier = computed(() => {
-    const currentEra = Eras.find(e => e.key === stateStore.state.currentEra);
-    const order = currentEra?.order ?? 0;
+    const order = currentEraOrder.value;
     // 从近代化学 (order 2) 开始，每级减少 15%
     return Math.max(0.1, 1.0 - Math.max(0, order - 1) * 0.15);
   });
@@ -232,12 +264,11 @@ export const useTaskStore = defineStore('task', () => {
       });
     }
     // 过滤：时代限制
-    const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-    const currentEraOrder = currentEraObj?.order ?? 0;
+    const currentOrder = currentEraOrder.value;
     rewardsList = rewardsList.filter(r => {
       if (!r.required_era) return true;
-      const reqEra = Eras.find(e => e.key === r.required_era);
-      return reqEra ? currentEraOrder >= reqEra.order : true;
+      const reqEra = getEra(r.required_era);
+      return reqEra ? currentOrder >= reqEra.order : true;
     });
 
     if (rewardsList.length === 1) return rewardsList[0];
@@ -402,10 +433,9 @@ export const useTaskStore = defineStore('task', () => {
           }
           // 时代限制
           if (r.required_era) {
-            const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-            const currentEraOrder = currentEraObj?.order ?? 0;
-            const reqEra = Eras.find(e => e.key === r.required_era);
-            if (reqEra && currentEraOrder < reqEra.order) return false;
+            const currentOrder = currentEraOrder.value;
+            const reqEra = getEra(r.required_era);
+            if (reqEra && currentOrder < reqEra.order) return false;
           }
           return true;
         });
@@ -437,26 +467,11 @@ export const useTaskStore = defineStore('task', () => {
           const chance = 0.1 + Math.random() * 0.05; // 10%-15%
           if (Math.random() < chance) {
             const fragmentStore = useFragmentStore();
-            const { Formulas } = await import('@/data/formula');
-
-            const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
-            const currentOrder = currentEraObj?.order ?? 0;
-
-            const eligibleFormulas = Formulas.filter(f => {
-              const fEraObj = Eras.find(e => e.key === f.required_era);
-              const fEraOrder = fEraObj?.order ?? 0;
-
-              const mainItems = (f.required_items || []).filter(item => item.isMain);
-              const mainMaterialCheck = mainItems.length === 0 || mainItems.some(req => {
-                const keys = Array.isArray(req.key) ? req.key : [req.key];
-                return keys.some(k => packStore.hasEverHad(k));
-              });
-
-              return !packStore.hasProvenFormula(f.key) &&
-                !fragmentStore.hasFragment(f.key) &&
-                fEraOrder <= currentOrder &&
-                mainMaterialCheck;
-            });
+            // 在预先通过时代和主材料过滤的基础上，再过滤已拥有的
+            const eligibleFormulas = potentialFragments.value.filter(f => 
+              !packStore.hasProvenFormula(f.key) && !fragmentStore.hasFragment(f.key)
+            );
+            
             if (eligibleFormulas.length > 0) {
               const picked = eligibleFormulas[Math.floor(Math.random() * eligibleFormulas.length)];
               if (fragmentStore.unlockFragment(picked.key)) {
@@ -480,8 +495,7 @@ export const useTaskStore = defineStore('task', () => {
         }
         // 发现新配方日志（任务完成时记录）
         if ('formulaKey' in task && task.formulaKey && !packStore.hasProvenFormula(task.formulaKey)) {
-          const { Formulas } = await import('@/data/formula')
-          const f = Formulas.find(fm => fm.key === task.formulaKey)
+          const f = getFormula(task.formulaKey);
           
           if (f) {
             logStore.addLog(`发现新配方: ${f.name}`, 'lab')
@@ -507,23 +521,10 @@ export const useTaskStore = defineStore('task', () => {
         notifyTaskComplete(task.name, '科技研究完成');
       }
         // 1% 概率在 Log 中添加小贴士
-        if (Math.random() < 0.01) {
-          const currentEra = Eras.find(e => e.key === stateStore.state.currentEra)
-          const currentEraOrder = currentEra?.order ?? 0
-          const availableTips = tips.filter(t => {
-            // 过滤已发现的矿石提示
-            if (t.item && packStore.discoveredItems.has(t.item)) return false
-            
-            if (!t.era) return true
-            const requiredEra = Eras.find(e => e.key === t.era)
-            return requiredEra ? requiredEra.order <= currentEraOrder : true
-          })
-
-          if (availableTips.length > 0) {
-            const randomTip = availableTips[Math.floor(Math.random() * availableTips.length)]
-            logStore.addLog(`${randomTip.content}`, 'tip')
-          }
-      }
+        if (Math.random() < 0.01 && availableTips.value.length > 0) {
+          const randomTip = availableTips.value[Math.floor(Math.random() * availableTips.value.length)]
+          logStore.addLog(`${randomTip.content}`, 'tip')
+        }
 
       // 检查循环执行逻辑
       if (task.condition?.loopUntil && !checkStepCondition(task.condition)) {

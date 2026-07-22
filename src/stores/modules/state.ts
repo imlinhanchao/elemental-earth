@@ -6,7 +6,7 @@ import { Maps } from '@/data/maps';
 import { useLogStore } from '@/stores/modules/log';
 import { useTaskStore } from '@/stores/modules/task';
 import { getElementById } from '@/data/elements';
-import { Eras, type IEra } from '@/data/eras';
+import { Eras, type IEra, getEra } from '@/data/eras';
 
 export interface IGameState {
   map: string;
@@ -50,7 +50,7 @@ export const useStateStore = defineStore('state', () => {
   const getState = computed(() => state);
 
   /** 当前时代数据 */
-  const currentEra = computed<IEra | undefined>(() => Eras.find(e => e.key === state.currentEra))
+  const currentEra = computed<IEra | undefined>(() => getEra(state.currentEra))
 
   /** 曼哈顿距离 -> 耗时毫秒的倍率，随时代演进减少 */
   const timePerDistance = computed(() => {
@@ -190,7 +190,18 @@ export const useStateStore = defineStore('state', () => {
   function completeMilestone(key: string) {
     if (state.completedMilestones.includes(key)) return
     state.completedMilestones.push(key)
-    logStore.addLog(`里程碑达成: ${Eras.map(e => e.milestones).flat().find(m => m.key === key)?.description || key}`, 'reward')
+    
+    // 查找该里程碑的描述
+    let milestoneDesc = key;
+    for (const era of Eras) {
+      const m = era.milestones.find(item => item.key === key);
+      if (m) {
+        milestoneDesc = m.description;
+        break;
+      }
+    }
+    logStore.addLog(`里程碑达成: ${milestoneDesc}`, 'reward')
+    
     // 检查是否可以晋级
     if (currentEra.value && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
       pendingEraTransition.value = currentEra.value.key

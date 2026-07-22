@@ -17,6 +17,9 @@ export const useLogStore = defineStore('log', () => {
 
   const addLog = (content: string, type: string) => {
     logs.push({ content, type });
+    if (logs.length > 500) {
+      logs.splice(0, logs.length - 500);
+    }
     
     const appStore = useAppStore();
     const toastStore = useToastStore();

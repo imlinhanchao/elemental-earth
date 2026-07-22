@@ -65,7 +65,7 @@ export const usePackStore = defineStore('pack', () => {
     }
     const existingItem = items.find(i => i.key === itemKey);
     if (existingItem) {
-      const itemData = Items.find(i => i.key === itemKey);
+      const itemData = getItem(itemKey);
       if (itemData?.elemental) {
         const stateStore = useStateStore();
         stateStore.addElement(itemData.elemental);
@@ -81,7 +81,7 @@ export const usePackStore = defineStore('pack', () => {
       }
       return true;
     } else {
-      const itemData = Items.find(i => i.key === itemKey);
+      const itemData = getItem(itemKey);
       if (itemData) {
         if (use > 0) {
           const maxDur = itemData.durable ?? 1;
@@ -115,7 +115,7 @@ export const usePackStore = defineStore('pack', () => {
     const existingItem = items.find(i => i.key === key);
     if (existingItem) {
       // 气体材料被消耗时：归还一个集气瓶
-      const itemDef = Items.find(d => d.key === key);
+      const itemDef = getItem(key);
       if (itemDef?.type.includes('gas')) {
         addItem('gas_bottle', 1);
       }
@@ -194,7 +194,7 @@ export const usePackStore = defineStore('pack', () => {
   function getDisplayName(itemKey: string): string {
     const rename = itemRenames[itemKey];
     if (rename?.customName) return rename.customName;
-    const def = Items.find(i => i.key === itemKey);
+    const def = getItem(itemKey);
     return def?.name || itemKey;
   }
 

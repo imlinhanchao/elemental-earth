@@ -24,6 +24,8 @@ export interface IEra {
 
 export const Eras: IEra[] = data as IEra[]
 
+const EraMap = new Map<string, IEra>(Eras.map(e => [e.key, e]))
+
 export function getEra(key: string): IEra | undefined {
-  return Eras.find(e => e.key === key)
+  return EraMap.get(key)
 }

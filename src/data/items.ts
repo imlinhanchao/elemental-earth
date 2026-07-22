@@ -45,6 +45,8 @@ export interface IItem {
 
 export const Items: IItem[] = data as IItem[];
 
+const ItemMap = new Map<string, IItem>(Items.map(i => [i.key, i]));
+
 export function getItem(key: string): IItem | undefined {
-  return Items.find(i => i.key === key);
+  return ItemMap.get(key);
 }

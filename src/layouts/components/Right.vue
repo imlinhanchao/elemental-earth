@@ -94,7 +94,7 @@ const visibleLogs = computed(() => {
 })
 
 const displayTasks = computed(() => {
-  const allTasks = taskStore.tasks
+  const allTasks = tasks.value
   if (!appStore.foldTasks) return allTasks.map(t => ({ task: t, ids: [t.id], count: 1 }))
   
   const groups: { task: ITask; ids: (number | string)[]; count: number }[] = []

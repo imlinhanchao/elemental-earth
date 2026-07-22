@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { Formulas } from '@/data/formula'
+import { Formulas, getFormula } from '@/data/formula'
 import { LabActions, type ILabAction } from '@/data/labs'
-import { Items } from '@/data/items'
+import { Items, getItem } from '@/data/items'
 import { usePackStore } from '@/stores/modules/pack'
 import { useProductionStore } from '@/stores/modules/production'
 import Icon from '@/components/Icon.vue'
@@ -35,7 +35,7 @@ const provenFormulas = computed(() => {
     .sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'))
 })
 
-const currentFormula = computed(() => Formulas.find(f => f.key === selectedFormulaKey.value))
+const currentFormula = computed(() => getFormula(selectedFormulaKey.value))
 
 watch(selectedFormulaKey, () => {
   handleFormulaChange()
@@ -66,7 +66,7 @@ const availableChainOps = computed(() => {
 })
 
 function getItemName(key: string) {
-  return Items.find(i => i.key === key)?.name || key
+  return getItem(key)?.name || key
 }
 
 function handleFormulaChange() {
@@ -121,7 +121,7 @@ function autoFillFuel() {
 const totalBurnTime = computed(() => {
   let total = 0
   for (const [key, qty] of Object.entries(fuelMap.value)) {
-    const fuel = Items.find(i => i.key === key)
+    const fuel = getItem(key)
     if (fuel && (fuel.attrs as any)?.burn_time) {
       total += (fuel.attrs as any).burn_time * qty
     }
@@ -258,13 +258,13 @@ function close() {
                   <template v-if="Array.isArray(req.key)">
                     <select v-model="selectedMaterials[idx]" class="select select-bordered select-sm w-full">
                       <option v-for="k in req.key" :key="k" :value="k">
-                        {{ getItemName(k) }} (持有: {{ packStore.getItemQuantity(k) }}{{ Items.find(i=>i.key===k)?.durable ? ', 耐久: ' + packStore.getTotalDurability(k).toFixed(1) : '' }})
+                        {{ getItemName(k) }} (持有: {{ packStore.getItemQuantity(k) }}{{ getItem(k)?.durable ? ', 耐久: ' + packStore.getTotalDurability(k).toFixed(1) : '' }})
                       </option>
                     </select>
                   </template>
                   <div v-else class="text-xs font-bold pl-1 flex justify-between">
                     <span>{{ getItemName(req.key) }}</span>
-                    <span v-if="Items.find(i => i.key === req.key)?.durable" class="bg-base-300 px-1 rounded font-normal scale-90">
+                    <span v-if="getItem(req.key)?.durable" class="bg-base-300 px-1 rounded font-normal scale-90">
                       耐久: {{ packStore.getTotalDurability(req.key).toFixed(1) }}
                     </span>
                   </div>

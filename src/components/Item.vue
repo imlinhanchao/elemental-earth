@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Items } from '@/data/items';
+  import { Items, getItem } from '@/data/items';
   import { useAppStore } from '@/stores/modules/app';
   import { usePackStore, type IPackItem } from '@/stores/modules/pack';
   import { computed, ref } from 'vue';
@@ -13,7 +13,7 @@
   const appStore = useAppStore();
   const packStore = usePackStore();
   const itemData = computed(() => {
-    return Items.find(item => item.key === props.data?.key);
+    return getItem(props.data.key);
   });
 
   const displayName = computed(() => packStore.getDisplayName(props.data.key));
