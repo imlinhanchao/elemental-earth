@@ -6,7 +6,7 @@
 
   const props = defineProps<{
     task: ITask;
-    ids?: number[];
+    ids?: (number | string)[];
     count?: number;
     showInTitle?: boolean;
   }>();

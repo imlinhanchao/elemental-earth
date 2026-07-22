@@ -66,7 +66,7 @@ const displayTasks = computed(() => {
   const allTasks = taskStore.getTasks
   if (!appStore.foldTasks) return allTasks.map(t => ({ task: t, ids: [t.id], count: 1 }))
   
-  const groups: { task: ITask; ids: number[]; count: number }[] = []
+  const groups: { task: ITask; ids: (number | string)[]; count: number }[] = []
   for (const t of allTasks) {
     const last = groups[groups.length - 1]
     if (last && last.task.name === t.name && last.task.type === t.type && last.task.key === t.key) {

@@ -474,6 +474,9 @@ function getMapName(key: string) {
                 :options="Items.map(i => ({ label: i.name, value: i.key }))"
                 placeholder="选择物品..."
               />
+              <p v-if="conditionInput.key" class="text-xs opacity-50">
+                持有 {{ packStore.getItemQuantity(conditionInput.key) }} 个
+              </p>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
