@@ -44,6 +44,32 @@ export const useTaskStore = defineStore('task', () => {
   const packStore = usePackStore();
   const logStore = useLogStore();
 
+  /** 获取时代奖励加成倍率 */
+  const getEraBonus = (reward: IReward): number => {
+    const currentEraObj = Eras.find(e => e.key === stateStore.state.currentEra);
+    const currentOrder = currentEraObj?.order ?? 0;
+    
+    // 若无时代限制，则当作炼金术时代 (order 1) 处理
+    const reqEraObj = reward.required_era 
+      ? Eras.find(e => e.key === reward.required_era) 
+      : Eras.find(e => e.key === 'alchemy');
+    const reqOrder = reqEraObj?.order ?? 1;
+
+    if (currentOrder > reqOrder) {
+      return 1 + (currentOrder - reqOrder) * 0.15;
+    }
+    return 1;
+  };
+
+  /** 获取考虑时代加成的最终奖励数量 */
+  const getFinalQuantity = (reward: IReward): number => {
+    let qty = Array.isArray(reward.quantity) 
+      ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] 
+      : (reward.quantity || 1);
+
+    return Math.max(1, Math.floor(qty * getEraBonus(reward)));
+  };
+
   const now = computed(() => appStore.tick);
 
   /** 时代进度带来的时间减免倍率 */
@@ -109,7 +135,8 @@ export const useTaskStore = defineStore('task', () => {
         const rewards = task.rewards || [];
         for (const r of rewards) {
           if (r.guaranteed || task.type === 'lab') {
-            const qty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
+            const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
+            const qty = Math.floor(baseQty * getEraBonus(r));
             const itemData = getItem(r.key);
             // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
             if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {
@@ -359,7 +386,7 @@ export const useTaskStore = defineStore('task', () => {
       });
 
         for (const gr of guaranteedRewards) {
-          const qty = Array.isArray(gr.quantity) ? gr.quantity[Math.floor(Math.random() * gr.quantity.length)] : gr.quantity || 1;
+          const qty = getFinalQuantity(gr);
           if (packStore.addItem(gr.key, qty)) {
             logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
           }
@@ -370,7 +397,7 @@ export const useTaskStore = defineStore('task', () => {
         }
         const reward = getReward(task.rewards.filter(r => !r.guaranteed), consumedKeys);
         if (reward) {
-          const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
+          const quantity = getFinalQuantity(reward);
           if (packStore.addItem(reward.key, quantity)) {
             logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
           }
@@ -419,7 +446,7 @@ export const useTaskStore = defineStore('task', () => {
         // lab 类型：给予所有产物
         const obtainedProducts: { key: string; quantity: number }[] = [];
         for (const reward of task.rewards) {
-          const quantity = Array.isArray(reward.quantity) ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] : reward.quantity || 1;
+          const quantity = getFinalQuantity(reward);
           if (packStore.addItem(reward.key, quantity)) {
             obtainedProducts.push({ key: reward.key, quantity });
             logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
