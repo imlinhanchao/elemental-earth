@@ -537,26 +537,30 @@
     ]
   },
   {
-    "name": "镍镉电池技术",
     "key": "nickel_cadmium_battery_tech",
+    "name": "镍镉电池技术",
     "description": "掌握了可充电镍镉电池的原理与制造工艺，利用氢氧化镍和镉在碱性电解液中的可逆反应。",
+    "time_required": 120,
     "required_items": [
       {
         "key": "battery",
         "quantity": 1
       },
       {
-        "key": "nickel",
-        "quantity": 5
+        "key": "nickel_hydroxide",
+        "quantity": 1
       },
       {
         "key": "cadmium",
-        "quantity": 2
+        "quantity": 1
+      },
+      {
+        "key": "potassium_hydroxide",
+        "quantity": 1
       }
     ],
     "required_techs": [
       "electrochemistry"
-    ],
-    "time_required": 120
+    ]
   }
 ]
