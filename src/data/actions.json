@@ -1879,7 +1879,7 @@
         "key": "barite",
         "quantity": [
           100,
-          300
+          120
         ],
         "probability": 100,
         "required_era": "modern_chem",
