@@ -113,10 +113,12 @@ export const useTaskStore = defineStore('task', () => {
   };
 
   /** 获取考虑时代加成的最终奖励数量 */
-  const getFinalQuantity = (reward: IReward): number => {
+  const getFinalQuantity = (reward: IReward, bonus = true): number => {
     let qty = Array.isArray(reward.quantity) 
       ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] 
       : (reward.quantity || 1);
+
+    if (!bonus) return qty;
 
     return Math.max(1, Number((qty * getEraBonus(reward)).toFixed(1)));
   };
@@ -486,7 +488,7 @@ export const useTaskStore = defineStore('task', () => {
         // lab 类型：给予所有产物
         const obtainedProducts: { key: string; quantity: number }[] = [];
         for (const reward of task.rewards) {
-          const quantity = getFinalQuantity(reward);
+          const quantity = getFinalQuantity(reward, false); // 实验室产物不受时代加成影响
           if (packStore.addItem(reward.key, quantity)) {
             obtainedProducts.push({ key: reward.key, quantity });
             logStore.addLog(`实验室产物: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
