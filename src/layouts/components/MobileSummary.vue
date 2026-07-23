@@ -20,10 +20,10 @@ const summaryItems = computed(() => {
 
 const displayTasks = computed(() => {
   const allTasks = taskStore.getTasks
-  if (!appStore.foldTasks) return allTasks.map(t => ({ task: t, count: 1 }))
+  if (!appStore.foldTasks) return allTasks.value.map(t => ({ task: t, count: 1 }))
   
   const groups: { task: any; count: number }[] = []
-  for (const t of allTasks) {
+  for (const t of allTasks.value) {
     const last = groups[groups.length - 1]
     if (last && last.task.name === t.name && last.task.type === t.type && last.task.key === t.key) {
       last.count++
