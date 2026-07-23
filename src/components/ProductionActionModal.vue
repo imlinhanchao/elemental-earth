@@ -24,13 +24,19 @@ const selectedActionKey = ref('')
 const selectedMaterials = ref<Record<number, string>>({})
 const count = ref(1)
 
+// 循环条件支持
+const loopUntil = ref(false)
+const targetItem = ref('')
+const targetCount = ref(0)
+const conditionType = ref<'ge' | 'le'>('ge')
+
 const availableActions = computed(() => {
   return Actions.filter(a => {
     // 基础过滤：必须有科技解锁 (或者没有科技要求)
     if (a.required_techs && !a.required_techs.every(t => packStore.techs.includes(t))) return false
     
     // 必须在当前地图可用
-    if (a.map && !a.map.includes(stateStore.state.map)) return false
+    if (a.map && !a.map.some(m => (typeof m === 'string' ? m : (m as any).key) === stateStore.state.map)) return false
 
     // 必须曾拥有过所有前置物品（或者至少其中之一，如果是可选的）
     if (a.required_items.some(item => {
@@ -44,6 +50,24 @@ const availableActions = computed(() => {
       label: a.name,
       value: a.key
     }))
+})
+
+const allItems = computed(() => {
+  return Array.from(packStore.discoveredItems)
+    .map(key => {
+      const qty = packStore.getItemQuantity(key)
+      const dur = packStore.getTotalDurability(key)
+      const item = getItem(key)
+      let label = packStore.getDisplayName(key)
+      if (qty > 0 || dur > 0) {
+        label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+      }
+      return {
+        value: key,
+        label
+      }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label, 'zh-Hans-CN'))
 })
 
 const currentAction = computed(() => {
@@ -63,6 +87,13 @@ function handleActionChange() {
       selectedMaterials.value[idx] = req.key
     }
   })
+
+  // 默认目标设置为主要的产物
+  const mainReward = currentAction.value.rewards[0]?.key
+  if (mainReward) {
+    targetItem.value = mainReward
+    targetCount.value = packStore.getItemQuantity(mainReward) + 10
+  }
 }
 
 watch(selectedActionKey, () => {
@@ -83,16 +114,25 @@ function handleAdd() {
     }))
   }
 
+  const condition = loopUntil.value && targetItem.value ? {
+    key: targetItem.value,
+    value: targetCount.value,
+    operator: (conditionType.value === 'ge' ? '>=' : '<=') as '>=' | '<=',
+    loopUntil: true
+  } : undefined
+
   productionStore.addStepToDraft({
     type: 'action',
     key: currentAction.value.key,
     name: currentAction.value.name,
-    payload
+    payload,
+    condition
   }, count.value)
 
   emit('close')
   selectedActionKey.value = ''
   count.value = 1
+  loopUntil.value = false
 }
 
 function close() {
@@ -150,9 +190,42 @@ function close() {
           <div class="form-control w-full">
             <label class="label"><span class="label-text">每轮循环执行次数</span></label>
             <div class="join w-full">
-              <button class="btn btn-sm join-item" @click="count = Math.max(1, count - 1)">-</button>
-              <input v-model.number="count" type="number" min="1" class="input input-sm input-bordered join-item grow text-center" />
-              <button class="btn btn-sm join-item" @click="count++">+</button>
+              <button class="btn btn-sm join-item" @click="count = Math.max(1, count - 1)" :disabled="loopUntil">-</button>
+              <input v-model.number="count" type="number" min="1" :disabled="loopUntil" class="input input-sm input-bordered join-item grow text-center" />
+              <button class="btn btn-sm join-item" @click="count++" :disabled="loopUntil">+</button>
+            </div>
+            
+            <!-- 循环条件 -->
+            <div class="mt-3 p-3 bg-base-300 rounded-xl space-y-2">
+              <label class="label cursor-pointer justify-start gap-2 py-0 text-xs text-secondary font-bold">
+                <input type="checkbox" v-model="loopUntil" class="checkbox checkbox-xs checkbox-secondary" />
+                <span>持续执行直到库存满足条件 (生产中心模式)</span>
+              </label>
+              
+              <div v-if="loopUntil" class="space-y-2 pt-1 border-t border-base-content/10 mt-1">
+                <div class="form-control">
+                  <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">监控物品</span></label>
+                  <SearchableSelect
+                    v-model="targetItem"
+                    :options="allItems"
+                    placeholder="选择监控的目标物品"
+                    size="xs"
+                  />
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="form-control">
+                    <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">判断逻辑</span></label>
+                    <select v-model="conditionType" class="select select-bordered select-xs w-full bg-base-200">
+                      <option value="ge">库存 ≥ 目标</option>
+                      <option value="le">库存 ≤ 目标</option>
+                    </select>
+                  </div>
+                  <div class="form-control">
+                    <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">目标数量</span></label>
+                    <input v-model.number="targetCount" type="number" class="input input-bordered input-xs w-full text-center bg-base-200" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

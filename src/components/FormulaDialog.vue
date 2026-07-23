@@ -39,7 +39,7 @@
                 :class="{ 'select-warning': insufficientMaterials[i] }">
                 <option :value="null" disabled>-- 请选择 --</option>
                 <option v-for="opt in materialOptions(req)" :key="opt.key" :value="opt.key">
-                  {{ opt.name }}（拥有 {{ opt.qty }}）
+                  {{ opt.name }}（拥有 {{ opt.qty }}{{ opt.isDurable ? '，耐: ' + opt.dur.toFixed(1) : '' }}）
                 </option>
               </select>
             </div>
@@ -330,13 +330,21 @@ const neededChainOperations = computed(() => {
 function materialOptions(req: IFormula['required_items'][number]) {
   const keys = Array.isArray(req.key) ? req.key : [req.key]
   const inv = taskStore.projectedInventory
+  const durMap = taskStore.projectedDurability
   return keys
     .map(k => {
       const def = getItem(k)
       const qty = inv.get(k) || 0
-      return { key: k, name: def?.name || k, qty }
+      const dur = durMap.get(k) || 0
+      return { 
+        key: k, 
+        name: def?.name || k, 
+        qty, 
+        dur,
+        isDurable: !!def?.durable
+      }
     })
-    .filter(o => o.qty > 0)
+    .filter(o => o.qty > 0 || (o.isDurable && o.dur > 0))
 }
 
 // ─── 容器选择 ──────────────────────────────────────────────────

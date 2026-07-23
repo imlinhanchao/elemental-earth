@@ -25,7 +25,17 @@ const importCode = ref('')
 const showActionModal = ref(false)
 const showFormulaModal = ref(false)
 const showLineModal = ref(false)
+const lineModalSelectedKey = ref('')
 const showConditionModal = ref(false)
+
+function handleAddLineStep() {
+  const line = productionStore.productionLines.find(l => l.id === lineModalSelectedKey.value)
+  if (line) {
+    productionStore.addStepToDraft({ type: 'line', key: line.id, name: line.name }, 1)
+  }
+  lineModalSelectedKey.value = ''
+  showLineModal.value = false
+}
 
 // Drag and drop state
 const draggedIndex = ref<number | null>(null)
@@ -257,7 +267,8 @@ function getMapName(key: string) {
             </div>
             <div class="flex flex-wrap gap-2">
               <div v-for="(req, key) in draftNetRequirements" :key="key" 
-                   class="badge badge-sm gap-1.5 py-2.5 transition-colors"
+                   class="badge badge-sm gap-1.5 py-2.5 transition-colors tooltip"
+                   :data-tip="`持有: ${packStore.getItemQuantity(key as string)} (耐久: ${packStore.getTotalDurability(key as string).toFixed(1)})`"
                    :class="isInsufficient(key as string, req) ? 'badge-error text-error-content' : 'badge-neutral'">
                 <span class="opacity-70">{{ req.name }}</span>
                 <span class="font-mono font-bold">
@@ -350,8 +361,9 @@ function getMapName(key: string) {
                 <div class="collapse-content px-4 pb-3">
                   <div class="flex flex-wrap gap-1.5 pt-2">
                     <template v-for="(req, key) in productionStore.getNetRequirements(line.steps, selectedCycles)" :key="key">
-                      <div class="flex items-center gap-1 bg-base-100 px-2 py-0.5 rounded border border-base-300 text-[10px] transition-colors"
-                           :class="isInsufficient(key as string, req) ? 'text-error border-error/50 bg-error/5' : ''">
+                      <div class="flex items-center gap-1 bg-base-100 px-2 py-0.5 rounded border border-base-300 text-[10px] transition-colors tooltip"
+                           :class="isInsufficient(key as string, req) ? 'text-error border-error/50 bg-error/5' : ''"
+                           :data-tip="`持有: ${packStore.getItemQuantity(key as string)} (耐久: ${packStore.getTotalDurability(key as string).toFixed(1)})`">
                         <span>{{ req.name }}</span>
                         <span class="font-mono font-bold" :class="isInsufficient(key as string, req) ? '' : 'text-primary'">
                           {{ req.quantity > 0 ? '×' + req.quantity : '' }}
@@ -433,22 +445,29 @@ function getMapName(key: string) {
           选择嵌套生产线
         </h3>
         
-        <div class="space-y-2 max-h-80 overflow-y-auto">
-          <div v-for="line in productionStore.productionLines.filter(l => l.id !== productionStore.currentEditingId)" :key="line.id" 
-               @click="productionStore.addStepToDraft({ type: 'line', key: line.id, name: line.name }, 1); showLineModal = false"
-               class="p-3 border border-base-300 rounded-xl hover:bg-base-200 cursor-pointer flex justify-between items-center transition-colors">
-            <div>
-              <div class="font-medium text-sm">{{ line.name }}</div>
-              <div class="text-[10px] opacity-40">{{ line.steps.length }} 个内部步骤</div>
-            </div>
-            <Icon icon="fluent:add-12-filled" class="opacity-30" />
+        <div class="space-y-4">
+          <div class="form-control">
+            <label class="label"><span class="label-text">搜索并选择生产线</span></label>
+            <SearchableSelect
+              v-model="lineModalSelectedKey"
+              :options="productionStore.productionLines
+                .filter(l => l.id !== productionStore.currentEditingId)
+                .map(l => ({ label: l.name, value: l.id }))"
+              placeholder="选择生产线..."
+            />
           </div>
+
+          <div v-if="lineModalSelectedKey" class="bg-base-200 p-3 rounded-xl border border-base-300 text-xs text-base-content/60">
+            已选择: {{ productionStore.productionLines.find(l => l.id === lineModalSelectedKey)?.name }}
+          </div>
+          
           <div v-if="productionStore.productionLines.filter(l => l.id !== productionStore.currentEditingId).length === 0" class="text-center py-6 text-base-content/40 text-xs">
-            暂无其他生产线
+            暂无其它的生产线可用
           </div>
         </div>
 
         <div class="modal-action">
+          <button @click="handleAddLineStep" class="btn btn-primary" :disabled="!lineModalSelectedKey">确认添加</button>
           <button @click="showLineModal = false" class="btn">取消</button>
         </div>
       </div>

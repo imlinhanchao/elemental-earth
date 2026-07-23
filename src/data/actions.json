@@ -1684,7 +1684,8 @@
       {
         "key": "coal",
         "quantity": 100,
-        "probability": 700,
+        "probability": 500,
+        "required_item": "dynamite",
         "map": [
           "mountain",
           "cave",
@@ -1697,7 +1698,8 @@
           100,
           30
         ],
-        "probability": 700,
+        "probability": 400,
+        "required_item": "dynamite",
         "map": [
           "mountain",
           "basin"
@@ -1722,8 +1724,9 @@
           100,
           300
         ],
-        "probability": 800,
+        "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "mountain",
           "cave"
@@ -1734,6 +1737,7 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "mountain"
         ]
@@ -1743,6 +1747,7 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "mountain",
           "cave"
@@ -1753,6 +1758,7 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "cave"
         ]
@@ -1783,6 +1789,7 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "cave",
           "volcano"
@@ -1793,6 +1800,7 @@
         "quantity": 100,
         "probability": 400,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "volcano"
         ]
@@ -1802,6 +1810,7 @@
         "quantity": 100,
         "probability": 150,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "volcano"
         ]
@@ -1811,6 +1820,7 @@
         "quantity": 100,
         "probability": 150,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "volcano"
         ]
@@ -1836,6 +1846,7 @@
         ],
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "basin",
           "salt_lake"
@@ -1896,6 +1907,7 @@
         "quantity": 100,
         "probability": 200,
         "required_era": "modern_chem",
+        "required_item": "dynamite",
         "map": [
           "volcano",
           "mountain"
@@ -1909,6 +1921,7 @@
         ],
         "probability": 200,
         "required_era": "modern_chem",
+        "required_item": "dynamite",
         "map": [
           "volcano"
         ]
@@ -1932,6 +1945,7 @@
         ],
         "probability": 200,
         "required_era": "modern_chem",
+        "required_item": "dynamite",
         "map": [
           "basin",
           "island"
@@ -1978,6 +1992,7 @@
         ],
         "probability": 300,
         "required_era": "modern_chem",
+        "required_item": "dynamite",
         "map": [
           "island",
           "cave"
@@ -2048,6 +2063,7 @@
         "key": "chalcopyrite",
         "quantity": 100,
         "probability": 400,
+        "required_item": "dynamite",
         "map": [
           "mountain",
           "cave"
@@ -2089,6 +2105,7 @@
         ],
         "probability": 100,
         "required_era": "rare_earth",
+        "required_item": "high_explosive",
         "map": [
           "mountain",
           "cave"

@@ -5,8 +5,10 @@ import { LabActions, type ILabAction } from '@/data/labs'
 import { Items, getItem } from '@/data/items'
 import { usePackStore } from '@/stores/modules/pack'
 import { useProductionStore } from '@/stores/modules/production'
+import { useTaskStore } from '@/stores/modules/task'
 import Icon from '@/components/Icon.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
+import { Techs } from '@/data/techs'
 
 const props = defineProps<{
   visible: boolean
@@ -18,6 +20,7 @@ const emit = defineEmits<{
 
 const packStore = usePackStore()
 const productionStore = useProductionStore()
+const taskStore = useTaskStore()
 
 const selectedFormulaKey = ref('')
 const batches = ref(1)
@@ -30,9 +33,37 @@ const fuelMap = ref<Record<string, number>>({})
 const selectedBattery = ref('')
 const selectedChainOps = ref<string[]>([])
 
+// 循环条件支持
+const loopUntil = ref(false)
+const targetItem = ref('')
+const targetCount = ref(0)
+const conditionType = ref<'ge' | 'le'>('ge')
+
+const allItems = computed(() => {
+  return Array.from(packStore.discoveredItems)
+    .map(key => {
+      const qty = packStore.getItemQuantity(key)
+      const dur = packStore.getTotalDurability(key)
+      const item = getItem(key)
+      let label = packStore.getDisplayName(key)
+      if (qty > 0 || dur > 0) {
+        label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+      }
+      return {
+        value: key,
+        label
+      }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label, 'zh-Hans-CN'))
+})
+
 const provenFormulas = computed(() => {
   return Formulas.filter(f => packStore.provenFormulas.includes(f.key))
     .sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'))
+    .map(f => ({
+      label: f.name,
+      value: f.key
+    }))
 })
 
 const currentFormula = computed(() => getFormula(selectedFormulaKey.value))
@@ -46,23 +77,83 @@ const currentOperation = computed(() => {
   return LabActions.find(a => a.key === currentFormula.value?.required_actions?.key)
 })
 
+function getReqOptions(req: any) {
+  const keys = Array.isArray(req.key) ? req.key : [req.key]
+  return keys.map((k: string) => {
+    const qty = packStore.getItemQuantity(k)
+    const dur = packStore.getTotalDurability(k)
+    const item = getItem(k)
+    let label = packStore.getDisplayName(k)
+    if (qty > 0 || dur > 0) {
+      label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+    }
+    return { value: k, label }
+  })
+}
+
+/** 获取当前配方产物中实际需要的追加操作 */
+const neededChainOps = computed(() => {
+  if (!currentFormula.value) return []
+  
+  // 获取配方产物中所有需要的追加操作 Key
+  const formulaOps = new Set(
+    currentFormula.value.products
+      .map(p => p.required_chain_operation)
+      .filter(Boolean)
+  )
+
+  return LabActions.filter(a => {
+    if (!a.is_chain) return false
+    
+    // 只显示本配方产物能够使用的追加操作
+    if (!formulaOps.has(a.key)) return false
+
+    // 检查科技
+    if (a.required_techs && !a.required_techs.every(t => packStore.hasTech(t))) return false
+    
+    // 检查所需物品 (同步 FormulaDialog 逻辑，但使用预期库存)
+    if (a.required_item) {
+      if (!a.required_item.every(req => {
+        const keys = Array.isArray(req.key) ? req.key : [req.key]
+        return keys.some(k => (taskStore.projectedInventory.get(k) || 0) > 0)
+      })) return false
+    }
+    
+    return true
+  }) as ILabAction[]
+})
+
 // 数据过滤助手
 const allContainers = computed(() => {
   const base = Items.filter(i => i.type.includes('container'))
-  if (currentFormula.value?.required_container) {
-    return base.filter(i => i.key === currentFormula.value?.required_container)
-  }
-  return base
+    .filter(i => {
+      if (currentFormula.value?.required_container) {
+        return i.key === currentFormula.value?.required_container
+      }
+      return true
+    })
+  return base.map(c => ({
+    key: c.key,
+    name: `${c.name} (持有: ${packStore.getItemQuantity(c.key)}, 耐久: ${packStore.getTotalDurability(c.key).toFixed(1)})`
+  }))
 })
-const allFireSources = computed(() => Items.filter(i => i.type.includes('fire_source')))
-const allFuels = computed(() => Items.filter(i => (i.attrs as any)?.burn_time > 0))
-const allBatteries = computed(() => Items.filter(i => i.type.includes('tool') && i.key.includes('battery')))
 
-const availableChainOps = computed(() => {
-  if (!currentOperation.value?.chain_operations) return []
-  return currentOperation.value.chain_operations
-    .map(key => LabActions.find(a => a.key === key))
-    .filter(Boolean) as ILabAction[]
+const allFireSources = computed(() => {
+  return Items.filter(i => i.type.includes('fire_source'))
+    .map(f => ({
+      key: f.key,
+      name: `${f.name} (持有: ${packStore.getItemQuantity(f.key)}, 耐久: ${packStore.getTotalDurability(f.key).toFixed(1)})`
+    }))
+})
+
+const allFuels = computed(() => Items.filter(i => (i.attrs as any)?.burn_time > 0))
+
+const allBatteries = computed(() => {
+  return Items.filter(i => i.type.includes('tool') && i.key.includes('battery'))
+    .map(b => ({
+      key: b.key,
+      name: `${b.name} (持有: ${packStore.getItemQuantity(b.key)}, 耐久: ${packStore.getTotalDurability(b.key).toFixed(1)})`
+    }))
 })
 
 function getItemName(key: string) {
@@ -94,6 +185,13 @@ function handleFormulaChange() {
   // 默认电池
   if (currentOperation.value?.requires_electricity) {
     selectedBattery.value = allBatteries.value.find(b => b.key.includes('lead_acid'))?.key || allBatteries.value[0]?.key || ''
+  }
+
+  // 默认目标设置为主要的产物
+  const mainProduct = currentFormula.value.products[0]?.key
+  if (mainProduct) {
+    targetItem.value = mainProduct
+    targetCount.value = packStore.getItemQuantity(mainProduct) + 10
   }
 }
 
@@ -135,6 +233,26 @@ const neededBurnTime = computed(() => {
   return base * batches.value
 })
 
+/** 判断某个 Reactant 是否为催化剂 */
+function isReactantCatalyst(index: number): boolean {
+  if (!currentFormula.value) return false
+  const key = selectedMaterials.value[index]
+  if (!key) return false
+  const req = currentFormula.value.required_items[index]
+  return (currentFormula.value.products || []).some(p => {
+    if (p.required_chain_operation && !selectedChainOps.value.includes(p.required_chain_operation)) return false
+    return p.key === key && p.multiple === req.quantity
+  })
+}
+
+/** 判断某个 Product 是否为催化剂 */
+function isProductCatalyst(productKey: string, multiple: number): boolean {
+  if (!currentFormula.value) return false
+  return (currentFormula.value.required_items || []).some((req, i) => {
+    return selectedMaterials.value[i] === productKey && req.quantity === multiple
+  })
+}
+
 function handleAdd() {
   if (!currentFormula.value || !currentOperation.value) return
 
@@ -142,16 +260,29 @@ function handleAdd() {
   const operation = currentOperation.value
 
   // 解析选中的材料（每轮消耗量）
+  // 催化剂在生产线中依然按每轮消耗/产出 1 次来计算，最终 getNetRequirements 会抵消
   const consumedMaterials = (formula.required_items || []).map((m, idx) => {
     const key = selectedMaterials.value[idx] || (Array.isArray(m.key) ? m.key[0] : m.key)
     return { key, quantity: m.quantity }
   })
 
   // 解析选中的燃料（每轮均摊量）
-  // 注意：燃料总量 / 总循环次数 = 每轮平均耗量
   const consumedFuels = Object.entries(fuelMap.value)
     .filter(([_, qty]) => qty > 0)
     .map(([key, qty]) => ({ key, quantity: qty / batches.value }))
+
+  // 追加操作的额外材料消耗
+  const chainOpRequirements: { key: string; quantity: number; use?: number }[] = []
+  selectedChainOps.value.forEach(opKey => {
+    const op = LabActions.find(a => a.key === opKey)
+    if (op?.required_item) {
+      op.required_item.forEach(req => {
+        // 这里的 req 可能是数组（可选），生产线中选取第一个作为代表或按逻辑选取
+        const key = Array.isArray(req.key) ? req.key[0] : req.key
+        chainOpRequirements.push({ key, quantity: req.quantity, use: req.use })
+      })
+    }
+  })
 
   // 过滤奖励
   const filteredRewards = (formula.products || []).filter(p => {
@@ -166,7 +297,7 @@ function handleAdd() {
     return true
   }).map(p => ({
     key: p.key,
-    quantity: p.multiple // 生产线每轮执行 1 次，奖励量为多倍率
+    quantity: p.multiple
   }))
 
   const milestones: string[] = []
@@ -186,16 +317,24 @@ function handleAdd() {
     }
   }
 
+  // 计算总耗时（含追加操作）
+  let totalTime = formula.time_required
+  selectedChainOps.value.forEach(k => {
+    const op = LabActions.find(a => a.key === k)
+    if (op) totalTime += op.time_required
+  })
+
   const payload = {
-    name: formula.name,
+    name: `${formula.name}${selectedChainOps.value.map(k => ' → ' + (LabActions.find(a => a.key === k)?.name || k)).join('')}`,
     key: formula.key,
     description: formula.name,
-    time_required: formula.time_required,
+    time_required: totalTime,
     rewards: filteredRewards,
     required_items: [
       { key: selectedContainer.value, quantity: 1, use: containerUse },
       ...consumedMaterials,
       ...consumedFuels,
+      ...chainOpRequirements,
       ...(selectedFireSource.value ? [{ key: selectedFireSource.value, quantity: 0, use: 0.01 }] : []),
       ...(selectedBattery.value ? [{ key: selectedBattery.value, quantity: 0, use: formula.power_consumption || 0.1 }] : []),
     ],
@@ -203,11 +342,19 @@ function handleAdd() {
     milestones
   }
 
+  const condition = loopUntil.value && targetItem.value ? {
+    key: targetItem.value,
+    value: targetCount.value,
+    operator: (conditionType.value === 'ge' ? '>=' : '<=') as '>=' | '<=',
+    loopUntil: true
+  } : undefined
+
   productionStore.addStepToDraft({
     type: 'formula',
     key: formula.key,
     name: formula.name,
-    payload
+    payload,
+    condition
   }, batches.value)
 
   emit('close')
@@ -242,25 +389,62 @@ function close() {
 
             <div v-if="currentFormula" class="space-y-4 pt-2">
               <div class="form-control">
-                <label class="label"><span class="label-text">执行循环次数</span></label>
-                <input v-model.number="batches" type="number" min="1" class="input input-bordered w-full" />
+                <label class="label"><span class="label-text">执行批量次数</span></label>
+                <input v-model.number="batches" type="number" min="1" :disabled="loopUntil" class="input input-bordered w-full" />
+                
+                <!-- 循环条件 -->
+                <div class="mt-3 p-3 bg-base-200 rounded-xl space-y-2">
+                  <label class="label cursor-pointer justify-start gap-2 py-0">
+                    <input type="checkbox" v-model="loopUntil" class="checkbox checkbox-sm checkbox-secondary" />
+                    <span class="label-text font-bold text-xs">持续生产直到满足条件</span>
+                  </label>
+                  
+                  <div v-if="loopUntil" class="space-y-2 pt-1 border-t border-base-300 mt-1">
+                    <div class="form-control">
+                      <label class="label py-0"><span class="label-text-alt text-[10px]">目标物品</span></label>
+                      <SearchableSelect
+                        v-model="targetItem"
+                        :options="allItems"
+                        placeholder="选择物品"
+                        size="xs"
+                      />
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="form-control">
+                        <label class="label py-0"><span class="label-text-alt text-[10px]">逻辑</span></label>
+                        <select v-model="conditionType" class="select select-bordered select-xs w-full">
+                          <option value="ge">大于等于 (≥)</option>
+                          <option value="le">小于等于 (≤)</option>
+                        </select>
+                      </div>
+                      <div class="form-control">
+                        <label class="label py-0"><span class="label-text-alt text-[10px]">目标数量</span></label>
+                        <input v-model.number="targetCount" type="number" class="input input-bordered input-xs w-full text-center" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div class="form-control">
                 <label class="label"><span class="label-text">材料选择</span></label>
                 <div v-for="(req, idx) in currentFormula.required_items" :key="idx" class="space-y-1 mb-2">
                   <div class="flex justify-between items-center text-[10px] opacity-60">
-                    <span>{{ req.isMain ? '主材料' : '消耗品' }} (每轮 x{{ req.quantity }})</span>
-                    <span :class="packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) >= req.quantity * batches ? 'text-success' : 'text-error'">
-                      持有: {{ packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) }}/{{ req.quantity * batches }}
+                    <div class="flex items-center gap-1">
+                      <span>{{ req.isMain ? '主材料' : '消耗品' }} (每轮 x{{ req.quantity }})</span>
+                      <span v-if="isReactantCatalyst(idx)" class="badge badge-outline badge-xs text-secondary border-secondary/30 scale-90">催化剂</span>
+                    </div>
+                    <span :class="packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) >= req.quantity * (isReactantCatalyst(idx) ? 1 : batches) ? 'text-success' : 'text-error'">
+                      持有: {{ packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) }}/{{ req.quantity * (isReactantCatalyst(idx) ? 1 : batches) }}
                     </span>
                   </div>
                   <template v-if="Array.isArray(req.key)">
-                    <select v-model="selectedMaterials[idx]" class="select select-bordered select-sm w-full">
-                      <option v-for="k in req.key" :key="k" :value="k">
-                        {{ getItemName(k) }} (持有: {{ packStore.getItemQuantity(k) }}{{ getItem(k)?.durable ? ', 耐久: ' + packStore.getTotalDurability(k).toFixed(1) : '' }})
-                      </option>
-                    </select>
+                    <SearchableSelect
+                      v-model="selectedMaterials[idx]"
+                      :options="getReqOptions(req)"
+                      placeholder="选择材料"
+                      size="sm"
+                    />
                   </template>
                   <div v-else class="text-xs font-bold pl-1 flex justify-between">
                     <span>{{ getItemName(req.key) }}</span>
@@ -326,13 +510,26 @@ function close() {
             </div>
 
             <!-- 追加操作 -->
-            <div v-if="availableChainOps.length > 0" class="form-control">
-              <label class="label"><span class="label-text">追加链式操作</span></label>
+            <div v-if="neededChainOps.length > 0" class="form-control">
+              <label class="label"><span class="label-text">后置/追加操作</span></label>
               <div class="flex flex-wrap gap-2">
-                <label v-for="op in availableChainOps" :key="op.key" class="label cursor-pointer gap-2 bg-base-200 px-2 py-1 rounded-lg">
+                <label v-for="op in neededChainOps" :key="op.key" class="label cursor-pointer gap-2 bg-base-200 px-2 py-1 rounded-lg">
                   <input type="checkbox" :value="op.key" v-model="selectedChainOps" class="checkbox checkbox-xs" />
                   <span class="label-text text-xs">{{ op.name }}</span>
                 </label>
+              </div>
+            </div>
+
+            <!-- 产物预览 -->
+            <div class="form-control">
+              <label class="label"><span class="label-text">产物预览</span></label>
+              <div class="flex flex-wrap gap-2 p-2 bg-base-300/30 rounded-xl min-h-12">
+                <div v-for="p in currentFormula.products.filter(p => !p.required_chain_operation || selectedChainOps.includes(p.required_chain_operation))" :key="p.key"
+                     class="flex items-center gap-1.5 bg-base-100 px-2 py-1 rounded-lg border border-base-300 text-xs">
+                  <span class="opacity-70">{{ getItemName(p.key) }}</span>
+                  <span class="text-secondary font-mono font-bold">x{{ p.multiple * batches }}</span>
+                  <span v-if="isProductCatalyst(p.key, p.multiple)" class="badge badge-outline badge-xs text-secondary/50 scale-[0.8]">催化</span>
+                </div>
               </div>
             </div>
           </div>
