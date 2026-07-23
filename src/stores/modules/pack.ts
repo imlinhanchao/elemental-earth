@@ -20,6 +20,13 @@ export interface ItemCustomization {
   note: string;
 }
 
+/** 玩家手札分组列表 */
+export interface IManuscriptGroup {
+  id: string;
+  name: string;
+  items: { type: 'action' | 'formula'; key: string }[];
+}
+
 export const usePackStore = defineStore('pack', () => {
   const items = reactive<IPackItem[]>([]);
   const techs = reactive<string[]>([]);
@@ -37,6 +44,41 @@ export const usePackStore = defineStore('pack', () => {
   const materialChoices = reactive<Record<string, string>>({})
   /** 行动批量执行数量 actionKey → count */
   const batchCounts = reactive<Record<string, number>>({})
+  /** 玩家手札分组 */
+  const manuscripts = reactive<IManuscriptGroup[]>([])
+
+  /** 添加/移除手札项目 */
+  function toggleManuscriptItem(groupId: string, type: 'action' | 'formula', key: string) {
+    const group = manuscripts.find(g => g.id === groupId)
+    if (!group) return
+    const index = group.items.findIndex(i => i.type === type && i.key === key)
+    if (index > -1) {
+      group.items.splice(index, 1)
+    } else {
+      group.items.push({ type, key })
+    }
+  }
+
+  /** 创建分组 */
+  function createManuscriptGroup(name: string) {
+    manuscripts.push({
+      id: Math.random().toString(36).slice(2, 9),
+      name,
+      items: []
+    })
+  }
+
+  /** 删除分组 */
+  function deleteManuscriptGroup(id: string) {
+    const idx = manuscripts.findIndex(g => g.id === id)
+    if (idx > -1) manuscripts.splice(idx, 1)
+  }
+
+  /** 重命名分组 */
+  function renameManuscriptGroup(id: string, name: string) {
+    const group = manuscripts.find(g => g.id === id)
+    if (group) group.name = name
+  }
 
   const logStore = useLogStore();
 
@@ -247,7 +289,7 @@ export const usePackStore = defineStore('pack', () => {
 
   return { 
     items, techs, provenFormulas, discoveredItems, performedActions, itemRenames, discoveryQueue, cooldowns,
-    materialChoices, batchCounts,
+    materialChoices, batchCounts, manuscripts,
     getItems, addItem, removeItem, hasItem, getItemQuantity, getTotalDurability, hasGasContainer,
     getTechs, addTech, hasTech, 
     getProvenFormulas, addProvenFormula, hasProvenFormula,
@@ -255,6 +297,7 @@ export const usePackStore = defineStore('pack', () => {
     hasEverHad, getDisplayName, setItemName, setItemNote, getItemNote,
     clearPendingDiscovery,
     setCooldown, isOnCooldown, getCooldownRemaining,
+    toggleManuscriptItem, createManuscriptGroup, deleteManuscriptGroup, renameManuscriptGroup
   }
 })
 

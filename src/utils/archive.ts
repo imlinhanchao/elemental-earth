@@ -5,7 +5,7 @@ import { useTaskStore } from '@/stores/modules/task';
 import { useLogStore } from '@/stores/modules/log';
 import { useFragmentStore } from '@/stores/modules/fragment';
 import { useProductionStore } from '@/stores/modules/production';
-import type { IPackItem } from '@/stores/modules/pack';
+import type { IPackItem, IManuscriptGroup } from '@/stores/modules/pack';
 import type { IGameState } from '@/stores/modules/state';
 import type { ITask } from '@/stores/modules/task';
 import type { ILog } from '@/stores/modules/log';
@@ -49,6 +49,8 @@ export interface SaveData {
   productionDraft?: IProductionLineStep[];
   /** 生产线列表（v5 新增） */
   productionLines?: IProductionLine[];
+  /** 玩家手札分组（v7 新增） */
+  manuscripts?: IManuscriptGroup[];
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -86,6 +88,7 @@ export function saveGame(): boolean {
       unreadFragments: JSON.parse(JSON.stringify(fragmentStore.unreadFragments)),
       productionDraft: JSON.parse(JSON.stringify(productionStore.draftSteps)),
       productionLines: JSON.parse(JSON.stringify(productionStore.productionLines)),
+      manuscripts: JSON.parse(JSON.stringify(packStore.manuscripts)),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
@@ -240,6 +243,11 @@ export function loadGame(): boolean {
       } catch (e) {
         console.error('迁移遗留生产线数据失败:', e);
       }
+    }
+
+    // 恢复手札分组（v7 新增）
+    if (Array.isArray(data.manuscripts)) {
+      packStore.manuscripts.splice(0, packStore.manuscripts.length, ...data.manuscripts);
     }
 
     lastSavedTime.value = data.timestamp;

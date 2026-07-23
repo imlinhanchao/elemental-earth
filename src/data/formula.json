@@ -4317,14 +4317,17 @@
     "required_era": "electrochem"
   },
   {
-    "name": "阳极泥贵金属回收",
     "key": "extract_precious_metals_from_slime",
+    "name": "阳极泥贵金属回收",
     "description": "阳极泥经过多步处理后，最后的稀贵金属富集物可通过高温熔炼和化学分离得到金和银。",
+    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 40,
+    "required_era": "alchemy",
+    "required_container": "blast_furnace",
     "required_actions": {
       "key": "roasting",
       "min": 2
     },
-    "required_container": "kiln",
     "required_items": [
       {
         "key": "anode_slime",
@@ -4332,7 +4335,6 @@
         "isMain": true
       }
     ],
-    "time_required": 180,
     "products": [
       {
         "key": "silver",
@@ -4342,10 +4344,7 @@
         "key": "gold",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#anode_slime#为基础原料，在进行$roasting$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "process_vanadinite",

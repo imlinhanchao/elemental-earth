@@ -5,7 +5,9 @@
   import { LabActions } from '@/data/labs';
   import Action from '@/components/Action.vue';
   import ActionTip from '@/components/ActionTip.vue';
+  import FormulaAction from '@/components/FormulaAction.vue';
   import FormulaDialog from '@/components/FormulaDialog.vue';
+  import ManuscriptSection from '@/components/ManuscriptSection.vue';
   import { usePackStore } from '@/stores/modules/pack';
   import { useStateStore } from '@/stores/modules/state';
   import { useTaskStore } from '@/stores/modules/task';
@@ -25,7 +27,11 @@
     return op.time_required * (f.required_actions?.min || 1);
   }
 
-  /** 已习得的配方 */
+  function isInGroup(groupId: string, type: 'action' | 'formula', key: string) {
+    const g = packStore.manuscripts.find(m => m.id === groupId)
+    return g?.items.some(i => i.type === type && i.key === key)
+  }
+
   const provenFormulas = computed(() => {
     let list = Formulas.filter(f => packStore.hasProvenFormula(f.key));
     if (searchQuery.value.trim()) {
@@ -151,6 +157,9 @@
       </div>
     </header>
 
+    <!-- 手札 -->
+    <ManuscriptSection @open-formula="openFormulaDialog" />
+
     <div v-if="provenFormulas.length === 0 && groupedActions.length === 0 && searchQuery" class="py-12 text-center opacity-50">
       <Icon icon="tabler:search-off" class="text-3xl mx-auto mb-2" />
       <p>没有找到匹配的内容</p>
@@ -171,26 +180,13 @@
       </summary>
       <div class="collapse-content">
         <div class="grid grid-cols-2 md:grid-cols-6 gap-4 flex-wrap">
-          <ActionTip
-            v-for="f in provenFormulas"
+          <FormulaAction 
+            v-for="f in provenFormulas" 
             :key="f.key"
-            :id="`action-${f.key}`"
-            :description="f.description"
-            :required_items="f.required_items.map(req => ({
-              key: Array.isArray(req.key) ? (req.key.find(k => packStore.hasEverHad(k)) || req.key[0]) : req.key,
-              quantity: req.quantity,
-            }))"
-            :required_techs="f.required_techs"
-            :time_required="getFormulaTime(f)"
-          >
-            <button
-              class="btn btn-soft w-full"
-              :disabled="!canPerformFormula(f)"
-              @click="openFormulaDialog(f)"
-            >
-              {{ f.name }}
-            </button>
-          </ActionTip>
+            :data="f"
+            @click="openFormulaDialog"
+            class="w-full"
+          />
         </div>
       </div>
     </details>
@@ -217,7 +213,7 @@
         </span>
       </summary>
       <div class="collapse-content">
-        <div class="flex gap-4 flex-wrap">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 flex-wrap">
           <Action v-for="action in group.actions" :key="action.key" :data="action" />
         </div>
       </div>

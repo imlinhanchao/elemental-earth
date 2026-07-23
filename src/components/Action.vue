@@ -12,6 +12,7 @@
 
   const props = defineProps<{
     data: IAction;
+    inGroupId?: string;
   }>();
 
   const packStore = usePackStore();
@@ -139,6 +140,11 @@
     e.stopPropagation();
     if (isRunning.value) return;
     showBatchPicker.value = !showBatchPicker.value;
+  }
+
+  function isInGroup(groupId: string, type: 'action' | 'formula', key: string) {
+    const g = packStore.manuscripts.find(m => m.id === groupId)
+    return g?.items.some(i => i.type === type && i.key === key)
   }
 
   // ─── 可见/可用 ──────────────────────────────────────────────
@@ -302,8 +308,8 @@
         </div>
       </div>
 
-      <!-- 添加到生产线（右下） -->
-      <div v-if="packStore.hasTech('production_tech')" class="absolute -bottom-2 -right-2 z-10">
+      <!-- 添加到生产线 -->
+      <div v-if="packStore.hasTech('production_tech')" class="absolute -bottom-2 -left-2 z-10">
         <button
           class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
           title="添加到生产线"
@@ -311,6 +317,35 @@
         >
           <Icon icon="mdi:plus" />
         </button>
+      </div>
+
+      <!-- 手札分组 -->
+      <div v-if="inGroupId" class="absolute -bottom-2 -right-2 z-110">
+        <button
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] text-error hover:bg-error/20"
+          title="移出手札"
+          @click.stop="packStore.toggleManuscriptItem(inGroupId, 'action', data.key)"
+        >
+          <Icon icon="tabler:x" />
+        </button>
+      </div>
+      <div v-else-if="packStore.manuscripts.length > 0" class="absolute -bottom-2 -right-2 z-110 dropdown dropdown-end">
+        <button
+          tabindex="0"
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
+          title="添加到手札"
+          @click.stop
+        >
+          <Icon icon="tabler:bookmark-plus" />
+        </button>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-30">
+          <li v-for="g in packStore.manuscripts" :key="g.id">
+            <a @click.stop="packStore.toggleManuscriptItem(g.id, 'action', data.key)" :class="{ 'bg-primary/10 text-primary': isInGroup(g.id, 'action', data.key) }">
+              <Icon :icon="isInGroup(g.id, 'action', data.key) ? 'tabler:check' : 'tabler:bookmark-plus'" class="text-xs" />
+              {{ g.name }}
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </ActionTip>
