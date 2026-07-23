@@ -142,13 +142,10 @@ export const useTaskStore = defineStore('task', () => {
 
     // 基础库存初始化
     packStore.items.forEach(item => {
-      inv.set(item.key, (inv.get(item.key) || 0) + item.quantity);
+      inv.set(item.key, packStore.getItemQuantity(item.key));
       const itemData = getItem(item.key);
       if (itemData && (itemData.durable ?? 0) > 0) {
-        // 总耐久 = (持有数量 - 1) * 单个满耐久 + 当前物品残余耐久
-        // 实际上 packStore 里的 durable 存储的就是当前物品的残余耐久
-        const maxDur = itemData.durable || 1;
-        dur.set(item.key, (dur.get(item.key) || 0) + (item.quantity - 1) * maxDur + item.durable);
+        dur.set(item.key, packStore.getTotalDurability(item.key));
         durableKeys.add(item.key);
       }
     });
@@ -316,9 +313,17 @@ export const useTaskStore = defineStore('task', () => {
 
   const canPerform = (required_items: { key: string | string[], quantity: number, use?: number }[]): boolean => {
     for (const req of required_items) {
-      if (packStore.getItemQuantity(req.key as string) < req.quantity) {
-        return false;
-      }
+      const keys = Array.isArray(req.key) ? req.key : [req.key];
+      const hasAny = keys.some(k => {
+        const itemData = getItem(k);
+        const hasQty = packStore.getItemQuantity(k);
+        if (itemData && (itemData.durable ?? 0) > 0) {
+          const totalDur = packStore.getTotalDurability(k);
+          return hasQty >= req.quantity && (!req.use || totalDur >= req.use);
+        }
+        return hasQty >= req.quantity;
+      });
+      if (!hasAny) return false;
     }
     return true;
   }
@@ -357,13 +362,12 @@ export const useTaskStore = defineStore('task', () => {
               const itemData = getItem(k);
               const maxDur = itemData?.durable || 1;
               const hasQty = packStore.getItemQuantity(k);
-              const existing = packStore.items.find(i => i.key === k);
+              const hasDur = packStore.getTotalDurability(k);
 
               if (itemData && (itemData.durable ?? 0) > 0) {
                 // 耐久物品：计算总耐久池
-                const totalDur = existing ? (existing.quantity - 1) * maxDur + existing.durable : 0;
                 const qOk = hasQty >= req.quantity;
-                const dOk = !req.use || totalDur >= req.use;
+                const dOk = !req.use || hasDur >= req.use;
                 if (qOk && dOk) {
                   matchedKey = k;
                   break;

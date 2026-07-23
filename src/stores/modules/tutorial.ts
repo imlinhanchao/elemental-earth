@@ -132,8 +132,8 @@ export const useTutorialStore = defineStore('tutorial', () => {
 
     if (s === 1) {
       if (!isHome) return { ...step, target: 'tab-home' }
-      const stoneQty = packStore.items.find(i => i.key === 'stone')?.quantity || 0
-      const woodQty = packStore.items.find(i => i.key === 'wood')?.quantity || 0
+      const stoneQty = packStore.getItemQuantity('stone')
+      const woodQty = packStore.getItemQuantity('wood')
       if (stoneQty < 30) return { ...step, target: 'action-pick_stone' }
       return { ...step, target: woodQty < 15 ? 'action-pick_branch' : 'home-actions-collect' }
     }
@@ -144,7 +144,7 @@ export const useTutorialStore = defineStore('tutorial', () => {
 
     if (s === 3) {
       if (!isHome) return { ...step, target: 'tab-home' }
-      const hasTools = packStore.items.some(i => i.key === 'stone_pickaxe') && packStore.items.some(i => i.key === 'stone_axe')
+      const hasTools = packStore.hasItem('stone_pickaxe') && packStore.hasItem('stone_axe')
       return hasTools ? { ...step, target: 'action-mining' } : { ...step, target: 'home-actions-craft' }
     }
 
@@ -155,14 +155,14 @@ export const useTutorialStore = defineStore('tutorial', () => {
     }
 
     if (s === 5) {
-      const hasTech = packStore.techs.includes('wood_processing')
+      const hasTech = packStore.hasTech('wood_processing')
       if (!hasTech) return isTech ? { ...step, target: 'tech-wood_processing' } : { ...step, target: 'tab-tech' }
       if (!isHome) return { ...step, target: 'tab-home' }
       return { ...step, target: 'action-craft_wooden_bucket' }
     }
 
     if (s === 6) {
-      const waterQty = packStore.items.find(i => i.key === 'water')?.quantity || 0
+      const waterQty = packStore.getItemQuantity('water')
       if (waterQty < 1) {
         if (!isHome) return { ...step, target: 'tab-home' }
         if (stateStore.state.map !== 'river_side') return { ...step, target: 'header-map-switch' }
@@ -203,9 +203,9 @@ export const useTutorialStore = defineStore('tutorial', () => {
     // If the user has already reached a further step once, allow going forward regardless of current state
     if (s < maxReachedStep.value) return false
 
-    const getQty = (key: string) => packStore.items.find(i => i.key === key)?.quantity || 0
-    const hasTech = (key: string) => packStore.techs.includes(key)
-    const hasItem = (key: string) => packStore.items.some(i => i.key === key)
+    const getQty = (key: string) => packStore.getItemQuantity(key)
+    const hasTech = (key: string) => packStore.hasTech(key)
+    const hasItem = (key: string) => packStore.hasItem(key)
 
     if (s === 1) {
       return !(getQty('stone') >= 30 && getQty('wood') >= 15)
@@ -261,9 +261,9 @@ export const useTutorialStore = defineStore('tutorial', () => {
   watch([() => packStore.items, () => packStore.techs, () => stateStore.state.map, () => stateStore.state.currentEra, () => packStore.provenFormulas], () => {
     if (!isTutorialActive.value) return
 
-    const getQty = (key: string) => packStore.items.find(i => i.key === key)?.quantity || 0
-    const hasTech = (key: string) => packStore.techs.includes(key)
-    const hasItem = (key: string) => packStore.items.some(i => i.key === key)
+    const getQty = (key: string) => packStore.getItemQuantity(key)
+    const hasTech = (key: string) => packStore.hasTech(key)
+    const hasItem = (key: string) => packStore.hasItem(key)
 
     if (currentStep.value === 1) {
       if (getQty('stone') >= 30 && getQty('wood') >= 15) {

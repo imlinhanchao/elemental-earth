@@ -4974,9 +4974,17 @@
     ]
   },
   {
-    "name": "制备氟化钾",
     "key": "produce_potassium_fluoride",
+    "name": "制备氟化钾",
     "description": "氢氧化钾与氢氟酸进行中和反应，生成氟化钾溶液，经结晶获得固体。",
+    "fragment_description": "以#potassium_hydroxide#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
+    "required_container": "iron_tank",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "potassium_hydroxide",
@@ -4989,8 +4997,6 @@
         "isMain": true
       }
     ],
-    "required_container": "iron_tank",
-    "time_required": 10,
     "products": [
       {
         "key": "potassium_fluoride",
@@ -5000,9 +5006,7 @@
         "key": "water",
         "multiple": 1
       }
-    ],
-    "fragment_description": "以#potassium_hydroxide#为基础原料，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "electrolyze_fluorine",

@@ -190,7 +190,7 @@ export const usePackStore = defineStore('pack', () => {
 
   const getItemQuantity = (key: string) => {
     const existingItem = items.find(i => i.key === key);
-    return existingItem ? existingItem.quantity : 0;
+    return Number((existingItem ? existingItem.quantity : 0).toFixed(2));
   }
 
   const getTotalDurability = (key: string) => {
@@ -199,7 +199,7 @@ export const usePackStore = defineStore('pack', () => {
     const itemData = getItem(key);
     if (!itemData || (!itemData.durable && itemData.durable !== 0)) return existingItem.quantity;
     const maxDur = itemData.durable || 1;
-    return (existingItem.quantity - 1) * maxDur + existingItem.durable;
+    return Number(((existingItem.quantity - 1) * maxDur + existingItem.durable + 0.005).toFixed(2));
   }
 
   const getTechs = computed(() => techs);
