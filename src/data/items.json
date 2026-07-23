@@ -373,7 +373,7 @@
     "type": [
       "tool"
     ],
-    "durable": 3
+    "durable": 10
   },
   {
     "key": "iron_shovel",
@@ -600,7 +600,7 @@
     "type": [
       "tool"
     ],
-    "durable": 2.5
+    "durable": 5
   },
   {
     "key": "brass_axe",
@@ -610,7 +610,7 @@
     "type": [
       "tool"
     ],
-    "durable": 2.5
+    "durable": 5
   },
   {
     "key": "brass_condenser",
