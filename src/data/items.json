@@ -3643,7 +3643,8 @@
     "category": "工具",
     "description": "用于分馏操作，增加汽液接触面积以提高分离效率。",
     "type": [
-      "tool"
+      "tool",
+      "container"
     ],
     "durable": 50,
     "attrs": {
