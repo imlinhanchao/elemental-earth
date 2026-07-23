@@ -65,7 +65,7 @@
       <!-- 手札分组（右下） -->
       <div v-if="inGroupId" class="absolute -bottom-2 -right-2 z-110">
         <button
-          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] text-error hover:bg-error/20"
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] text-error hover:bg-error/20 btn-tool"
           title="移出手札"
           @click.stop="packStore.toggleManuscriptItem(inGroupId, 'formula', data.key)"
         >

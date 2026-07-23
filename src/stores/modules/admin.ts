@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { gameSDK } from '@/main'
 
 const STORAGE_KEY = 'admin_token'
 
@@ -7,7 +8,7 @@ const STORAGE_KEY = 'admin_token'
 const API_BASE = import.meta.env.DEV ? '' : ''
 
 export const useAdminStore = defineStore('admin', () => {
-  const token = ref<string | null>(localStorage.getItem(STORAGE_KEY))
+  const token = ref<string | null>(gameSDK.getToken())
   const isLoggedIn = computed(() => !!token.value)
 
   function setToken(t: string) {
@@ -22,8 +23,7 @@ export const useAdminStore = defineStore('admin', () => {
 
   /** 为 fetch 添加 Authorization 头 */
   function authHeaders(): Record<string, string> {
-    if (!token.value) return {}
-    return { Authorization: `Bearer ${token.value}` }
+    return { Authorization: `Bearer ${gameSDK.getToken()}` }
   }
 
   /** 带认证的 fetch 封装 */

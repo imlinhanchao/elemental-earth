@@ -332,7 +332,7 @@
       <div v-else-if="packStore.manuscripts.length > 0" class="absolute -bottom-2 -right-2 z-110 dropdown dropdown-end">
         <button
           tabindex="0"
-          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
+          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] btn-tool"
           title="添加到手札"
           @click.stop
         >

@@ -1758,7 +1758,6 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
-        "required_item": "dynamite",
         "map": [
           "cave"
         ]
@@ -1846,7 +1845,6 @@
         ],
         "probability": 300,
         "required_era": "alchemy",
-        "required_item": "dynamite",
         "map": [
           "basin",
           "salt_lake"
@@ -1858,7 +1856,7 @@
           100,
           200
         ],
-        "probability": 300,
+        "probability": 100,
         "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
@@ -1883,7 +1881,7 @@
           100,
           300
         ],
-        "probability": 300,
+        "probability": 100,
         "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
@@ -1894,7 +1892,7 @@
       {
         "key": "pentlandite",
         "quantity": 100,
-        "probability": 200,
+        "probability": 100,
         "required_era": "modern_chem",
         "required_item": "high_explosive",
         "map": [
@@ -2103,7 +2101,7 @@
           10,
           30
         ],
-        "probability": 100,
+        "probability": 80,
         "required_era": "rare_earth",
         "required_item": "high_explosive",
         "map": [

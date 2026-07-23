@@ -8,7 +8,6 @@ import { saveGame, getLastSavedLabel } from '@/utils/archive'
 import MapSwitchModal from './MapSwitch/MapSwitchModal.vue'
 import MapSwitchOverlay from './MapSwitch/MapSwitchOverlay.vue'
 import EraDetailModal from './EraDetailModal.vue'
-import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
 
 const appStore = useAppStore()

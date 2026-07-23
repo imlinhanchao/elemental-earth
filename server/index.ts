@@ -80,7 +80,7 @@ app.use((_req: Request, res: Response, next) => {
 // Admin 认证
 // ============================================================
 
-const BASE_URL = 'http://127.0.0.1:5174';
+const BASE_URL = 'https://play.adventext.fun';
 
 /** 验证 admin 请求的 token */
 async function requireAdmin(req: Request, res: Response, next: () => void) {
@@ -97,14 +97,17 @@ async function requireAdmin(req: Request, res: Response, next: () => void) {
     const verifyRes = await fetch(`${BASE_URL}/api/user/profile`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+
+    console.log(token)
     
     if (!verifyRes.ok) {
       res.status(401).json({ error: '认证失败' });
       return;
     }
 
-    const user = await verifyRes.json() as { isAdmin?: boolean };
-    if (!user.isAdmin) {
+    const user = await verifyRes.json();
+    console.log(user)
+    if (!user.data.isAdmin) {
       res.status(403).json({ error: '无权操作：需要管理员权限' });
       return;
     }

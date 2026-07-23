@@ -454,13 +454,31 @@ export const useTaskStore = defineStore('task', () => {
         if (task.cooldown) {
           packStore.setCooldown(task.key, task.cooldown)
         }
-        const reward = getReward(task.rewards.filter(r => !r.guaranteed), mapKey, consumedKeys);
-        if (reward) {
-          const quantity = getFinalQuantity(reward, task.era_bonus);
-          if (packStore.addItem(reward.key, quantity)) {
-            logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
+        
+        const nonGuaranteed = task.rewards.filter(r => !r.guaranteed);
+        // 针对“爆破”和“定向爆破”，除了原本的 1 次掉落外，额外增加 2~5 次掉落（总共 3~6 次）
+        const iterations = ['爆破', '定向爆破'].includes(task.name) ? (Math.floor(Math.random() * 4) + 3) : 1;
+        
+        let receivedCount = 0;
+        const rewardSummary = new Map<string, number>();
+
+        for (let i = 0; i < iterations; i++) {
+          const reward = getReward(nonGuaranteed, mapKey, consumedKeys);
+          if (reward) {
+            const quantity = getFinalQuantity(reward, task.era_bonus);
+            if (packStore.addItem(reward.key, quantity)) {
+              receivedCount++;
+              const name = packStore.getDisplayName(reward.key);
+              rewardSummary.set(name, (rewardSummary.get(name) || 0) + quantity);
+            }
           }
-          notifyTaskComplete(task.name, `获得 ${packStore.getDisplayName(reward.key)} x${quantity}`);
+        }
+
+        if (receivedCount > 0) {
+          const summaryArr = Array.from(rewardSummary.entries()).map(([name, qty]) => `${name} x${qty}`);
+          const msg = summaryArr.join('，');
+          logStore.addLog(`任务 ${task.name} 完成，获得: ${msg}`, 'reward');
+          notifyTaskComplete(task.name, `获得: ${msg}`);
         } else {
           logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
           notifyTaskComplete(task.name, '未获得奖励');
@@ -589,13 +607,6 @@ export const useTaskStore = defineStore('task', () => {
       tasksMap[mapKey] = [];
     }
 
-    if (task.required_items.length) {
-      if (!canPerformWithProjection(task.required_items)) {
-        logStore.addLog(`无法将任务 ${task.name} 加入队列，预期材料不足`, 'warning');
-        return false;
-      }
-    }
-    
     tasksMap[mapKey].push({ 
       ...task, 
       begin_time: 0, 
@@ -647,13 +658,6 @@ export const useTaskStore = defineStore('task', () => {
     const mapKey = stateStore.state.map;
     if (!tasksMap[mapKey]) {
       tasksMap[mapKey] = [];
-    }
-
-    if (labTask.required_items.length) {
-      if (!canPerformWithProjection(labTask.required_items)) {
-        logStore.addLog(`无法将任务 ${labTask.name} 加入队列，预期材料不足`, 'warning');
-        return false;
-      }
     }
 
     tasksMap[mapKey].push({
