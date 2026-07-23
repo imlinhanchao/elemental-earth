@@ -8938,5 +8938,36 @@
         "multiple": 1
       }
     ]
+  },
+  {
+    "key": "dilute_concentrated_sulfuric_acid",
+    "name": "稀释浓硫酸",
+    "description": "将浓硫酸缓慢注入水中并不断搅拌，释放大量热，得到稀硫酸。",
+    "fragment_description": "将 #concentrated_sulfuric_acid# 缓缓注入 #water# 中，同时用 $stirring$ 不断搅拌，烧杯壁变得滚烫...",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1,
+      "max": 1
+    },
+    "required_items": [
+      {
+        "key": "concentrated_sulfuric_acid",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "water",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "dilute_sulfuric_acid",
+        "multiple": 2
+      }
+    ]
   }
 ]
