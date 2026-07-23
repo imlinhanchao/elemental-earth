@@ -244,7 +244,7 @@
     :required_techs="data.required_techs"
     :time_required="data.time_required"
   >
-    <div class="relative inline-flex" ref="actionButtonRef">
+    <div class="relative inline-flex action" ref="actionButtonRef">
       <button 
         class="btn btn-soft w-[10em]" 
         :disabled="!isEnabled" 
@@ -261,10 +261,10 @@
       </div>
 
       <!-- 批量次数（左上） -->
-      <div class="absolute -top-2.75 -left-2 z-10">
+      <div class="absolute -top-2.75 -left-2 z-102">
         <button
           v-if="packStore.hasTech('fire_starting')"
-          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[8px] font-bold"
+          class="btn btn-xs btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 tooltip rounded-full w-5 h-5 min-h-0 p-0 text-[8px] font-bold"
           :class="batchCount > 1 ? 'text-secondary' : 'text-base-content/40'"
           data-tip="批量执行"
           @click="toggleBatchPicker"
@@ -283,10 +283,10 @@
       </div>
 
       <!-- 替代材料选择（右上） -->
-      <div v-if="hasAlternatives" class="absolute -top-2 -right-2 z-300">
+      <div v-if="hasAlternatives" class="absolute -top-2 -right-2 z-103">
         <button
           v-if="hasMultipleChoices() && !isRunning"
-          class="btn btn-xs btn-ghost bg-base-100 shadow-sm border border-base-300 rounded-full w-5 h-5 min-h-0 p-0 flex items-center justify-center"
+          class="btn btn-xs btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 rounded-full w-5 h-5 min-h-0 p-0 flex items-center justify-center"
           title="选择材料"
           @click="toggleMaterialPicker"
         ><span class="text-[12px]"><Icon icon="tdesign:setting-1-filled" /></span></button>
@@ -311,7 +311,7 @@
       <!-- 添加到生产线 -->
       <div v-if="packStore.hasTech('production_tech')" class="absolute -bottom-2 -left-2 z-10">
         <button
-          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
+          class="btn btn-xs btn-circle btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px]"
           title="添加到生产线"
           @click.stop="addToProductionLine"
         >
@@ -322,7 +322,7 @@
       <!-- 手札分组 -->
       <div v-if="inGroupId" class="absolute -bottom-2 -right-2 z-110">
         <button
-          class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] text-error hover:bg-error/20"
+          class="btn btn-xs btn-circle btn-ghost tool-btn bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] text-error hover:bg-error/20"
           title="移出手札"
           @click.stop="packStore.toggleManuscriptItem(inGroupId, 'action', data.key)"
         >

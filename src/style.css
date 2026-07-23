@@ -7,3 +7,12 @@ html, body, #app {
   height: 100%;
   margin: 0;
 }
+
+.tool-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.formula:hover .tool-btn, .action:hover .tool-btn {
+  opacity: 1;
+}
