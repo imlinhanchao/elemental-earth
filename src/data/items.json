@@ -3602,24 +3602,30 @@
   {
     "key": "sealed_tube",
     "name": "石英反应管",
+    "category": "工具",
+    "description": "耐高温石英管，适用于通气反应。",
     "type": [
       "tool",
       "container"
     ],
-    "category": "工具",
-    "description": "耐高温石英管，适用于通气反应。",
-    "durable": 20
+    "durable": 20,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "key": "graphite_electrolytic_cell",
     "name": "石墨电解槽",
+    "category": "工具",
+    "description": "用于熔盐电解的专用容器。",
     "type": [
       "tool",
       "container"
     ],
-    "category": "工具",
-    "description": "用于熔盐电解的专用容器。",
-    "durable": 30
+    "durable": 30,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "name": "石墨",
@@ -3634,12 +3640,15 @@
   {
     "key": "fractionating_column",
     "name": "分馏柱",
+    "category": "工具",
     "description": "用于分馏操作，增加汽液接触面积以提高分离效率。",
     "type": [
       "tool"
     ],
-    "category": "工具",
-    "durable": 50
+    "durable": 50,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "key": "reactor_vessel",
