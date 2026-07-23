@@ -37,6 +37,8 @@ export interface ITask extends IAction {
   milestones?: string[];
   /** 执行条件 */
   condition?: ITaskCondition;
+  /** 是否时代加成 */
+  era_bonus?: boolean;
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -113,7 +115,7 @@ export const useTaskStore = defineStore('task', () => {
   };
 
   /** 获取考虑时代加成的最终奖励数量 */
-  const getFinalQuantity = (reward: IReward, bonus = true): number => {
+  const getFinalQuantity = (reward: IReward, bonus = false): number => {
     let qty = Array.isArray(reward.quantity) 
       ? reward.quantity[Math.floor(Math.random() * reward.quantity.length)] 
       : (reward.quantity || 1);
@@ -443,7 +445,7 @@ export const useTaskStore = defineStore('task', () => {
         });
 
         for (const gr of guaranteedRewards) {
-          const qty = getFinalQuantity(gr);
+          const qty = getFinalQuantity(gr, task.era_bonus);
           if (packStore.addItem(gr.key, qty)) {
             logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(gr.key)} x${qty}`, 'reward');
           }
@@ -454,7 +456,7 @@ export const useTaskStore = defineStore('task', () => {
         }
         const reward = getReward(task.rewards.filter(r => !r.guaranteed), mapKey, consumedKeys);
         if (reward) {
-          const quantity = getFinalQuantity(reward);
+          const quantity = getFinalQuantity(reward, task.era_bonus);
           if (packStore.addItem(reward.key, quantity)) {
             logStore.addLog(`任务 ${task.name} 完成，获得: ${packStore.getDisplayName(reward.key)} x${quantity}`, 'reward');
           }
@@ -603,7 +605,8 @@ export const useTaskStore = defineStore('task', () => {
       category: 'category' in task ? task.category : '', 
       cooldown: 'cooldown' in task ? task.cooldown : undefined, 
       materials_locked: false,
-      condition: task.condition
+      condition: task.condition,
+      era_bonus: 'category' in task ? task.category == '采集' : false
     } as ITask);
     
     recalculateStartTimes(mapKey);
