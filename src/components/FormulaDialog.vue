@@ -55,7 +55,7 @@
               :class="{ 'select-warning': isContainerInsufficient }">
               <option :value="null" disabled>-- 请选择 --</option>
               <option v-for="c in containerOptions" :key="c.key" :value="c.key">
-                {{ c.name }}（耐久 {{ c.durable.toFixed(2) }}）
+                {{ c.name }}（耐久 {{ c.durable }}）
               </option>
             </select>
           </div>
@@ -69,7 +69,7 @@
               <select v-model="selectedFireSource" class="select select-bordered select-sm w-full">
                 <option :value="null" disabled>-- 请选择 --</option>
                 <option v-for="f in fireSourceOptions" :key="f.key" :value="f.key">
-                  {{ f.name }}（耐久 {{ f.durable.toFixed(2) }}）
+                  {{ f.name }}（耐久 {{ f.durable }}）
                 </option>
               </select>
             </div>
@@ -109,7 +109,7 @@
               <select v-model="selectedPowerSource" class="select select-bordered select-sm w-full">
                 <option :value="null" disabled>-- 请选择 --</option>
                 <option v-for="ps in powerSourceOptions" :key="ps.key" :value="ps.key">
-                {{ ps.name }} (耐久/电量: {{ ps.durable.toFixed(2) }})
+                {{ ps.name }} (耐久/电量: {{ ps.durable }})
                 </option>
               </select>
               <div v-if="selectedPowerSourcePack" class="text-xs text-base-content/50 mt-1 pl-1">

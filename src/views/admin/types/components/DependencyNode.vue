@@ -142,6 +142,6 @@ watch(requestedLocationKey, (newKey) => {
 
 function formatNumber(num: number) {
   if (num === Math.floor(num)) return num.toString();
-  return num.toFixed(2).replace(/\.?0+$/, '');
+  return Number(num.toFixed(2));
 }
 </script>

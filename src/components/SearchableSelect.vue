@@ -9,17 +9,18 @@
     </button>
 
     <!-- 下拉面板 -->
-    <Teleport to="body">
-      <div v-if="open" class="fixed inset-0 z-[1999]" @click="close" @contextmenu.prevent="close"></div>
+    <Teleport to="body" :disabled="!appendToBody">
+      <div v-if="open" class="fixed inset-0 z-1000" @click="close" @contextmenu.prevent="close"></div>
       <div v-if="open" ref="panelRef"
-        class="fixed z-[2000] bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden flex flex-col"
+        class="z-1004 bg-base-100 border border-base-300 rounded-lg shadow-lg overflow-hidden flex flex-col"
+        :class="appendToBody ? 'fixed' : 'absolute mt-1'"
         :style="panelStyle">
         <!-- 搜索框 -->
         <div class="p-1.5 border-b border-base-300 shrink-0">
           <input ref="searchRef" v-model="query" class="input input-bordered input-sm w-full" placeholder="搜索…" @keydown.escape="close" @keydown.enter="selectFirst" />
         </div>
         <!-- 选项列表 -->
-        <div class="overflow-y-auto grow max-h-[260px]">
+        <div class="overflow-y-auto grow max-h-65">
           <button v-for="opt in filteredOptions" :key="getValue(opt)"
             class="w-full text-left px-3 py-1.5 text-sm hover:bg-base-200 transition-colors flex items-center justify-between gap-2"
             :class="{ 'bg-primary/10 text-primary font-bold': getValue(opt) === selected }"
@@ -43,10 +44,12 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   border?: boolean;
   size?: string;
+  appendToBody?: boolean;
 }>(), {
   placeholder: '',
   border: true,
   size: 'xs',
+  appendToBody: false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [v: string] }>()
@@ -56,7 +59,7 @@ const query = ref('')
 const wrapperRef = ref<HTMLElement | null>(null)
 const panelRef = ref<HTMLElement | null>(null)
 const searchRef = ref<HTMLInputElement | null>(null)
-const panelStyle = ref({ top: '0px', left: '0px', width: '200px' })
+const panelStyle = ref<Record<string, string>>({ top: '0px', left: '0px', width: '200px' })
 
 const selected = computed(() => props.modelValue)
 
@@ -95,11 +98,18 @@ function positionPanel() {
   const rect = wrapperRef.value.getBoundingClientRect()
   const panelHeight = 260
   const spaceBelow = window.innerHeight - rect.bottom
-  const top = spaceBelow >= panelHeight ? rect.bottom : Math.max(8, rect.top - panelHeight)
-  panelStyle.value = {
-    top: `${top}px`,
-    left: `${rect.left}px`,
-    width: `${rect.width}px`,
+  const showBelow = spaceBelow >= panelHeight
+
+  if (props.appendToBody) {
+    const top = showBelow ? rect.bottom : Math.max(8, rect.top - panelHeight)
+    panelStyle.value = {
+      top: `${top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+    }
+  } else {
+    panelStyle.value = {
+    }
   }
 }
 
