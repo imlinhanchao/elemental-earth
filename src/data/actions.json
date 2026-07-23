@@ -2855,7 +2855,6 @@
         ]
       }
     ],
-    "cooldown": 900,
     "required_techs": [
       "explosives"
     ],
