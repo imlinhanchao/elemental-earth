@@ -2,7 +2,7 @@
   <svg v-if="isLocal" class="svg-icon" :style="{ fontSize: size || '1em' }" aria-hidden="true">
     <use :xlink:href="symbolId" />
   </svg>
-  <IconifyIcon class="inline-flex" v-else :icon="(symbolId as string)" :style="{ fontSize: size || '1em' }" />
+  <IconifyIcon class="inline-block" v-else :icon="(symbolId as string)" :style="{ fontSize: size || '1em' }" />
 </template>
 
 <script setup lang="ts">
@@ -25,7 +25,7 @@ const props = defineProps<{
 <style scoped>
 .svg-icon {
   fill: currentColor;
-  display: inline-flex;
+  display: inline-block;
   vertical-align: middle;
   width: 1em;
   height: 1em;

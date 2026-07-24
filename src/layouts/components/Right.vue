@@ -248,9 +248,7 @@ const showDraftModule = computed(() => {
                     :key="idx"
                     class="flex items-start gap-1.5 px-1 py-0.5 rounded hover:bg-base-300/40 transition-colors"
                 >
-                    <span class="mt-0.5 shrink-0">
-                        <Icon :icon="logStyle(log.type).icon" class="text-xs" :class="logStyle(log.type).iconColor" />
-                    </span>
+                    <Icon :icon="logStyle(log.type).icon" class="text-xs" :class="logStyle(log.type).iconColor" />
                     <span class="text-[11px] leading-snug text-base-content/70 wrap-break-word flex-1">{{ log.content }}</span>
                     <span v-if="log.count > 1" class="shrink-0 text-[10px] text-base-content/30 font-mono mt-0.5">×{{ log.count }}</span>
                 </div>
