@@ -1,12 +1,17 @@
 <template>
   <div class="relative isolation-auto" ref="wrapperRef">
     <!-- 触发器 -->
-    <button type="button" class="w-full flex items-center justify-between gap-1 text-left"
-      :class="{ 'text-base-content/40': !selected, 'input input-bordered': border, ['input-' + size]: size }"
-      @click="toggleOpen">
-      <span class="truncate">{{ selected ? getLabel(selected) : placeholder }}</span>
-      <svg class="w-3 h-3 opacity-40 shrink-0 transition-transform" :class="{ 'rotate-180': open }" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-    </button>
+    <div class="flex items-center gap-1" :class="{ 'input input-bordered p-0 pr-2': border, ['input-' + size]: size }">
+      <button type="button" class="grow flex items-center justify-between gap-1 text-left px-3 h-full overflow-hidden"
+        :class="{ 'text-base-content/40': !selected }"
+        @click="toggleOpen">
+        <span class="truncate">{{ selected ? getLabel(selected) : placeholder }}</span>
+      </button>
+      <button v-if="selected && clearable" type="button" class="btn btn-ghost btn-circle btn-xs opacity-40 hover:opacity-100" @click.stop="clear">
+        <svg class="w-2.5 h-2.5" viewBox="0 0 10 10"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </button>
+      <svg class="w-3 h-3 opacity-40 shrink-0 transition-transform pointer-events-none" :class="{ 'rotate-180': open }" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    </div>
 
     <!-- 下拉面板 -->
     <Teleport to="body" :disabled="!appendToBody">
@@ -45,11 +50,13 @@ const props = withDefaults(defineProps<{
   border?: boolean;
   size?: string;
   appendToBody?: boolean;
+  clearable?: boolean;
 }>(), {
   placeholder: '',
   border: true,
-  size: 'xs',
+  size: 'md',
   appendToBody: false,
+  clearable: false
 })
 
 const emit = defineEmits<{ 'update:modelValue': [v: string] }>()
@@ -115,6 +122,11 @@ function positionPanel() {
 
 function pick(opt: any) {
   emit('update:modelValue', getValue(opt))
+  close()
+}
+
+function clear() {
+  emit('update:modelValue', '')
   close()
 }
 

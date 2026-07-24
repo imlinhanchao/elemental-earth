@@ -157,7 +157,7 @@ function handleAdd() {
     value: targetCount.value,
     operator: (conditionType.value === 'ge' ? '>=' : '<=') as '>=' | '<=',
     loopUntil: true
-  } : props.initialStep?.condition // 如果不是 loop，保留原有的 condition (可能在外部编辑过)
+  } : (targetItem.value ? props.initialStep?.condition : undefined)
 
   const stepData = {
     type: 'action' as const,

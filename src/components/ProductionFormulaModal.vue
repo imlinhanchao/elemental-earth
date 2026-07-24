@@ -398,7 +398,7 @@ function handleAdd() {
     value: targetCount.value,
     operator: (conditionType.value === 'ge' ? '>=' : '<=') as '>=' | '<=',
     loopUntil: true
-  } : props.initialStep?.condition
+  } : (targetItem.value ? props.initialStep?.condition : undefined)
 
   const stepData = {
     type: 'formula' as const,

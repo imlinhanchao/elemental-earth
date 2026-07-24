@@ -46,17 +46,28 @@ const localConditionType = computed({
   get: () => props.conditionType,
   set: (val) => emit('update:conditionType', val)
 })
+
+function reset() {
+  emit('update:targetItem', '')
+  emit('update:loopUntil', false)
+  emit('update:targetCount', 0)
+}
 </script>
 
 <template>
   <div class="mt-3 p-3 bg-base-300 rounded-xl space-y-2 transition-all">
-    <label class="label cursor-pointer justify-start gap-2 py-0 text-xs font-bold"
-           :class="mode === 'loop' ? 'text-secondary' : 'text-warning'">
-      <input type="checkbox" v-model="localLoopUntil" class="checkbox checkbox-xs" 
-             :class="mode === 'loop' ? 'checkbox-secondary' : 'checkbox-warning'" />
-      <span v-if="mode === 'loop'">持续执行直到库存满足条件 (生产中心模式)</span>
-      <span v-else>循环直到条件满足</span>
-    </label>
+    <div class="flex items-center justify-between py-0">
+      <label class="label cursor-pointer justify-start gap-2 py-0 text-xs font-bold"
+             :class="mode === 'loop' ? 'text-secondary' : 'text-warning'">
+        <input type="checkbox" v-model="localLoopUntil" class="checkbox checkbox-xs" 
+               :class="mode === 'loop' ? 'checkbox-secondary' : 'checkbox-warning'" />
+        <span v-if="mode === 'loop'">持续执行直到库存满足条件 (生产中心模式)</span>
+        <span v-else>循环直到条件满足</span>
+      </label>
+      <button v-if="localTargetItem" @click="reset" class="btn btn-ghost btn-xs opacity-40 hover:opacity-100 px-1 text-[10px]">
+        重置
+      </button>
+    </div>
     
     <div v-if="localLoopUntil || mode === 'pre'" class="space-y-2 pt-1 border-t border-base-content/10 mt-1">
       <div v-if="mode === 'pre' && !localLoopUntil" class="text-[10px] opacity-50 px-1">
@@ -79,6 +90,7 @@ const localConditionType = computed({
           placeholder="选择监控的目标物品"
           size="xs"
           append-to-body
+          clearable
         />
       </div>
       <div class="grid grid-cols-2 gap-2">
