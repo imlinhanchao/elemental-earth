@@ -101,10 +101,11 @@
                   v-for="(i, idx) in r.required_items"
                   :key="idx"
                   class="badge badge-ghost badge-sm mr-1 mb-1"
-                  :class="{ 'badge-error': !i.quantity }"
+                  :class="{ 'badge-error': !i.quantity && !i.use }"
                 >
                   {{ itemOptions.find(x => x.key == i.key || x.key == i.key[0])?.name || i.key }}
                   <span v-if="i.quantity > 1">×{{ i.quantity }}</span>
+                  <span v-if="i.use > 0" class="text-primary ml-1">{{ i.use }}耐</span>
                 </span>
               </span>
               <span v-else>—</span>
@@ -114,8 +115,8 @@
                 <span
                   v-for="(p, idx) in r.products"
                   :key="idx"
-                  class="badge badge-ghost badge-sm mr-1 mb-1"
-                  :class="{ 'badge-error': !p.multiple }"
+                  class="badge badge-sm mr-1 mb-1"
+                  :class="{ 'badge-error': !p.multiple, 'badge-ghost': p.multiple }"
                 >
                   {{ itemOptions.find(x => x.key == p.key)?.name || p.key }}
                   <span v-if="p.multiple > 1">×{{ p.multiple }}</span>
@@ -264,7 +265,7 @@
                 <button
                   class="btn btn-xs btn-ghost"
                   @click="
-                    objItems.push({ _keys: [], _input: '', key: '', quantity: 1, isMain: false })
+                    objItems.push({ _keys: [], _input: '', key: '', quantity: 1, use: undefined, isMain: false })
                   "
                 >
                   <Icon icon="material-symbols:add" />
@@ -303,6 +304,16 @@
                   type="number"
                   class="input input-bordered input-xs w-14"
                   v-model.number="row.quantity"
+                />
+              </label>
+              <label class="flex items-center gap-1 text-xs whitespace-nowrap">
+                耐久
+                <input
+                  type="number"
+                  step="0.01"
+                  class="input input-bordered input-xs w-14"
+                  v-model.number="row.use"
+                  placeholder="0"
                 />
               </label>
               <label class="flex items-center gap-1 text-xs cursor-pointer select-none">
@@ -668,8 +679,11 @@ async function save() {
         if (r._keys.length === 1) o.key = r._keys[0];
         else if (r._keys.length > 1) o.key = [...r._keys];
         else return null;
+        
         if (r.quantity !== undefined && r.quantity !== "")
           o.quantity = r.quantity;
+        if (r.use !== undefined && r.use !== null && r.use !== "")
+          o.use = r.use;
         if (r.isMain) o.isMain = true;
         return o;
       })

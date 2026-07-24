@@ -305,7 +305,11 @@ function handleAdd() {
   // 催化剂在生产线中依然按每轮消耗/产出 1 次来计算，最终 getNetRequirements 会抵消
   const consumedMaterials = (formula.required_items || []).map((m, idx) => {
     const key = selectedMaterials.value[idx] || (Array.isArray(m.key) ? m.key[0] : m.key)
-    return { key, quantity: m.quantity }
+    return { 
+      key, 
+      quantity: m.use ? 1 : m.quantity,
+      use: m.use
+    }
   })
 
   // 解析选中的燃料（每轮均摊量）

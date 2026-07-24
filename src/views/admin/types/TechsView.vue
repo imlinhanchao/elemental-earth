@@ -49,6 +49,8 @@
                   class="badge badge-ghost badge-sm"
                 >
                   {{ Array.isArray(i.key) ? i.key.map((k: string) => itemOptions.find(o => o.key === k)?.name || k).join(', ') : itemOptions.find(o => o.key === i.key)?.name || i.key }}
+                  <span v-if="i.quantity > 1">×{{ i.quantity }}</span>
+                  <span v-if="i.use > 0" class="text-primary ml-1">{{ i.use }}耐</span>
                 </span>
               </div>
             </td>
@@ -122,7 +124,7 @@
               <span> 所需材料 </span>
               <button
                 class="btn btn-xs btn-ghost"
-                @click="objItems.push({ key: '', quantity: 1 })"
+                @click="objItems.push({ key: '', quantity: 1, use: undefined })"
               >
                 <Icon icon="material-symbols:add" />
               </button>
@@ -144,6 +146,9 @@
                   class="input input-bordered input-xs w-14"
                   v-model.number="row.quantity"
               /></label>
+              <label class="flex items-center gap-1 text-xs whitespace-nowrap">
+                耐久 <input type="number" step="0.01" class="input input-bordered input-xs w-14" v-model.number="row.use" />
+              </label>
               <button
                 class="btn btn-xs btn-ghost text-error"
                 @click="objItems.splice(i, 1)"
@@ -296,6 +301,7 @@ async function save() {
       if (r.key) o.key = r.key;
       if (r.quantity !== undefined && r.quantity !== "")
         o.quantity = r.quantity;
+      if (r.use !== undefined && r.use !== "") o.use = r.use;
       return o;
     });
   if (form.techs.length) body.required_techs = [...form.techs];

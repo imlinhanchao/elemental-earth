@@ -134,7 +134,7 @@
       <div v-if="items.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
         <template v-if="item.quantity > 0">{{ item.quantity }}x </template>
-        <template v-else-if="item.use > 0">{{ item.use }}耐 </template>
+        <template v-if="item.use > 0">{{ item.use }}耐 </template>
         <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
         <span class="unknown" v-if="!item.known">????</span>
         <span v-if="item.known" class="opacity-40 italic ml-1">

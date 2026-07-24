@@ -31,7 +31,13 @@
           <!-- 材料选择 -->
           <div class="form-row" v-for="(req, i) in formula?.required_items || []" :key="i">
             <label :class="{ 'label-insufficient': insufficientMaterials[i] }">
-              {{ getItem(Array.isArray(req.key) ? req.key[0] : req.key)?.name || `材料 ${i + 1}` }} x {{ req.quantity * (isReactantCatalyst(i) ? 1 : batches) }}
+              {{ getItem(Array.isArray(req.key) ? req.key[0] : req.key)?.name || `材料 ${i + 1}` }}
+              <template v-if="req.use">
+                ({{ (req.use * (isReactantCatalyst(i) ? 1 : batches)).toFixed(2) }} 耐)
+              </template>
+              <template v-else>
+                x {{ req.quantity * (isReactantCatalyst(i) ? 1 : batches) }}
+              </template>
               <span v-if="insufficientMaterials[i]" class="insufficient-hint">不足</span>
             </label>
             <div class="material-select-row">
@@ -201,11 +207,15 @@ function addToProductionLine() {
   
   const consumedItems: { key: string; quantity: number; use?: number }[] = []
 
-  // 1. 消耗材料
+  // 1. 消耗材料 (生产线中 payload 为单次消耗，批量由 step.count 处理)
   for (let i = 0; i < formula.value.required_items.length; i++) {
     const key = selectedMaterials.value[i]!
     const req = formula.value.required_items[i]
-    consumedItems.push({ key, quantity: req.quantity * (isReactantCatalyst(i) ? 1 : batches.value) })
+    consumedItems.push({ 
+      key, 
+      quantity: req.use ? 1 : req.quantity,
+      use: req.use
+    })
   }
 
   // 2. 消耗容器耐久
@@ -603,8 +613,12 @@ const canConfirm = computed(() => {
     const key = selectedMaterials.value[i]
     if (!key) return false
     const req = formula.value!.required_items[i]
-    const need = req.quantity * (isReactantCatalyst(i) ? 1 : batches.value)
-    if ((inv.get(key) || 0) < need) return false
+    const multiplier = isReactantCatalyst(i) ? 1 : batches.value
+    
+    // 数量检查
+    if (!req.use && (inv.get(key) || 0) < req.quantity * multiplier) return false
+    // 耐久检查
+    if (req.use && (taskStore.projectedDurability.get(key) || 0) < req.use * multiplier) return false
   }
 
   // 需要容器时检查
@@ -652,7 +666,12 @@ function confirm() {
   for (let i = 0; i < formula.value.required_items.length; i++) {
     const key = selectedMaterials.value[i]!
     const req = formula.value.required_items[i]
-    consumedItems.push({ key, quantity: req.quantity * (isReactantCatalyst(i) ? 1 : batches.value) })
+    const multiplier = isReactantCatalyst(i) ? 1 : batches.value
+    consumedItems.push({ 
+      key, 
+      quantity: req.use ? 1 : req.quantity * multiplier,
+      use: req.use ? req.use * multiplier : undefined
+    })
   }
 
   // 2. 消耗容器耐久

@@ -41,6 +41,7 @@
     return props.data.required_items.map(req => ({
       key: Array.isArray(req.key) ? (req.key.find(k => packStore.hasEverHad(k)) || req.key[0]) : req.key,
       quantity: req.quantity,
+      use: req.use,
     }));
   });
 </script>

@@ -22,8 +22,12 @@ function reqKeys(key: string | string[]): string[] {
 }
 
 /** 在 selectedMaterials 中查找满足某一项配方需求的物品 key */
-function findMatchingMaterial(keys: string[], needQty: number): string | null {
-  return keys.find(k => (labStore.selectedMaterials.get(k) || 0) >= needQty) || null
+function findMatchingMaterial(keys: string[], needQty: number, needUse?: number): string | null {
+  return keys.find(k => {
+    const qtyOk = (labStore.selectedMaterials.get(k) || 0) >= needQty
+    const durOk = !needUse || packStore.getTotalDurability(k) >= needUse
+    return qtyOk && durOk
+  }) || null
 }
 
 // ---- 用户选择 ----
@@ -268,7 +272,7 @@ const matchedFormula = computed<IFormula | null>(() => {
     if (f.required_container && f.required_container !== selectedContainerKey.value) return false
     if (f.required_items) {
       for (const req of f.required_items) {
-        if (!findMatchingMaterial(reqKeys(req.key), req.quantity)) return false
+        if (!findMatchingMaterial(reqKeys(req.key), req.quantity, req.use)) return false
       }
     }
     if (f.required_techs && !f.required_techs.every(t => packStore.hasTech(t))) return false
@@ -584,7 +588,7 @@ const canStart = computed(() => {
   // 有匹配配方时才检查配方材料是否充足
   if (matchedFormula.value?.required_items) {
     for (const req of matchedFormula.value.required_items) {
-      if (!findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)) return false
+      if (!findMatchingMaterial(reqKeys(req.key), req.quantity * cycles.value, (req.use ?? 0) * cycles.value)) return false
     }
   }
 
@@ -656,9 +660,13 @@ function startExperiment() {
   const milestones: string[] = []
   if (matchedFormula.value) {
     for (const req of matchedFormula.value.required_items) {
-      const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value)
+      const matchedKey = findMatchingMaterial(reqKeys(req.key), req.quantity * cycles.value, (req.use ?? 0) * cycles.value)
       if (matchedKey) {
-        consumedItems.push({ key: matchedKey, quantity: req.quantity * batches.value })
+        consumedItems.push({ 
+          key: matchedKey, 
+          quantity: req.use ? 1 : req.quantity * cycles.value,
+          use: req.use ? req.use * cycles.value : undefined
+        })
       }
     }
     // 实验室里程碑（从操作数据读取）

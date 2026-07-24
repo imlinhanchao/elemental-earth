@@ -30,6 +30,7 @@
             <th>描述</th>
             <th>耗时</th>
             <th>燃烧</th>
+            <th>设备</th>
             <th class="w-28">操作</th>
           </tr>
         </thead>
@@ -49,6 +50,14 @@
                     ? "❌ 不需要"
                     : "—"
               }}
+            </td>
+            <td>
+              <div class="flex flex-wrap gap-1">
+                <span v-for="i in r.required_items || []" :key="i.key" class="badge badge-ghost badge-sm">
+                  {{ Array.isArray(i.key) ? i.key.map((k: string) => itemOptions.find(o => o.key === k)?.name || k).join('/') : itemOptions.find(o => o.key === i.key)?.name || i.key }}
+                  <span v-if="i.use > 0" class="text-primary ml-1">{{ i.use }}耐</span>
+                </span>
+              </div>
             </td>
             <td>
               <button class="btn btn-xs btn-ghost" @click="openEdit(r)">

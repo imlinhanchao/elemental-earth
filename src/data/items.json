@@ -1982,17 +1982,17 @@
     "durable": 1
   },
   {
-    "name": "玻璃蒸馏瓶",
     "key": "distilling_flask",
+    "name": "玻璃蒸馏瓶",
     "category": "容器",
     "description": "带有长颈和侧支管的玻璃瓶，瓶身圆润，玻璃质地均匀透明。",
     "type": [
       "container"
     ],
+    "durable": 100,
     "attrs": {
       "can_heat": true
-    },
-    "durable": 1
+    }
   },
   {
     "name": "玻璃棒",
