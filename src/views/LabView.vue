@@ -588,7 +588,7 @@ const canStart = computed(() => {
   // 有匹配配方时才检查配方材料是否充足
   if (matchedFormula.value?.required_items) {
     for (const req of matchedFormula.value.required_items) {
-      if (!findMatchingMaterial(reqKeys(req.key), req.quantity * cycles.value, (req.use ?? 0) * cycles.value)) return false
+      if (!findMatchingMaterial(reqKeys(req.key), req.quantity * batches.value, (req.use ?? 0) * batches.value)) return false
     }
   }
 
