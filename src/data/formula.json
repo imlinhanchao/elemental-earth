@@ -6736,80 +6736,80 @@
     "name": "稀土分步结晶分离",
     "description": "利用各种稀土硝酸盐溶解度的微小差异，通过反复重结晶将混合溶液分离成单一元素的硝酸盐晶体。",
     "fragment_description": "利用多级$fractional_crystallization$反复提纯，基于溶解度的微小差异将#rare_earth_nitrate_solution#逐步分离。",
-    "time_required": 600,
+    "time_required": 420,
     "required_era": "rare_earth",
     "required_container": "evaporating_dish",
     "required_actions": {
       "key": "fractional_crystallization",
-      "min": 20
+      "min": 14
     },
     "required_items": [
       {
         "key": "rare_earth_nitrate_solution",
-        "quantity": 5,
+        "quantity": 8,
         "isMain": true
       }
     ],
     "products": [
       {
         "key": "lanthanum_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "cerium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "praseodymium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "neodymium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "samarium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "europium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "gadolinium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "terbium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "dysprosium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "holmium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "erbium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "thulium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "ytterbium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "lutetium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       },
       {
         "key": "yttrium_nitrate",
-        "multiple": 0.3
+        "multiple": 0.5
       }
     ],
     "required_techs": [
