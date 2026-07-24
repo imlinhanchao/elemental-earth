@@ -6436,10 +6436,6 @@
         "key": "concentrated_sulfuric_acid",
         "quantity": 1,
         "isMain": true
-      },
-      {
-        "key": "evaporating_dish",
-        "quantity": 1
       }
     ],
     "products": [
