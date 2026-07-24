@@ -8297,7 +8297,8 @@
     "name": "镭还原",
     "description": "在真空中使用金属镁还原氯化镭，得到纯金属镭。",
     "fragment_description": "在#vacuum_pump#维持的高真空中，利用金属#magnesium#对#pure_radium_chloride#进行还原$heating$。",
-    "time_required": 80,
+    "time_required": 10,
+    "required_era": "atomic_age",
     "required_actions": {
       "key": "heating",
       "min": 1
@@ -8315,16 +8316,15 @@
       {
         "key": "vacuum_pump",
         "quantity": 1,
-        "use": 0.05
+        "use": 0.01
       }
     ],
     "products": [
       {
         "key": "radium",
-        "quantity": 1
+        "multiple": 1
       }
-    ],
-    "required_era": "atomic_age"
+    ]
   },
   {
     "key": "radium_to_radon",
@@ -8375,12 +8375,14 @@
       },
       {
         "key": "vacuum_pump",
-        "quantity": 1
+        "quantity": 1,
+        "use": 0.01
       }
     ],
     "products": [
       {
-        "key": "radon"
+        "key": "radon",
+        "multiple": 1
       }
     ]
   },
@@ -8389,7 +8391,8 @@
     "name": "真空加热脱氦",
     "description": "真空加热沥青铀矿至红热，释放出其中捕获的氦气。",
     "fragment_description": "对颗粒状的#pitchblende#进行高温$heating$并由#vacuum_pump#抽真空，释放出封存在矿石孔隙中的#crude_helium#。",
-    "time_required": 100,
+    "time_required": 10,
+    "required_era": "rare_earth",
     "required_actions": {
       "key": "heating",
       "min": 1
@@ -8403,16 +8406,15 @@
       {
         "key": "vacuum_pump",
         "quantity": 1,
-        "use": 0.05
+        "use": 0.01
       }
     ],
     "products": [
       {
         "key": "crude_helium",
-        "quantity": 1
+        "multiple": 1
       }
-    ],
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "helium_deoxidation",
@@ -8539,7 +8541,8 @@
     "name": "钋真空蒸馏",
     "description": "在真空下加热铋片，利用钋的挥发性将其蒸馏分离。",
     "fragment_description": "在#vacuum_pump#高真空及高温环境下，利用挥发性差异将#polonium#从铋板表面$distillation$蒸馏分离。",
-    "time_required": 80,
+    "time_required": 30,
+    "required_era": "atomic_age",
     "required_actions": {
       "key": "distillation",
       "min": 1
@@ -8553,16 +8556,15 @@
       {
         "key": "vacuum_pump",
         "quantity": 1,
-        "use": 0.1
+        "use": 0.01
       }
     ],
     "products": [
       {
         "key": "polonium",
-        "quantity": 1
+        "multiple": 1
       }
-    ],
-    "required_era": "atomic_age"
+    ]
   },
   {
     "key": "air_separation",

@@ -3846,7 +3846,8 @@
     "description": "用于抽取容器空气，制造真空环境。",
     "type": [
       "tool"
-    ]
+    ],
+    "durable": 10
   },
   {
     "key": "steel_cylinder",
