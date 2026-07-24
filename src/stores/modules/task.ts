@@ -79,7 +79,7 @@ export const useTaskStore = defineStore('task', () => {
     return allFragmentCandidates.value.filter(f => {
       // 时代检查
       const fEraOrder = getEra(f.required_era || '')?.order ?? 0;
-      if (fEraOrder > currentOrder) return false;
+      if (fEraOrder >= currentOrder) return false;
 
       // 主材料发现检查
       const mainItems = (f.required_items || []).filter(item => item.isMain);

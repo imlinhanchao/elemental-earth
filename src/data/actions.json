@@ -2092,7 +2092,7 @@
           30
         ],
         "probability": 80,
-        "required_era": "electrochem",
+        "required_era": "rare_earth",
         "required_item": "high_explosive",
         "map": [
           "mountain",
@@ -2846,7 +2846,7 @@
         "key": "monazite",
         "quantity": 100,
         "probability": 200,
-        "required_era": "electrochem",
+        "required_era": "rare_earth",
         "required_item": [
           "titanium_pickaxe",
           "chromium_pickaxe"
