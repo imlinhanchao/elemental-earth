@@ -76,6 +76,12 @@ export const useProductionStore = defineStore('production', () => {
     draftSteps.splice(index, 1);
   }
 
+  function updateStepInDraft(index: number, step: IProductionLineStep) {
+    if (index >= 0 && index < draftSteps.length) {
+      draftSteps[index] = { ...step };
+    }
+  }
+
   function clearDraft() {
     draftSteps.splice(0, draftSteps.length);
     currentEditingId.value = null;
@@ -491,6 +497,7 @@ export const useProductionStore = defineStore('production', () => {
     productionLines,
     draftSteps,
     addStepToDraft,
+    updateStepInDraft,
     removeStepFromDraft,
     clearDraft,
     moveStepInDraft,

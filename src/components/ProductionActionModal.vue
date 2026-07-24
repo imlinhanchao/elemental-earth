@@ -7,9 +7,12 @@ import { useProductionStore } from '@/stores/modules/production'
 import { useStateStore } from '@/stores/modules/state'
 import Icon from '@/components/Icon.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
+import ProductionConditionEditor from '@/components/ProductionConditionEditor.vue'
 
 const props = defineProps<{
   visible: boolean
+  initialStep?: any
+  index?: number
 }>()
 
 const emit = defineEmits<{
@@ -29,6 +32,40 @@ const loopUntil = ref(false)
 const targetItem = ref('')
 const targetCount = ref(0)
 const conditionType = ref<'ge' | 'le'>('ge')
+
+let isLoading = false
+
+// 监听初始步骤进行填充
+watch(() => props.visible, (val) => {
+  if (val && props.initialStep) {
+    isLoading = true
+    const s = props.initialStep
+    selectedActionKey.value = s.key
+    count.value = s.count || 1
+    if (s.condition) {
+      loopUntil.value = s.condition.loopUntil || false
+      targetItem.value = s.condition.key
+      targetCount.value = s.condition.value
+      conditionType.value = s.condition.operator === '>=' ? 'ge' : 'le'
+    }
+    // 恢复材料选择
+    if (s.payload?.required_items) {
+      s.payload.required_items.forEach((req: any, idx: number) => {
+        selectedMaterials.value[idx] = req.key
+      })
+    }
+    setTimeout(() => { isLoading = false }, 0)
+  } else if (val) {
+    isLoading = false
+    // 重置
+    selectedActionKey.value = ''
+    selectedMaterials.value = {}
+    count.value = 1
+    loopUntil.value = false
+    targetItem.value = ''
+    targetCount.value = 0
+  }
+})
 
 const availableActions = computed(() => {
   return Actions.filter(a => {
@@ -97,6 +134,7 @@ function handleActionChange() {
 }
 
 watch(selectedActionKey, () => {
+  if (isLoading) return
   handleActionChange()
 })
 
@@ -114,25 +152,29 @@ function handleAdd() {
     }))
   }
 
-  const condition = loopUntil.value && targetItem.value ? {
+  const condition = (loopUntil.value && targetItem.value) ? {
     key: targetItem.value,
     value: targetCount.value,
     operator: (conditionType.value === 'ge' ? '>=' : '<=') as '>=' | '<=',
     loopUntil: true
-  } : undefined
+  } : props.initialStep?.condition // 如果不是 loop，保留原有的 condition (可能在外部编辑过)
 
-  productionStore.addStepToDraft({
-    type: 'action',
+  const stepData = {
+    type: 'action' as const,
     key: currentAction.value.key,
     name: currentAction.value.name,
     payload,
-    condition
-  }, count.value)
+    condition,
+    count: count.value
+  }
+
+  if (props.index !== undefined && props.index !== null && props.index >= 0) {
+    productionStore.updateStepInDraft(props.index, stepData)
+  } else {
+    productionStore.addStepToDraft(stepData, count.value)
+  }
 
   emit('close')
-  selectedActionKey.value = ''
-  count.value = 1
-  loopUntil.value = false
 }
 
 function close() {
@@ -146,7 +188,7 @@ function close() {
       <div class="modal-box max-w-lg">
         <h3 class="font-bold text-lg flex items-center gap-2 mb-4">
           <Icon icon="fluent:puzzle-cube-16-filled" class="text-primary" />
-          添加行动步骤
+          {{ index !== undefined ? '编辑步骤' : '添加行动步骤' }}
         </h3>
 
         <div class="space-y-4">
@@ -196,43 +238,21 @@ function close() {
             </div>
             
             <!-- 循环条件 -->
-            <div class="mt-3 p-3 bg-base-300 rounded-xl space-y-2">
-              <label class="label cursor-pointer justify-start gap-2 py-0 text-xs text-secondary font-bold">
-                <input type="checkbox" v-model="loopUntil" class="checkbox checkbox-xs checkbox-secondary" />
-                <span>持续执行直到库存满足条件 (生产中心模式)</span>
-              </label>
-              
-              <div v-if="loopUntil" class="space-y-2 pt-1 border-t border-base-content/10 mt-1">
-                <div class="form-control">
-                  <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">监控物品</span></label>
-                  <SearchableSelect
-                    v-model="targetItem"
-                    :options="allItems"
-                    placeholder="选择监控的目标物品"
-                    size="xs"
-                  />
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                  <div class="form-control">
-                    <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">判断逻辑</span></label>
-                    <select v-model="conditionType" class="select select-bordered select-xs w-full bg-base-200">
-                      <option value="ge">库存 ≥ 目标</option>
-                      <option value="le">库存 ≤ 目标</option>
-                    </select>
-                  </div>
-                  <div class="form-control">
-                    <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">目标数量</span></label>
-                    <input v-model.number="targetCount" type="number" class="input input-bordered input-xs w-full text-center bg-base-200" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductionConditionEditor
+              v-model:loopUntil="loopUntil"
+              v-model:targetItem="targetItem"
+              v-model:targetCount="targetCount"
+              v-model:conditionType="conditionType"
+              :allItems="allItems"
+            />
           </div>
         </div>
 
         <div class="modal-action">
           <button class="btn btn-ghost" @click="close">取消</button>
-          <button class="btn btn-primary" :disabled="!selectedActionKey" @click="handleAdd">确认添加</button>
+          <button class="btn btn-primary" :disabled="!selectedActionKey" @click="handleAdd">
+            {{ index !== undefined ? '保存修改' : '确认添加' }}
+          </button>
         </div>
       </div>
       <div class="modal-backdrop" @click="close"></div>

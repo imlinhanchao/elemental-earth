@@ -10,6 +10,7 @@ import Icon from '@/components/Icon.vue'
 import { useToastStore } from '@/stores/modules/toast'
 import ProductionActionModal from '@/components/ProductionActionModal.vue'
 import ProductionFormulaModal from '@/components/ProductionFormulaModal.vue'
+import ProductionConditionEditor from '@/components/ProductionConditionEditor.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
 
 const productionStore = useProductionStore()
@@ -27,6 +28,31 @@ const showFormulaModal = ref(false)
 const showLineModal = ref(false)
 const lineModalSelectedKey = ref('')
 const showConditionModal = ref(false)
+
+const editingStep = ref<any>(null)
+const editingIndex = ref<number | undefined>(undefined)
+
+function openActionModal(index?: number) {
+  if (index !== undefined) {
+    editingStep.value = productionStore.draftSteps[index]
+    editingIndex.value = index
+  } else {
+    editingStep.value = null
+    editingIndex.value = undefined
+  }
+  showActionModal.value = true
+}
+
+function openFormulaModal(index?: number) {
+  if (index !== undefined) {
+    editingStep.value = productionStore.draftSteps[index]
+    editingIndex.value = index
+  } else {
+    editingStep.value = null
+    editingIndex.value = undefined
+  }
+  showFormulaModal.value = true
+}
 
 function handleAddLineStep() {
   const line = productionStore.productionLines.find(l => l.id === lineModalSelectedKey.value)
@@ -96,6 +122,26 @@ function saveCondition() {
   editingConditionIndex.value = null
   showConditionModal.value = false
 }
+
+const allItems = computed(() => {
+  return Array.from(packStore.discoveredItems)
+    .concat(Items.map(i => i.key)) // 包含未发现的基础物品以便配置
+    .filter((v, i, a) => a.indexOf(v) === i) // 去重
+    .map(key => {
+      const qty = packStore.getItemQuantity(key)
+      const dur = packStore.getTotalDurability(key)
+      const item = Items.find(i => i.key === key)
+      let label = packStore.getDisplayName(key)
+      if (qty > 0 || dur > 0) {
+        label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+      }
+      return {
+        value: key,
+        label
+      }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label, 'zh-Hans-CN'))
+})
 
 const draftNetRequirements = computed(() => {
   return productionStore.getNetRequirements(productionStore.draftSteps, 1)
@@ -183,11 +229,11 @@ function getMapName(key: string) {
           当前设计草稿
         </h2>
         <div class="flex items-center gap-2">
-          <button @click="showActionModal = true" class="btn btn-xs btn-primary gap-1">
+          <button @click="openActionModal()" class="btn btn-xs btn-primary gap-1">
             <Icon icon="fluent:add-16-filled" />
             行动
           </button>
-          <button @click="showFormulaModal = true" class="btn btn-xs btn-secondary gap-1">
+          <button @click="openFormulaModal()" class="btn btn-xs btn-secondary gap-1">
             <Icon icon="fluent:add-16-filled" />
             配方
           </button>
@@ -211,39 +257,44 @@ function getMapName(key: string) {
         </div>
 
         <div v-else class="space-y-4">
-          <!-- 步骤列表 -->
-          <ul class="list bg-base-200/30 rounded-box border border-base-300 divide-y divide-base-300">
-            <li v-for="(step, idx) in productionStore.draftSteps" :key="idx" 
-                class="list-row items-center p-3 cursor-move active:bg-base-300 transition-colors"
-                draggable="true"
-                @dragstart="onDragStart(idx, $event)"
-                @dragend="onDragEnd"
-                @dragover="onDragOver($event)"
-                @drop="onDrop(idx)">
-              <div class="text-base-content/30 font-mono w-8 text-center text-xs flex flex-col items-center">
-                <Icon icon="fluent:re-order-16-regular" class="opacity-50" />
-                <span>{{ idx + 1 }}</span>
-              </div>
-              <div class="list-col-grow">
-                <div class="flex flex-col gap-1">
-                  <div class="flex items-center gap-2">
-                    <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : (step.type === 'formula' ? 'fluent:beaker-16-filled' : 'fluent:factory-16-filled')" 
-                          :class="step.type === 'action' ? 'text-primary' : (step.type === 'formula' ? 'text-secondary' : 'text-accent')" />
-                    <span class="font-medium text-sm">{{ step.name }}</span>
-                    <span v-if="step.count > 1" class="text-primary font-bold text-xs ml-1">x{{ step.count }}</span>
-                    <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded ml-1">
-                      {{ step.type === 'action' ? '行动' : (step.type === 'formula' ? '实验室' : '生产线') }}
-                    </span>
-                  </div>
-                  <!-- Condition Display -->
-                  <div v-if="step.condition" class="flex items-center gap-1 text-[10px] opacity-60">
-                    <Icon icon="fluent:flash-16-regular" class="text-warning" />
-                    <span>条件: {{ packStore.getDisplayName(step.condition.key) }} {{ step.condition.operator }} {{ step.condition.value }}</span>
-                    <span v-if="step.condition.loopUntil" class="badge badge-warning badge-xs scale-[0.8] origin-left">循环</span>
+            <!-- 步骤列表 -->
+            <ul class="list bg-base-200/30 rounded-box border border-base-300 divide-y divide-base-300">
+              <li v-for="(step, idx) in productionStore.draftSteps" :key="idx" 
+                  class="list-row items-center p-3 cursor-move active:bg-base-300 transition-colors"
+                  draggable="true"
+                  @dragstart="onDragStart(idx, $event)"
+                  @dragend="onDragEnd"
+                  @dragover="onDragOver($event)"
+                  @drop="onDrop(idx)">
+                <div class="text-base-content/30 font-mono w-8 text-center text-xs flex flex-col items-center">
+                  <Icon icon="fluent:re-order-16-regular" class="opacity-50" />
+                  <span>{{ idx + 1 }}</span>
+                </div>
+                <div class="list-col-grow">
+                  <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-2">
+                      <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : (step.type === 'formula' ? 'fluent:beaker-16-filled' : 'fluent:factory-16-filled')" 
+                            :class="step.type === 'action' ? 'text-primary' : (step.type === 'formula' ? 'text-secondary' : 'text-accent')" />
+                      <span class="font-medium text-sm">{{ step.name }}</span>
+                      <span v-if="step.count > 1" class="text-primary font-bold text-xs ml-1">x{{ step.count }}</span>
+                      <span class="text-[10px] opacity-50 px-1 bg-base-300 rounded ml-1">
+                        {{ step.type === 'action' ? '行动' : (step.type === 'formula' ? '实验室' : '生产线') }}
+                      </span>
+                    </div>
+                    <!-- Condition Display -->
+                    <div v-if="step.condition" class="flex items-center gap-1 text-[10px] opacity-60">
+                      <Icon icon="fluent:flash-16-regular" class="text-warning" />
+                      <span>执行条件: {{ packStore.getDisplayName(step.condition.key) }} {{ step.condition.operator }} {{ step.condition.value }}</span>
+                      <span v-if="step.condition.loopUntil" class="badge badge-warning badge-xs scale-[0.8] origin-left">循环模式</span>
+                    </div>
                   </div>
                 </div>
-              </div>
               <div class="flex gap-1">
+                <button v-if="step.type !== 'line'" 
+                        @click="step.type === 'action' ? openActionModal(idx) : openFormulaModal(idx)" 
+                        class="btn btn-ghost btn-sm btn-square tooltip" data-tip="编辑步骤">
+                  <Icon icon="fluent:edit-16-regular" class="text-primary" />
+                </button>
                 <button @click="openConditionModal(idx)" class="btn btn-ghost btn-sm btn-square tooltip" data-tip="设置执行条件">
                   <Icon icon="fluent:flash-settings-20-filled" :class="step.condition ? 'text-warning' : 'text-base-content/30'" />
                 </button>
@@ -430,10 +481,14 @@ function getMapName(key: string) {
     <!-- 弹窗 -->
     <ProductionActionModal 
       :visible="showActionModal" 
+      :initialStep="editingStep"
+      :index="editingIndex"
       @close="showActionModal = false" 
     />
     <ProductionFormulaModal 
       :visible="showFormulaModal" 
+      :initialStep="editingStep"
+      :index="editingIndex"
       @close="showFormulaModal = false"
     />
 
@@ -479,61 +534,33 @@ function getMapName(key: string) {
     <!-- 执行条件设置对话框 -->
     <Teleport to="body">
       <div v-if="showConditionModal" class="modal modal-open">
-        <div class="modal-box">
-          <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+        <div class="modal-box max-w-sm">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
             <Icon icon="fluent:flash-settings-20-filled" class="text-warning" />
-            设置执行条件
+            配置步骤执行条件
           </h3>
+          <p class="text-xs opacity-50 mb-4 font-bold">针对特定资源的库存量进行判断</p>
           
           <div class="space-y-4">
-            <div class="form-control">
-              <span class="label text-xs opacity-60">条件触发物品 (例如：煤)</span>
-              <SearchableSelect
-                v-model="conditionInput.key"
-                :options="Items.map(i => ({ label: i.name, value: i.key }))"
-                placeholder="选择物品..."
-              />
-              <p v-if="conditionInput.key" class="text-xs opacity-50">
-                持有 {{ packStore.getItemQuantity(conditionInput.key) }} 个
+            <ProductionConditionEditor
+              v-model:loopUntil="conditionInput.loopUntil"
+              v-model:targetItem="conditionInput.key"
+              v-model:targetCount="conditionInput.value"
+              v-model:conditionType="conditionInput.operator"
+              :allItems="allItems"
+              mode="pre"
+            />
+
+            <div class="px-2">
+              <p class="text-[10px] opacity-50 italic">
+                * 满足上述条件时，该步骤才会被加入执行队列。如果不选择物品，则表示总是执行。
               </p>
             </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div class="form-control">
-                <span class="label text-xs opacity-60">比较方式</span>
-                <select v-model="conditionInput.operator" class="select select-bordered w-full">
-                  <option value=">">大于 (&gt;)</option>
-                  <option value="<">小于 (&lt;)</option>
-                  <option value=">=">大于等于 (&gt;=)</option>
-                  <option value="<=">小于等于 (&lt;=)</option>
-                  <option value="==">等于 (=)</option>
-                  <option value="!=">不等于 (≠)</option>
-                </select>
-              </div>
-              <div class="form-control">
-                <span class="label text-xs opacity-60">数值 (背包数量)</span>
-                <input v-model.number="conditionInput.value" type="number" class="input input-bordered w-full" />
-              </div>
-            </div>
-
-            <div class="form-control bg-base-200/50 p-3 rounded-xl border border-base-300">
-              <label class="label cursor-pointer py-0">
-                <div class="space-y-0.5">
-                  <span class="label-text font-bold">循环直到条件满足</span>
-                  <div class="text-[10px] opacity-50">如果条件不满足，将持续添加任务直到满足或达到次数上限</div>
-                </div>
-                <input type="checkbox" v-model="conditionInput.loopUntil" class="toggle toggle-primary" />
-              </label>
-            </div>
-
-            <p class="text-[10px] opacity-50 italic">
-              * 满足上述条件时，该步骤才会被加入执行队列。如果不选择物品，则条件为空，表示总是执行。
-            </p>
           </div>
 
           <div class="modal-action">
-            <button @click="saveCondition" class="btn btn-primary">确定</button>
-            <button @click="showConditionModal = false" class="btn">取消</button>
+            <button @click="saveCondition" class="btn btn-warning btn-sm px-6">应用条件</button>
+            <button @click="showConditionModal = false" class="btn btn-ghost btn-sm">取消</button>
           </div>
         </div>
       </div>
