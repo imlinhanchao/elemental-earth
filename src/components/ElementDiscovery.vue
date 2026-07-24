@@ -100,6 +100,7 @@ import { useStateStore } from '@/stores/modules/state'
 import { ELEMENTS, getElementById, CATEGORY_LABELS, DEFAULT_CATEGORY_COLORS } from '@/data/elements'
 import type { PeriodicElement, ElementCategory } from '@/data/elements'
 import WinAnimation from './WinAnimation.vue'
+import { Items } from '@/data/items.ts'
 
 const props = defineProps<{
   /** 是否可见 */
@@ -283,7 +284,7 @@ async function reveal() {
   // 检查是否全元素收集完成
   const stateStore = useStateStore()
   const discoveredCount = stateStore.state.elements?.length || 0
-  const totalElementsCount = ELEMENTS.filter(e => e.category !== 'placeholder').length
+  const totalElementsCount = new Set(Items.filter(e => e.elemental).map(e => e.elemental)).size
 
   if (discoveredCount >= totalElementsCount) {
     await sleep(800)
