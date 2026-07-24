@@ -2118,7 +2118,9 @@
     "map": [
       "mountain",
       "cave",
-      "volcano"
+      "volcano",
+      "basin",
+      "meteor_crater"
     ]
   },
   {
