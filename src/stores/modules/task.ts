@@ -188,7 +188,7 @@ export const useTaskStore = defineStore('task', () => {
           for (const r of rewards) {
             if (r.guaranteed || task.type === 'lab') {
               const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
-              const qty = Math.floor(baseQty * getEraBonus(r));
+              const qty = task.era_bonus ? Math.floor(baseQty * getEraBonus(r)) : baseQty;
               const itemData = getItem(r.key);
               // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
               if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {
