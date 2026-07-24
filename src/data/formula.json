@@ -8258,7 +8258,7 @@
     "products": [
       {
         "key": "radium_chloride_solution",
-        "quantity": 1
+        "multiple": 1
       }
     ],
     "required_era": "rare_earth"
@@ -8288,7 +8288,8 @@
     ],
     "products": [
       {
-        "key": "pure_radium_chloride"
+        "key": "pure_radium_chloride",
+        "multiple": 1
       }
     ]
   },
@@ -8346,7 +8347,7 @@
     "products": [
       {
         "key": "radon_gas_mixture",
-        "quantity": 1
+        "multiple": 1
       }
     ],
     "required_era": "atomic_age"
@@ -8440,7 +8441,7 @@
     "products": [
       {
         "key": "helium_deoxidized",
-        "quantity": 1
+        "multiple": 1
       }
     ],
     "required_era": "rare_earth"
@@ -8473,7 +8474,7 @@
     "products": [
       {
         "key": "helium",
-        "quantity": 1
+        "multiple": 1
       }
     ],
     "required_era": "rare_earth"
@@ -8502,7 +8503,7 @@
     "products": [
       {
         "key": "polonium_acid_solution",
-        "quantity": 1
+        "multiple": 1
       }
     ],
     "required_era": "rare_earth"
@@ -8532,7 +8533,8 @@
     ],
     "products": [
       {
-        "key": "polonium_on_bismuth"
+        "key": "polonium_on_bismuth",
+        "multiple": 1
       }
     ]
   },
