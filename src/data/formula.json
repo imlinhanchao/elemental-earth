@@ -8742,9 +8742,9 @@
     "name": "铀残留放射性提纯",
     "description": "利用离子交换与精密萃取技术，从铀矿处理残渣中提取痕量的锕与镤。",
     "fragment_description": "在精密萃取过程中对含铀溶液进行长时间$aging$放置，小心提取出微量的#actinium#和#protactinium#。",
-    "time_required": 180,
+    "time_required": 600,
     "required_era": "atomic_age",
-    "required_container": "distillation_flask",
+    "required_container": "reaction_kettle",
     "required_actions": {
       "key": "aging",
       "min": 2
@@ -8752,18 +8752,18 @@
     "required_items": [
       {
         "key": "radioactive_acid_solution",
-        "quantity": 200,
+        "quantity": 10,
         "isMain": true
       }
     ],
     "products": [
       {
         "key": "actinium",
-        "multiple": 1
+        "multiple": 0.2
       },
       {
         "key": "protactinium",
-        "multiple": 1
+        "multiple": 0.2
       },
       {
         "key": "radium",
