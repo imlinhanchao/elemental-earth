@@ -24,7 +24,7 @@ export const useLogStore = defineStore('log', () => {
     const appStore = useAppStore();
     const toastStore = useToastStore();
     if (appStore.isMobile) {
-      toastStore.addToast(content, type);
+      // toastStore.addToast(content, type); // 移动端不再使用 toast 弹窗显示日志，避免频繁弹窗干扰
     }
   }
 
