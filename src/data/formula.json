@@ -8677,7 +8677,7 @@
     "name": "独居石硫酸消解",
     "description": "利用浓硫酸高温消解独居石，将钍和稀土元素转化为硫酸盐溶液。",
     "fragment_description": "在强酸性和高压的#autoclave#中，通过剧烈的$stirring$使矿石彻底消解为钍盐溶液。",
-    "time_required": 40,
+    "time_required": 50,
     "required_era": "rare_earth",
     "required_container": "autoclave",
     "required_actions": {
@@ -8701,7 +8701,7 @@
         "multiple": 0.8
       },
       {
-        "key": "rare_earth_mixture",
+        "key": "mixed_rare_earth_solution",
         "multiple": 0.5
       }
     ]
