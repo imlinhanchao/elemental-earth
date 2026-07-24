@@ -91,6 +91,7 @@
                     :max="f.qty"
                   />
                   <button class="btn btn-xs" :disabled="(fuelMap.get(f.key) || 0) >= f.qty" @click="incFuel(f.key)">+</button>
+                  <button class="btn btn-xs" @click="autoFuel(f.key)"><Icon icon="ri:fire-line" /></button>
                 </div>
               </div>
               <div class="fuel-total" v-if="totalBurnTime > 0">
@@ -462,6 +463,14 @@ function onFuelInput(e: Event, key: string, max: number) {
   const safeVal = Math.max(0, Math.min(val, max))
   if (safeVal <= 0) fuelMap.value.delete(key)
   else fuelMap.value.set(key, safeVal)
+  fuelMap.value = new Map(fuelMap.value)
+}
+
+function autoFuel(key: string) {
+  const inv = taskStore.projectedInventory
+  const maxQty = inv.get(key) || 0
+  const needQty = Math.ceil(Math.max(0, neededBurnTime.value - totalBurnTime.value) / (getItem(key)?.attrs?.burn_time || 1))
+  fuelMap.value.set(key, Math.min(maxQty, needQty))
   fuelMap.value = new Map(fuelMap.value)
 }
 
