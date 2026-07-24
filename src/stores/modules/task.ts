@@ -279,11 +279,11 @@ export const useTaskStore = defineStore('task', () => {
     let cumulativeProbability = 0;
     for (const r of rewardsList) {
       cumulativeProbability += r.probability;
-      if (random < cumulativeProbability) {
+      if (random <= cumulativeProbability) {
         return r;
       }
     }
-    return null;
+    return rewardsList?.[0];
   }
 
   /** 重新计算任务队列中所有任务的预计开始时间 */
