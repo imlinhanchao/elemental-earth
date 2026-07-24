@@ -141,6 +141,9 @@ export function loadGame(): boolean {
     // 恢复地图状态
     stateStore.state.map = data.state.map;
 
+    // 恢复统计数据
+    stateStore.state.stats = { ...data.state.stats };
+
     // 恢复地图切换进度（旧存档可能没有这些字段）
     if (data.state.switchingTarget) {
       stateStore.state.switchingTarget = data.state.switchingTarget;
