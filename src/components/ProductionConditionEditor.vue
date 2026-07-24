@@ -78,6 +78,7 @@ const localConditionType = computed({
           :options="allItems"
           placeholder="选择监控的目标物品"
           size="xs"
+          append-to-body
         />
       </div>
       <div class="grid grid-cols-2 gap-2">

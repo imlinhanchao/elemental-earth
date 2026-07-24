@@ -7229,9 +7229,11 @@
     "name": "钙还原制取钐",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钐。",
     "fragment_description": "在惰性气氛中用金属#calcium#对#samarium_fluoride#进行$reduction$还原，得到金属#samarium#。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7250,9 +7252,7 @@
         "key": "samarium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_europium_nitrate",
@@ -7315,9 +7315,11 @@
     "name": "钙还原制取铕",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铕。",
     "fragment_description": "使用金属#calcium#还原#europium_fluoride#，利用$reduction$反应提取极活泼的#europium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7336,9 +7338,7 @@
         "key": "europium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_gadolinium_nitrate",
@@ -7401,9 +7401,11 @@
     "name": "钙还原制取钆",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钆。",
     "fragment_description": "通过金属钙对#gadolinium_fluoride#进行$reduction$还原，析出银白色的金属#gadolinium#。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7422,9 +7424,7 @@
         "key": "gadolinium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_terbium_nitrate",
@@ -7487,9 +7487,11 @@
     "name": "钙还原制取铽",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铽。",
     "fragment_description": "利用金属#calcium#对#terbium_fluoride#进行$reduction$还原，得到金属状态的#terbium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7508,9 +7510,7 @@
         "key": "terbium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_dysprosium_nitrate",
@@ -7573,9 +7573,11 @@
     "name": "钙还原制取镝",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镝。",
     "fragment_description": "利用金属#calcium#对#dysprosium_fluoride#进行$reduction$还原，得到金属状态的#dysprosium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7594,9 +7596,7 @@
         "key": "dysprosium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_holmium_nitrate",
@@ -7659,9 +7659,11 @@
     "name": "钙还原制取钬",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钬。",
     "fragment_description": "利用金属#calcium#对#holmium_fluoride#进行$reduction$还原，得到金属状态的#holmium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7680,9 +7682,7 @@
         "key": "holmium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_erbium_nitrate",
@@ -7745,9 +7745,11 @@
     "name": "钙还原制取铒",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铒。",
     "fragment_description": "利用金属#calcium#对#erbium_fluoride#进行$reduction$还原，得到金属状态的#erbium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7766,9 +7768,7 @@
         "key": "erbium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_thulium_nitrate",
@@ -7831,9 +7831,11 @@
     "name": "钙还原制取铥",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铥。",
     "fragment_description": "利用金属#calcium#对#thulium_fluoride#进行$reduction$还原，得到金属状态的#thulium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7852,9 +7854,7 @@
         "key": "thulium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_ytterbium_nitrate",
@@ -7917,9 +7917,11 @@
     "name": "钙还原制取镱",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镱。",
     "fragment_description": "利用金属#calcium#对#ytterbium_fluoride#进行$reduction$还原，得到金属状态的#ytterbium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -7938,9 +7940,7 @@
         "key": "ytterbium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_lutetium_nitrate",
@@ -8003,9 +8003,11 @@
     "name": "钙还原制取镥",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镥。",
     "fragment_description": "利用金属#calcium#对#lutetium_fluoride#进行$reduction$还原，得到金属状态的#lutetium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -8024,9 +8026,7 @@
         "key": "lutetium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "calcine_yttrium_nitrate",
@@ -8089,9 +8089,11 @@
     "name": "钙还原制取钇",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钇。",
     "fragment_description": "利用金属#calcium#对#yttrium_fluoride#进行$reduction$还原，得到金属状态的#yttrium#单质。",
-    "required_container": "crucible",
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
-      "key": "reduction",
+      "key": "precipitation",
       "min": 1
     },
     "required_items": [
@@ -8110,9 +8112,7 @@
         "key": "yttrium",
         "multiple": 0.9
       }
-    ],
-    "time_required": 60,
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "bombard_neodymium_to_promethium",
@@ -8209,7 +8209,9 @@
     "name": "碳酸钠沉淀镭",
     "description": "在浸出液中加入碳酸钠，使镭以碳酸盐形式沉淀。",
     "fragment_description": "向浸出液中添加#sodium_carbonate#，$precipitation$出含镭的沉淀物。",
-    "time_required": 40,
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
       "key": "precipitation",
       "min": 1
@@ -8227,15 +8229,12 @@
     ],
     "products": [
       {
-        "key": "radium_carbonate_precipitate",
-        "quantity": 1
+        "key": "radium_carbonate_precipitate"
       },
       {
-        "key": "uranyl_sodium_solution",
-        "quantity": 1
+        "key": "uranyl_sodium_solution"
       }
-    ],
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "radium_carbonate_dissolving",
@@ -8271,7 +8270,9 @@
     "name": "镭-钡分步结晶",
     "description": "利用镭盐和钡盐溶解度的微小差异，经过上千次重结晶获得纯氯化镭。",
     "fragment_description": "由于物理性质相似，需进行上千次$fractional_crystallization$才能将#radium_chloride_solution#中的钡分离。",
-    "time_required": 120,
+    "time_required": 30,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
       "key": "fractional_crystallization",
       "min": 1
@@ -8289,11 +8290,9 @@
     ],
     "products": [
       {
-        "key": "pure_radium_chloride",
-        "quantity": 0.1
+        "key": "pure_radium_chloride"
       }
-    ],
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "radium_reduction",
@@ -8359,7 +8358,9 @@
     "name": "氡分离纯化",
     "description": "通过真空转移和液氮冷凝，将氡从气体混合物中分离。",
     "fragment_description": "在#liquid_nitrogen#极低温下利用#vacuum_pump#进行气相分离，从而$gas_collecting_air$纯化出单质#radon#。",
-    "time_required": 60,
+    "time_required": 10,
+    "required_era": "atomic_age",
+    "required_container": "gas_bottle",
     "required_actions": {
       "key": "gas_collecting_air",
       "min": 1
@@ -8376,17 +8377,14 @@
       },
       {
         "key": "vacuum_pump",
-        "quantity": 1,
-        "use": 0.05
+        "quantity": 1
       }
     ],
     "products": [
       {
-        "key": "radon",
-        "quantity": 1
+        "key": "radon"
       }
-    ],
-    "required_era": "atomic_age"
+    ]
   },
   {
     "key": "pitchblende_helium_release",
@@ -8514,7 +8512,9 @@
     "name": "铋片置换钋",
     "description": "利用金属铋比钋更活泼的性质，将溶液中的钋原子置换沉积在铋片表面。",
     "fragment_description": "利用更活泼的金属#bismuth#板在酸溶液中发生电化学置换，$precipitation$出吸附在板表面的钋原子。",
-    "time_required": 60,
+    "time_required": 10,
+    "required_era": "rare_earth",
+    "required_container": "beaker",
     "required_actions": {
       "key": "precipitation",
       "min": 1
@@ -8532,11 +8532,9 @@
     ],
     "products": [
       {
-        "key": "polonium_on_bismuth",
-        "quantity": 1
+        "key": "polonium_on_bismuth"
       }
-    ],
-    "required_era": "rare_earth"
+    ]
   },
   {
     "key": "polonium_vacuum_distillation",
@@ -8606,7 +8604,7 @@
       },
       {
         "key": "neon",
-        "multiple": 18
+        "multiple": 10
       },
       {
         "key": "krypton",
@@ -8623,6 +8621,13 @@
     "name": "制备活性炭",
     "description": "通过物理或化学活化处理木炭或焦炭，使其产生大量孔隙。",
     "fragment_description": "对#charcoal#进行高温$roasting$活化处理，使其结构变得疏松多孔，生成吸附力极强的#activated_charcoal#。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "charcoal",
@@ -8630,18 +8635,12 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "time_required": 30,
     "products": [
       {
         "key": "activated_charcoal",
         "multiple": 1
       }
-    ],
-    "required_era": "modern_chem"
+    ]
   },
   {
     "key": "rubber_production",

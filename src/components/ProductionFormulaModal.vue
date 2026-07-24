@@ -442,6 +442,7 @@ function close() {
                 :options="provenFormulas"
                 placeholder="-- 请选择配方 --"
                 size="sm"
+                append-to-body
               />
             </div>
 
@@ -478,6 +479,7 @@ function close() {
                       :options="getReqOptions(req)"
                       placeholder="选择材料"
                       size="sm"
+                      append-to-body
                     />
                   </template>
                   <div v-else class="text-xs font-bold pl-1 flex justify-between">

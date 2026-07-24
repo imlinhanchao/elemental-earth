@@ -81,7 +81,7 @@
             >
               {{ r.required_container || "—" }}
             </td>
-            <td class="text-xs">{{ r.required_actions?.key || "—" }}</td>
+            <td class="text-xs" :class="{ 'text-error font-bold': !labOptions.find(l => l.key == r.required_actions?.key) }">{{ labOptions.find(l => l.key == r.required_actions?.key)?.name || "—" }}</td>
             <td class="text-xs">{{ eraOptions.find(e => e.key == r.required_era)?.name || "—" }}</td>
             <td class="text-xs">
               <span v-if="r.required_techs?.length">

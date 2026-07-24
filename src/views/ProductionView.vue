@@ -509,7 +509,8 @@ function getMapName(key: string) {
                 .filter(l => l.id !== productionStore.currentEditingId)
                 .map(l => ({ label: l.name, value: l.id }))"
               placeholder="选择生产线..."
-            />
+              append-to-body
+            />reduce_holmium_fluoride
           </div>
 
           <div v-if="lineModalSelectedKey" class="bg-base-200 p-3 rounded-xl border border-base-300 text-xs text-base-content/60">

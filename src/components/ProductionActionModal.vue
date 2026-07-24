@@ -200,6 +200,7 @@ function close() {
               :options="availableActions"
               placeholder="-- 请选择行动 --"
               size="sm"
+              append-to-body
             />
           </div>
 
