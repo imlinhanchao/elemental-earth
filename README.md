@@ -46,6 +46,7 @@ Journey through 5 distinct eras of human knowledge:
 | **🧪 Modern Chemistry** | Gas isolation, precision crucibles, and volumetric analysis. |
 | **⚡ Electrochemistry** | Harnessing electricity for electrolysis and reactive metal extraction. |
 | **💎 Rare Earth** | Modern separation techniques and atomic transmutation. |
+| **☢️ Atomic Age** | Exploring radioactive elements and synthetic isotopes through nuclear reactors and particle accelerators. |
 
 ---
 

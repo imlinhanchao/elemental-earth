@@ -69,7 +69,7 @@
   {
     "key": "electrochem",
     "name": "电化学时代",
-    "icon": "tabler:battery",
+    "icon": "typcn:flash",
     "description": "电力的应用使人类能够分离最顽固的化合物。",
     "order": 3,
     "milestones": [
