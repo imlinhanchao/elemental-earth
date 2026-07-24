@@ -1719,7 +1719,7 @@
         ]
       },
       {
-        "key": "hematite",
+        "key": "green_vitriol",
         "quantity": [
           100,
           300
@@ -1778,17 +1778,6 @@
         "key": "stibnite",
         "quantity": 100,
         "probability": 150,
-        "required_era": "alchemy",
-        "required_item": "dynamite",
-        "map": [
-          "cave",
-          "volcano"
-        ]
-      },
-      {
-        "key": "arsenopyrite",
-        "quantity": 100,
-        "probability": 300,
         "required_era": "alchemy",
         "required_item": "dynamite",
         "map": [
@@ -1907,7 +1896,6 @@
         "quantity": 100,
         "probability": 200,
         "required_era": "modern_chem",
-        "required_item": "dynamite",
         "map": [
           "volcano",
           "mountain"
