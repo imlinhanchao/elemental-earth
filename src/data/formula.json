@@ -8167,7 +8167,7 @@
     "name": "沥青铀矿酸浸",
     "description": "在浓硫酸和硝酸作用下加热，将铀、镭从矿石中溶解出来。",
     "fragment_description": "将粉碎后的矿石在#autoclave#中与#concentrated_sulfuric_acid#和#nitric_acid#进行强力$stirring$浸出。",
-    "time_required": 20,
+    "time_required": 50,
     "required_era": "rare_earth",
     "required_container": "autoclave",
     "required_actions": {
@@ -8192,11 +8192,11 @@
     "products": [
       {
         "key": "radioactive_acid_solution",
-        "multiple": 0.95
+        "multiple": 1
       },
       {
         "key": "polonium_residue",
-        "multiple": 0.95
+        "multiple": 1
       }
     ]
   },
