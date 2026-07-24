@@ -70,7 +70,7 @@
       <span v-if="count && count > 1">x{{ count }}</span>
       <span>[{{ shortTime(cost) }}]</span>
     </span>
-    <span v-if="!readOnly" class="inline-flex absolute left-0 right-0 transition-transform translate-y-0.5 items-center justify-center">
+    <span v-if="!readOnly" class="group-hover:inline-flex hidden absolute left-0 right-0 transition-transform translate-y-0.5 items-center justify-center">
       <Icon icon="tabler:x" class="text-sm hidden group-hover:inline" />
     </span>
   </span>
