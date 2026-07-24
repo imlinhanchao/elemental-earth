@@ -43,10 +43,20 @@ export interface IItem {
   milestone?: string;
 }
 
-export const Items: IItem[] = data as IItem[];
+const baseItems: IItem[] = data as IItem[];
+export const Items: IItem[] = [...baseItems];
 
-const ItemMap = new Map<string, IItem>(Items.map(i => [i.key, i]));
+let itemMap = new Map<string, IItem>(Items.map(i => [i.key, i]));
+
+function rebuildItemMap(): void {
+  itemMap = new Map<string, IItem>(Items.map(i => [i.key, i]));
+}
+
+export function replaceItems(next: IItem[]): void {
+  Items.splice(0, Items.length, ...next);
+  rebuildItemMap();
+}
 
 export function getItem(key: string): IItem | undefined {
-  return ItemMap.get(key);
+  return itemMap.get(key);
 }

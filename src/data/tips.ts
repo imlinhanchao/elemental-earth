@@ -12,4 +12,9 @@ export interface ITip {
 /**
  * 游戏小贴士数据
  */
-export const tips: ITip[] = tipsData as ITip[]
+const baseTips: ITip[] = tipsData as ITip[]
+export const tips: ITip[] = [...baseTips]
+
+export function replaceTips(next: ITip[]): void {
+  tips.splice(0, tips.length, ...next)
+}

@@ -13,6 +13,8 @@ import type { IProductionLine, IProductionLineStep } from '@/stores/modules/prod
 import { ref } from 'vue';
 import { shortTime } from './date';
 import { gameSDK } from './sdk';
+import { modManager } from '@/mods/manager';
+import type { StoredModRegistry } from '@/mods/types';
 
 const storage = new EncryptedStorage();
 const SAVE_KEY = 'game_save_data';
@@ -51,6 +53,8 @@ export interface SaveData {
   productionLines?: IProductionLine[];
   /** 玩家手札分组（v7 新增） */
   manuscripts?: IManuscriptGroup[];
+  /** Mod 注册表快照（v8 新增） */
+  modRegistry?: StoredModRegistry;
 }
 
 /** 上次保存时间（毫秒时间戳），用于 UI 反馈 */
@@ -89,9 +93,15 @@ export function saveGame(): boolean {
       productionDraft: JSON.parse(JSON.stringify(productionStore.draftSteps)),
       productionLines: JSON.parse(JSON.stringify(productionStore.productionLines)),
       manuscripts: JSON.parse(JSON.stringify(packStore.manuscripts)),
+      modRegistry: modManager.exportRegistrySnapshot(),
     };
     storage.setItem(SAVE_KEY, data);
     lastSavedTime.value = Date.now();
+    void modManager.emit('onSave', {
+      saveKey: SAVE_KEY,
+      version: SAVE_VERSION,
+      timestamp: data.timestamp,
+    });
 
     return true;
   } catch (e) {
@@ -111,6 +121,14 @@ export function loadGame(): boolean {
     if (data.version > SAVE_VERSION) {
       console.warn(`存档版本太新: 存档 v${data.version}，当前支持 v${SAVE_VERSION}，请更新程序`);
       return false;
+    }
+
+    if (data.modRegistry) {
+      try {
+        modManager.restoreRegistrySnapshot(data.modRegistry);
+      } catch (error) {
+        console.error('恢复存档内 Mod 注册表失败，继续按当前本地 Mod 状态加载:', error);
+      }
     }
 
     const packStore = usePackStore();
@@ -251,6 +269,11 @@ export function loadGame(): boolean {
     }
 
     lastSavedTime.value = data.timestamp;
+    void modManager.emit('onLoad', {
+      saveKey: SAVE_KEY,
+      version: data.version,
+      timestamp: data.timestamp,
+    });
     return true;
   } catch (e) {
     console.error('加载游戏失败:', e);

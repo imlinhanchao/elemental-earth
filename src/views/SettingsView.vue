@@ -161,6 +161,90 @@
       </div>
     </div>
 
+    <!-- Mod 管理 -->
+    <div class="card bg-base-200 shadow border border-info/20">
+      <div class="card-body">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="card-title text-base">Mod 管理</h2>
+          <div class="join">
+            <button class="btn btn-sm join-item" @click="showModImport = true">导入文本</button>
+            <button class="btn btn-sm join-item" :disabled="modFileImporting" @click="openModFilePicker">
+              {{ modFileImporting ? '导入中...' : '导入文件(JSON/ZIP)' }}
+            </button>
+          </div>
+        </div>
+        <input
+          ref="modFileInputRef"
+          type="file"
+          class="hidden"
+          accept=".json,.zip,application/json,application/zip"
+          @change="onModFileSelected"
+        />
+        <p class="text-xs text-base-content/70">
+          高权限 Mod 可访问全部 Store、DOM 和网络。仅导入可信来源内容。
+        </p>
+
+        <div v-if="modRows.length === 0" class="text-sm text-base-content/60 py-2">尚未安装 Mod</div>
+        <div v-else class="space-y-2">
+          <div v-for="row in modRows" :key="row.pkg.manifest.modId" class="p-2 rounded border border-base-300 bg-base-100">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-sm">
+                  {{ row.pkg.manifest.name }}
+                  <span class="text-xs text-base-content/60">v{{ row.pkg.manifest.version }}</span>
+                  <span v-if="isHighTrustMod(row.pkg)" class="badge badge-warning badge-xs ml-1">高权限</span>
+                </div>
+                <div class="text-xs text-base-content/60">{{ row.pkg.manifest.modId }}</div>
+              </div>
+              <div class="join">
+                <button class="btn btn-xs join-item" @click="toggleMod(row.pkg.manifest.modId, !row.enabled)">
+                  {{ row.enabled ? '停用' : '启用' }}
+                </button>
+                <button class="btn btn-xs btn-error join-item" @click="removeMod(row.pkg.manifest.modId)">卸载</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="modWarnings.length" class="mt-2">
+          <div class="text-xs font-bold mb-1">最近告警</div>
+          <ul class="text-xs text-warning space-y-1">
+            <li v-for="(w, idx) in modWarnings.slice(-5)" :key="`w-${idx}`">{{ w }}</li>
+          </ul>
+        </div>
+
+        <div v-if="modDiagnostics.length" class="mt-2">
+          <div class="text-xs font-bold mb-1">运行诊断</div>
+          <ul class="text-xs text-base-content/70 space-y-1 max-h-36 overflow-auto">
+            <li v-for="(d, idx) in modDiagnostics.slice(0, 15)" :key="`d-${idx}`" class="font-mono">
+              <span :class="`text-${d.level}`">[{{ d.level }}]</span>
+              {{ d.modId }}/{{ d.hookId }}: 
+              {{ d.message }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mod 导入弹窗 -->
+    <Teleport to="body">
+      <dialog ref="modImportModalRef" class="modal" @close="showModImport = false">
+        <div class="modal-box max-w-2xl">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2"><Icon icon="tabler:plug-connected" class="text-lg" />导入 Mod(JSON)</h3>
+          <p class="text-xs text-base-content/60 mb-3">粘贴完整 mod 包 JSON（manifest + patches + hooks）。导入后默认不启用。</p>
+          <textarea class="textarea textarea-bordered w-full font-mono text-xs" rows="10" v-model="modImportText" placeholder="在此粘贴 mod 包 JSON..."></textarea>
+          <div class="flex gap-2 mt-3 justify-end">
+            <button class="btn btn-sm" :disabled="modFileImporting" @click="openModFilePicker">
+              {{ modFileImporting ? '导入中...' : '选择文件(JSON/ZIP)' }}
+            </button>
+            <button class="btn btn-primary btn-sm" :disabled="!modImportText.trim()" @click="submitModImport">导入</button>
+            <button class="btn btn-ghost btn-sm" @click="showModImport = false">取消</button>
+          </div>
+        </div>
+        <form method="dialog" class="modal-backdrop"><button>close</button></form>
+      </dialog>
+    </Teleport>
+
     <!-- 导出弹窗 -->
     <Teleport to="body">
       <dialog ref="exportModalRef" class="modal" @close="showExport = false">
@@ -202,7 +286,9 @@ import { ref, watch, onMounted } from 'vue'
 import { useAppStore } from '../stores/modules/app'
 import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave, syncCloudArchive, uploadCloudArchive, pullCloudArchive } from '@/utils/archive'
 import { gameSDK as sdk } from '@/utils/sdk'
+import { modManager } from '@/mods/manager'
 import type { UserInfo } from 'fishpi-play'
+import type { HookDiagnostic, ModPackage, StoredModEntry } from '@/mods/types'
 
 const appStore = useAppStore()
 
@@ -314,6 +400,126 @@ function fileImport() {
   importSaveDataFromFile()
 }
 
+// ─── Mod 管理 ────────────────────────────────────────────────
+const modRows = ref<StoredModEntry[]>([])
+const modWarnings = ref<string[]>([])
+const modDiagnostics = ref<HookDiagnostic[]>([])
+
+const showModImport = ref(false)
+const modImportText = ref('')
+const modImportModalRef = ref<HTMLDialogElement | null>(null)
+const modFileInputRef = ref<HTMLInputElement | null>(null)
+const modFileImporting = ref(false)
+
+function isHighTrustMod(pkg: ModPackage): boolean {
+  if (pkg.manifest.hooksRuntime === 'full-trust') return true
+  if ((pkg.hooks?.length ?? 0) > 0) return true
+  if (pkg.manifest.capabilities?.stores === 'all') return true
+  if (pkg.manifest.capabilities?.dom === true) return true
+  if (pkg.manifest.capabilities?.network === true) return true
+  return false
+}
+
+function getPrivilegeSummary(pkg: ModPackage): string {
+  const parts: string[] = []
+  if (pkg.manifest.hooksRuntime === 'full-trust') parts.push('Full Trust 运行时')
+  if ((pkg.hooks?.length ?? 0) > 0) parts.push(`脚本 Hook ${pkg.hooks?.length} 个`)
+  if (pkg.manifest.capabilities?.stores === 'all') parts.push('访问全部 Store')
+  if (pkg.manifest.capabilities?.dom === true) parts.push('访问 DOM')
+  if (pkg.manifest.capabilities?.network === true) parts.push('访问网络')
+
+  const allowDomains = pkg.manifest.networkPolicy?.allowDomains || []
+  const blockedDomains = pkg.manifest.networkPolicy?.blockedDomains || []
+  if (allowDomains.length > 0) parts.push(`网络白名单: ${allowDomains.join(', ')}`)
+  if (blockedDomains.length > 0) parts.push(`网络黑名单: ${blockedDomains.join(', ')}`)
+  return parts.join('；')
+}
+
+function confirmHighTrustEnable(pkg: ModPackage): boolean {
+  if (!isHighTrustMod(pkg)) return true
+  const summary = getPrivilegeSummary(pkg)
+  return confirm(
+    `即将启用高权限 Mod：${pkg.manifest.name} (${pkg.manifest.modId})\n\n权限摘要：${summary || '高权限执行'}\n\n该 Mod 脚本可能读取/改写游戏状态，且可访问页面和网络。请确认来源可信后再启用。`,
+  )
+}
+
+function openModFilePicker() {
+  modFileInputRef.value?.click()
+}
+
+async function onModFileSelected(event: Event) {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  modFileImporting.value = true
+  try {
+    const pkg = await modManager.importModFromFile(file)
+    showModImport.value = false
+    refreshModPanel()
+    const warning = isHighTrustMod(pkg) ? '\n该 Mod 含高权限能力，启用时会再次要求确认。' : ''
+    alert(`Mod 导入成功: ${pkg.manifest.name}（默认未启用）${warning}`)
+  } catch (e) {
+    alert('Mod 文件导入失败: ' + (e as Error).message)
+  } finally {
+    modFileImporting.value = false
+    target.value = ''
+  }
+}
+
+function refreshModPanel() {
+  modRows.value = modManager.listMods()
+  modWarnings.value = modManager.getApplyResult().warnings
+  modDiagnostics.value = [...modManager.getDiagnostics()].reverse()
+}
+
+watch(showModImport, (v) => {
+  if (v) modImportModalRef.value?.showModal()
+  else modImportModalRef.value?.close()
+})
+
+function submitModImport() {
+  try {
+    const pkg = modManager.importModFromText(modImportText.value)
+    modImportText.value = ''
+    showModImport.value = false
+    refreshModPanel()
+    const warning = isHighTrustMod(pkg) ? '\n该 Mod 含高权限能力，启用时会再次要求确认。' : ''
+    alert(`Mod 导入成功: ${pkg.manifest.name}（默认未启用）${warning}`)
+  } catch (e) {
+    alert('Mod 导入失败: ' + (e as Error).message)
+  }
+}
+
+function toggleMod(modId: string, enable: boolean) {
+  try {
+    const row = modRows.value.find(item => item.pkg.manifest.modId === modId)
+    if (!row) {
+      throw new Error(`找不到 Mod: ${modId}`)
+    }
+
+    if (enable && !confirmHighTrustEnable(row.pkg)) {
+      return
+    }
+
+    if (enable) modManager.enableMod(modId)
+    else modManager.disableMod(modId)
+    refreshModPanel()
+  } catch (e) {
+    alert((enable ? '启用' : '停用') + '失败: ' + (e as Error).message)
+  }
+}
+
+function removeMod(modId: string) {
+  if (!confirm(`确认卸载 Mod: ${modId} ?`)) return
+  try {
+    modManager.uninstallMod(modId)
+    refreshModPanel()
+  } catch (e) {
+    alert('卸载失败: ' + (e as Error).message)
+  }
+}
+
 // ─── 重置 ────────────────────────────────────────────────
 function resetSave() {
   if (!confirm('⚠️ 确定要重置存档吗？\n\n所有游戏进度将被清除，此操作不可撤销！')) return
@@ -324,4 +530,19 @@ function resetSave() {
   alert('存档已重置，页面将重新加载')
   window.location.href = window.location.origin + window.location.pathname
 }
+
+onMounted(() => {
+  refreshModPanel()
+})
 </script>
+<style lang="less" scoped>
+  .text-error {
+    color: var(--color-error);
+  }
+  .text-warn {
+    color: var(--color-warning);
+  }
+  .text-info {
+    color: var(--color-info);
+  }
+</style>

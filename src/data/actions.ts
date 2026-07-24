@@ -85,4 +85,9 @@ export interface IAction {
   };
 }
 
-export const Actions: IAction[] = data as IAction[];
+const baseActions: IAction[] = data as IAction[];
+export const Actions: IAction[] = [...baseActions];
+
+export function replaceActions(next: IAction[]): void {
+  Actions.splice(0, Actions.length, ...next);
+}

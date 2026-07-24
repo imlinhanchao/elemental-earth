@@ -55,9 +55,19 @@ export interface IFormula {
     power_consumption?: number;
 }
 
-export const Formulas: IFormula[] = data as IFormula[];
+const baseFormulas: IFormula[] = data as IFormula[];
+export const Formulas: IFormula[] = [...baseFormulas];
 
-const formulaMap = new Map<string, IFormula>(Formulas.map(f => [f.key, f]));
+let formulaMap = new Map<string, IFormula>(Formulas.map(f => [f.key, f]));
+
+function rebuildFormulaMap(): void {
+  formulaMap = new Map<string, IFormula>(Formulas.map(f => [f.key, f]));
+}
+
+export function replaceFormulas(next: IFormula[]): void {
+  Formulas.splice(0, Formulas.length, ...next);
+  rebuildFormulaMap();
+}
 
 export function getFormula(key: string) {
     return formulaMap.get(key);

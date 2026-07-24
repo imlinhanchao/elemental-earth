@@ -23,4 +23,9 @@ export interface IMap {
   position: { x: number; y: number };
 }
 
-export const Maps: IMap[] = data as IMap[];
+const baseMaps: IMap[] = data as IMap[];
+export const Maps: IMap[] = [...baseMaps];
+
+export function replaceMaps(next: IMap[]): void {
+  Maps.splice(0, Maps.length, ...next);
+}

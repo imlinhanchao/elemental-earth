@@ -31,4 +31,9 @@ export interface ITech {
   milestone?: string;
 }
 
-export const Techs: ITech[] = data as ITech[];
+const baseTechs: ITech[] = data as ITech[];
+export const Techs: ITech[] = [...baseTechs];
+
+export function replaceTechs(next: ITech[]): void {
+  Techs.splice(0, Techs.length, ...next);
+}

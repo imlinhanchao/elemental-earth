@@ -7,6 +7,7 @@ import { useLogStore } from '@/stores/modules/log';
 import { useTaskStore } from '@/stores/modules/task';
 import { getElementById } from '@/data/elements';
 import { Eras, type IEra, getEra } from '@/data/eras';
+import { modManager } from '@/mods/manager';
 
 export interface IGameState {
   map: string;
@@ -125,11 +126,18 @@ export const useStateStore = defineStore('state', () => {
   /** 完成切换地图 */
   function completeSwitch() {
     if (!state.switchingTarget) return
+    const fromMap = state.map
+    const toMap = state.switchingTarget
     const targetName = getSwitchTargetMap.value?.name || state.switchingTarget
     state.map = state.switchingTarget
     state.switchingTarget = null
     state.switchStartTime = 0
     state.switchDuration = 0
+    void modManager.emit('onMapSwitch', {
+      from: fromMap,
+      to: toMap,
+      name: targetName,
+    })
   }
 
   const getElements = computed(() => state.elements);
@@ -204,9 +212,17 @@ export const useStateStore = defineStore('state', () => {
     
     // 检查是否可以晋级
     if (currentEra.value && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
+      const previousEra = currentEra.value
       pendingEraTransition.value = currentEra.value.key
       logStore.addLog(`✨ 你的文明进入了「${currentEra.value.name}」`, 'elements')
-      if (nextEra.value) state.currentEra = nextEra.value.key
+      if (nextEra.value) {
+        state.currentEra = nextEra.value.key
+        void modManager.emit('onEraAdvance', {
+          from: previousEra?.key,
+          to: nextEra.value.key,
+          milestoneKey: key,
+        })
+      }
     }
   }
 

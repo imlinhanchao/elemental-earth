@@ -7,6 +7,7 @@ import { setupStore } from '@/stores/'
 import 'virtual:svg-icons-register'
 import { registerSW } from 'virtual:pwa-register'
 import { gameSDK } from '@/utils/sdk'
+import { modManager } from '@/mods/manager'
 
 export { gameSDK }
 
@@ -52,12 +53,51 @@ async function bootstrap() {
   const app = createApp(App)
   
   setupStore(app);
-  // 预加载 admin store，确保 localStorage 中的 token 被读取
-  const { useAdminStore } = await import('@/stores/modules/admin')
-  useAdminStore()
+  await preloadStoresForMods();
+  modManager.initialize();
   app.use(router)
   app.component('Icon', Icon);
   app.mount('#app')
+}
+
+async function preloadStoresForMods() {
+  const [
+    appModule,
+    adminModule,
+    fragmentModule,
+    labModule,
+    logModule,
+    packModule,
+    productionModule,
+    stateModule,
+    taskModule,
+    toastModule,
+    tutorialModule,
+  ] = await Promise.all([
+    import('@/stores/modules/app'),
+    import('@/stores/modules/admin'),
+    import('@/stores/modules/fragment'),
+    import('@/stores/modules/lab'),
+    import('@/stores/modules/log'),
+    import('@/stores/modules/pack'),
+    import('@/stores/modules/production'),
+    import('@/stores/modules/state'),
+    import('@/stores/modules/task'),
+    import('@/stores/modules/toast'),
+    import('@/stores/modules/tutorial'),
+  ]);
+
+  appModule.useAppStore();
+  adminModule.useAdminStore();
+  fragmentModule.useFragmentStore();
+  labModule.useLabStore();
+  logModule.useLogStore();
+  packModule.usePackStore();
+  productionModule.useProductionStore();
+  stateModule.useStateStore();
+  taskModule.useTaskStore();
+  toastModule.useToastStore();
+  tutorialModule.useTutorialStore();
 }
 
 bootstrap();

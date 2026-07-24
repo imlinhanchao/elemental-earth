@@ -22,10 +22,20 @@ export interface IEra {
   milestones: IEraMilestone[]
 }
 
-export const Eras: IEra[] = data as IEra[]
+const baseEras: IEra[] = data as IEra[]
+export const Eras: IEra[] = [...baseEras]
 
-const EraMap = new Map<string, IEra>(Eras.map(e => [e.key, e]))
+let eraMap = new Map<string, IEra>(Eras.map(e => [e.key, e]))
+
+function rebuildEraMap(): void {
+  eraMap = new Map<string, IEra>(Eras.map(e => [e.key, e]))
+}
+
+export function replaceEras(next: IEra[]): void {
+  Eras.splice(0, Eras.length, ...next)
+  rebuildEraMap()
+}
 
 export function getEra(key: string): IEra | undefined {
-  return EraMap.get(key)
+  return eraMap.get(key)
 }

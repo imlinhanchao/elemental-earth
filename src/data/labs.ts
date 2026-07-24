@@ -46,9 +46,19 @@ export interface ILabAction {
     milestone?: string;
 }
 
-export const LabActions: ILabAction[] = data as ILabAction[];
+const baseLabActions: ILabAction[] = data as ILabAction[];
+export const LabActions: ILabAction[] = [...baseLabActions];
 
-const labMap = new Map<string, ILabAction>(LabActions.map(l => [l.key, l]));
+let labMap = new Map<string, ILabAction>(LabActions.map(l => [l.key, l]));
+
+function rebuildLabMap(): void {
+    labMap = new Map<string, ILabAction>(LabActions.map(l => [l.key, l]));
+}
+
+export function replaceLabActions(next: ILabAction[]): void {
+    LabActions.splice(0, LabActions.length, ...next);
+    rebuildLabMap();
+}
 
 export function getLab(key: string) {
     return labMap.get(key);

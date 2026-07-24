@@ -15,6 +15,7 @@ import { getItem } from '@/data/items';
 import { Formulas, getFormula } from '@/data/formula';
 import { LabActions, getLab } from '@/data/labs';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
+import { modManager } from '@/mods/manager';
 
 export interface ITaskCondition {
   key: string;
@@ -535,6 +536,13 @@ export const useTaskStore = defineStore('task', () => {
           if (f) {
             logStore.addLog(`发现新配方: ${f.name}`, 'lab')
             appStore.triggerLabSuccess(task.formulaKey, obtainedProducts)
+            void modManager.emit('onFormulaResolved', {
+              mapKey,
+              task,
+              formulaKey: task.formulaKey,
+              formulaName: f.name,
+              products: obtainedProducts,
+            });
           }
           packStore.addProvenFormula(task.formulaKey)
         }
@@ -599,6 +607,12 @@ export const useTaskStore = defineStore('task', () => {
         }
       }
 
+      void modManager.emit('onTaskComplete', {
+        mapKey,
+        task,
+        type: task.type,
+      });
+
       mapTasks.splice(0, 1); // 从任务列表中移除完成的任务
       if (mapTasks.length == 0) {
         // 检查是否所有地图的任务都完成了
@@ -621,6 +635,7 @@ export const useTaskStore = defineStore('task', () => {
 
   // 使用全局 Worker 触发的 tick 处理任务
   appStore.onTick((time) => {
+    void modManager.emit('onTick', { time });
     checkAndProcessTasks(time);
   });
 
@@ -642,7 +657,7 @@ export const useTaskStore = defineStore('task', () => {
       tasksMap[mapKey] = [];
     }
 
-    tasksMap[mapKey].push({ 
+    const createdTask = { 
       ...task, 
       begin_time: 0, 
       id: task.id || (Date.now() + Math.random()), 
@@ -653,7 +668,16 @@ export const useTaskStore = defineStore('task', () => {
       materials_locked: false,
       condition: task.condition,
       era_bonus: 'category' in task ? task.category == '采集' : false
-    } as ITask);
+    } as ITask;
+
+    tasksMap[mapKey].push(createdTask);
+
+    if (createdTask.type === 'action') {
+      void modManager.emit('onActionStart', {
+        mapKey,
+        task: createdTask,
+      });
+    }
     
     recalculateStartTimes(mapKey);
     return true;
