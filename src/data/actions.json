@@ -2877,7 +2877,9 @@
       "mountain",
       "cave",
       "volcano",
-      "island"
+      "island",
+      "basin",
+      "meteor_crater"
     ]
   },
   {
