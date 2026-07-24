@@ -2597,9 +2597,9 @@
         ]
       },
       {
-        "key": "cobaltite",
-        "quantity": 400,
-        "probability": 300,
+        "key": "cinnabar",
+        "quantity": 100,
+        "probability": 200,
         "required_era": "alchemy",
         "required_item": [
           "manganese_pickaxe",
@@ -2618,9 +2618,9 @@
         ]
       },
       {
-        "key": "galena",
+        "key": "niter",
         "quantity": 400,
-        "probability": 400,
+        "probability": 300,
         "required_era": "alchemy",
         "map": [
           {
@@ -2630,18 +2630,14 @@
         ]
       },
       {
-        "key": "sphalerite",
+        "key": "green_vitriol",
         "quantity": 400,
-        "probability": 400,
+        "probability": 300,
         "required_era": "alchemy",
         "map": [
           {
             "key": "cave",
             "probability": 400
-          },
-          {
-            "key": "mountain",
-            "probability": 300
           }
         ]
       },
