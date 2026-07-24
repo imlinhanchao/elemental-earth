@@ -33,10 +33,8 @@ const tasks = computed(() => {
 
 // 地图切换相关
 const mapsWithTasks = computed(() => {
-  const activeMaps = Object.keys(taskStore.tasksMap).filter(k => taskStore.tasksMap[k]?.length > 0)
-  // 始终包含当前地图，或者当前查看的地图
-  const set = new Set([currentMapKey.value, viewingMapKey.value, ...activeMaps])
-  return Array.from(set).map(k => Maps.find(m => m.key === k)).filter(Boolean) as any[]
+  return Maps.map(m => ({ ...m, taskCount: taskStore.tasksMap[m.key]?.length || 0 }))
+    .filter(m => m.taskCount > 0 || m.key === currentMapKey.value || m.key === viewingMapKey.value)
 })
 
 const selectMap = (key: string) => {
@@ -201,19 +199,18 @@ const showDraftModule = computed(() => {
         </section>
 
         <!-- 地图切换 Tabs -->
-        <div v-if="mapsWithTasks.length > 1" class="px-2 py-1 mb-1 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 border-t border-base-300 bg-base-200/30">
+        <div v-if="mapsWithTasks.length > 1" class="px-2 py-1 mb-1 flex items-center gap-1.5 no-scrollbar shrink-0 border-t border-base-300 bg-base-200/30">
           <template
             v-for="m in mapsWithTasks" 
             :key="m.key"
           >
             <button 
-              v-if="taskStore.tasksMap[m.key]?.length" 
-              class="badge badge-sm cursor-pointer whitespace-nowrap transition-all border-none "
+              class="badge badge-sm cursor-pointer whitespace-nowrap transition-all border-none tooltip"
               :class="viewingMapKey === m.key ? 'badge-primary' : 'badge-ghost opacity-40 hover:opacity-100'"
               @click="selectMap(m.key)"
               :data-tip="m.name + ' (' + taskStore.tasksMap[m.key].length + ' 个任务)'"
             >
-              <Icon :icon="m.icon || 'tabler:map-filled'" class="text-xs mr-1" />
+              <Icon :icon="m.icon || 'tabler:map-filled'" class="text-xs" />
             </button>
           </template>
         </div>
