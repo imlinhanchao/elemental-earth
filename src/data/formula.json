@@ -5800,6 +5800,7 @@
     "key": "lithium_chloride_from_carbonate",
     "name": "氯化锂制备（碳酸锂法）",
     "description": "碳酸锂与盐酸反应，经过量蒸发结晶得到氯化锂。",
+    "fragment_description": "向#lithium_carbonate#逐渐加入#hydrochloric_acid#，观察到气泡剧烈冒出，$stirring$至溶液澄清，蒸发结晶得白色#lithium_chloride#粉末。",
     "time_required": 10,
     "required_era": "modern_chem",
     "required_container": "beaker",
@@ -5834,6 +5835,7 @@
     "key": "lithium_chloride_from_hydroxide",
     "name": "氯化锂制备（氢氧化锂法）",
     "description": "氢氧化锂与盐酸中和反应，通过蒸发浓缩提取氯化锂晶体。",
+    "fragment_description": "将#lithium_hydroxide#中和于#hydrochloric_acid#中，利用$evaporation$法缓慢除去水分，析出晶体。",
     "time_required": 100,
     "required_era": "modern_chem",
     "required_container": "beaker",
@@ -6487,6 +6489,7 @@
     "key": "monazite_leaching",
     "name": "独居石酸浸处理",
     "description": "浓硫酸高温分解独居石，冰水溶解后过滤除去放射性钍渣。",
+    "fragment_description": "将#monazite#独居石研磨后与热#concentrated_sulfuric_acid#长时间$stirring$反应，使镧、铈等稀土元素转化为可溶盐。",
     "time_required": 50,
     "required_era": "rare_earth",
     "required_container": "reaction_kettle",
@@ -6520,6 +6523,7 @@
     "key": "rare_earth_oxalate_pp",
     "name": "稀土草酸盐沉淀",
     "description": "加入草酸使稀土离子沉淀，分离杂质。",
+    "fragment_description": "向稀土溶液中滴加#oxalic_acid#，利用极低的溶解度差异，$precipitation$出白色絮状的草酸稀土。",
     "required_container": "beaker",
     "required_actions": {
       "key": "precipitation",
@@ -6549,6 +6553,7 @@
     "key": "rare_earth_calcination",
     "name": "煅烧草酸盐",
     "description": "800℃煅烧使草酸盐分解为氧化物。",
+    "fragment_description": "在#crucible#中对稀土草酸盐进行高温$roasting$，使其完全氧化分解，制得混合的#mixed_rare_earth_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -6574,6 +6579,7 @@
     "key": "lanthanum_chlorination",
     "name": "氧化镧氯化",
     "description": "高温下通氯气将氧化物转变为无水氯化物。",
+    "fragment_description": "在高温及#activated_charcoal#还原剂环境下，通入#chlorine#，$blowing$吹扫使其转化为无水#lanthanum_chloride#。",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -6607,6 +6613,7 @@
     "key": "cerium_chlorination",
     "name": "氧化铈氯化",
     "description": "高温下通氯气将氧化物转变为无水氯化物。",
+    "fragment_description": "在高温及#activated_charcoal#还原剂下通入#chlorine#，$blowing$反应，生成#cerium_chloride#。",
     "required_container": "sealed_tube",
     "required_actions": {
       "key": "blowing",
@@ -6640,6 +6647,7 @@
     "key": "lanthanum_electrolysis",
     "name": "金属镧电解还原",
     "description": "熔融氯化镧电解获得单质。",
+    "fragment_description": "电解熔融的#lanthanum_chloride#，在阴极表面析出银灰色的金属#lanthanum#，阳极则释放出#chlorine#。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "molten_electrolysis",
@@ -6670,6 +6678,7 @@
     "key": "cerium_electrolysis",
     "name": "金属铈电解还原",
     "description": "熔融氯化铈电解获得单质。",
+    "fragment_description": "电解熔融的#cerium_chloride#，通过$molten_electrolysis$获得活泼的金属#cerium#单质。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "molten_electrolysis",
@@ -6700,6 +6709,7 @@
     "key": "prepare_rare_earth_nitrate_solution",
     "name": "制备混合稀土硝酸溶液",
     "description": "将混合稀土氧化物溶解于硝酸中，为后续的分步结晶做准备。",
+    "fragment_description": "将混合的稀土氧化物缓慢溶解在#nitric_acid#中，通过$heating$和搅拌得到高浓度的硝酸稀土溶液。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -6729,6 +6739,7 @@
     "key": "rare_earth_fractional_crystallization",
     "name": "稀土分步结晶分离",
     "description": "利用各种稀土硝酸盐溶解度的微小差异，通过反复重结晶将混合溶液分离成单一元素的硝酸盐晶体。",
+    "fragment_description": "利用多级$fractional_crystallization$反复提纯，基于溶解度的微小差异将#rare_earth_nitrate_solution#逐步分离。",
     "time_required": 600,
     "required_era": "rare_earth",
     "required_container": "evaporating_dish",
@@ -6813,6 +6824,7 @@
     "key": "calcine_lanthanum_nitrate",
     "name": "煅烧硝酸镧",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "在空气中对#lanthanum_nitrate#进行$roasting$热分解，通过失水、脱除氮氧化物制备稳定的粉末。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -6838,6 +6850,7 @@
     "key": "chlorinate_lanthanum_oxide",
     "name": "氧化镧氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "fragment_description": "使#lanthanum_oxide#与#activated_charcoal#混合后，通入#chlorine#并进行$blowing$吹扫反应，得到氯化物。",
     "time_required": 30,
     "required_era": "rare_earth",
     "required_container": "sealed_tube",
@@ -6871,6 +6884,7 @@
     "key": "electrolyze_lanthanum_chloride",
     "name": "熔盐电解制镧",
     "description": "在石墨电解槽中，通过熔盐电解获得纯金属镧。",
+    "fragment_description": "电解熔融的#lanthanum_chloride#，利用强电流$electrolysis$在极板析出银白色#lanthanum#。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "electrolysis",
@@ -6897,6 +6911,7 @@
     "key": "calcine_cerium_nitrate",
     "name": "煅烧硝酸铈",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "在高温#crucible#中对#cerium_nitrate#进行$roasting$处理，使其彻底转化为二氧化铈。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -6922,6 +6937,7 @@
     "key": "chlorinate_cerium_oxide",
     "name": "氧化铈氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "fragment_description": "将#cerium_oxide#与碳还原剂混合，通入#chlorine#并实施$blowing$操作，生成#cerium_chloride#。",
     "time_required": 30,
     "required_era": "rare_earth",
     "required_container": "sealed_tube",
@@ -6955,6 +6971,7 @@
     "key": "electrolyze_cerium_chloride",
     "name": "熔盐电解制铈",
     "description": "在石墨电解槽中，通过熔盐电解获得纯金属铈。",
+    "fragment_description": "通过熔盐$electrolysis$还原#cerium_chloride#，在金属态#cerium#析出前保持电解槽温度。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "electrolysis",
@@ -6981,6 +6998,7 @@
     "key": "calcine_praseodymium_nitrate",
     "name": "煅烧硝酸镨",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "将#praseodymium_nitrate#进行高温$roasting$氧化分解，转化为深色的#praseodymium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7006,6 +7024,7 @@
     "key": "chlorinate_praseodymium_oxide",
     "name": "氧化镨氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "fragment_description": "将#praseodymium_oxide#与#activated_charcoal#混合，通入#chlorine#，$blowing$吹扫使其转化为无水#praseodymium_chloride#。",
     "time_required": 30,
     "required_era": "rare_earth",
     "required_container": "sealed_tube",
@@ -7039,6 +7058,7 @@
     "key": "electrolyze_praseodymium_chloride",
     "name": "熔盐电解制镨",
     "description": "在石墨电解槽中，通过熔盐电解获得纯金属镨。",
+    "fragment_description": "电解熔融的#praseodymium_chloride#，利用强电流$electrolysis$在极板析出深色的#praseodymium#。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "electrolysis",
@@ -7065,6 +7085,7 @@
     "key": "calcine_neodymium_nitrate",
     "name": "煅烧硝酸钕",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "将#neodymium_nitrate#进行高温$roasting$氧化分解，转化为粉紫色的#neodymium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7090,6 +7111,7 @@
     "key": "chlorinate_neodymium_oxide",
     "name": "氧化钕氯化",
     "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
+    "fragment_description": "在#sealed_tube#中使#neodymium_oxide#与碳混合，通过$blowing$并通入#chlorine#制得#neodymium_chloride#。",
     "time_required": 30,
     "required_era": "rare_earth",
     "required_container": "sealed_tube",
@@ -7123,6 +7145,7 @@
     "key": "electrolyze_neodymium_chloride",
     "name": "熔盐电解制钕",
     "description": "在石墨电解槽中，通过熔盐电解获得纯金属钕。",
+    "fragment_description": "电解熔融的#neodymium_chloride#，通过$electrolysis$在阴极析出金属#neodymium#单质。",
     "required_container": "graphite_electrolytic_cell",
     "required_actions": {
       "key": "electrolysis",
@@ -7149,6 +7172,7 @@
     "key": "calcine_samarium_nitrate",
     "name": "煅烧硝酸钐",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#samarium_nitrate#进行高温$roasting$氧化，得到稳定的#samarium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7174,6 +7198,7 @@
     "key": "fluorinate_samarium_oxide",
     "name": "氧化钐氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#samarium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$除去水分，生成#samarium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7203,6 +7228,7 @@
     "key": "reduce_samarium_fluoride",
     "name": "钙还原制取钐",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钐。",
+    "fragment_description": "在惰性气氛中用金属#calcium#对#samarium_fluoride#进行$reduction$还原，得到金属#samarium#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7232,6 +7258,7 @@
     "key": "calcine_europium_nitrate",
     "name": "煅烧硝酸铕",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#europium_nitrate#高温进行$roasting$煅烧处理，生成#europium_oxide#粉末。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7257,6 +7284,7 @@
     "key": "fluorinate_europium_oxide",
     "name": "氧化铕氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "将#europium_oxide#置于#hydrofluoric_acid#中$heating$反应，转化为#europium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7286,6 +7314,7 @@
     "key": "reduce_europium_fluoride",
     "name": "钙还原制取铕",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铕。",
+    "fragment_description": "使用金属#calcium#还原#europium_fluoride#，利用$reduction$反应提取极活泼的#europium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7315,6 +7344,7 @@
     "key": "calcine_gadolinium_nitrate",
     "name": "煅烧硝酸钆",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#gadolinium_nitrate#高温$roasting$分解，转化为#gadolinium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7340,6 +7370,7 @@
     "key": "fluorinate_gadolinium_oxide",
     "name": "氧化钆氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#gadolinium_oxide#与#hydrofluoric_acid#经由$heating$反应，生成#gadolinium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7369,6 +7400,7 @@
     "key": "reduce_gadolinium_fluoride",
     "name": "钙还原制取钆",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钆。",
+    "fragment_description": "通过金属钙对#gadolinium_fluoride#进行$reduction$还原，析出银白色的金属#gadolinium#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7398,6 +7430,7 @@
     "key": "calcine_terbium_nitrate",
     "name": "煅烧硝酸铽",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "将#terbium_nitrate#进行高温$roasting$氧化分解，转化为黑色的#terbium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7423,6 +7456,7 @@
     "key": "fluorinate_terbium_oxide",
     "name": "氧化铽氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#terbium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#terbium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7452,6 +7486,7 @@
     "key": "reduce_terbium_fluoride",
     "name": "钙还原制取铽",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铽。",
+    "fragment_description": "利用金属#calcium#对#terbium_fluoride#进行$reduction$还原，得到金属状态的#terbium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7481,6 +7516,7 @@
     "key": "calcine_dysprosium_nitrate",
     "name": "煅烧硝酸镝",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "将#dysprosium_nitrate#进行高温$roasting$氧化分解，转化为#dysprosium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7506,6 +7542,7 @@
     "key": "fluorinate_dysprosium_oxide",
     "name": "氧化镝氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#dysprosium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#dysprosium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7535,6 +7572,7 @@
     "key": "reduce_dysprosium_fluoride",
     "name": "钙还原制取镝",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镝。",
+    "fragment_description": "利用金属#calcium#对#dysprosium_fluoride#进行$reduction$还原，得到金属状态的#dysprosium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7564,6 +7602,7 @@
     "key": "calcine_holmium_nitrate",
     "name": "煅烧硝酸钬",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#holmium_nitrate#进行高温$roasting$氧化分解，转化为#holmium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7589,6 +7628,7 @@
     "key": "fluorinate_holmium_oxide",
     "name": "氧化钬氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#holmium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#holmium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7618,6 +7658,7 @@
     "key": "reduce_holmium_fluoride",
     "name": "钙还原制取钬",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钬。",
+    "fragment_description": "利用金属#calcium#对#holmium_fluoride#进行$reduction$还原，得到金属状态的#holmium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7647,6 +7688,7 @@
     "key": "calcine_erbium_nitrate",
     "name": "煅烧硝酸铒",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#erbium_nitrate#进行高温$roasting$氧化分解，转化为粉红色的#erbium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7672,6 +7714,7 @@
     "key": "fluorinate_erbium_oxide",
     "name": "氧化铒氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#erbium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#erbium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7701,6 +7744,7 @@
     "key": "reduce_erbium_fluoride",
     "name": "钙还原制取铒",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铒。",
+    "fragment_description": "利用金属#calcium#对#erbium_fluoride#进行$reduction$还原，得到金属状态的#erbium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7730,6 +7774,7 @@
     "key": "calcine_thulium_nitrate",
     "name": "煅烧硝酸铥",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#thulium_nitrate#进行高温$roasting$氧化分解，转化为稳定的#thulium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7755,6 +7800,7 @@
     "key": "fluorinate_thulium_oxide",
     "name": "氧化铥氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#thulium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#thulium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7784,6 +7830,7 @@
     "key": "reduce_thulium_fluoride",
     "name": "钙还原制取铥",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属铥。",
+    "fragment_description": "利用金属#calcium#对#thulium_fluoride#进行$reduction$还原，得到金属状态的#thulium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7813,6 +7860,7 @@
     "key": "calcine_ytterbium_nitrate",
     "name": "煅烧硝酸镱",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#ytterbium_nitrate#进行高温$roasting$氧化分解，转化为稳定的#ytterbium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7838,6 +7886,7 @@
     "key": "fluorinate_ytterbium_oxide",
     "name": "氧化镱氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#ytterbium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#ytterbium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7867,6 +7916,7 @@
     "key": "reduce_ytterbium_fluoride",
     "name": "钙还原制取镱",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镱。",
+    "fragment_description": "利用金属#calcium#对#ytterbium_fluoride#进行$reduction$还原，得到金属状态的#ytterbium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7896,6 +7946,7 @@
     "key": "calcine_lutetium_nitrate",
     "name": "煅烧硝酸镥",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#lutetium_nitrate#进行高温$roasting$氧化分解，转化为稳定的#lutetium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -7921,6 +7972,7 @@
     "key": "fluorinate_lutetium_oxide",
     "name": "氧化镥氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#lutetium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#lutetium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -7950,6 +8002,7 @@
     "key": "reduce_lutetium_fluoride",
     "name": "钙还原制取镥",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属镥。",
+    "fragment_description": "利用金属#calcium#对#lutetium_fluoride#进行$reduction$还原，得到金属状态的#lutetium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -7979,6 +8032,7 @@
     "key": "calcine_yttrium_nitrate",
     "name": "煅烧硝酸钇",
     "description": "通过高温煅烧使硝酸盐分解为稳定的氧化物。",
+    "fragment_description": "对#yttrium_nitrate#进行高温$roasting$氧化分解，转化为稳定的#yttrium_oxide#。",
     "required_container": "crucible",
     "required_actions": {
       "key": "roasting",
@@ -8004,6 +8058,7 @@
     "key": "fluorinate_yttrium_oxide",
     "name": "氧化钇氟化",
     "description": "使用氢氟酸处理氧化物得到氟化物。",
+    "fragment_description": "使#yttrium_oxide#与#hydrofluoric_acid#发生反应，通过$heating$生成#yttrium_fluoride#。",
     "required_container": "reaction_kettle",
     "required_actions": {
       "key": "heating",
@@ -8033,6 +8088,7 @@
     "key": "reduce_yttrium_fluoride",
     "name": "钙还原制取钇",
     "description": "在真空炉或惰性气体保护下，用金属钙还原氟化物得到金属钇。",
+    "fragment_description": "利用金属#calcium#对#yttrium_fluoride#进行$reduction$还原，得到金属状态的#yttrium#单质。",
     "required_container": "crucible",
     "required_actions": {
       "key": "reduction",
@@ -8062,6 +8118,7 @@
     "key": "bombard_neodymium_to_promethium",
     "name": "中子轰击钕",
     "description": "利用核反应堆产生的中子束轰击金属钕，使其转化为人造放射性元素钷。",
+    "fragment_description": "利用反应堆产生的强中子束对#neodymium#进行$neutron_irradiation$轰击，诱发核转变生成#promethium#。",
     "time_required": 120,
     "required_container": "reactor_vessel",
     "required_actions": {
@@ -8087,6 +8144,7 @@
     "key": "pitchblende_grinding",
     "name": "沥青铀矿粉碎",
     "description": "使用研磨装置将沥青铀矿石粉碎成细粉。",
+    "fragment_description": "利用#crucible#对#pitchblende#原料进行$grinding$粉碎，为酸浸提取做准备。",
     "time_required": 20,
     "required_era": "rare_earth",
     "required_container": "crucible",
@@ -8112,6 +8170,7 @@
     "key": "pitchblende_acid_leaching",
     "name": "沥青铀矿酸浸",
     "description": "在浓硫酸和硝酸作用下加热，将铀、镭从矿石中溶解出来。",
+    "fragment_description": "将粉碎后的矿石在#autoclave#中与#concentrated_sulfuric_acid#和#nitric_acid#进行强力$stirring$浸出。",
     "time_required": 20,
     "required_era": "rare_earth",
     "required_container": "autoclave",
@@ -8149,6 +8208,7 @@
     "key": "radium_precipitation",
     "name": "碳酸钠沉淀镭",
     "description": "在浸出液中加入碳酸钠，使镭以碳酸盐形式沉淀。",
+    "fragment_description": "向浸出液中添加#sodium_carbonate#，$precipitation$出含镭的沉淀物。",
     "time_required": 40,
     "required_actions": {
       "key": "precipitation",
@@ -8181,6 +8241,7 @@
     "key": "radium_carbonate_dissolving",
     "name": "沉淀溶解",
     "description": "使用盐酸溶解碳酸镭沉淀，转变为可溶性的氯化镭。",
+    "fragment_description": "使用#hydrochloric_acid#将碳酸盐沉淀$dissolving$溶解，转变为可溶的镭盐溶液。",
     "time_required": 20,
     "required_actions": {
       "key": "dissolving",
@@ -8209,6 +8270,7 @@
     "key": "radium_fractional_crystallization",
     "name": "镭-钡分步结晶",
     "description": "利用镭盐和钡盐溶解度的微小差异，经过上千次重结晶获得纯氯化镭。",
+    "fragment_description": "由于物理性质相似，需进行上千次$fractional_crystallization$才能将#radium_chloride_solution#中的钡分离。",
     "time_required": 120,
     "required_actions": {
       "key": "fractional_crystallization",
@@ -8237,6 +8299,7 @@
     "key": "radium_reduction",
     "name": "镭还原",
     "description": "在真空中使用金属镁还原氯化镭，得到纯金属镭。",
+    "fragment_description": "在#vacuum_pump#维持的高真空中，利用金属#magnesium#对#pure_radium_chloride#进行还原$heating$。",
     "time_required": 80,
     "required_actions": {
       "key": "heating",
@@ -8270,6 +8333,7 @@
     "key": "radium_to_radon",
     "name": "镭衰变产氡",
     "description": "金属镭在密封容器中发生衰变，缓慢产生氡气。",
+    "fragment_description": "在密封存储中等待#radium#的放射性$aging$衰变，逐步收集生成的#radon_gas_mixture#。",
     "time_required": 300,
     "required_actions": {
       "key": "aging",
@@ -8294,6 +8358,7 @@
     "key": "radon_purification",
     "name": "氡分离纯化",
     "description": "通过真空转移和液氮冷凝，将氡从气体混合物中分离。",
+    "fragment_description": "在#liquid_nitrogen#极低温下利用#vacuum_pump#进行气相分离，从而$gas_collecting_air$纯化出单质#radon#。",
     "time_required": 60,
     "required_actions": {
       "key": "gas_collecting_air",
@@ -8327,6 +8392,7 @@
     "key": "pitchblende_helium_release",
     "name": "真空加热脱氦",
     "description": "真空加热沥青铀矿至红热，释放出其中捕获的氦气。",
+    "fragment_description": "对颗粒状的#pitchblende#进行高温$heating$并由#vacuum_pump#抽真空，释放出封存在矿石孔隙中的#crude_helium#。",
     "time_required": 100,
     "required_actions": {
       "key": "heating",
@@ -8356,6 +8422,7 @@
     "key": "helium_deoxidation",
     "name": "氦气除氧",
     "description": "通过灼热的铜网，使氦气中的氧气杂质与之反应生成氧化铜。",
+    "fragment_description": "使#crude_helium#流经灼热的金属#copper#，$blowing$吹扫使其中的氧气杂质反应脱除。",
     "time_required": 40,
     "required_actions": {
       "key": "blowing",
@@ -8384,6 +8451,7 @@
     "key": "helium_charcoal_trap",
     "name": "氦气活性炭纯化",
     "description": "在液氮冷却下，利用活性炭吸附除去剩余的氮、氧、氩等杂质。",
+    "fragment_description": "在#liquid_nitrogen#冷却环境下，通过#activated_charcoal#对氦气进行深低温$filtering$物理吸附纯化。",
     "time_required": 60,
     "required_actions": {
       "key": "filtering",
@@ -8416,6 +8484,7 @@
     "key": "polonium_leaching",
     "name": "钋渣溶解",
     "description": "使用盐酸溶解酸浸残渣，使其中的钋进入溶液。",
+    "fragment_description": "对#polonium_residue#加入#hydrochloric_acid#进行$dissolving$溶解，将钋离子浸入酸溶液中。",
     "time_required": 30,
     "required_actions": {
       "key": "dissolving",
@@ -8444,6 +8513,7 @@
     "key": "polonium_displacement",
     "name": "铋片置换钋",
     "description": "利用金属铋比钋更活泼的性质，将溶液中的钋原子置换沉积在铋片表面。",
+    "fragment_description": "利用更活泼的金属#bismuth#板在酸溶液中发生电化学置换，$precipitation$出吸附在板表面的钋原子。",
     "time_required": 60,
     "required_actions": {
       "key": "precipitation",
@@ -8472,6 +8542,7 @@
     "key": "polonium_vacuum_distillation",
     "name": "钋真空蒸馏",
     "description": "在真空下加热铋片，利用钋的挥发性将其蒸馏分离。",
+    "fragment_description": "在#vacuum_pump#高真空及高温环境下，利用挥发性差异将#polonium#从铋板表面$distillation$蒸馏分离。",
     "time_required": 80,
     "required_actions": {
       "key": "distillation",
@@ -8501,6 +8572,7 @@
     "key": "air_separation",
     "name": "空气分馏",
     "description": "利用深低温技术将液态空气分馏，获得氮气、氧气及氩、氖、氪、氙等稀有气体。",
+    "fragment_description": "在#fractionating_column#中对大量冷凝的#air#进行连续$fractional_distillation$，分离得到氧、氮及各种稀有气体。",
     "time_required": 40,
     "required_era": "rare_earth",
     "required_container": "fractionating_column",
@@ -8550,6 +8622,7 @@
     "key": "activated_charcoal_production",
     "name": "制备活性炭",
     "description": "通过物理或化学活化处理木炭或焦炭，使其产生大量孔隙。",
+    "fragment_description": "对#charcoal#进行高温$roasting$活化处理，使其结构变得疏松多孔，生成吸附力极强的#activated_charcoal#。",
     "required_items": [
       {
         "key": "charcoal",
@@ -8574,6 +8647,7 @@
     "key": "rubber_production",
     "name": "硫化橡胶",
     "description": "通过硫化处理树脂获得橡胶。",
+    "fragment_description": "将#resin#与少量#sulfur#混合并持续$stirring$，发生硫化反应后生成具有弹性的#rubber#。",
     "required_items": [
       {
         "key": "resin",
@@ -8602,6 +8676,7 @@
     "key": "monazite_digestion",
     "name": "独居石硫酸消解",
     "description": "利用浓硫酸高温消解独居石，将钍和稀土元素转化为硫酸盐溶液。",
+    "fragment_description": "在强酸性和高压的#autoclave#中，通过剧烈的$stirring$使矿石彻底消解为钍盐溶液。",
     "time_required": 40,
     "required_era": "rare_earth",
     "required_container": "autoclave",
@@ -8635,6 +8710,7 @@
     "key": "thorium_extraction",
     "name": "金属钍提取",
     "description": "利用草酸沉淀与还原反应，从硫酸钍溶液中提取出纯净的金属钍。",
+    "fragment_description": "对#thorium_sulfate_solution#通过$electrolysis$电解还原，最终制得高纯度的#thorium#金属。",
     "time_required": 60,
     "required_era": "atomic_age",
     "required_container": "reaction_kettle",
@@ -8664,6 +8740,7 @@
     "key": "extract_actinium_and_protactinium",
     "name": "铀残留放射性提纯",
     "description": "利用离子交换与精密萃取技术，从铀矿处理残渣中提取痕量的锕与镤。",
+    "fragment_description": "在精密萃取过程中对含铀溶液进行长时间$aging$放置，小心提取出微量的#actinium#和#protactinium#。",
     "time_required": 180,
     "required_era": "atomic_age",
     "required_container": "distillation_flask",
@@ -8697,6 +8774,7 @@
     "key": "bombard_radium_to_actinium",
     "name": "中子轰击镭",
     "description": "利用核反应堆产生的中子束轰击金属镭，使其经由β衰变转化为锕。",
+    "fragment_description": "将#radium#置于反应堆的强中子流下通过$neutron_irradiation$，转化出极微量的#actinium#。",
     "time_required": 120,
     "required_era": "atomic_age",
     "required_container": "reactor_vessel",
@@ -8726,6 +8804,7 @@
     "key": "bombard_molybdenum_to_technetium",
     "name": "中子轰击钼制备锝",
     "description": "在反应堆中利用中子轰击金属钼，使其部分转化为锝-99。",
+    "fragment_description": "在#reactor_vessel#中对#molybdenum#施加稳定的$neutron_irradiation$，成功制备出人造元素#technetium#。",
     "time_required": 120,
     "required_era": "atomic_age",
     "required_container": "reactor_vessel",
@@ -8751,6 +8830,7 @@
     "key": "bombard_bismuth_to_astatine",
     "name": "α粒子轰击铋",
     "description": "利用加速器产生的α粒子流轰击金属铋靶，人工合成极短寿命的砹。",
+    "fragment_description": "在反应堆内以特定能量的微粒对#bismuth#靶材进行$particle_acceleration$轰击，观察到砹原子的瞬时生成。",
     "time_required": 180,
     "required_era": "atomic_age",
     "required_container": "reactor_vessel",
@@ -8779,6 +8859,7 @@
     "key": "decay_actinium_to_francium",
     "name": "锕衰变捕获钫",
     "description": "利用锕-227的α衰变过程，在极短时间内捕获产生的子核钫。",
+    "fragment_description": "利用天然存在的#actinium#样品在密闭系统中发生$aging$阿尔法衰变，并及时捕获产生的#francium#。",
     "time_required": 180,
     "required_era": "atomic_age",
     "required_container": "reaction_kettle",
@@ -8804,6 +8885,7 @@
     "key": "sulfur_dioxide_catalytic_oxidation",
     "name": "二氧化硫催化氧化",
     "description": "在铂铑催化剂存在下，将二氧化硫与氧气加热反应生成三氧化硫。",
+    "fragment_description": "在装有铂催化剂的#sealed_tube#中，$heating$使二氧化硫与氧气发生高效氧化反应。",
     "time_required": 10,
     "required_container": "sealed_tube",
     "required_actions": {
