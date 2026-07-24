@@ -3577,13 +3577,16 @@
   {
     "key": "reaction_kettle",
     "name": "反应釜",
+    "category": "工具",
+    "description": "耐酸碱高温的工业反应容器。",
     "type": [
       "tool",
       "container"
     ],
-    "category": "工具",
-    "description": "耐酸碱高温的工业反应容器。",
-    "durable": 100
+    "durable": 100,
+    "attrs": {
+      "can_heat": true
+    }
   },
   {
     "key": "evaporating_dish",
