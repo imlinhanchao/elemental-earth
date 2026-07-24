@@ -120,5 +120,14 @@
         "description": "从矿石中提取出镭"
       }
     ]
+  },
+  {
+    "key": "future",
+    "name": "未来时代",
+    "icon": "tabler:rocket",
+    "description": "人类文明的未来，充满了无限可能。",
+    "order": 6,
+    "milestones": [
+    ]
   }
 ]

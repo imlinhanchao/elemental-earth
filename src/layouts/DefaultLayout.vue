@@ -86,6 +86,9 @@ onMounted(() => {
   setTimeout(() => {
     appStore.isReady = true
   }, 100)
+  setTimeout(() => {
+    stateStore.checkEraAdvance()
+  }, 2000)
 })
 
 // ─── 元素发现动画 ────────────────────────────────────────────────

@@ -211,13 +211,18 @@ export const useStateStore = defineStore('state', () => {
     logStore.addLog(`里程碑达成: ${milestoneDesc}`, 'reward')
     
     // 检查是否可以晋级
-    if (currentEra.value && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
+    checkEraAdvance(key);
+  }
+
+  /** 检查是否可以晋级 */
+  function checkEraAdvance(key?: string) {
+    if (currentEra.value && currentEra.value!.milestones.length > 0 && completedMilestoneCount.value >= currentEra.value!.milestones.length) {
       const previousEra = currentEra.value
       pendingEraTransition.value = currentEra.value.key
       logStore.addLog(`✨ 你的文明进入了「${currentEra.value.name}」`, 'elements')
       if (nextEra.value) {
         state.currentEra = nextEra.value.key
-        void modManager.emit('onEraAdvance', {
+        modManager.emit('onEraAdvance', {
           from: previousEra?.key,
           to: nextEra.value.key,
           milestoneKey: key,
@@ -251,7 +256,7 @@ export const useStateStore = defineStore('state', () => {
     calcSwitchDuration, startSwitch, cancelSwitch, completeSwitch, 
     getElements, addElement, recordAction, discoveryQueue, clearPendingDiscovery,
     currentEra, timePerDistance, nextEra, eraProgress, completedMilestoneCount, totalMilestoneCount,
-    pendingEraTransition, clearEraTransition, checkMilestone, markEraDetailsSeen
+    pendingEraTransition, clearEraTransition, checkMilestone, markEraDetailsSeen, checkEraAdvance
   }
 })
 
