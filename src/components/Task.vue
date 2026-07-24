@@ -65,7 +65,8 @@
     @click="remove"
   >
     <span class="truncate inline-flex items-center" :class="{ 'group-hover:opacity-50': !readOnly }">
-      <Icon v-if="task.condition?.loopUntil" icon="tabler:repeat" class="text-xs mr-0.5 text-primary" />
+      <Icon v-if="task.type === 'production_check'" icon="tabler:list-check" class="text-xs mr-0.5 text-info" />
+      <Icon v-else-if="task.condition?.loopUntil" icon="tabler:repeat" class="text-xs mr-0.5 text-primary" />
       <span class="truncate">{{ task.name }}</span>
       <span v-if="count && count > 1">x{{ count }}</span>
       <span>[{{ shortTime(cost) }}]</span>

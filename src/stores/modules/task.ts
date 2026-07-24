@@ -24,10 +24,15 @@ export interface ITaskCondition {
   loopUntil?: boolean;
 }
 
-export interface ITask extends IAction {
+export interface ITask extends Partial<IAction> {
   id: string | number;
+  key: string;
+  name: string;
+  time_required: number;
   begin_time: number; // timestamp
-  type: 'action' | 'tech' | 'lab';
+  type: 'action' | 'tech' | 'lab' | 'production_check';
+  required_items: { key: string | string[]; quantity: number; use?: number }[];
+  rewards: IReward[];
   formulaKey?: string;
   /** 任务完成后的冷却时间（秒） */
   cooldown?: number;
@@ -39,6 +44,10 @@ export interface ITask extends IAction {
   condition?: ITaskCondition;
   /** 是否时代加成 */
   era_bonus?: boolean;
+  /** 关联的生产线（用于循环检查） */
+  source_line_id?: string;
+  /** 生产线步进（用于循环检查） */
+  line_steps?: any[];
 }
 
 export const useTaskStore = defineStore('task', () => {
@@ -541,7 +550,29 @@ export const useTaskStore = defineStore('task', () => {
           logStore.addLog(`实验室操作 ${task.name} 已完成，但似乎没有任何变化`, 'lab');
           notifyTaskComplete(task.name, '实验室操作已完成，但似乎没有任何变化');
         }
-      } else {
+      } else if (task.type === 'production_check') {
+        // 生产线条件检查任务
+        if (!checkStepCondition(task.condition)) {
+          // 条件未满足，重新展开生产线
+          const productionStore = (await import('./production')).useProductionStore();
+          if (task.line_steps) {
+            // 将步骤插入到队列最前面（当前 map）
+            const addedCount = productionStore.addStepsToQueue(task.source_line_id || 'sub', task.line_steps, 1, 0, mapKey);
+            if (addedCount > 0) {
+              // 这里的 addStepsToQueue 会将任务 push 到 mapTasks 的末尾
+              // 我们需要将它们移动到当前检查任务之前
+              const allAdded = mapTasks.splice(mapTasks.length - addedCount, addedCount);
+              mapTasks.splice(0, 0, ...allAdded);
+              
+              logStore.addLog(`生产线 ${task.name} 条件未满足，已自动重复执行`, 'process');
+              recalculateStartTimes(mapKey);
+              return; // 保持在队列中，任务本身不移除，再次等待循环
+            }
+          }
+        } else {
+          logStore.addLog(`生产线 ${task.name} 任务已达标`, 'process');
+        }
+      } else if (task.type === 'tech') {
         packStore.addTech(task.key);
         logStore.addLog(`科技 ${task.name} 研究完成`, 'tech');
         notifyTaskComplete(task.name, '科技研究完成');
@@ -605,8 +636,8 @@ export const useTaskStore = defineStore('task', () => {
 
   const getTasks = computed(() => tasks);
 
-  const pushTask = (task: (IAction|ITech) & { id?: string | number, condition?: ITaskCondition }): boolean => {
-    const mapKey = stateStore.state.map;
+  const pushTask = (task: (IAction|ITech) & { id?: string | number, condition?: ITaskCondition, type?: string }, targetMap?: string): boolean => {
+    const mapKey = targetMap || stateStore.state.map;
     if (!tasksMap[mapKey]) {
       tasksMap[mapKey] = [];
     }
@@ -616,7 +647,7 @@ export const useTaskStore = defineStore('task', () => {
       begin_time: 0, 
       id: task.id || (Date.now() + Math.random()), 
       rewards: 'rewards' in task ? task.rewards : [], 
-      type: 'rewards' in task ? 'action' : 'tech', 
+      type: task.type || ('rewards' in task ? 'action' : 'tech'), 
       category: 'category' in task ? task.category : '', 
       cooldown: 'cooldown' in task ? task.cooldown : undefined, 
       materials_locked: false,
@@ -658,8 +689,8 @@ export const useTaskStore = defineStore('task', () => {
     milestones?: string[];
     id?: string | number;
     condition?: ITaskCondition;
-  }): boolean {
-    const mapKey = stateStore.state.map;
+  }, targetMap?: string): boolean {
+    const mapKey = targetMap || stateStore.state.map;
     if (!tasksMap[mapKey]) {
       tasksMap[mapKey] = [];
     }

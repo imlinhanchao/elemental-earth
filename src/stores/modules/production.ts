@@ -250,103 +250,125 @@ export const useProductionStore = defineStore('production', () => {
     }
 
     let addedCount = 0;
-    
-    function addSteps(steps: IProductionLineStep[], m: number, depth: number = 0) {
-      if (depth > 5) return; // Prevent infinite recursion
+    addedCount = addStepsToQueue(line.id, line.steps, multiplier);
+    toastStore.addToast(`已添加 ${addedCount} 个任务到队列`, 'success');
+  }
 
-      for (const step of steps) {
-        // 1. 循环条件的处理 (Loop Until)
-        if (step.condition?.loopUntil) {
-          // 预检：如果根据预期清单已经满足条件，直接跳过
-          if (checkStepCondition(step.condition, taskStore.projectedInventory)) {
-            continue;
-          }
+  /**
+   * 将生产线步骤展开并推入任务队列
+   * @param lineId 来源生产线 ID
+   * @param steps 步骤列表
+   * @param m 倍率
+   * @param depth 递归深度
+   * @returns 成功添加的任务数
+   */
+  function addStepsToQueue(lineId: string, steps: IProductionLineStep[], m: number, depth: number = 0, targetMap?: string): number {
+    if (depth > 5) return 0; // Prevent infinite recursion
+    let addedCount = 0;
+    const mapKey = targetMap || stateStore.state.map;
 
-          // 如果还没满足逻辑，推入【一个】带有循环属性的任务
-          let pushSuccess = false;
-          const commonId = `prod-${id}-${step.key}-${Date.now()}-loop-${Math.random().toString(36).slice(2, 5)}`;
-          
-          if (step.type === 'action') {
-            const action = Actions.find(a => a.key === step.key);
-            if (!action) continue;
-            pushSuccess = taskStore.pushTask({
-              ...action,
-              id: commonId,
-              required_items: step.payload?.required_items || action.required_items,
-              condition: step.condition
-            });
-          } else if (step.type === 'formula') {
-            const formula = Formulas.find(f => f.key === step.key);
-            if (!formula || !step.payload) continue;
-            pushSuccess = taskStore.pushLabTask({
-              ...step.payload,
-              id: commonId,
-              condition: step.condition
-            });
-          } else if (step.type === 'line') {
-            // 嵌套生产线的 LoopUntil：直接展开一次（暂不支持生产线级别的 native task loop）
-            const subLine = productionLines.find(l => l.id === step.key);
-            if (subLine) {
-              addSteps(subLine.steps, 1, depth + 1);
-              pushSuccess = true;
-            }
-          }
-
-          if (pushSuccess) addedCount++;
-          continue; // 转入下一个 Step
+    for (const step of steps) {
+      // 1. 循环条件的处理 (Loop Until)
+      if (step.condition?.loopUntil) {
+        // 预检：如果根据预期清单已经满足条件，直接跳过
+        if (checkStepCondition(step.condition, taskStore.projectedInventory)) {
+          continue;
         }
 
-        // 2. 普通条件检查 (If condition)
-        if (step.condition && !step.condition.loopUntil) {
-          if (!checkStepCondition(step.condition, taskStore.projectedInventory)) {
-            continue;
+        // 如果还没满足逻辑，推入【一个】带有循环属性的任务
+        let pushSuccess = false;
+        const commonId = `prod-${lineId}-${step.key}-${Date.now()}-loop-${Math.random().toString(36).slice(2, 5)}`;
+        
+        if (step.type === 'action') {
+          const action = Actions.find(a => a.key === step.key);
+          if (!action) continue;
+          pushSuccess = taskStore.pushTask({
+            ...action,
+            id: commonId,
+            required_items: step.payload?.required_items || action.required_items,
+            condition: step.condition
+          } as any, mapKey);
+        } else if (step.type === 'formula') {
+          const formula = Formulas.find(f => f.key === step.key);
+          if (!formula || !step.payload) continue;
+          pushSuccess = taskStore.pushLabTask({
+            ...step.payload,
+            id: commonId,
+            condition: step.condition
+          }, mapKey);
+        } else if (step.type === 'line') {
+          // 嵌套生产线的 LoopUntil：展开一次，并在末尾追加一个“检查并重复”任务
+          const subLine = productionLines.find(l => l.id === step.key);
+          if (subLine) {
+            addedCount += addStepsToQueue(step.key, subLine.steps, 1, depth + 1, mapKey);
+            // 追加检查任务
+            taskStore.pushTask({
+              id: `prod-check-${step.key}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+              name: `检查: ${subLine.name}`,
+              type: 'production_check',
+              required_items: [],
+              condition: step.condition,
+              line_steps: subLine.steps,
+              source_line_id: step.key,
+              time_required: 1, // 1s 检查时间
+              begin_time: Date.now()
+            } as any, mapKey);
+            pushSuccess = true;
           }
         }
 
-        // 3. 普通任务/嵌套生产线展开
-        const cycles = step.count * m;
-        for (let j = 0; j < cycles; j++) {
-          if (taskStore.currentMapTasks.length >= 100) break;
+        if (pushSuccess) addedCount++;
+        continue; // 转入下一个 Step
+      }
 
-          let pushSuccess = false;
-          if (step.type === 'action') {
-            const action = Actions.find(a => a.key === step.key);
-            if (!action) break;
+      // 2. 普通条件检查 (If condition)
+      if (step.condition && !step.condition.loopUntil) {
+        if (!checkStepCondition(step.condition, taskStore.projectedInventory)) {
+          continue;
+        }
+      }
 
-            pushSuccess = taskStore.pushTask({
-              ...action,
-              id: `prod-${id}-${step.key}-${Date.now()}-${j}-${Math.random().toString(36).slice(2, 7)}`,
-              required_items: step.payload?.required_items || action.required_items
-            });
-          } else if (step.type === 'formula') {
-            const formula = Formulas.find(f => f.key === step.key);
-            if (!formula || !step.payload) break;
+      // 3. 普通任务/嵌套生产线展开
+      const cycles = step.count * m;
+      for (let j = 0; j < cycles; j++) {
+        if (taskStore.currentMapTasks.length >= 100) break;
 
-            pushSuccess = taskStore.pushLabTask({
-              ...step.payload,
-              id: `prod-${id}-${step.key}-${Date.now()}-${j}-${Math.random().toString(36).slice(2, 7)}`
-            });
-          } else if (step.type === 'line') {
-            const subLine = productionLines.find(l => l.id === step.key);
-            if (subLine) {
-              addSteps(subLine.steps, 1, depth + 1);
-              pushSuccess = true; 
-            } else {
-              break;
-            }
-          }
+        let pushSuccess = false;
+        if (step.type === 'action') {
+          const action = Actions.find(a => a.key === step.key);
+          if (!action) break;
 
-          if (pushSuccess) {
-            addedCount++;
+          pushSuccess = taskStore.pushTask({
+            ...action,
+            id: `prod-${lineId}-${step.key}-${Date.now()}-${j}-${Math.random().toString(36).slice(2, 7)}`,
+            required_items: step.payload?.required_items || action.required_items
+          } as any, mapKey);
+        } else if (step.type === 'formula') {
+          const formula = Formulas.find(f => f.key === step.key);
+          if (!formula || !step.payload) break;
+
+          pushSuccess = taskStore.pushLabTask({
+            ...step.payload,
+            id: `prod-${lineId}-${step.key}-${Date.now()}-${j}-${Math.random().toString(36).slice(2, 7)}`
+          }, mapKey);
+        } else if (step.type === 'line') {
+          const subLine = productionLines.find(l => l.id === step.key);
+          if (subLine) {
+            addedCount += addStepsToQueue(step.key, subLine.steps, 1, depth + 1, mapKey);
+            pushSuccess = true; 
           } else {
             break;
           }
         }
+
+        if (pushSuccess) {
+          addedCount++;
+        } else {
+          break;
+        }
       }
     }
-
-    addSteps(line.steps, multiplier);
-    toastStore.addToast(`已添加 ${addedCount} 个任务到队列`, 'success');
+    return addedCount;
   }
 
   function validateMapCompatibility(line: IProductionLine | { steps: IProductionLineStep[] }): { ok: boolean, invalidActions: string[] } {
@@ -511,6 +533,7 @@ export const useProductionStore = defineStore('production', () => {
     getTotalTime,
     exportLine,
     importLine,
-    currentEditingId
+    currentEditingId,
+    addStepsToQueue
   }
 })
