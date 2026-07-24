@@ -1758,6 +1758,7 @@
         "quantity": 100,
         "probability": 300,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "cave"
         ]
@@ -1778,6 +1779,7 @@
         "quantity": 100,
         "probability": 150,
         "required_era": "alchemy",
+        "required_item": "dynamite",
         "map": [
           "cave",
           "volcano"
@@ -2102,7 +2104,7 @@
           30
         ],
         "probability": 80,
-        "required_era": "rare_earth",
+        "required_era": "electrochem",
         "required_item": "high_explosive",
         "map": [
           "mountain",
@@ -2852,6 +2854,19 @@
         "map": [
           "mountain",
           "cave"
+        ]
+      },
+      {
+        "key": "monazite",
+        "probability": 200,
+        "required_era": "electrochem",
+        "required_item": [
+          "titanium_pickaxe",
+          "chromium_pickaxe"
+        ],
+        "map": [
+          "cave",
+          "mountain"
         ]
       }
     ],
