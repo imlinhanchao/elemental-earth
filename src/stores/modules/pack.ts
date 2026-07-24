@@ -158,8 +158,8 @@ export const usePackStore = defineStore('pack', () => {
     if (existingItem) {
       // 气体材料被消耗时：归还一个集气瓶
       const itemDef = getItem(key);
-      if (itemDef?.type.includes('gas')) {
-        addItem('gas_bottle', 1);
+      if (itemDef?.type.includes('gas') && !use) {
+        addItem('gas_bottle', quantity);
       }
       if (use > 0 && itemDef && itemDef.durable) {
         const maxDur = itemDef.durable;
