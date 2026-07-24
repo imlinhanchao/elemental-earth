@@ -2063,14 +2063,14 @@
     ]
   },
   {
-    "name": "雷管",
     "key": "detonator",
+    "name": "雷管",
     "category": "工具",
     "description": "金属管状装置，内部装有起爆药，用于安全引爆高能炸药。",
     "type": [
       "tool"
     ],
-    "durable": 1
+    "durable": 0
   },
   {
     "name": "铯榴石",
