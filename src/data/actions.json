@@ -1465,8 +1465,7 @@
       {
         "key": "tenon_mortise",
         "quantity": 1,
-        "probability": 1000,
-        "guaranteed": true
+        "probability": 1000
       }
     ],
     "required_techs": [
