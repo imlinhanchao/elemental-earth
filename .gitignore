@@ -27,3 +27,4 @@ core
 .codegraph/daemon.pid
 
 .archive
+output
