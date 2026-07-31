@@ -197,7 +197,7 @@ export const useTaskStore = defineStore('task', () => {
         if (task.type === 'lab' || task.type === 'action') {
           const rewards = task.rewards || [];
           for (const r of rewards) {
-            if (r.guaranteed || task.type === 'lab') {
+            if (r.guaranteed || task.type === 'lab' || rewards.length == 1) {
               const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
               const qty = task.era_bonus ? Math.floor(baseQty * getEraBonus(r)) : baseQty;
               const itemData = getItem(r.key);
