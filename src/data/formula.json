@@ -9290,7 +9290,8 @@
     "required_items": [
       {
         "key": "sulfur_dioxide",
-        "quantity": 2
+        "quantity": 2,
+        "isMain": true
       },
       {
         "key": "oxygen",
