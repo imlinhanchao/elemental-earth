@@ -3897,7 +3897,13 @@
         "quantity": 1
       }
     ],
-    "rewards": [],
+    "rewards": [
+      {
+        "key": "roman_concrete",
+        "quantity": 4,
+        "probability": 1000
+      }
+    ],
     "required_techs": [
       "roman_architecture"
     ]

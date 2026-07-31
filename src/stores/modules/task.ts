@@ -500,7 +500,7 @@ export const useTaskStore = defineStore('task', () => {
           const msg = summaryArr.join('，');
           logStore.addLog(`任务 ${task.name} 完成，获得: ${msg}`, 'reward');
           notifyTaskComplete(task.name, `获得: ${msg}`);
-        } else {
+        } else if (nonGuaranteed.length) {
           logStore.addLog(`任务 ${task.name} 完成，但未获得奖励`, 'reward');
           notifyTaskComplete(task.name, '未获得奖励');
         }
