@@ -82,7 +82,7 @@ function openEraModal() {
         </button>
       </div>
       <div class="flex-1 px-2 flex items-center gap-2">
-        <Icon icon="pinhead:bohr-atomic-model" class="text-2xl text-primary"></Icon>
+        <Icon icon="pinhead:bohr-atomic-model" class="text-primary" size="1.5em"></Icon>
         <span class="text-xl font-bold" :class="{ 'hidden': appStore.isMobile }">元素纪元</span>
         <div 
         >
