@@ -53,6 +53,7 @@
     :required_items="resolvedItems"
     :required_techs="data.required_techs"
     :time_required="timeRequired"
+    :products="data.products"
   >
     <div class="relative inline-flex formula w-full">
       <button

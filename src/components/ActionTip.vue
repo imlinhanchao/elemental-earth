@@ -9,6 +9,7 @@
   const props = defineProps<{
     description: string;
     required_items: { key: string | string[]; quantity: number, use?: number }[];
+    products?: { key: string; multiple?: number; required_chain_operation?: string }[];
     required_techs?: string[];
     time_required?: number;
   }>();
@@ -58,6 +59,23 @@
         insufficient: known && (isDurable && item.use ? item.use > projectedDur : item.quantity > projectedQty),
       };
     });
+  });
+
+  const products = computed(() => {
+    if (!showTooltip.value || !props.products || props.products.length === 0) return [];
+    return props.products.map(p => {
+      const itemData = getItem(p.key);
+      const isGas = itemData?.type.includes('gas');
+      const hasGasTech = packStore.hasTech('gas_collection');
+      // 如果是气体且未解锁气体收集，则不显示（上层将过滤掉）
+      return {
+        key: p.key,
+        multiple: p.multiple || 1,
+        name: itemData?.name || p.key,
+        isGas,
+        visible: !isGas || hasGasTech,
+      };
+    }).filter(p => p.visible);
   });
 
   const actualTime = computed(() => {
@@ -133,7 +151,7 @@
         <Icon icon="tabler:clock" />
         {{ actualTime }}s
       </div>
-      <div v-if="items.length" class="divider my-1 h-px"></div>
+      <div v-if="items.length || products.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
         <template v-if="item.quantity > 0">{{ item.quantity }}x </template>
         <template v-if="item.use > 0">{{ item.use }}耐 </template>
@@ -142,6 +160,17 @@
         <span v-if="item.known" class="opacity-40 italic ml-1">
           (持有: {{ taskStore.projectedInventory.get(item.key) || 0 }}{{ item.isDurable ? ', 耐久: ' + (taskStore.projectedDurability.get(item.key) || 0).toFixed(1) : '' }})
         </span>
+      </div>
+      <div v-if="products.length" class="mt-1 text-[10px]">
+        <div class="text-xs font-bold mb-1 flex items-center justify-center">
+          <Icon icon="system-uicons:pull-down" />
+          <Icon icon="system-uicons:pull-down" />
+          <Icon icon="system-uicons:pull-down" />
+        </div>
+        <div v-for="p in products" :key="p.key" class="leading-relaxed">
+          <template v-if="p.multiple && p.multiple > 0">{{ p.multiple }}x </template>
+          <span>{{ p.name }}</span>
+        </div>
       </div>
     </section>
   </section>
