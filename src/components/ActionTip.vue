@@ -17,6 +17,8 @@
   const taskStore = useTaskStore();
   const appStore = useAppStore();
 
+  const canHover = !window.matchMedia('(hover: none)').matches;
+
   const items = computed(() => {
     if (!showTooltip.value) return [];
     
@@ -67,21 +69,21 @@
   // 移动端长按显示
   const mobileShow = ref(false);
   const isHovered = ref(false);
-  const showTooltip = computed(() => mobileShow.value || (!appStore.isMobile && isHovered.value));
+  const showTooltip = computed(() => mobileShow.value || (canHover && isHovered.value));
   let pressTimer: any = null;
 
   function handleMouseEnter() {
-    if (appStore.isMobile) return;
+    if (!canHover) return;
     isHovered.value = true;
   }
 
   function handleMouseLeave() {
-    if (appStore.isMobile) return;
+    if (!canHover) return;
     isHovered.value = false;
   }
 
   function handleTouchStart() {
-    if (!appStore.isMobile) return;
+    if (!canHover) return;
     // 重置状态
     if (pressTimer) clearTimeout(pressTimer);
     
@@ -94,7 +96,7 @@
   }
 
   function handleTouchEnd() {
-    if (!appStore.isMobile) return;
+    if (!canHover) return;
     if (pressTimer) {
       clearTimeout(pressTimer);
       pressTimer = null;
@@ -102,7 +104,7 @@
   }
 
   function handleTouchMove() {
-    if (!appStore.isMobile) return;
+    if (!canHover) return;
     if (pressTimer) {
       clearTimeout(pressTimer);
       pressTimer = null;

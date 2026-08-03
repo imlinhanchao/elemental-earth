@@ -9804,8 +9804,16 @@
   },
   {
     "key": "lead_oxide_reduction",
-    "name": "碳还原氧化铅",
+    "name": "还原氧化铅",
     "description": "氧化铅与碳反应生成铅和一氧化碳。",
+    "fragment_description": "对#lead_oxide#与#charcoal#混合物进行$roasting$，通过热还原反应产出金属#lead#。",
+    "time_required": 20,
+    "required_era": "alchemy",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "lead_oxide",
@@ -9817,11 +9825,6 @@
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "roasting"
-    },
-    "required_container": "kiln",
-    "time_required": 30,
     "products": [
       {
         "key": "lead",
@@ -9832,9 +9835,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ],
-    "required_era": "alchemy",
-    "fragment_description": "对#lead_oxide#与#charcoal#混合物进行$roasting$，通过热还原反应产出金属#lead#。"
+    ]
   },
   {
     "key": "zinc_oxide_reduction",
