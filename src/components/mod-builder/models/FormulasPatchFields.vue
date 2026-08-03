@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <fieldset class="fieldset">
         <legend class="fieldset-legend">配方标识符 (Key)</legend>
         <input v-model="form.key" class="input input-sm w-full" placeholder="$new_formula" />
@@ -9,11 +9,6 @@
       <fieldset class="fieldset">
         <legend class="fieldset-legend">显示名称</legend>
         <input v-model="form.name" class="input input-sm w-full" />
-      </fieldset>
-
-      <fieldset class="fieldset">
-        <legend class="fieldset-legend">基础研发耗时 (秒)</legend>
-        <input type="number" v-model.number="form.timeRequired" class="input input-sm w-full" />
       </fieldset>
 
       <fieldset class="fieldset">
@@ -37,10 +32,9 @@
       </fieldset>
 
       <fieldset class="fieldset">
-        <legend class="fieldset-legend">操作强度范围</legend>
+        <legend class="fieldset-legend">操作次数</legend>
         <div class="join w-full">
           <input type="number" v-model.number="form.requiredActionMin" class="input input-sm join-item w-1/2" placeholder="最小值" />
-          <input type="number" v-model.number="form.requiredActionMax" class="input input-sm join-item w-1/2" placeholder="最大值" />
         </div>
       </fieldset>
 
@@ -66,6 +60,7 @@
           multiple
           :options="lookup.techs.value"
           placeholder="选择前置科技..."
+          class="w-full"
         />
       </fieldset>
     </div>
@@ -81,13 +76,92 @@
     </fieldset>
 
     <fieldset class="fieldset">
-      <legend class="fieldset-legend">反应底物/材料需求 (required_items - JSON)</legend>
-      <textarea v-model="form.requiredItemsJson" class="textarea textarea-sm w-full font-mono text-xs" rows="3" placeholder='[{"key":"water","quantity":1}]'></textarea>
+      <legend class="fieldset-legend">反应底物/材料需求 (required_items)</legend>
+      <div class="space-y-2">
+        <div
+          v-for="(item, idx) in form.requiredItems"
+          :key="`formula-required-${idx}`"
+          class="rounded-box border border-base-300 p-3 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_auto_auto] gap-2 items-end"
+        >
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">物品 Key (支持可替代项多选)</legend>
+            <SearchableSelect
+              v-model="item.keys"
+              multiple
+              :options="lookup.items.value"
+              placeholder="选择底物..."
+            />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">数量</legend>
+            <input v-model.number="item.quantity" type="number" min="1" class="input input-sm w-full" />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">耐久消耗 use</legend>
+            <input v-model="item.useText" type="number" min="0" class="input input-sm w-full" placeholder="可选" />
+          </fieldset>
+          <label class="label cursor-pointer justify-start gap-2">
+            <input v-model="item.isMain" type="checkbox" class="checkbox checkbox-sm" />
+            <span class="label-text text-xs">主反应物</span>
+          </label>
+          <button class="btn btn-xs btn-error btn-soft" @click="removeRequiredItem(idx)">
+            <Icon icon="tabler:trash" />
+            删除
+          </button>
+        </div>
+
+        <button class="btn btn-xs" @click="addRequiredItem">
+          <Icon icon="tabler:plus" />
+          添加底物
+        </button>
+      </div>
     </fieldset>
 
     <fieldset class="fieldset">
-      <legend class="fieldset-legend">反应产物 (products - JSON)</legend>
-      <textarea v-model="form.productsJson" class="textarea textarea-sm w-full font-mono text-xs" rows="4" placeholder='[{"key":"steam","multiple":1}]'></textarea>
+      <legend class="fieldset-legend">反应产物 (products)</legend>
+      <div class="space-y-2">
+        <div
+          v-for="(product, idx) in form.products"
+          :key="`formula-product-${idx}`"
+          class="rounded-box border border-base-300 p-3 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-2 items-end"
+        >
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">产物 Key</legend>
+            <SearchableSelect
+              v-model="product.key"
+              clearable
+              :options="lookup.items.value"
+              placeholder="选择产物..."
+            />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">倍数 multiple</legend>
+            <input v-model.number="product.multiple" type="number" min="0" class="input input-sm w-full" />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">required_chain_operation</legend>
+            <input v-model="product.requiredChainOperation" class="input input-sm w-full" placeholder="可选" />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">required_item (可替代项多选)</legend>
+            <SearchableSelect
+              v-model="product.requiredItems"
+              multiple
+              :options="lookup.items.value"
+              placeholder="选择触发物品..."
+            />
+          </fieldset>
+          <button class="btn btn-xs btn-error btn-soft" @click="removeProduct(idx)">
+            <Icon icon="tabler:trash" />
+            删除
+          </button>
+        </div>
+
+        <button class="btn btn-xs" @click="addProduct">
+          <Icon icon="tabler:plus" />
+          添加产物
+        </button>
+      </div>
     </fieldset>
 
     <fieldset class="fieldset">
@@ -103,14 +177,28 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, reactive, watch } from 'vue'
+import { computed, inject, reactive, ref, watch } from 'vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
 import type { BuilderPatchOperation } from '@/views/mods/builder/types'
 
-const props = defineProps<{ modelValue: Record<string, unknown>; op: BuilderPatchOperation }>()
-const emit = defineEmits<{ (e: 'update:modelValue', value: Record<string, unknown>): void }>()
+const _props = defineProps<{ op: BuilderPatchOperation }>()
+const model = defineModel<Record<string, unknown>>({ required: true })
 
 const lookup = inject<any>('builder-lookup')
+
+interface FormulaRequiredItemFormRow {
+  keys: string[]
+  quantity: number
+  useText: string
+  isMain: boolean
+}
+
+interface FormulaProductFormRow {
+  key: string
+  multiple: number
+  requiredChainOperation: string
+  requiredItems: string[]
+}
 
 const form = reactive({
   key: '',
@@ -123,12 +211,18 @@ const form = reactive({
   requiredActionMax: undefined as number | undefined,
   requiredTechs: [] as string[],
   requiredEra: '',
-  requiredItemsJson: '',
-  productsJson: '',
+  requiredItems: [] as FormulaRequiredItemFormRow[],
+  products: [] as FormulaProductFormRow[],
   fragmentDescription: '',
   powerConsumption: undefined as number | undefined,
   extraJson: '',
 })
+const syncingFromModel = ref(false)
+const lastSnapshot = ref('')
+
+function snapshot(value: Record<string, unknown>): string {
+  return JSON.stringify(value)
+}
 
 function parseError(raw: string): string {
   if (!raw.trim()) return ''
@@ -142,15 +236,44 @@ function parseError(raw: string): string {
 
 const jsonErrors = computed(() => {
   const rows = [
-    ['required_items', parseError(form.requiredItemsJson)],
-    ['products', parseError(form.productsJson)],
     ['advanced', parseError(form.extraJson)],
   ].filter(([, err]) => err)
 
   return rows.map(([name, err]) => `${name}: ${err}`)
 })
 
+function parseOptionalNumber(raw: string): number | undefined {
+  const text = raw.trim()
+  if (!text) return undefined
+  const num = Number(text)
+  return Number.isFinite(num) ? num : undefined
+}
+
+function buildSingleOrArray(keys: string[]): string | string[] | undefined {
+  const cleanKeys = keys.map(String).map(item => item.trim()).filter(Boolean)
+  if (cleanKeys.length === 0) return undefined
+  if (cleanKeys.length === 1) return cleanKeys[0]
+  return cleanKeys
+}
+
+function addRequiredItem(): void {
+  form.requiredItems.push({ keys: [], quantity: 1, useText: '', isMain: false })
+}
+
+function removeRequiredItem(index: number): void {
+  form.requiredItems.splice(index, 1)
+}
+
+function addProduct(): void {
+  form.products.push({ key: '', multiple: 1, requiredChainOperation: '', requiredItems: [] })
+}
+
+function removeProduct(index: number): void {
+  form.products.splice(index, 1)
+}
+
 function applyFromValue(value: Record<string, unknown>): void {
+  syncingFromModel.value = true
   form.key = String(value.key ?? '')
   form.name = String(value.name ?? '')
   form.description = String(value.description ?? '')
@@ -164,11 +287,40 @@ function applyFromValue(value: Record<string, unknown>): void {
 
   form.requiredTechs = Array.isArray(value.required_techs) ? [...value.required_techs].map(String) : []
   form.requiredEra = String(value.required_era ?? '')
-  form.requiredItemsJson = Array.isArray(value.required_items) ? JSON.stringify(value.required_items, null, 2) : ''
-  form.productsJson = Array.isArray(value.products) ? JSON.stringify(value.products, null, 2) : ''
+
+  form.requiredItems = Array.isArray(value.required_items)
+    ? value.required_items.map(entry => {
+      const item = (entry || {}) as Record<string, unknown>
+      const use = item.use
+      return {
+        keys: Array.isArray(item.key) ? item.key.map(String) : item.key ? [String(item.key)] : [],
+        quantity: typeof item.quantity === 'number' && Number.isFinite(item.quantity) ? item.quantity : 1,
+        useText: typeof use === 'number' && Number.isFinite(use) ? String(use) : '',
+        isMain: Boolean(item.isMain),
+      }
+    })
+    : []
+
+  form.products = Array.isArray(value.products)
+    ? value.products.map(entry => {
+      const product = (entry || {}) as Record<string, unknown>
+      return {
+        key: String(product.key ?? ''),
+        multiple: typeof product.multiple === 'number' && Number.isFinite(product.multiple) ? product.multiple : 1,
+        requiredChainOperation: String(product.required_chain_operation ?? ''),
+        requiredItems: Array.isArray(product.required_item)
+          ? product.required_item.map(String)
+          : product.required_item
+            ? [String(product.required_item)]
+            : [],
+      }
+    })
+    : []
+
   form.fragmentDescription = String(value.fragment_description ?? '')
   form.powerConsumption = typeof value.power_consumption === 'number' ? value.power_consumption : undefined
   form.extraJson = ''
+  syncingFromModel.value = false
 }
 
 function buildValue(): Record<string, unknown> {
@@ -192,20 +344,48 @@ function buildValue(): Record<string, unknown> {
   if (form.fragmentDescription.trim()) value.fragment_description = form.fragmentDescription.trim()
   if (typeof form.powerConsumption === 'number') value.power_consumption = form.powerConsumption
 
-  if (form.requiredItemsJson.trim()) {
-    try {
-      value.required_items = JSON.parse(form.requiredItemsJson)
-    } catch {
-      // ignore
-    }
+  const requiredItems = form.requiredItems
+    .map(item => {
+      const key = buildSingleOrArray(item.keys)
+      if (!key) return null
+
+      const row: Record<string, unknown> = {
+        key,
+        quantity: typeof item.quantity === 'number' && Number.isFinite(item.quantity) ? item.quantity : 1,
+      }
+
+      const use = parseOptionalNumber(item.useText)
+      if (typeof use === 'number') row.use = use
+      if (item.isMain) row.isMain = true
+      return row
+    })
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+
+  if (requiredItems.length > 0) {
+    value.required_items = requiredItems
   }
 
-  if (form.productsJson.trim()) {
-    try {
-      value.products = JSON.parse(form.productsJson)
-    } catch {
-      // ignore
-    }
+  const products = form.products
+    .map(product => {
+      const key = product.key.trim()
+      if (!key) return null
+
+      const row: Record<string, unknown> = {
+        key,
+        multiple: typeof product.multiple === 'number' && Number.isFinite(product.multiple) ? product.multiple : 1,
+      }
+
+      const requiredChainOperation = product.requiredChainOperation.trim()
+      if (requiredChainOperation) row.required_chain_operation = requiredChainOperation
+
+      const requiredItem = buildSingleOrArray(product.requiredItems)
+      if (requiredItem) row.required_item = requiredItem
+      return row
+    })
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+
+  if (products.length > 0) {
+    value.products = products
   }
 
   if (form.extraJson.trim()) {
@@ -219,6 +399,28 @@ function buildValue(): Record<string, unknown> {
   return value
 }
 
-watch(() => props.modelValue, value => applyFromValue(value || {}), { immediate: true, deep: true })
-watch(form, () => emit('update:modelValue', buildValue()), { deep: true })
+watch(
+  model,
+  value => {
+    const next = (value || {}) as Record<string, unknown>
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    applyFromValue(next)
+  },
+  { immediate: true, deep: true },
+)
+
+watch(
+  form,
+  () => {
+    if (syncingFromModel.value) return
+    const next = buildValue()
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    model.value = next
+  },
+  { deep: true },
+)
 </script>

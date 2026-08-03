@@ -54,17 +54,18 @@
       <div class="divider my-0"></div>
 
       <component
+        v-if="editorComponent"
         :is="editorComponent"
-        :model-value="draft.value"
+        v-model="draft.value"
         :op="draft.op"
-        @update:modelValue="onValueUpdate"
+        :key="editorComponentKey"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { BuilderPatchRow } from '@/views/mods/builder/types'
 import { BUILDER_MODELS, BUILDER_OPS } from '@/views/mods/builder/types'
 import { getModelEntry, listModelKeys } from '@/views/mods/builder/helpers'
@@ -77,25 +78,14 @@ import MapsPatchFields from './models/MapsPatchFields.vue'
 import TechsPatchFields from './models/TechsPatchFields.vue'
 import TipsPatchFields from './models/TipsPatchFields.vue'
 
-const props = defineProps<{
-  row: BuilderPatchRow
-}>()
-
 const emit = defineEmits<{
-  (e: 'update', row: BuilderPatchRow): void
   (e: 'remove', id: string): void
 }>()
 
 const models = BUILDER_MODELS
 const ops = BUILDER_OPS
 
-const draft = reactive<BuilderPatchRow>({
-  id: '',
-  model: 'items',
-  op: 'add',
-  targetKey: '',
-  value: {},
-})
+const draft = defineModel<BuilderPatchRow>("row", { required: true })
 
 const editorMap = {
   items: ItemsPatchFields,
@@ -108,7 +98,7 @@ const editorMap = {
   eras: ErasPatchFields,
 }
 
-const editorComponent = computed(() => editorMap[draft.model] || ItemsPatchFields)
+const editorComponent = computed(() => editorMap[draft.value.model] || ItemsPatchFields)
 
 const targetExampleMap: Record<string, string> = {
   items: 'stone',
@@ -121,52 +111,33 @@ const targetExampleMap: Record<string, string> = {
   eras: 'stone_age',
 }
 
-const targetExample = computed(() => targetExampleMap[draft.model])
-const targetListId = computed(() => `mod-target-keys-${draft.id}`)
-const availableKeys = computed(() => listModelKeys(draft.model))
+const targetExample = computed(() => targetExampleMap[draft.value.model])
+const targetListId = computed(() => `mod-target-keys-${draft.value.id}`)
+const availableKeys = computed(() => listModelKeys(draft.value.model))
+const editorEpoch = ref(0)
+const editorComponentKey = computed(() => `${draft.value.id}-${draft.value.model}-${editorEpoch.value}`)
 
-function applyFromRow(row: BuilderPatchRow): void {
-  draft.id = row.id
-  draft.model = row.model
-  draft.op = row.op
-  draft.targetKey = row.targetKey
-  draft.value = { ...(row.value || {}) }
-}
+watch(
+  () => draft.value.model,
+  (next, prev) => {
+    if (next === prev) return
 
-function onValueUpdate(value: Record<string, unknown>): void {
-  draft.value = value
-}
+    editorEpoch.value += 1
+    draft.value.targetKey = ''
+    draft.value.value = {}
+  },
+)
 
 function loadTargetValue(): void {
-  const key = draft.targetKey.trim()
+  const key = draft.value.targetKey.trim()
   if (!key) return
 
-  const value = getModelEntry(draft.model, key)
+  const value = getModelEntry(draft.value.model, key)
   if (!value) {
     alert(`未找到目标条目：${key}`)
     return
   }
 
-  draft.value = value
+  draft.value.value = value
 }
-
-watch(
-  () => props.row,
-  row => applyFromRow(row),
-  { immediate: true, deep: true },
-)
-
-watch(
-  draft,
-  () => {
-    emit('update', {
-      id: draft.id,
-      model: draft.model,
-      op: draft.op,
-      targetKey: draft.targetKey,
-      value: { ...(draft.value || {}) },
-    })
-  },
-  { deep: true },
-)
 </script>

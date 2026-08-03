@@ -68,27 +68,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import type { BuilderHookDraft } from '@/views/mods/builder/types'
 import { HOOK_EVENT_LABELS, HOOK_EVENTS } from '@/views/mods/builder/types'
 import { buildHookCode } from '@/views/mods/builder/helpers'
-
-const props = defineProps<{
-  modelValue: BuilderHookDraft
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: BuilderHookDraft): void
-}>()
 
 const hookEvents = HOOK_EVENTS
 const eventLabels = HOOK_EVENT_LABELS
 const activeEvent = ref(hookEvents[0])
 
-const draft = reactive<BuilderHookDraft>({
-  enabled: false,
-  id: 'main',
-  events: {},
+const draft = defineModel<BuilderHookDraft>('modelValue', {
+  required: true,
+  default: () => ({
+    enabled: false,
+    id: 'main',
+    events: {},
+  }),
 })
 
 const snippetMap: Record<string, string> = {
@@ -98,19 +93,19 @@ const snippetMap: Record<string, string> = {
 }
 
 const eventBody = computed({
-  get: () => draft.events[activeEvent.value] || '',
+  get: () => draft.value.events[activeEvent.value] || '',
   set: (value: string) => {
-    draft.events = {
-      ...draft.events,
+    draft.value.events = {
+      ...draft.value.events,
       [activeEvent.value]: value,
     }
   },
 })
 
 const compileError = computed(() => {
-  if (!draft.enabled) return ''
+  if (!draft.value.enabled) return ''
   try {
-    const code = buildHookCode(draft.events)
+    const code = buildHookCode(draft.value.events)
     new Function('module', 'exports', code)
     return ''
   } catch (error) {
@@ -123,26 +118,4 @@ function appendSnippet(type: keyof typeof snippetMap): void {
   const current = eventBody.value
   eventBody.value = current ? `${current}\n${snippet}` : snippet
 }
-
-watch(
-  () => props.modelValue,
-  value => {
-    draft.enabled = Boolean(value.enabled)
-    draft.id = value.id || 'main'
-    draft.events = { ...(value.events || {}) }
-  },
-  { immediate: true, deep: true },
-)
-
-watch(
-  draft,
-  () => {
-    emit('update:modelValue', {
-      enabled: draft.enabled,
-      id: draft.id.trim() || 'main',
-      events: { ...draft.events },
-    })
-  },
-  { deep: true },
-)
 </script>

@@ -8,12 +8,22 @@
 
       <fieldset class="fieldset">
         <legend class="fieldset-legend">显示时机：绑定时代 (可选)</legend>
-        <input v-model="form.era" class="input input-sm w-full" placeholder="stone_age" />
+        <SearchableSelect
+          v-model="form.era"
+          clearable
+          :options="lookup.eras.value"
+          placeholder="选择时代..."
+        />
       </fieldset>
 
       <fieldset class="fieldset md:col-span-2">
         <legend class="fieldset-legend">触发条件：关联物品 (可选)</legend>
-        <input v-model="form.item" class="input input-sm w-full" placeholder="stone" />
+        <SearchableSelect
+          v-model="form.item"
+          clearable
+          :options="lookup.items.value"
+          placeholder="选择物品..."
+        />
       </fieldset>
     </div>
 
@@ -35,17 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
+import { computed, inject, reactive, ref, watch } from 'vue'
+import SearchableSelect from '@/components/SearchableSelect.vue'
 import type { BuilderPatchOperation } from '@/views/mods/builder/types'
 
-const props = defineProps<{
-  modelValue: Record<string, unknown>
-  op: BuilderPatchOperation
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: Record<string, unknown>): void
-}>()
+const _props = defineProps<{ op: BuilderPatchOperation }>()
+const model = defineModel<Record<string, unknown>>({ required: true })
+const lookup = inject<any>('builder-lookup')
 
 const form = reactive({
   id: '',
@@ -54,6 +60,12 @@ const form = reactive({
   item: '',
   extraJson: '',
 })
+const syncingFromModel = ref(false)
+const lastSnapshot = ref('')
+
+function snapshot(value: Record<string, unknown>): string {
+  return JSON.stringify(value)
+}
 
 const jsonError = computed(() => {
   const raw = form.extraJson.trim()
@@ -67,11 +79,13 @@ const jsonError = computed(() => {
 })
 
 function applyFromValue(value: Record<string, unknown>): void {
+  syncingFromModel.value = true
   form.id = String(value.id ?? '')
   form.content = String(value.content ?? '')
   form.era = String(value.era ?? '')
   form.item = String(value.item ?? '')
   form.extraJson = ''
+  syncingFromModel.value = false
 }
 
 function buildValue(): Record<string, unknown> {
@@ -93,14 +107,27 @@ function buildValue(): Record<string, unknown> {
 }
 
 watch(
-  () => props.modelValue,
-  value => applyFromValue(value || {}),
+  model,
+  value => {
+    const next = (value || {}) as Record<string, unknown>
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    applyFromValue(next)
+  },
   { immediate: true, deep: true },
 )
 
 watch(
   form,
-  () => emit('update:modelValue', buildValue()),
+  () => {
+    if (syncingFromModel.value) return
+    const next = buildValue()
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    model.value = next
+  },
   { deep: true },
 )
 </script>

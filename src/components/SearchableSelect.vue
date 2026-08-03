@@ -1,7 +1,7 @@
 <template>
   <div class="relative isolation-auto" ref="wrapperRef">
     <!-- 触发器 -->
-    <div class="flex items-center gap-1" :class="{ 'input input-bordered p-0 pr-2 h-auto min-h-8': border, ['input-' + size]: size }">
+    <div class="flex items-center gap-1 w-full" :class="{ 'input input-bordered p-0 pr-2 h-auto min-h-8': border, ['input-' + size]: size }">
       <button type="button" class="grow flex flex-wrap items-center gap-1 text-left px-3 py-1 min-h-full overflow-hidden"
         :class="{ 'text-base-content/40': !hasValue }"
         @click="toggleOpen">

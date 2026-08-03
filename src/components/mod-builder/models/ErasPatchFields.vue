@@ -28,8 +28,32 @@
     </fieldset>
 
     <fieldset class="fieldset">
-      <legend class="fieldset-legend">里程碑清单 (milestones - JSON)</legend>
-      <textarea v-model="form.milestonesJson" class="textarea textarea-sm w-full font-mono text-xs" rows="4" placeholder='[{"key":"stone_milestone","description":"获取石器时代核心物品"}]'></textarea>
+      <legend class="fieldset-legend">里程碑清单 (milestones)</legend>
+      <div class="space-y-2">
+        <div
+          v-for="(milestone, idx) in form.milestones"
+          :key="`milestone-${idx}`"
+          class="rounded-box border border-base-300 p-3 grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-2 items-end"
+        >
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">里程碑 Key</legend>
+            <input v-model="milestone.key" class="input input-sm w-full" placeholder="stone_milestone" />
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend text-xs">描述</legend>
+            <input v-model="milestone.description" class="input input-sm w-full" placeholder="获取石器时代核心物品" />
+          </fieldset>
+          <button class="btn btn-xs btn-error btn-soft" @click="removeMilestone(idx)">
+            <Icon icon="tabler:trash" />
+            删除
+          </button>
+        </div>
+
+        <button class="btn btn-xs" @click="addMilestone">
+          <Icon icon="tabler:plus" />
+          添加里程碑
+        </button>
+      </div>
     </fieldset>
 
     <fieldset class="fieldset">
@@ -45,11 +69,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import type { BuilderPatchOperation } from '@/views/mods/builder/types'
 
-const props = defineProps<{ modelValue: Record<string, unknown>; op: BuilderPatchOperation }>()
-const emit = defineEmits<{ (e: 'update:modelValue', value: Record<string, unknown>): void }>()
+const _props = defineProps<{ op: BuilderPatchOperation }>()
+const model = defineModel<Record<string, unknown>>({ required: true })
+
+interface MilestoneFormRow {
+  key: string
+  description: string
+}
 
 const form = reactive({
   key: '',
@@ -57,9 +86,15 @@ const form = reactive({
   icon: '',
   description: '',
   order: undefined as number | undefined,
-  milestonesJson: '',
+  milestones: [] as MilestoneFormRow[],
   extraJson: '',
 })
+const syncingFromModel = ref(false)
+const lastSnapshot = ref('')
+
+function snapshot(value: Record<string, unknown>): string {
+  return JSON.stringify(value)
+}
 
 function parseError(raw: string): string {
   if (!raw.trim()) return ''
@@ -73,21 +108,38 @@ function parseError(raw: string): string {
 
 const jsonErrors = computed(() => {
   const rows = [
-    ['milestones', parseError(form.milestonesJson)],
     ['advanced', parseError(form.extraJson)],
   ].filter(([, err]) => err)
 
   return rows.map(([name, err]) => `${name}: ${err}`)
 })
 
+function addMilestone(): void {
+  form.milestones.push({ key: '', description: '' })
+}
+
+function removeMilestone(index: number): void {
+  form.milestones.splice(index, 1)
+}
+
 function applyFromValue(value: Record<string, unknown>): void {
+  syncingFromModel.value = true
   form.key = String(value.key ?? '')
   form.name = String(value.name ?? '')
   form.icon = String(value.icon ?? '')
   form.description = String(value.description ?? '')
   form.order = typeof value.order === 'number' ? value.order : undefined
-  form.milestonesJson = Array.isArray(value.milestones) ? JSON.stringify(value.milestones, null, 2) : ''
+  form.milestones = Array.isArray(value.milestones)
+    ? value.milestones.map(entry => {
+      const milestone = (entry || {}) as Record<string, unknown>
+      return {
+        key: String(milestone.key ?? ''),
+        description: String(milestone.description ?? ''),
+      }
+    })
+    : []
   form.extraJson = ''
+  syncingFromModel.value = false
 }
 
 function buildValue(): Record<string, unknown> {
@@ -98,12 +150,17 @@ function buildValue(): Record<string, unknown> {
   if (form.description.trim()) value.description = form.description.trim()
   if (typeof form.order === 'number') value.order = form.order
 
-  if (form.milestonesJson.trim()) {
-    try {
-      value.milestones = JSON.parse(form.milestonesJson)
-    } catch {
-      // ignore invalid json
-    }
+  const milestones = form.milestones
+    .map(item => {
+      const key = item.key.trim()
+      const description = item.description.trim()
+      if (!key || !description) return null
+      return { key, description }
+    })
+    .filter((item): item is { key: string; description: string } => Boolean(item))
+
+  if (milestones.length > 0) {
+    value.milestones = milestones
   }
 
   if (form.extraJson.trim()) {
@@ -117,6 +174,28 @@ function buildValue(): Record<string, unknown> {
   return value
 }
 
-watch(() => props.modelValue, value => applyFromValue(value || {}), { immediate: true, deep: true })
-watch(form, () => emit('update:modelValue', buildValue()), { deep: true })
+watch(
+  model,
+  value => {
+    const next = (value || {}) as Record<string, unknown>
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    applyFromValue(next)
+  },
+  { immediate: true, deep: true },
+)
+
+watch(
+  form,
+  () => {
+    if (syncingFromModel.value) return
+    const next = buildValue()
+    const nextSnapshot = snapshot(next)
+    if (nextSnapshot === lastSnapshot.value) return
+    lastSnapshot.value = nextSnapshot
+    model.value = next
+  },
+  { deep: true },
+)
 </script>
