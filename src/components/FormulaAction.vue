@@ -74,7 +74,7 @@
           <Icon icon="tabler:x" />
         </button>
       </div>
-      <div v-else-if="packStore.manuscripts.length > 0" class="absolute -bottom-2 -right-2 z-10 dropdown dropdown-end">
+      <div v-else-if="packStore.manuscripts.length > 0" class="absolute -bottom-2 -right-2 z-101 dropdown dropdown-end">
         <button
           tabindex="0"
           class="btn btn-xs btn-circle btn-ghost bg-base-100 shadow-sm border border-base-300 w-5 h-5 min-h-0 p-0 text-[10px] tool-btn"
@@ -83,7 +83,7 @@
         >
           <Icon icon="tabler:bookmark-plus" />
         </button>
-        <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-48 z-30 border border-base-300">
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-48 z-101 border border-base-300">
           <li class="menu-title text-xs">加入手札</li>
           <li v-for="g in packStore.manuscripts" :key="g.id">
             <a class="flex justify-between items-center text-sm" @click.stop="packStore.toggleManuscriptItem(g.id, 'formula', data.key)" :class="{ 'bg-primary/10 text-primary': isInGroup(g.id) }">

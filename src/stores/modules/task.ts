@@ -301,6 +301,7 @@ export const useTaskStore = defineStore('task', () => {
     rewardsList.sort((a, b) => a.probability - b.probability);
     const totalProbability = rewardsList.reduce((sum, r) => sum + r.probability, 0);
     const random = Math.random() * totalProbability;
+    console.log(rewardsList.map(r => packStore.getDisplayName(r.key) + ':' + (r.probability / totalProbability * 100).toFixed(2) + '%').join('\n'))
     let cumulativeProbability = 0;
     for (const r of rewardsList) {
       cumulativeProbability += r.probability;
