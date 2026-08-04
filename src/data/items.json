@@ -398,16 +398,6 @@
     ]
   },
   {
-    "key": "iron_pickaxe",
-    "name": "铁镐",
-    "category": "工具",
-    "description": "用铁打造的镐，比石镐更坚固耐用。",
-    "type": [
-      "tool"
-    ],
-    "durable": 10
-  },
-  {
     "key": "iron_shovel",
     "name": "铁铲",
     "category": "工具",
@@ -643,6 +633,16 @@
       "tool"
     ],
     "durable": 5
+  },
+  {
+    "key": "iron_pickaxe",
+    "name": "铁镐",
+    "category": "工具",
+    "description": "用铁打造的镐，比石镐更坚固耐用。",
+    "type": [
+      "tool"
+    ],
+    "durable": 10
   },
   {
     "key": "brass_condenser",
