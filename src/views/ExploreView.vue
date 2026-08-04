@@ -104,6 +104,7 @@
         <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
         世界奇观
         <span class="text-xs font-normal opacity-50 ml-2">人类文明的丰碑</span>
+        <span v-if="wonderBonusPercent > 0" class="ml-3 badge badge-outline badge-sm badge-secondary text-xs">产量加成 +{{ wonderBonusPercent }}%</span>
       </h2>
       
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -214,6 +215,18 @@ const unlockedWonders = computed(() => {
     a.rewards && 
     a.rewards.some((r: any) => packStore.hasItem(r.key))
   )
+})
+
+// 计算已解锁的奇观总加成（来自 items.json 中每个奇观的 attrs.level）
+const wonderBonusPercent = computed(() => {
+  let total = 0
+  for (const it of Items) {
+    if (it.category !== '奇观') continue
+    const lvl = it.attrs?.level || 0
+    if (lvl <= 0) continue
+    if (packStore.hasItem(it.key)) total += Number(lvl)
+  }
+  return Math.round(total)
 })
 
 function getWonderImage(wonder: any) {

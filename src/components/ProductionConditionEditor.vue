@@ -60,7 +60,7 @@ function reset() {
       <label class="label cursor-pointer justify-start gap-2 py-0 text-xs font-bold"
              :class="mode === 'loop' ? 'text-secondary' : 'text-warning'">
         <input type="checkbox" v-model="localLoopUntil" class="checkbox checkbox-xs" 
-               :class="mode === 'loop' ? 'checkbox-secondary' : 'checkbox-warning'" />
+               :class="mode === 'loop' ? 'checkbox-secondary' : 'checkbox-accent'" />
         <span v-if="mode === 'loop'">持续执行直到库存满足条件 (生产中心模式)</span>
         <span v-else>循环直到条件满足</span>
       </label>

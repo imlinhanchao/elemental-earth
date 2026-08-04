@@ -12,7 +12,7 @@ import type { ITech } from '@/data/techs';
 import { tips } from '@/data/tips';
 import { Eras, getEra } from '@/data/eras';
 import { useLogStore } from './log';
-import { getItem } from '@/data/items';
+import { getItem, Items } from '@/data/items';
 import { Formulas, getFormula } from '@/data/formula';
 import { LabActions, getLab } from '@/data/labs';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
@@ -113,17 +113,29 @@ export const useTaskStore = defineStore('task', () => {
   });
 
   /** 获取时代奖励加成倍率 */
-  const getEraBonus = (reward: IReward): number => {
+  const getBonus = (reward: IReward): number => {
     const currentOrder = currentEraOrder.value;
     
     // 若无时代限制，则当作炼金术时代 (order 1) 处理
     const reqOrder = reward.required_era ? (getEra(reward.required_era)?.order ?? 1) : 1;
 
     if (currentOrder > reqOrder) {
-      return 1 + (currentOrder - reqOrder) * 0.80;
+      return 1 + (currentOrder - reqOrder) * 0.80 + (wonderBonusPercent.value || 0);
     }
     return 1;
   };
+
+  // 计算已解锁奇观带来的总加成（百分比）——来自 items.json 中奇观的 attrs.level
+  const wonderBonusPercent = computed(() => {
+    let total = 0;
+    for (const it of Items) {
+      if (it.category !== '奇观') continue;
+      const lvl = it.attrs?.level || 0;
+      if (lvl <= 0) continue;
+      if (packStore.hasItem(it.key)) total += Number(lvl);
+    }
+    return Math.round(total);
+  });
 
   /** 获取考虑时代加成的最终奖励数量 */
   const getFinalQuantity = (reward: IReward, bonus = false): number => {
@@ -133,7 +145,9 @@ export const useTaskStore = defineStore('task', () => {
 
     if (!bonus) return qty;
 
-    return Math.max(1, Number((qty * getEraBonus(reward)).toFixed(1)));
+    // 当 bonus 标记为 true 时，应用时代加成与奇观加成（乘法叠加）
+    const mult = getBonus(reward);
+    return Math.max(1, Number((qty * mult).toFixed(1)));
   };
 
   const now = computed(() => appStore.tick);
@@ -199,7 +213,7 @@ export const useTaskStore = defineStore('task', () => {
           for (const r of rewards) {
             if (r.guaranteed || task.type === 'lab' || rewards.length == 1) {
               const baseQty = Array.isArray(r.quantity) ? Math.min(...r.quantity) : r.quantity || 1;
-              const qty = task.era_bonus ? Math.floor(baseQty * getEraBonus(r)) : baseQty;
+              const qty = task.era_bonus ? Math.floor(baseQty * getBonus(r)) : baseQty;
               const itemData = getItem(r.key);
               // 这里判断是否具有耐久属性：原本就在 durableKeys 中，或者配置表中定义了 durable
               if (durableKeys.has(r.key) || (itemData && (itemData.durable ?? 0) > 0)) {

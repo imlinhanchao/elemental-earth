@@ -18,15 +18,18 @@
     ]
   },
   {
-    "name": "埃及金字塔",
     "key": "giza_pyramid",
+    "name": "埃及金字塔",
     "category": "奇观",
     "description": "巍峨的巨型石砌建筑，矗立在沙海之间，诉说着千年的秘密。它是人类劳动力与几何智慧的巅峰结晶。",
     "type": [
       "material",
       "building"
     ],
-    "milestone": "build_pyramid"
+    "milestone": "build_pyramid",
+    "attrs": {
+      "level": 4
+    }
   },
   {
     "name": "木材",
@@ -4213,11 +4216,14 @@
     "key": "four_goat_zun",
     "name": "四羊方尊",
     "category": "奇观",
+    "description": "青铜铸造技术的巅峰之作，四角各有一只卷角神羊，造型雄奇。",
     "type": [
       "material"
     ],
-    "description": "青铜铸造技术的巅峰之作，四角各有一只卷角神羊，造型雄奇。",
-    "is_discovery": true
+    "is_discovery": true,
+    "attrs": {
+      "level": 3
+    }
   },
   {
     "key": "blue_brick",
@@ -4261,7 +4267,10 @@
       "material"
     ],
     "is_discovery": true,
-    "milestone": 2
+    "milestone": 2,
+    "attrs": {
+      "level": 5
+    }
   },
   {
     "key": "roman_concrete",
@@ -4273,24 +4282,30 @@
     ]
   },
   {
-    "name": "罗马万神殿",
     "key": "pantheon",
+    "name": "罗马万神殿",
     "category": "奇观",
     "description": "宏伟的穹顶建筑，巨大的圆形拱顶在没有现代机械的情况下精确落成，象征着罗马帝国的辉煌。",
     "type": [
       "material",
       "building"
-    ]
+    ],
+    "attrs": {
+      "level": 2
+    }
   },
   {
-    "name": "埃菲尔铁塔",
     "key": "eiffel_tower",
+    "name": "埃菲尔铁塔",
     "category": "奇观",
     "description": "一座由锻铁构成的宏伟塔楼，高耸入云，象征着工业时代的辉煌。",
     "type": [
       "material",
       "building"
-    ]
+    ],
+    "attrs": {
+      "level": 6
+    }
   },
   {
     "name": "铆钉",
@@ -4321,14 +4336,17 @@
     ]
   },
   {
-    "name": "应县木塔",
     "key": "yinxian_pagoda",
+    "name": "应县木塔",
     "category": "奇观",
     "description": "全木结构的楼阁式古塔，塔高67米，历经千年风雨依旧巍然屹立，是中国古代木构建筑的瑰宝。",
     "type": [
       "material",
       "building"
-    ]
+    ],
+    "attrs": {
+      "level": 1
+    }
   },
   {
     "name": "硫化钠",
@@ -4743,6 +4761,9 @@
     "description": "已成功发射并进入轨道的空间站，人类文明的象征。",
     "type": [
       "material"
-    ]
+    ],
+    "attrs": {
+      "level": 7
+    }
   }
 ]
