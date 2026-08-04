@@ -114,3 +114,20 @@ export const renderMarkdown = (text: string): string => {
   // marked.parse 返回可能是 string 或 Promise<string>，视配置而定，默认同步
   return marked.parse(text, { breaks: true, gfm: true }) as string;
 };
+
+export const fixed = (num: number, precision = 3) => {
+  if (typeof num !== 'number') return num;
+  return Number(num.toFixed(precision));
+};
+
+/** 格式化物品数量，用于 UI 显示（支持千/百万/十亿后缀） */
+export const formatQty = (num: any, precision = 2) => {
+  if (typeof num !== 'number') return num;
+  const abs = Math.abs(num);
+  if (abs >= 1e9) return Number((num / 1e9).toFixed(precision)) + 'B';
+  if (abs >= 1e6) return Number((num / 1e6).toFixed(precision)) + 'M';
+  if (abs >= 1e3) return Number((num / 1e3).toFixed(precision)) + 'k';
+  // 小数处理：对于小于1但大于0的值保留一位小数，否则按 precision 处理
+  if (abs > 0 && abs < 1) return Number(num.toFixed(Math.max(1, precision))).toString();
+  return Number(num.toFixed(precision)).toString();
+};

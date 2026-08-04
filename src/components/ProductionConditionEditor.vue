@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { formatQty } from '@/utils/function'
 import Icon from '@/components/Icon.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
 import { usePackStore } from '@/stores/modules/pack'
@@ -77,8 +78,8 @@ function reset() {
       <div class="form-control">
         <div class="flex justify-between items-center px-1">
           <label class="label py-0"><span class="label-text-alt text-[10px] opacity-60">监控物品</span></label>
-          <span v-if="localTargetItem" class="text-[10px] opacity-40 italic">
-            当前: {{ packStore.getItemQuantity(localTargetItem) }}
+            <span v-if="localTargetItem" class="text-[10px] opacity-40 italic">
+            当前: {{ formatQty(packStore.getItemQuantity(localTargetItem)) }}
             <template v-if="getItem(localTargetItem)?.durable">
               (耐: {{ packStore.getTotalDurability(localTargetItem).toFixed(1) }})
             </template>

@@ -5,6 +5,7 @@
   import { useAppStore } from '@/stores/modules/app';
   import { useTaskStore } from '@/stores/modules/task';
   import { computed, ref } from 'vue';
+  import { formatQty } from '@/utils/function';
 
   const props = defineProps<{
     description: string;
@@ -153,12 +154,12 @@
       </div>
       <div v-if="items.length || products.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
-        <template v-if="item.quantity > 0">{{ item.quantity }}x </template>
-        <template v-if="item.use > 0">{{ item.use }}耐 </template>
+        <template v-if="item.quantity > 0">{{ formatQty(item.quantity) }}x </template>
+        <template v-if="item.use > 0">{{ formatQty(item.use) }}耐 </template>
         <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
         <span class="unknown" v-if="!item.known">????</span>
         <span v-if="item.known" class="opacity-40 italic ml-1">
-          (持有: {{ taskStore.projectedInventory.get(item.key) || 0 }}{{ item.isDurable ? ', 耐久: ' + (taskStore.projectedDurability.get(item.key) || 0).toFixed(1) : '' }})
+          (持有: {{ formatQty(taskStore.projectedInventory.get(item.key) || 0) }}{{ item.isDurable ? ', 耐久: ' + (taskStore.projectedDurability.get(item.key) || 0).toFixed(1) : '' }})
         </span>
       </div>
       <div v-if="products.length" class="mt-1 text-[10px]">

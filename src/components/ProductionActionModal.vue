@@ -8,6 +8,7 @@ import { useStateStore } from '@/stores/modules/state'
 import Icon from '@/components/Icon.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
 import ProductionConditionEditor from '@/components/ProductionConditionEditor.vue'
+import { formatQty } from '@/utils/function'
 
 const props = defineProps<{
   visible: boolean
@@ -212,7 +213,7 @@ function close() {
                 <span class="opacity-60">{{ idx + 1 }}. {{ Array.isArray(req.key) ? '选择材料' : getItemName(req.key) }}:</span>
                 <div class="flex items-center gap-2">
                   <span :class="packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) >= req.quantity * count ? 'text-success' : 'text-error'">
-                    持有: {{ packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) }}/{{ req.quantity * count }}
+                      持有: {{ formatQty(packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key)) }}/{{ formatQty(req.quantity * count) }}
                   </span>
                   <span v-if="Items.find(i => i.key === (Array.isArray(req.key) ? selectedMaterials[idx] : req.key))?.durable" class="bg-base-200 px-1 rounded">
                     耐久: {{ packStore.getTotalDurability(Array.isArray(req.key) ? selectedMaterials[idx] : req.key).toFixed(1) }}
@@ -222,7 +223,7 @@ function close() {
               <template v-if="Array.isArray(req.key)">
                 <select v-model="selectedMaterials[idx]" class="select select-bordered select-xs w-full mt-1">
                   <option v-for="k in req.key" :key="k" :value="k">
-                    {{ getItemName(k) }} (持有: {{ packStore.getItemQuantity(k) }}{{ Items.find(i=>i.key===k)?.durable ? ', 耐久: ' + packStore.getTotalDurability(k).toFixed(1) : '' }})
+                    {{ getItemName(k) }} (持有: {{ formatQty(packStore.getItemQuantity(k)) }}{{ Items.find(i=>i.key===k)?.durable ? ', 耐久: ' + packStore.getTotalDurability(k).toFixed(1) : '' }})
                   </option>
                 </select>
               </template>

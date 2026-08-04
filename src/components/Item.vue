@@ -5,6 +5,7 @@
   import { computed, ref } from 'vue';
   import InlineTooltip from '@/components/InlineTooltip.vue';
   import RenameDialog from '@/components/RenameDialog.vue';
+  import { formatQty } from '@/utils/function';
 
   const props = defineProps<{
     data: IPackItem;
@@ -65,7 +66,7 @@
         >
           <Icon icon="icon-park-outline:edit" class="text-base" />
         </button>
-        <span class="badge badge-soft badge-primary badge-xs">{{ Number(data.quantity.toFixed(2)) }}</span>
+        <span class="badge badge-soft badge-primary badge-xs">{{ formatQty(data.quantity, 2) }}</span>
       </div>
     </div>
     <InlineTooltip v-if="itemData?.durable" :text="`耐久度: ${Math.round((data.durable / (itemData?.durable ?? 1)) * 100)}%`">

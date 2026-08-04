@@ -19,7 +19,7 @@
               <div v-for="p in products" :key="p.key" class="product-item">
                 <div class="badge badge-primary badge-lg py-4 px-4 gap-2 shadow-lg scale-110">
                   <span class="product-name font-bold">{{ packStore.getDisplayName(p.key) }}</span>
-                  <span class="product-qty opacity-80 text-sm">x{{ p.quantity }}</span>
+                  <span class="product-qty opacity-80 text-sm">x{{ formatQty(p.quantity) }}</span>
                 </div>
               </div>
             </div>
@@ -42,6 +42,7 @@ import { computed } from 'vue'
 import { usePackStore } from '@/stores/modules/pack'
 import { Formulas } from '@/data/formula'
 import Icon from './Icon.vue'
+import { formatQty } from '@/utils/function'
 
 const props = defineProps<{
   visible: boolean

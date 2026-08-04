@@ -10,6 +10,7 @@ import Icon from '@/components/Icon.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
 import ProductionConditionEditor from '@/components/ProductionConditionEditor.vue'
 import { Techs } from '@/data/techs'
+import { formatQty } from '@/utils/function'
 
 const props = defineProps<{
   visible: boolean
@@ -88,7 +89,7 @@ const allItems = computed(() => {
       const item = getItem(key)
       let label = packStore.getDisplayName(key)
       if (qty > 0 || dur > 0) {
-        label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+        label += ` (${formatQty(qty)}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
       }
       return {
         value: key,
@@ -174,27 +175,27 @@ const allContainers = computed(() => {
       }
       return true
     })
-  return base.map(c => ({
+    return base.map(c => ({
     key: c.key,
-    name: `${c.name} (持有: ${packStore.getItemQuantity(c.key)}, 耐久: ${packStore.getTotalDurability(c.key).toFixed(1)})`
+    name: `${c.name} (持有: ${formatQty(packStore.getItemQuantity(c.key))}, 耐久: ${packStore.getTotalDurability(c.key).toFixed(1)})`
   }))
 })
 
 const allFireSources = computed(() => {
-  return Items.filter(i => i.type.includes('fire_source'))
+    return Items.filter(i => i.type.includes('fire_source'))
     .map(f => ({
       key: f.key,
-      name: `${f.name} (持有: ${packStore.getItemQuantity(f.key)}, 耐久: ${packStore.getTotalDurability(f.key).toFixed(1)})`
+      name: `${f.name} (持有: ${formatQty(packStore.getItemQuantity(f.key))}, 耐久: ${packStore.getTotalDurability(f.key).toFixed(1)})`
     }))
 })
 
 const allFuels = computed(() => Items.filter(i => (i.attrs as any)?.burn_time > 0))
 
 const allBatteries = computed(() => {
-  return Items.filter(i => i.type.includes('tool') && i.key.includes('battery'))
+    return Items.filter(i => i.type.includes('tool') && i.key.includes('battery'))
     .map(b => ({
       key: b.key,
-      name: `${b.name} (持有: ${packStore.getItemQuantity(b.key)}, 耐久: ${packStore.getTotalDurability(b.key).toFixed(1)})`
+      name: `${b.name} (持有: ${formatQty(packStore.getItemQuantity(b.key))}, 耐久: ${packStore.getTotalDurability(b.key).toFixed(1)})`
     }))
 })
 
@@ -474,7 +475,7 @@ function close() {
                       <span v-if="isReactantCatalyst(idx)" class="badge badge-outline badge-xs text-secondary border-secondary/30 scale-90">催化剂</span>
                     </div>
                     <span :class="packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) >= req.quantity * (isReactantCatalyst(idx) ? 1 : batches) ? 'text-success' : 'text-error'">
-                      持有: {{ packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key) }}/{{ req.quantity * (isReactantCatalyst(idx) ? 1 : batches) }}
+                      持有: {{ formatQty(packStore.getItemQuantity(Array.isArray(req.key) ? selectedMaterials[idx] : req.key)) }}/{{ formatQty(req.quantity * (isReactantCatalyst(idx) ? 1 : batches)) }}
                     </span>
                   </div>
                   <template v-if="Array.isArray(req.key)">
@@ -503,7 +504,7 @@ function close() {
               <label class="label"><span class="label-text">容器</span></label>
               <select v-model="selectedContainer" class="select select-bordered w-full">
                 <option v-for="c in allContainers" :key="c.key" :value="c.key">
-                  {{ c.name }} (持有: {{ packStore.getItemQuantity(c.key) }}, 耐久: {{ packStore.getTotalDurability(c.key).toFixed(1) }})
+                  {{ c.name }} (持有: {{ formatQty(packStore.getItemQuantity(c.key)) }}, 耐久: {{ packStore.getTotalDurability(c.key).toFixed(1) }})
                 </option>
               </select>
             </div>
@@ -515,7 +516,7 @@ function close() {
                 <label class="label"><span class="label-text-alt text-[10px]">火源 (耐久: {{ packStore.getTotalDurability(selectedFireSource).toFixed(1) }})</span></label>
                 <select v-model="selectedFireSource" class="select select-bordered select-xs w-full">
                   <option v-for="f in allFireSources" :key="f.key" :value="f.key">
-                    {{ f.name }} (持有: {{ packStore.getItemQuantity(f.key) }}, 耐久: {{ packStore.getTotalDurability(f.key).toFixed(1) }})
+                    {{ f.name }} (持有: {{ formatQty(packStore.getItemQuantity(f.key)) }}, 耐久: {{ packStore.getTotalDurability(f.key).toFixed(1) }})
                   </option>
                 </select>
               </div>
@@ -528,7 +529,7 @@ function close() {
                   <div v-for="f in allFuels" :key="f.key" class="flex flex-col text-[10px] bg-base-100 p-1 rounded">
                     <div class="flex justify-between items-center">
                       <span>{{ f.name }}</span>
-                      <span :class="packStore.getItemQuantity(f.key) > 0 ? 'opacity-60' : 'text-error'">持有: {{ packStore.getItemQuantity(f.key) }}</span>
+                      <span :class="packStore.getItemQuantity(f.key) > 0 ? 'opacity-60' : 'text-error'">持有: {{ formatQty(packStore.getItemQuantity(f.key)) }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-1">
                       <span class="opacity-40 italic">焚烧: {{ (f.attrs as any)?.burn_time }}s</span>
@@ -544,7 +545,7 @@ function close() {
               <label class="label"><span class="label-text">电池/电源 (耐久: {{ packStore.getTotalDurability(selectedBattery).toFixed(1) }})</span></label>
               <select v-model="selectedBattery" class="select select-bordered w-full">
                 <option v-for="b in allBatteries" :key="b.key" :value="b.key">
-                  {{ b.name }} (持有: {{ packStore.getItemQuantity(b.key) }}, 耐久: {{ packStore.getTotalDurability(b.key).toFixed(1) }})
+                  {{ b.name }} (持有: {{ formatQty(packStore.getItemQuantity(b.key)) }}, 耐久: {{ packStore.getTotalDurability(b.key).toFixed(1) }})
                 </option>
               </select>
             </div>

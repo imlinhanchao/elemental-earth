@@ -45,7 +45,7 @@
                 :class="{ 'select-warning': insufficientMaterials[i] }">
                 <option :value="null" disabled>-- 请选择 --</option>
                 <option v-for="opt in materialOptions(req)" :key="opt.key" :value="opt.key">
-                  {{ opt.name }}（拥有 {{ opt.qty }}{{ opt.isDurable ? '，耐: ' + opt.dur.toFixed(1) : '' }}）
+                  {{ opt.name }}（拥有 {{ formatQty(opt.qty) }}{{ opt.isDurable ? '，耐: ' + opt.dur.toFixed(1) : '' }}）
                 </option>
               </select>
             </div>
@@ -85,7 +85,7 @@
               <div v-if="fuelOptions.length === 0" class="text-xs text-warning">没有可用的燃料</div>
               <div v-for="f in fuelOptions" :key="f.key" class="fuel-row">
                 <span class="fuel-name">{{ f.name }}</span>
-                <span class="fuel-info">拥有 {{ f.qty }} · 燃烧 {{ f.burnTime }}s</span>
+                <span class="fuel-info">拥有 {{ formatQty(f.qty) }} · 燃烧 {{ f.burnTime }}s</span>
                 <div class="fuel-controls">
                   <button class="btn btn-xs" :disabled="(fuelMap.get(f.key) || 0) <= 0" @click="decFuel(f.key)">−</button>
                   <input
@@ -146,7 +146,7 @@
           <div class="product-preview">
             <span class="product-label">预计产物：</span>
             <span v-for="p in productList" :key="p.key" class="product-tag">
-              {{ p.name }} ×{{ p.qty * (p.isCatalyst ? 1 : batches) }}
+              {{ p.name }} ×{{ formatQty(p.qty * (p.isCatalyst ? 1 : batches)) }}
             </span>
             <span v-if="productList.length === 0" class="text-warning">（尚未确认配方，可能没有有用产物）</span>
           </div>
@@ -182,6 +182,7 @@ import { ref, computed, watch } from 'vue'
 import { Formulas, type IFormula } from '@/data/formula'
 import { LabActions } from '@/data/labs'
 import { getItem } from '@/data/items'
+import { formatQty } from '@/utils/function'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
 import { useLogStore } from '@/stores/modules/log'

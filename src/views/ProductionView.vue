@@ -7,6 +7,7 @@ import { useTaskStore } from '@/stores/modules/task'
 import { Maps } from '@/data/maps'
 import { Items } from '@/data/items'
 import Icon from '@/components/Icon.vue'
+import { formatQty } from '@/utils/function'
 import { useToastStore } from '@/stores/modules/toast'
 import ProductionActionModal from '@/components/ProductionActionModal.vue'
 import ProductionFormulaModal from '@/components/ProductionFormulaModal.vue'
@@ -133,7 +134,7 @@ const allItems = computed(() => {
       const item = Items.find(i => i.key === key)
       let label = packStore.getDisplayName(key)
       if (qty > 0 || dur > 0) {
-        label += ` (${qty}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
+        label += ` (${formatQty(qty)}${item?.durable ? ', 耐: ' + dur.toFixed(1) : ''})`
       }
       return {
         value: key,
@@ -319,7 +320,7 @@ function getMapName(key: string) {
             <div class="flex flex-wrap gap-2">
               <div v-for="(req, key) in draftNetRequirements" :key="key" 
                    class="badge badge-sm gap-1.5 py-2.5 transition-colors tooltip"
-                   :data-tip="`持有: ${packStore.getItemQuantity(key as string)} (耐久: ${packStore.getTotalDurability(key as string).toFixed(1)})`"
+                   :data-tip="`持有: ${formatQty(packStore.getItemQuantity(key as string))} (耐久: ${packStore.getTotalDurability(key as string).toFixed(1)})`"
                    :class="isInsufficient(key as string, req) ? 'badge-error text-error-content' : 'badge-neutral'">
                 <span class="opacity-70">{{ req.name }}</span>
                 <span class="font-mono font-bold">
