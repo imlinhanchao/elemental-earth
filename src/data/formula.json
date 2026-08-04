@@ -10421,5 +10421,33 @@
     ],
     "required_era": "modern_chem",
     "fragment_description": "使#ammonia#通过#water#进行充分$stirring$吸收，配制成具有碱性的#ammonia_water#。"
+  },
+  {
+    "key": "copper_sulfate_from_oxide",
+    "name": "制备硫酸铜",
+    "description": "将氧化铜黑色粉末与稀硫酸混合，加热促进反应，生成蓝色硫酸铜溶液。",
+    "fragment_description": "将#copper_oxide#黑色粉末与#dilute_sulfuric_acid#混合，$heating$促进反应，生成蓝色#copper_sulfate_solution#。",
+    "time_required": 10,
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "heating",
+      "min": 1
+    },
+    "required_items": [
+      {
+        "key": "copper_oxide",
+        "quantity": 1
+      },
+      {
+        "key": "dilute_sulfuric_acid",
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "copper_sulfate_solution",
+        "multiple": 1
+      }
+    ]
   }
 ]
