@@ -1,19 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
 const props = defineProps<{ text: string }>()
 
 const show = ref(false)
 const style = ref({ top: '0px', left: '0px' })
 const el = ref<HTMLSpanElement | null>(null)
+const tooltipEl = ref<HTMLDivElement | null>(null)
 
-function onMouseEnter(e: MouseEvent) {
+async function onMouseEnter(e: MouseEvent) {
   const rect = (e.target as HTMLElement).getBoundingClientRect()
+  // show first so the tooltip element is rendered in the DOM and measurable
+  show.value = true
+  await nextTick()
+
+  const tt = tooltipEl.value as HTMLDivElement | null
+  const tooltipWidth = tt ? tt.offsetWidth : 280 // fallback to max-width
+
+  const minMargin = 10
+  const desiredCenter = rect.left + rect.width / 2 - tooltipWidth / 2
+  const maxLeft = Math.max(window.innerWidth - tooltipWidth - minMargin, minMargin)
+
+  // clamp desired center to viewport bounds to avoid large jumps
+  const leftPx = Math.min(Math.max(desiredCenter, minMargin), maxLeft)
+
   style.value = {
     top: `${rect.bottom + 6}px`,
-    left: `${Math.max(rect.left + rect.width / 2, 10)}px`,
+    left: `${leftPx}px`,
   }
-  show.value = true
 }
 function onMouseLeave() { 
   show.value = false 
@@ -24,7 +38,7 @@ function onMouseLeave() {
   <span class="inline-tooltip-trigger" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" ref="el">
     <slot />
     <Teleport to="body">
-      <div v-if="show" class="fixed-tooltip bg-base-100 text-base-content/60" :style="style">
+      <div v-if="show" ref="tooltipEl" class="fixed-tooltip bg-base-100 text-base-content/60" :style="style">
         <slot name="text">{{ text }}</slot>
       </div>
     </Teleport>

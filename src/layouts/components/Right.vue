@@ -10,6 +10,7 @@ import { useStateStore } from '@/stores/modules/state'
 import { useRouter, useRoute } from 'vue-router'
 import { Maps } from '@/data/maps'
 import Icon from '@/components/Icon.vue'
+import InlineTooltip from '@/components/InlineTooltip.vue';
 
 const appStore = useAppStore()
 const taskStore = useTaskStore()
@@ -199,19 +200,21 @@ const showDraftModule = computed(() => {
         </section>
 
         <!-- 地图切换 Tabs -->
-        <div v-if="mapsWithTasks.length > 1" class="px-2 py-1 mb-1 flex items-center gap-1.5 no-scrollbar shrink-0 border-t border-base-300 bg-base-200/30">
+        <div v-if="mapsWithTasks.length > 1" class="px-2 py-1 mb-1 flex items-center gap-1.5 no-scrollbar shrink-0 border-t border-base-300 bg-base-200/30 overflow-x-auto">
           <template
             v-for="m in mapsWithTasks" 
             :key="m.key"
           >
-            <button 
-              class="badge badge-sm cursor-pointer whitespace-nowrap transition-all border-none tooltip"
-              :class="viewingMapKey === m.key ? 'badge-primary' : 'badge-ghost opacity-40 hover:opacity-100'"
-              @click="selectMap(m.key)"
-              :data-tip="m.name + ' (' + taskStore.tasksMap[m.key].length + ' 个任务)'"
-            >
-              <Icon :icon="m.icon || 'tabler:map-filled'" class="text-xs" />
-            </button>
+            <InlineTooltip :text="m.name + ' (' + taskStore.tasksMap[m.key].length + ' 个任务)'">
+              <button 
+                class="badge badge-sm cursor-pointer whitespace-nowrap transition-all border-none"
+                :class="viewingMapKey === m.key ? 'badge-primary' : 'badge-ghost opacity-40 hover:opacity-100'"
+                @click="selectMap(m.key)"
+                :data-tip="m.name + ' (' + taskStore.tasksMap[m.key].length + ' 个任务)'"
+              >
+                <Icon :icon="m.icon || 'tabler:map-filled'" class="text-xs" />
+              </button>
+            </InlineTooltip>
           </template>
         </div>
 
