@@ -3,6 +3,15 @@
     <!-- Header Toolbar -->
     <Header />
 
+      <!-- 多标签页警告 -->
+      <div
+        v-if="showMultiTabWarning && !multiTabDismissed"
+        class="fixed top-16 left-0 right-0 z-50 p-3 bg-yellow-200 text-yellow-900 text-center flex items-center justify-center gap-4"
+      >
+        <span>请不要在多个页面同时打开游戏，这可能会导致存档冲突和数据丢失。</span>
+        <button @click="multiTabDismissed = true" class="btn btn-sm btn-ghost">我知道了</button>
+      </div>
+
     <!-- Body: three-column layout -->
     <div class="flex flex-1 overflow-hidden relative">
       <!-- 移动端遮罩 -->
@@ -56,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useAppStore } from '../stores/modules/app.ts'
 import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
@@ -74,6 +83,10 @@ import LabSuccessOverlay from '../components/LabSuccessOverlay.vue'
 import TutorialOverlay from '@/components/TutorialOverlay.vue'
 import LoadingOverlay from '@/components/LoadingOverlay.vue'
 import Toast from '@/components/Toast.vue'
+import { gameSDK } from '@/utils/sdk'
+import { syncCloudArchive } from '@/utils/archive'
+import { useEventListener } from '@vueuse/core'
+
 
 const appStore = useAppStore()
 const stateStore = useStateStore()
@@ -163,7 +176,7 @@ const tabs: Tab[] = [
   { name: 'Settings', path: '/settings', label: '设置', icon: '⚙️' },
 ]
 
-let wakeLock = null;
+let wakeLock: any = null;
 const requestWakeLock = async () => {
    try {
       wakeLock = await navigator.wakeLock.request('screen');
@@ -173,4 +186,107 @@ const requestWakeLock = async () => {
    }
 };
 requestWakeLock();
+
+const pageId = Date.now();
+onMounted(async () => {
+  const isFreshLogin = await gameSDK.initAuth()
+  
+  // 处理存档同步
+  if (isFreshLogin) {
+    // 刚刚登录（从平台重定向回来），检查差异
+    await syncCloudArchive(false)
+  }
+
+  if (await gameSDK.isAuthenticated()) {
+    gameSDK.connectRealtime((msg) => {
+      console.log('Received message:', msg);
+    });
+  }
+
+})
+
+// ─── 多标签页检测（基于 localStorage 心跳） ─────────────────────────────────
+const showMultiTabWarning = ref(false)
+const multiTabDismissed = ref(false)
+const startupGrace = ref(true)
+const heartbeatPrefix = 'ashes_tab_'
+const heartbeatKey = `${heartbeatPrefix}${pageId}`
+let heartbeatTimer: number | null = null
+
+function writeHeartbeat() {
+  try {
+    localStorage.setItem(heartbeatKey, String(Date.now()))
+  } catch (e) {
+    // ignore quota / privacy errors
+  }
+}
+
+function checkOtherTabs() {
+  const now = Date.now()
+  let others = 0
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (!key) continue
+    if (!key.startsWith(heartbeatPrefix)) continue
+    if (key === heartbeatKey) continue
+    const val = Number(localStorage.getItem(key)) || 0
+    // consider alive if updated within last 5 seconds
+    if (now - val < 5000) {
+      others++
+    } else {
+      // prune stale entries
+      try { localStorage.removeItem(key) } catch (e) {}
+    }
+  }
+  showMultiTabWarning.value = others > 0 && !multiTabDismissed.value && !startupGrace.value
+}
+
+function storageHandler(e: StorageEvent) {
+  if (!e.key) return
+  if (!e.key.startsWith(heartbeatPrefix)) return
+  // some other tab changed heartbeat -> re-check
+  checkOtherTabs()
+}
+
+// start heartbeat and checks
+onMounted(() => {
+  writeHeartbeat()
+  checkOtherTabs()
+  heartbeatTimer = window.setInterval(() => {
+    writeHeartbeat()
+    checkOtherTabs()
+  }, 2000) as unknown as number
+  window.addEventListener('storage', storageHandler)
+  // clear grace after short delay to avoid false positive on refresh
+  setTimeout(() => { startupGrace.value = false }, 1500)
+  // remove heartbeat on page unload (so refresh doesn't leave a transient entry)
+  const handleBeforeUnload = () => {
+    try { localStorage.removeItem(heartbeatKey) } catch (e) {}
+  }
+  window.addEventListener('beforeunload', handleBeforeUnload)
+  // keep reference for cleanup
+  ;(window as any).__ashes_handleBeforeUnload = handleBeforeUnload
+})
+
+onBeforeUnmount(() => {
+  if (heartbeatTimer) {
+    clearInterval(heartbeatTimer)
+    heartbeatTimer = null
+  }
+  try { localStorage.removeItem(heartbeatKey) } catch (e) {}
+  window.removeEventListener('storage', storageHandler)
+  const h = (window as any).__ashes_handleBeforeUnload
+  if (h) {
+    window.removeEventListener('beforeunload', h)
+    try { delete (window as any).__ashes_handleBeforeUnload } catch (e) {}
+  }
+})
+
+onBeforeUnmount(() => {
+  if (wakeLock) {
+    wakeLock.release().then(() => {
+      console.log('屏幕常亮已释放');
+    });
+  }
+});
 </script>
