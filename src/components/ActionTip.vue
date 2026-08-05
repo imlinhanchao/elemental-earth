@@ -154,7 +154,7 @@
       </div>
       <div v-if="items.length || products.length" class="divider my-1 h-px"></div>
       <div v-for="item in items" :key="item.key" class="text-[10px] leading-relaxed request-item" :class="{ 'text-error': item.insufficient, 'opacity-50': !item.known }">
-        <template v-if="item.quantity > 0">{{ formatQty(item.quantity) }}x </template>
+        <template v-if="item.quantity > 0">{{ formatQty(item.quantity) }} x </template>
         <template v-if="item.use > 0">{{ formatQty(item.use) }}耐 </template>
         <span class="item-name" :class="{ 'hidden': !item.known }">{{ item.name }}</span>
         <span class="unknown" v-if="!item.known">????</span>
@@ -169,7 +169,7 @@
           <Icon icon="system-uicons:pull-down" />
         </div>
         <div v-for="p in products" :key="p.key" class="leading-relaxed">
-          <template v-if="p.multiple && p.multiple > 0">{{ p.multiple }}x </template>
+          <template v-if="p.multiple && p.multiple > 0">{{ p.multiple }} x </template>
           <span>{{ p.name }}</span>
         </div>
       </div>
