@@ -3792,9 +3792,9 @@
   },
   {
     "key": "nickel_chrome_battery_charging",
-    "name": "镍铬电池充电",
+    "name": "镍镉电池充电",
     "category": "制作",
-    "description": "可对镍铬充电电池进行充电，恢复满电",
+    "description": "可对镍镉充电电池进行充电，恢复满电",
     "time_required": 100,
     "required_items": [
       {
