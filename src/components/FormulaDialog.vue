@@ -220,17 +220,19 @@ function addToProductionLine() {
   }
 
   // 2. 消耗容器耐久
-  if (selectedContainer.value) {
-    // 检查操作是否有针对容器的耐久消耗
-    let containerUse = 0.05 // 默认消耗
-    for (const req of operation.value?.required_item || []) {
-      const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
-      if (reqKeys.includes(selectedContainer.value) && req.use) {
-        containerUse = req.use
-        break
+  if (formula.value?.required_container) {
+    if (selectedContainer.value) {
+      // 检查操作是否有针对容器的耐久消耗
+      let containerUse = 0.05 // 默认消耗
+      for (const req of operation.value?.required_item || []) {
+        const reqKeys = Array.isArray(req.key) ? req.key : [req.key]
+        if (reqKeys.includes(selectedContainer.value) && req.use) {
+          containerUse = req.use
+          break
+        }
       }
+      consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
     }
-    consumedItems.push({ key: selectedContainer.value, quantity: 0, use: containerUse * batches.value })
   }
   
   // 3. 消耗燃料和火种

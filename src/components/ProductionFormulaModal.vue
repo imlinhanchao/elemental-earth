@@ -153,15 +153,7 @@ const neededChainOps = computed(() => {
 
     // 检查科技
     if (a.required_techs && !a.required_techs.every(t => packStore.hasTech(t))) return false
-    
-    // 检查所需物品 (同步 FormulaDialog 逻辑，但使用预期库存)
-    if (a.required_item) {
-      if (!a.required_item.every(req => {
-        const keys = Array.isArray(req.key) ? req.key : [req.key]
-        return keys.some(k => (taskStore.projectedInventory.get(k) || 0) > 0)
-      })) return false
-    }
-    
+        
     return true
   }) as ILabAction[]
 })
