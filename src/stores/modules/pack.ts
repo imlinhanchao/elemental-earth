@@ -174,6 +174,10 @@ export const usePackStore = defineStore('pack', () => {
           existingItem.durable = totalDur % maxDur || maxDur;
         }
       } else {
+        if (itemDef) {
+          const maxDur = itemDef.durable;
+          existingItem.durable = maxDur || 1;
+        }
         existingItem.quantity -= quantity;
       }
       if (existingItem.quantity <= 0) {
