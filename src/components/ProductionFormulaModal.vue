@@ -145,9 +145,7 @@ const neededChainOps = computed(() => {
       .filter(Boolean)
   )
 
-  return LabActions.filter(a => {
-    if (!a.is_chain) return false
-    
+  return LabActions.filter(a => {    
     // 只显示本配方产物能够使用的追加操作
     if (!formulaOps.has(a.key)) return false
 
