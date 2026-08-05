@@ -33,6 +33,19 @@ const showConditionModal = ref(false)
 const editingStep = ref<any>(null)
 const editingIndex = ref<number | undefined>(undefined)
 
+// Search for saved production lines
+const lineSearch = ref('')
+
+const filteredProductionLines = computed(() => {
+  const q = lineSearch.value.trim().toLowerCase()
+  return productionStore.productionLines
+    .map((l, i) => ({ line: l, index: i }))
+    .filter(({ line }) => {
+      if (!q) return true
+      return (line.name || '').toLowerCase().includes(q) || line.id.toLowerCase().includes(q)
+    })
+})
+
 function openActionModal(index?: number) {
   if (index !== undefined) {
     editingStep.value = productionStore.draftSteps[index]
@@ -403,19 +416,25 @@ function getMapName(key: string) {
         <Icon icon="fluent:bookmark-multiple-16-filled" class="text-primary" />
         已配置生产线
       </h2>
+      <div class="px-2">
+        <div class="flex items-center gap-2 mt-2">
+          <input v-model="lineSearch" type="text" placeholder="搜索生产线 (名称或ID)" class="input input-sm grow" />
+          <button v-if="lineSearch" @click="lineSearch = ''" class="btn btn-sm btn-ghost">清除</button>
+        </div>
+      </div>
       
       <div v-if="productionStore.productionLines.length === 0" class="card bg-base-100 border border-dashed border-base-300 p-12 text-center text-base-content/40 text-sm">
         暂无保存的生产线
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div v-for="(line, idx) in productionStore.productionLines" :key="line.id" 
+        <div v-for="({ line, index } , idx) in filteredProductionLines" :key="line.id" 
              draggable="true"
-             @dragstart="onLineDragStart(idx, $event)"
+             @dragstart="onLineDragStart(index, $event)"
              @dragend="onLineDragEnd"
              @dragover="onLineDragOver($event)"
-             @drop="onLineDrop(idx)"
-             :class="['card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all', (draggedLineIndex === idx) ? 'opacity-50' : '']">
+             @drop="onLineDrop(index)"
+             :class="['card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all', (draggedLineIndex === index) ? 'opacity-50' : '']">
           <div class="card-body p-5">
             <div class="flex justify-between items-start mb-3">
               <h3 class="card-title text-lg font-bold flex items-center gap-2 truncate">
