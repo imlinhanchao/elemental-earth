@@ -16,6 +16,7 @@ import { shortTime } from './date';
 import { gameSDK } from './sdk';
 import { modManager } from '@/mods/manager';
 import type { StoredModRegistry } from '@/mods/types';
+import { appVersion } from './update';
 
 const storage = new EncryptedStorage();
 const SAVE_KEY = 'game_save_data';
@@ -110,6 +111,13 @@ export function saveGame(): boolean {
       version: SAVE_VERSION,
       timestamp: data.timestamp,
     });
+
+    gameSDK.setAttributes({
+      map: stateStore.state.map,
+      currentEra: stateStore.state.currentEra,
+      stats: stateStore.state.stats,
+      version: appVersion || null,
+    })
 
     return true;
   } catch (e) {

@@ -86,7 +86,6 @@ import LoadingOverlay from '@/components/LoadingOverlay.vue'
 import Toast from '@/components/Toast.vue'
 import { gameSDK } from '@/utils/sdk'
 import { syncCloudArchive } from '@/utils/archive'
-import { useEventListener } from '@vueuse/core'
 
 
 const appStore = useAppStore()
