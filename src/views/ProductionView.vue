@@ -92,6 +92,34 @@ function onDrop(index: number) {
   draggedIndex.value = null
 }
 
+// Production lines drag-and-drop
+const draggedLineIndex = ref<number | null>(null)
+
+function onLineDragStart(index: number, event: DragEvent) {
+  draggedLineIndex.value = index
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+  }
+}
+
+function onLineDragEnd() {
+  draggedLineIndex.value = null
+}
+
+function onLineDragOver(event: DragEvent) {
+  event.preventDefault()
+  if (event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move'
+  }
+}
+
+function onLineDrop(index: number) {
+  if (draggedLineIndex.value !== null && draggedLineIndex.value !== index) {
+    productionStore.moveProductionLine(draggedLineIndex.value, index)
+  }
+  draggedLineIndex.value = null
+}
+
 const editingConditionIndex = ref<number | null>(null)
 const conditionInput = ref<NonNullable<IProductionLineStep['condition']>>({
   key: '',
@@ -381,12 +409,17 @@ function getMapName(key: string) {
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div v-for="line in productionStore.productionLines" :key="line.id" 
-             class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all">
+        <div v-for="(line, idx) in productionStore.productionLines" :key="line.id" 
+             draggable="true"
+             @dragstart="onLineDragStart(idx, $event)"
+             @dragend="onLineDragEnd"
+             @dragover="onLineDragOver($event)"
+             @drop="onLineDrop(idx)"
+             :class="['card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all', (draggedLineIndex === idx) ? 'opacity-50' : '']">
           <div class="card-body p-5">
             <div class="flex justify-between items-start mb-3">
               <h3 class="card-title text-lg font-bold flex items-center gap-2 truncate">
-                <Icon icon="fluent:factory-16-regular" class="text-primary" />
+                <Icon icon="lsicon:drag-outline" class="text-primary" />
                 {{ line.name }}
               </h3>
               <div class="flex gap-1">

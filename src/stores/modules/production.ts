@@ -93,6 +93,13 @@ export const useProductionStore = defineStore('production', () => {
     draftSteps.splice(toIndex, 0, step);
   }
 
+  function moveProductionLine(fromIndex: number, toIndex: number) {
+    if (fromIndex < 0 || fromIndex >= productionLines.length || toIndex < 0 || toIndex >= productionLines.length) return;
+    const line = productionLines.splice(fromIndex, 1)[0];
+    productionLines.splice(toIndex, 0, line);
+    saveToStorage();
+  }
+
   function saveProductionLine(name: string) {
     if (draftSteps.length === 0) return;
     
@@ -534,6 +541,7 @@ export const useProductionStore = defineStore('production', () => {
     exportLine,
     importLine,
     currentEditingId,
-    addStepsToQueue
+    addStepsToQueue,
+    moveProductionLine
   }
 })

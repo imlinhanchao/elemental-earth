@@ -264,6 +264,7 @@ onMounted(() => {
     try { localStorage.removeItem(heartbeatKey) } catch (e) {}
   }
   window.addEventListener('beforeunload', handleBeforeUnload)
+  onBeforeUnmount(handleBeforeUnload)
   // keep reference for cleanup
   ;(window as any).__ashes_handleBeforeUnload = handleBeforeUnload
 })
