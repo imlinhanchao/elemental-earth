@@ -17,6 +17,7 @@ import { Formulas, getFormula } from '@/data/formula';
 import { LabActions, getLab } from '@/data/labs';
 import { notifyTaskComplete, notifyAllTasksDone } from '@/utils/notification';
 import { modManager } from '@/mods/manager';
+import { useProductionStore } from './production';
 
 export interface ITaskCondition {
   key: string;
@@ -60,6 +61,8 @@ export const useTaskStore = defineStore('task', () => {
   const stateStore = useStateStore();
   const packStore = usePackStore();
   const logStore = useLogStore();
+  const productionStore = useProductionStore();
+  const fragmentStore = useFragmentStore();
 
   const tasks = computed(() => {
     const key = viewingMap.value || stateStore.state.map;
@@ -524,7 +527,6 @@ export const useTaskStore = defineStore('task', () => {
         if (stateStore.state.currentEra !== 'stone' && ['挖掘', '爆破', '定向爆破'].includes(task.name)) {
           const chance = 0.1 + Math.random() * 0.05; // 10%-15%
           if (Math.random() < chance) {
-            const fragmentStore = useFragmentStore();
             // 在预先通过时代和主材料过滤的基础上，再过滤已拥有的
             const eligibleFormulas = potentialFragments.value.filter(f => 
               !packStore.hasProvenFormula(f.key) && !fragmentStore.hasFragment(f.key)
@@ -595,7 +597,6 @@ export const useTaskStore = defineStore('task', () => {
         // 生产线条件检查任务
         if (!checkStepCondition(task.condition)) {
           // 条件未满足，重新展开生产线
-          const productionStore = (await import('./production')).useProductionStore();
           if (task.line_steps) {
             // 将步骤插入到队列最前面（当前 map）
             const addedCount = productionStore.addStepsToQueue(task.source_line_id || 'sub', task.line_steps, 1, 0, mapKey);
