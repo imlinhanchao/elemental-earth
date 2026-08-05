@@ -288,7 +288,7 @@
         <a href="https://github.com/imlinhanchao/elemental-earth" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <Icon icon="uiw:github" size="1.2em" class="mb-1" />
         </a>
-        <span v-if="appVersion" class="text-xs text-base-content/50">版本：{{ appVersion }}</span>
+        <span v-if="appVersion" class="text-xs text-base-content/50">最新版本：{{ appVersion }}</span>
       </section>
       <button class="btn btn-xs btn-primary" :disabled="checkingUpdate" @click="handleCheckForUpdates">
         <Icon icon="tabler:refresh" class="text-sm" />

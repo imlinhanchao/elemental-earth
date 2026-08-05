@@ -15,31 +15,63 @@ export function setPwaUpdater(updater: PwaUpdater): void {
   pwaUpdater = updater
 }
 
+function isNeedRefreshAvailable(hadToast: boolean, registration?: ServiceWorkerRegistration | null): boolean {
+  const hasToastNow = !!document.getElementById('pwa-refresh-toast')
+  return !!registration?.waiting || (!hadToast && hasToastNow)
+}
+
+async function waitForInstallingDone(registration: ServiceWorkerRegistration): Promise<void> {
+  const worker = registration.installing
+  if (!worker) return
+
+  if (worker.state === 'installed' || worker.state === 'activated' || worker.state === 'redundant') return
+
+  await new Promise<void>((resolve) => {
+    const onStateChange = () => {
+      if (worker.state === 'installed' || worker.state === 'activated' || worker.state === 'redundant') {
+        worker.removeEventListener('statechange', onStateChange)
+        resolve()
+      }
+    }
+    worker.addEventListener('statechange', onStateChange)
+  })
+}
+
 export async function checkForUpdates(): Promise<boolean> {
-  if (!pwaUpdater) {
-    console.warn('PWA 更新器尚未注册')
+  const hadToast = !!document.getElementById('pwa-refresh-toast')
+
+  if (!('serviceWorker' in navigator)) {
     return false
   }
 
-  const hadToast = !!document.getElementById('pwa-refresh-toast')
+  const registration = await navigator.serviceWorker.getRegistration()
+  if (!registration) {
+    console.warn('当前页面没有可用的 Service Worker 注册')
+    return false
+  }
 
-  // Trigger the PWA update probe; if a new version exists,
-  // the onNeedRefresh handler in main.ts will show update UI.
-  await pwaUpdater().catch((e) => {
-    console.error('PWA 更新检查失败', e)
-  })
+  if (isNeedRefreshAvailable(hadToast, registration)) {
+    return true
+  }
 
-  // Double-check by asking SW registration to update now.
-  if ('serviceWorker' in navigator) {
-    const registration = await navigator.serviceWorker.getRegistration()
-    await registration?.update().catch((e) => {
-      console.error('Service Worker update() 调用失败', e)
+  // 尝试触发一次插件内部探测（若已注册）
+  if (pwaUpdater) {
+    await pwaUpdater().catch((e) => {
+      console.error('PWA 更新检查失败', e)
     })
   }
 
-  // Give onNeedRefresh hook a short moment to render the prompt.
-  await new Promise((resolve) => setTimeout(resolve, 10000))
-  const hasToastNow = !!document.getElementById('pwa-refresh-toast')
+  // 直接向浏览器请求 SW 更新，这是最准确的“检查更新”入口。
+  await registration.update().catch((e) => {
+    console.error('Service Worker update() 调用失败', e)
+  })
 
-  return !hadToast && hasToastNow
+  if (isNeedRefreshAvailable(hadToast, registration)) {
+    return true
+  }
+
+  // 若正在安装新 SW，则等待安装结束后再判断，避免网络慢时误判。
+  await waitForInstallingDone(registration)
+
+  return isNeedRefreshAvailable(hadToast, registration)
 }
