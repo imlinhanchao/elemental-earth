@@ -281,6 +281,20 @@
         <form method="dialog" class="modal-backdrop"><button>close</button></form>
       </dialog>
     </Teleport>
+    
+    <!-- 版本与检查更新 -->
+    <div class="flex items-center justify-between gap-2 px-2">
+      <section class="flex items-center gap-2">
+        <a href="https://github.com/imlinhanchao/elemental-earth" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <Icon icon="uiw:github" size="1.2em" class="mb-1" />
+        </a>
+        <span v-if="appVersion" class="text-xs text-base-content/50">版本：{{ appVersion }}</span>
+      </section>
+      <button class="btn btn-xs btn-primary" :disabled="checkingUpdate" @click="handleCheckForUpdates">
+        <Icon icon="tabler:refresh" class="text-sm" />
+        {{ checkingUpdate ? '检查中...' : '检查更新' }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -290,10 +304,12 @@ import { useAppStore } from '../stores/modules/app'
 import { deleteSaveData, deleteTutorialData, exportSaveData, downloadSaveData, getLastSavedLabel, importSaveDataFromText, importSaveDataFromFile, stopAutoSave, syncCloudArchive, uploadCloudArchive, pullCloudArchive } from '@/utils/archive'
 import { gameSDK as sdk } from '@/utils/sdk'
 import { modManager } from '@/mods/manager'
+import { appVersion, checkForUpdates } from '@/utils/update'
 import type { UserInfo } from 'fishpi-play'
 import type { HookDiagnostic, ModPackage, StoredModEntry } from '@/mods/types'
 
 const appStore = useAppStore()
+const checkingUpdate = ref(false)
 
 // ─── 账户 ────────────────────────────────────────────────
 const user = ref<UserInfo | null>(null)
@@ -538,6 +554,19 @@ function resetSave() {
 onMounted(() => {
   refreshModPanel()
 })
+
+async function handleCheckForUpdates() {
+  if (checkingUpdate.value) return
+  checkingUpdate.value = true
+  try {
+    const hasUpdate = await checkForUpdates()
+    if (!hasUpdate) {
+      alert('已检查更新，当前已是最新版本')
+    }
+  } finally {
+    checkingUpdate.value = false
+  }
+}
 </script>
 <style lang="less" scoped>
   .text-error {

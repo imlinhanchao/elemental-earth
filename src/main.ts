@@ -8,12 +8,14 @@ import 'virtual:svg-icons-register'
 import { registerSW } from 'virtual:pwa-register'
 import { gameSDK } from '@/utils/sdk'
 import { modManager } from '@/mods/manager'
+import { setPwaUpdater } from '@/utils/update'
+import { removeAllMultiTabHeartbeats } from '@/utils/multiTabGuard'
 
 modManager.initialize();
 
 export { gameSDK }
 
-const updateServiceWorker = registerSW({
+export const updateServiceWorker = registerSW({
   immediate: true,
   onNeedRefresh() {
     // 如果已经存在提示，则不再创建
@@ -35,6 +37,8 @@ const updateServiceWorker = registerSW({
     document.body.appendChild(toast);
     
     document.getElementById('pwa-refresh-btn')?.addEventListener('click', () => {
+      // remove multi-tab heartbeat keys to avoid stale heartbeat interfering after update
+      removeAllMultiTabHeartbeats()
       updateServiceWorker(true);
     });
   },
@@ -42,6 +46,8 @@ const updateServiceWorker = registerSW({
     console.log('离线环境已就绪');
   },
 })
+
+setPwaUpdater(updateServiceWorker)
 
 // 每 60 分钟检查一次更新
 setInterval(() => {

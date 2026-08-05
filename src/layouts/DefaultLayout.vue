@@ -71,6 +71,7 @@ import { useStateStore } from '@/stores/modules/state'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTutorialStore } from '@/stores/modules/tutorial'
 import { initAutoSave } from '@/utils/archive.ts'
+import { useMultiTabGuard } from '@/utils/multiTabGuard'
 import Content from './components/Content.vue'
 import Header from './components/Header.vue'
 import Left from './components/Left.vue'
@@ -89,6 +90,10 @@ import { useEventListener } from '@vueuse/core'
 
 
 const appStore = useAppStore()
+
+const pageId = Date.now();
+
+const { showMultiTabWarning, multiTabDismissed } = useMultiTabGuard(pageId)
 const stateStore = useStateStore()
 const packStore = usePackStore()
 const tutorialStore = useTutorialStore()
@@ -187,7 +192,6 @@ const requestWakeLock = async () => {
 };
 requestWakeLock();
 
-const pageId = Date.now();
 onMounted(async () => {
   const isFreshLogin = await gameSDK.initAuth()
   
@@ -205,83 +209,7 @@ onMounted(async () => {
 
 })
 
-// ─── 多标签页检测（基于 localStorage 心跳） ─────────────────────────────────
-const showMultiTabWarning = ref(false)
-const multiTabDismissed = ref(false)
-const startupGrace = ref(true)
-const heartbeatPrefix = 'ashes_tab_'
-const heartbeatKey = `${heartbeatPrefix}${pageId}`
-let heartbeatTimer: number | null = null
-
-function writeHeartbeat() {
-  try {
-    localStorage.setItem(heartbeatKey, String(Date.now()))
-  } catch (e) {
-    // ignore quota / privacy errors
-  }
-}
-
-function checkOtherTabs() {
-  const now = Date.now()
-  let others = 0
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (!key) continue
-    if (!key.startsWith(heartbeatPrefix)) continue
-    if (key === heartbeatKey) continue
-    const val = Number(localStorage.getItem(key)) || 0
-    // consider alive if updated within last 5 seconds
-    if (now - val < 5000) {
-      others++
-    } else {
-      // prune stale entries
-      try { localStorage.removeItem(key) } catch (e) {}
-    }
-  }
-  showMultiTabWarning.value = others > 0 && !multiTabDismissed.value && !startupGrace.value
-}
-
-function storageHandler(e: StorageEvent) {
-  if (!e.key) return
-  if (!e.key.startsWith(heartbeatPrefix)) return
-  // some other tab changed heartbeat -> re-check
-  checkOtherTabs()
-}
-
-// start heartbeat and checks
-onMounted(() => {
-  writeHeartbeat()
-  checkOtherTabs()
-  heartbeatTimer = window.setInterval(() => {
-    writeHeartbeat()
-    checkOtherTabs()
-  }, 2000) as unknown as number
-  window.addEventListener('storage', storageHandler)
-  // clear grace after short delay to avoid false positive on refresh
-  setTimeout(() => { startupGrace.value = false }, 1500)
-  // remove heartbeat on page unload (so refresh doesn't leave a transient entry)
-  const handleBeforeUnload = () => {
-    try { localStorage.removeItem(heartbeatKey) } catch (e) {}
-  }
-  window.addEventListener('beforeunload', handleBeforeUnload)
-  onBeforeUnmount(handleBeforeUnload)
-  // keep reference for cleanup
-  ;(window as any).__ashes_handleBeforeUnload = handleBeforeUnload
-})
-
-onBeforeUnmount(() => {
-  if (heartbeatTimer) {
-    clearInterval(heartbeatTimer)
-    heartbeatTimer = null
-  }
-  try { localStorage.removeItem(heartbeatKey) } catch (e) {}
-  window.removeEventListener('storage', storageHandler)
-  const h = (window as any).__ashes_handleBeforeUnload
-  if (h) {
-    window.removeEventListener('beforeunload', h)
-    try { delete (window as any).__ashes_handleBeforeUnload } catch (e) {}
-  }
-})
+// multi-tab guard handled by `useMultiTabGuard` composable
 
 onBeforeUnmount(() => {
   if (wakeLock) {
