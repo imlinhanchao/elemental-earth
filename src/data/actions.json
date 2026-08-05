@@ -3799,8 +3799,7 @@
     "required_items": [
       {
         "key": "nickel_cadmium_battery",
-        "quantity": 1,
-        "use": 1
+        "quantity": 1
       },
       {
         "key": "battery",
@@ -3825,8 +3824,7 @@
     "required_items": [
       {
         "key": "lithium_ion_battery",
-        "quantity": 1,
-        "use": 1
+        "quantity": 1
       },
       {
         "key": "battery",

@@ -3221,9 +3221,17 @@
     "required_era": "alchemy"
   },
   {
-    "name": "硫化锶酸浸制氯化锶",
     "key": "leach_strontium_sulfide",
+    "name": "硫化锶酸浸制氯化锶",
     "description": "用盐酸浸取硫化锶，生成氯化锶并放出硫化氢气体。",
+    "fragment_description": "向#strontium_sulfide#中加入#hydrochloric_acid#进行$stirring$酸浸，得到澄清的#strontium_chloride#溶液并释放出臭鸡蛋气味的#hydrogen_sulfide#。",
+    "time_required": 10,
+    "required_era": "modern_chem",
+    "required_container": "beaker",
+    "required_actions": {
+      "key": "stirring",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "strontium_sulfide",
@@ -3235,13 +3243,6 @@
         "quantity": 2
       }
     ],
-    "required_container": "beaker",
-    "required_actions": {
-      "key": "stirring",
-      "min": 1
-    },
-    "required_techs": [],
-    "time_required": 30,
     "products": [
       {
         "key": "strontium_chloride",
@@ -3250,11 +3251,9 @@
       {
         "key": "hydrogen_sulfide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "fragment_description": "向#strontium_sulfide#中加入#hydrochloric_acid#进行$stirring$酸浸，得到澄清的#strontium_chloride#溶液并释放出臭鸡蛋气味的#hydrogen_sulfide#。",
-    "required_era": "modern_chem"
+    ]
   },
   {
     "name": "焙烧菱锶矿制氧化锶",
