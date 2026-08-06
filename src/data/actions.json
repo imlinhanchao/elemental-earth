@@ -2541,11 +2541,11 @@
     "time_required": 100,
     "required_items": [
       {
-        "key": "chromium",
+        "key": "stainless_steel",
         "quantity": 2
       },
       {
-        "key": "wood",
+        "key": "steel",
         "quantity": 1
       }
     ],
