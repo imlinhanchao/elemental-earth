@@ -3985,17 +3985,20 @@
       {
         "key": "liquid_hydrogen",
         "quantity": 5,
-        "probability": 1000
+        "probability": 1000,
+        "required_item": "hydrogen"
       },
       {
         "key": "liquid_oxygen",
         "quantity": 5,
-        "probability": 1000
+        "probability": 1000,
+        "required_item": "oxygen"
       },
       {
         "key": "liquid_helium",
         "quantity": 5,
-        "probability": 1000
+        "probability": 1000,
+        "required_item": "helium"
       }
     ],
     "required_techs": [

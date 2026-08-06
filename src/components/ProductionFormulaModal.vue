@@ -78,6 +78,9 @@ watch(() => props.visible, (val) => {
     selectedMaterials.value = {}
     selectedChainOps.value = []
     fuelMap.value = {}
+    selectedBattery.value = ''
+    selectedContainer.value = ''
+    selectedFireSource.value = ''
   }
 })
 
