@@ -228,13 +228,12 @@ function getActualTime(t: number) {
   return actual < 1 ? actual.toFixed(1) : Math.round(actual)
 }
 
+const editRef = ref<HTMLElement | null>(null)
 function handleEdit(line: any) {
   productionStore.editProductionLine(line)
-  if (!newName.value) {
-    newName.value = line.name
-  }
+  newName.value = line.name;
   // Scroll to draft areas
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  editRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 function handleSaveDraft() {
@@ -264,7 +263,7 @@ function getMapName(key: string) {
     </header>
 
     <!-- 正在编辑的草稿 -->
-    <div class="card bg-base-100 border border-base-300 shadow-sm overflow-hidden">
+    <div ref="editRef" class="card bg-base-100 border border-base-300 shadow-sm overflow-hidden">
       <div class="bg-base-200/50 px-6 py-4 border-b border-base-300 flex justify-between items-center">
         <h2 class="font-bold flex items-center gap-2">
           <Icon icon="fluent:edit-16-filled" />
