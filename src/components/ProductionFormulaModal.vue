@@ -159,6 +159,22 @@ const neededChainOps = computed(() => {
   }) as ILabAction[]
 })
 
+// 产物预览（考虑追加操作与 required_item）
+const previewProducts = computed(() => {
+  const f = currentFormula.value
+  if (!f) return []
+  const chainOps = selectedChainOps.value || []
+  const consumed = Object.values(selectedMaterials.value || {})
+  return f.products.filter(p => {
+    if (p.required_chain_operation && !chainOps.includes(p.required_chain_operation)) return false
+    if (p.required_item) {
+      const requiredSeeds = Array.isArray(p.required_item) ? p.required_item : [p.required_item]
+      if (!requiredSeeds.some(k => consumed.includes(k))) return false
+    }
+    return true
+  })
+})
+
 // 数据过滤助手
 const allContainers = computed(() => {
   const base = Items.filter(i => i.type.includes('container'))
@@ -337,7 +353,8 @@ function handleAdd() {
     return true
   }).map(p => ({
     key: p.key,
-    quantity: p.multiple
+    quantity: p.multiple,
+    required_item: p.required_item
   }))
 
   const milestones: string[] = []
@@ -558,7 +575,7 @@ function close() {
             <div class="form-control">
               <label class="label"><span class="label-text">产物预览</span></label>
               <div class="flex flex-wrap gap-2 p-2 bg-base-300/30 rounded-xl min-h-12">
-                <div v-for="p in currentFormula.products.filter(p => !p.required_chain_operation || selectedChainOps.includes(p.required_chain_operation))" :key="p.key"
+                <div v-for="p in previewProducts" :key="p.key"
                      class="flex items-center gap-1.5 bg-base-100 px-2 py-1 rounded-lg border border-base-300 text-xs">
                   <span class="opacity-70">{{ getItemName(p.key) }}</span>
                   <span class="text-secondary font-mono font-bold">x{{ p.multiple * batches }}</span>

@@ -322,6 +322,7 @@ const formulaProducts = computed(() => {
       key: p.key,
       name: packStore.getDisplayName(p.key),
       quantity: p.multiple * batches.value,
+      required_item: p.required_item
     }))
 })
 
@@ -697,7 +698,7 @@ function startExperiment() {
     key: `lab_${selectedOperation.value.key}_${Date.now()}`,
     description: selectedOperation.value.description,
     time_required: baseTotalTime.value,
-    rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1 })),
+    rewards: formulaProducts.value.map(p => ({ key: p.key, quantity: p.quantity, probability: 1, required_item: p.required_item })),
     required_items: consumedItems,
     formulaKey: matchedFormula.value?.key,
     milestones,

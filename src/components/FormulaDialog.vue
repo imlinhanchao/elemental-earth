@@ -263,6 +263,9 @@ function addToProductionLine() {
   const rewards = formula.value.products
     .filter(p => {
       if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      if (p.required_item) return (Array.isArray(p.required_item) ? p.required_item : [p.required_item]).every(req => {
+        return selectedMaterials.value.includes(req)
+      })
       return true
     })
     .map(p => {
@@ -530,6 +533,9 @@ const productList = computed(() => {
   return formula.value.products
     .filter(p => {
       if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      if (p.required_item) return (Array.isArray(p.required_item) ? p.required_item : [p.required_item]).every(req => {
+        return selectedMaterials.value.includes(req)
+      })
       return true
     })
     .map(p => ({
@@ -722,6 +728,9 @@ function confirm() {
   const rewards = formula.value.products
     .filter(p => {
       if (p.required_chain_operation) return chainOps.has(p.required_chain_operation)
+      if (p.required_item) return (Array.isArray(p.required_item) ? p.required_item : [p.required_item]).every(req => {
+        return selectedMaterials.value.includes(req)
+      })
       return true
     })
     .map(p => {
