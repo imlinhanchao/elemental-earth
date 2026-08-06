@@ -1228,7 +1228,7 @@
         "required_item": "zinc"
       },
       {
-        "key": "iron_sulfate",
+        "key": "ferrous_sulfate",
         "multiple": 1,
         "required_item": "pig_iron"
       },
@@ -5495,10 +5495,13 @@
     "key": "refine_gold_step",
     "name": "还原沉淀金",
     "description": "向贵金属溶液中加入硫酸亚铁，将金离子还原为金属金粉。",
-    "time_required": 30,
+    "fragment_description": "以#precious_metal_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
+    "time_required": 10,
+    "required_era": "alchemy",
     "required_container": "beaker",
     "required_actions": {
-      "key": "heating"
+      "key": "heating",
+      "min": 1
     },
     "required_items": [
       {
@@ -5507,7 +5510,9 @@
         "isMain": true
       },
       {
-        "key": "ferrous_sulfate",
+        "key": [
+          "ferrous_sulfate"
+        ],
         "quantity": 1,
         "isMain": true
       }
@@ -5521,10 +5526,7 @@
         "key": "platinum_group_solution",
         "multiple": 1
       }
-    ],
-    "required_techs": [],
-    "fragment_description": "以#precious_metal_solution#为基础原料，在进行$heating$的过程中，通过特定条件的化学反应，实现物质的纯化或合成。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "refine_platinum_step",
@@ -9839,7 +9841,7 @@
     "key": "copper_displacement_iron",
     "name": "铁置换铜",
     "description": "铁与硫酸铜溶液反应生成铜和硫酸亚铁。",
-    "fragment_description": "将#iron#放入#copper_sulfate_solution#中进行$stirring$，利用置换反应沉淀出金属#copper#并产出#iron_sulfate#。",
+    "fragment_description": "将#iron#放入#copper_sulfate_solution#中进行$stirring$，利用置换反应沉淀出金属#copper#并产出#ferrous_sulfate#。",
     "time_required": 10,
     "required_era": "modern_chem",
     "required_actions": {
@@ -9863,7 +9865,7 @@
         "multiple": 1
       },
       {
-        "key": "iron_sulfate",
+        "key": "ferrous_sulfate",
         "multiple": 1
       }
     ]
@@ -10021,21 +10023,26 @@
     "fragment_description": "将#manganese_carbonate#放入#kiln#中进行$roasting$，热分解生成#pyrolusite#与#carbon_dioxide#。"
   },
   {
-    "key": "iron_sulfate_dry_distillation",
+    "key": "ferrous_sulfate_dry_distillation",
     "name": "绿矾干馏制硫酸",
     "description": "硫酸亚铁干馏生成氧化铁、二氧化硫和三氧化硫。",
+    "fragment_description": "在密闭容器中对#ferrous_sulfate#进行$dry_distillation$，分解产出#hematite#、#sulfur_dioxide#与#sulfur_trioxide#。",
+    "time_required": 30,
+    "required_era": "modern_chem",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1
+    },
     "required_items": [
       {
-        "key": "iron_sulfate",
+        "key": [
+          "ferrous_sulfate"
+        ],
         "quantity": 1,
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "dry_distillation"
-    },
-    "required_container": "clay_pot",
-    "time_required": 40,
     "products": [
       {
         "key": "hematite",
@@ -10051,9 +10058,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
-    ],
-    "required_era": "modern_chem",
-    "fragment_description": "在密闭容器中对#iron_sulfate#进行$dry_distillation$，分解产出#hematite#、#sulfur_dioxide#与#sulfur_trioxide#。"
+    ]
   },
   {
     "key": "ammonium_chloride_decomposition",

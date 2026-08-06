@@ -956,15 +956,6 @@
     "elemental": 0
   },
   {
-    "name": "硫酸亚铁",
-    "key": "iron_sulfate",
-    "category": "材料",
-    "description": "淡蓝绿色的晶体粉末，暴露在空气中会逐渐氧化变为黄褐色。",
-    "type": [
-      "material"
-    ]
-  },
-  {
     "name": "硫酸亚锡",
     "key": "tin_sulfate",
     "category": "材料",
