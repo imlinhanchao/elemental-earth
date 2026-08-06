@@ -170,7 +170,18 @@ const showDraftModule = computed(() => {
         <section class="flex-1 min-h-0 overflow-y-auto mb-1">
             <header class="bg-base-100 sticky top-0 z-10 flex items-center justify-between">
               <div class="text-[10px] font-semibold text-base-content/40 uppercase tracking-wider mb-1 px-1 flex items-center gap-1">
-                <span>任务队列 <span v-if="isReadOnly" class="text-warning text-[9px] normal-case opacity-60">(查看模式)</span></span>
+                <span>
+                  任务队列 
+                  <span 
+                    class="text-[9px] normal-case opacity-60" 
+                    :class="{
+                      'text-warning': isReadOnly
+                    }">
+                    ({{ 
+                    Maps.find(m => m.key === viewingMapKey)?.name || '未知地图'
+                    }})
+                  </span>
+                </span>
                 <button 
                   class="btn btn-ghost btn-xs p-0 h-4 min-h-0" 
                   :class="appStore.foldTasks ? 'text-primary' : 'text-base-content/30'"
@@ -181,8 +192,17 @@ const showDraftModule = computed(() => {
                 </button>
               </div>
               <!-- 添加清空按钮 -->
-              <div v-if="tasks.length > 0 && !isReadOnly" class="flex justify-end mb-1 px-1">
-                <button class="btn btn-ghost btn-xs text-base-content/30 hover:text-base-content/60 transition-colors" @click="taskStore.clearTasks()">清空</button>
+              <div v-if="taskStore.totalTaskCount > 0 && !isReadOnly" class="flex justify-end gap-1 mb-1 px-1">
+                <InlineTooltip :text="'清空当前地图任务'">
+                  <button v-if="tasks.length > 0" class="btn btn-ghost btn-xs btn-circle p-0 text-base-content/30 hover:text-base-content/60 transition-colors" @click="taskStore.clearTasks()" aria-label="清空当前地图任务">
+                    <Icon icon="tabler:trash" class="text-xs" />
+                  </button>
+                </InlineTooltip>
+                <InlineTooltip v-if="mapsWithTasks.length > 1" :text="'清空全部地图任务'">
+                  <button class="btn btn-ghost btn-xs btn-circle p-0 text-base-content/30 hover:text-base-content/60 transition-colors" @click="taskStore.clearAllTasks()" aria-label="清空全部地图任务">
+                    <Icon icon="ic:baseline-delete-forever" class="text-xs" />
+                  </button>
+                </InlineTooltip>
               </div>
             </header>
             <div v-if="tasks.length === 0" class="text-[11px] text-base-content/20 px-1">空闲中</div>

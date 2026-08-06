@@ -776,6 +776,18 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
+  function clearAllTasks() {
+    for (const mapKey of Object.keys(tasksMap)) {
+      const mapTasks = tasksMap[mapKey];
+      if (!mapTasks || mapTasks.length === 0) continue;
+
+      // 返还该地图所有任务的所需物品
+      while (mapTasks.length > 0) {
+        removeTask(mapTasks[0].id, mapKey);
+      }
+    }
+  }
+
   /** 在所有地图中查找特定类型的任务及其所属地图 */
   const findTaskGlobal = (key: string, type?: string) => {
     for (const [mapKey, mapTasks] of Object.entries(tasksMap)) {
@@ -802,6 +814,7 @@ export const useTaskStore = defineStore('task', () => {
     removeTask,
     pushLabTask,
     clearTasks,
+    clearAllTasks,
     canPerformWithProjection,
     findTaskGlobal
   }
