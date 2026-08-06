@@ -222,7 +222,7 @@
               :key="i"
               class="flex gap-2 items-start mb-2 bg-base-200 rounded-box p-2"
             >
-              <label class="input input-xs w-32">
+              <label class="input input-xs w-32 flex flex-col">
                 <SearchableSelect
                   :options="itemOptions"
                   v-model="row.key"

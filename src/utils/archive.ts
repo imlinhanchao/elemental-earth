@@ -113,9 +113,10 @@ export function saveGame(): boolean {
     });
 
     gameSDK.setAttributes({
-      map: stateStore.state.map,
+      elements: packStore.discoveredItems.size,
       currentEra: stateStore.state.currentEra,
       stats: stateStore.state.stats,
+      map: stateStore.state.map,
       version: appVersion || null,
     })
 
