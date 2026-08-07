@@ -75,31 +75,52 @@
 
     <!-- ─── Drifting Bottles ────────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
-      <h2 class="text-xl font-bold flex items-baseline gap-2 mb-1">
-        <span class="flex items-center gap-2">
-          <Icon icon="game-icons:square-bottle" class="text-2xl text-primary" />
-          <span>漂流瓶</span>
-        </span>
-        <span class="badge badge-xs badge-primary badge-outline">({{ bottleStore.collectedBottles.length }}/{{ Bottles.length }})</span>
-      </h2>
-      <div class="text-xs font-normal opacity-50 mb-4">海边的意外惊喜</div>
-      
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <div 
-          v-for="bottle in sortedCollectedBottles" 
-          :key="bottle.index"
-          class="relative group cursor-pointer"
-          @click="openBottle(bottle)"
-        >
-          <div class="aspect-square rounded-xl bg-base-200 border border-base-300 flex flex-col items-center justify-center gap-2 transition-all hover:scale-105 hover:bg-base-300 hover:border-primary/30">
-            <Icon icon="game-icons:square-bottle" size="3em" class="text-primary/80 group-hover:text-primary transition-colors" />
-            <span class="text-xs opacity-60">#{{ bottle.index + 1 }}</span>
-            
-            <!-- Unread Badge -->
-            <div v-if="bottleStore.isUnread(bottle.index)" class="badge badge-error badge-xs absolute -top-1 -right-1">NEW</div>
+      <section class="rounded-2xl border border-base-300/60 bg-base-200/30 p-4 sm:p-5">
+        <div class="mb-4 flex items-end justify-between gap-3">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold flex items-center gap-2">
+              <Icon icon="game-icons:square-bottle" class="text-xl sm:text-2xl text-primary" />
+              <span>漂流瓶</span>
+            </h2>
+            <div class="text-xs font-normal opacity-50 mt-1">海边的意外惊喜</div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="badge badge-xs badge-outline">{{ bottleStore.collectedBottles.length }}/{{ Bottles.length }}</span>
+            <span v-if="unreadBottleCount > 0" class="badge badge-xs badge-error badge-outline">{{ unreadBottleCount }} NEW</span>
           </div>
         </div>
-      </div>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2.5 sm:gap-3">
+          <button
+            v-for="bottle in sortedCollectedBottles"
+            :key="bottle.index"
+            type="button"
+            class="group relative text-left"
+            @click="openBottle(bottle)"
+          >
+            <div
+              class="relative rounded-lg border px-2.5 py-2 sm:px-3 sm:py-2.5 flex flex-col items-center justify-center gap-1.5 min-h-[92px] sm:min-h-[100px] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md"
+              :class="bottleStore.isUnread(bottle.index)
+                ? 'bg-primary/5 border-primary/35 shadow-sm'
+                : 'bg-base-100/70 border-base-300/80 hover:border-primary/30 hover:bg-base-100'"
+            >
+              <Icon
+                icon="game-icons:square-bottle"
+                size="2.2em"
+                class="text-primary/75 group-hover:text-primary transition-colors"
+              />
+              <span class="text-[11px] sm:text-xs font-medium opacity-65">#{{ bottle.index + 1 }}</span>
+
+              <div
+                v-if="bottleStore.isUnread(bottle.index)"
+                class="badge badge-error badge-xs absolute -top-1.5 -right-1.5"
+              >
+                NEW
+              </div>
+            </div>
+          </button>
+        </div>
+      </section>
     </div>
     <!-- ─── Wonders Collection ──────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
@@ -238,6 +259,8 @@ const sortedCollectedBottles = computed(() => {
     return a.index - b.index
   })
 })
+
+const unreadBottleCount = computed(() => bottleStore.unreadIndices.length)
 
 // ─── Wonder Logic ─────────────────────────────────────────────────────────────
 const packStore = usePackStore()
