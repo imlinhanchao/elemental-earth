@@ -75,15 +75,18 @@
 
     <!-- ─── Drifting Bottles ────────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
-      <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
-        <Icon icon="game-icons:square-bottle" class="text-2xl text-primary" />
-        漂流瓶
-        <span class="text-xs font-normal opacity-50 ml-2">海边的意外惊喜</span>
+      <h2 class="text-xl font-bold flex items-baseline gap-1 mb-1">
+        <span class="flex items-center gap-2">
+          <Icon icon="game-icons:square-bottle" class="text-2xl text-primary" />
+          <span>漂流瓶</span>
+        </span>
+        <span class="badge badge-xs badge-primary badge-outline">({{ bottleStore.collectedBottles.length }}/{{ Bottles.length }})</span>
       </h2>
+      <div class="text-xs font-normal opacity-50 mb-4">海边的意外惊喜</div>
       
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <div 
-          v-for="bottle in bottleStore.collectedBottles" 
+          v-for="bottle in sortedCollectedBottles" 
           :key="bottle.index"
           class="relative group cursor-pointer"
           @click="openBottle(bottle)"
@@ -100,12 +103,14 @@
     </div>
     <!-- ─── Wonders Collection ──────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
-      <h2 class="text-xl font-bold flex items-center gap-2 mb-4">
-        <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
-        世界奇观
-        <span class="text-xs font-normal opacity-50 ml-2">人类文明的丰碑</span>
-        <span v-if="wonderBonusPercent > 0" class="ml-3 badge badge-outline badge-sm badge-secondary text-xs">产量加成 +{{ wonderBonusPercent }}%</span>
+      <h2 class="text-xl font-bold flex items-baseline gap-1 mb-1">
+        <span class="flex items-center gap-2">
+          <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
+          <span>世界奇观</span>
+        </span>
+        <span v-if="wonderBonusPercent > 0" class="badge badge-outline badge-xs badge-secondary">产量加成 +{{ wonderBonusPercent }}%</span>
       </h2>
+      <div class="text-xs font-normal opacity-50 mb-4">人类文明的丰碑</div>
       
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div 
@@ -187,7 +192,7 @@ import { useStateStore } from '@/stores/modules/state';
 import { useBottleStore } from '@/stores/modules/bottle';
 import { usePackStore } from '@/stores/modules/pack';
 import ActionsData from '@/data/actions.json'
-import type { IBottle } from '@/data/bottle';
+import { type IBottle, Bottles } from '@/data/bottle';
 import { Items } from '@/data/items';
 import { computed } from 'vue';
 import { renderMarkdown } from '@/utils/function';
@@ -206,6 +211,33 @@ function openBottle(bottle: IBottle & { index: number }) {
 function closeBottle() {
   bottleModal.value?.close()
 }
+
+const sortedCollectedBottles = computed(() => {
+  const unreadIndices = bottleStore.unreadIndices
+  const unreadSet = new Set(unreadIndices)
+  const unreadOrder = new Map<number, number>()
+
+  unreadIndices.forEach((index, order) => {
+    unreadOrder.set(index, order)
+  })
+
+  return [...bottleStore.collectedBottles].sort((a, b) => {
+    const aUnread = unreadSet.has(a.index)
+    const bUnread = unreadSet.has(b.index)
+
+    // 未读漂流瓶排在最前，并按解锁时间倒序（新的在前）
+    if (aUnread !== bUnread) {
+      return aUnread ? -1 : 1
+    }
+
+    if (aUnread && bUnread) {
+      return (unreadOrder.get(b.index) ?? -1) - (unreadOrder.get(a.index) ?? -1)
+    }
+
+    // 已读漂流瓶按编号升序
+    return a.index - b.index
+  })
+})
 
 // ─── Wonder Logic ─────────────────────────────────────────────────────────────
 const packStore = usePackStore()
