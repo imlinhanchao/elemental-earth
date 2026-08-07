@@ -75,7 +75,7 @@
 
     <!-- ─── Drifting Bottles ────────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
-      <h2 class="text-xl font-bold flex items-baseline gap-1 mb-1">
+      <h2 class="text-xl font-bold flex items-baseline gap-2 mb-1">
         <span class="flex items-center gap-2">
           <Icon icon="game-icons:square-bottle" class="text-2xl text-primary" />
           <span>漂流瓶</span>
@@ -103,7 +103,7 @@
     </div>
     <!-- ─── Wonders Collection ──────────────────────────────────────────────── -->
     <div class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
-      <h2 class="text-xl font-bold flex items-baseline gap-1 mb-1">
+      <h2 class="text-xl font-bold flex items-baseline gap-2 mb-1">
         <span class="flex items-center gap-2">
           <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
           <span>世界奇观</span>
