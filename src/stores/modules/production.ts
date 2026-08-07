@@ -35,6 +35,69 @@ export interface IProductionLine {
   steps: IProductionLineStep[];
 }
 
+export type IImportConflictAction = 'keep' | 'reset'
+
+export interface IProductionImportConflict {
+  id: string;
+  existingName: string;
+  importedName: string;
+  sameName: boolean;
+  sameContent: boolean;
+  warning: boolean;
+}
+
+export interface IProductionImportPreviewItem {
+  id: string;
+  name: string;
+  depth: number;
+  parentId: string | null;
+  stepCount: number;
+  conflict?: IProductionImportConflict;
+}
+
+export interface IProductionImportPreview {
+  rootId: string;
+  rootName: string;
+  lines: IProductionLine[];
+  items: IProductionImportPreviewItem[];
+  conflicts: IProductionImportConflict[];
+  hasNested: boolean;
+}
+
+export interface IProductionImportPreviewResult {
+  success: boolean;
+  message: string;
+  preview?: IProductionImportPreview;
+}
+
+export interface IProductionImportApplyResult {
+  success: boolean;
+  message: string;
+  importedIds: string[];
+  rootId?: string;
+}
+
+interface IEncodedProductionStep {
+  t: 0 | 1 | 2;
+  k: string;
+  c?: number;
+  p?: any;
+  cd?: IProductionLineStep['condition'];
+  n?: string;
+}
+
+interface IEncodedProductionLine {
+  id: string;
+  n: string;
+  s: IEncodedProductionStep[];
+}
+
+interface IExportBundleV2 {
+  v: 2;
+  rootId: string;
+  lines: IEncodedProductionLine[];
+}
+
 export const useProductionStore = defineStore('production', () => {
   const productionLines = reactive<IProductionLine[]>([]);
   const draftSteps = reactive<IProductionLineStep[]>([]);
@@ -397,111 +460,403 @@ export const useProductionStore = defineStore('production', () => {
     };
   }
 
-  /**
-   * 导出生产线为压缩字符串
-   * 格式: EAPv1|Name|JSON
-   */
-  function exportLine(id: string): string {
-    const line = productionLines.find(l => l.id === id)
-    if (!line) return ''
-    
-    // 简化步骤数据以减小体积
-    const data = line.steps.map(s => {
-      let t = 0;
-      if (s.type === 'formula') t = 1;
-      if (s.type === 'line') t = 2;
-
-      return {
-        t,
-        k: s.key,
-        c: s.count,
-        p: s.payload,
-        cd: s.condition // 增加执行条件
-      }
-    })
-
-    const json = JSON.stringify({ n: line.name, s: data })
-    // 使用简单的 Base64，后续如有需求可引入更高效的压缩
-    return 'EAPv1:' + btoa(encodeURIComponent(json))
+  function normalizeStepsForCompare(steps: IProductionLineStep[]) {
+    return steps.map(step => ({
+      type: step.type,
+      key: step.key,
+      count: step.count || 1,
+      payload: step.payload ?? null,
+      condition: step.condition ?? null
+    }))
   }
 
-  /**
-   * 导入生产线
-   * 返回 { success: boolean, message: string }
-   */
-  function importLine(code: string): { success: boolean, message: string } {
-    if (!code.startsWith('EAPv1:')) {
+  function isLineEquivalent(a: IProductionLine, b: IProductionLine): { sameName: boolean, sameContent: boolean } {
+    const sameName = a.name === b.name
+    const sameContent = JSON.stringify(normalizeStepsForCompare(a.steps)) === JSON.stringify(normalizeStepsForCompare(b.steps))
+    return { sameName, sameContent }
+  }
+
+  function getStepTypeByCode(code: number): IProductionLineStep['type'] {
+    if (code === 1) return 'formula'
+    if (code === 2) return 'line'
+    return 'action'
+  }
+
+  function getStepTypeCode(type: IProductionLineStep['type']): 0 | 1 | 2 {
+    if (type === 'formula') return 1
+    if (type === 'line') return 2
+    return 0
+  }
+
+  function getStepDisplayName(type: IProductionLineStep['type'], key: string, encodedName?: string, importedNameMap?: Map<string, string>) {
+    if (type === 'action') {
+      return Actions.find(a => a.key === key)?.name || encodedName || key
+    }
+    if (type === 'formula') {
+      return Formulas.find(f => f.key === key)?.name || encodedName || key
+    }
+    return importedNameMap?.get(key) || productionLines.find(l => l.id === key)?.name || encodedName || key
+  }
+
+  function generateUniqueLineId(seed: string, usedIds: Set<string>) {
+    const safeSeed = (seed || 'line').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || 'line'
+    for (let i = 0; i < 500; i++) {
+      const id = `${safeSeed}_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`
+      if (!usedIds.has(id)) {
+        usedIds.add(id)
+        return id
+      }
+    }
+    let fallbackIndex = 1
+    while (usedIds.has(`${safeSeed}_${fallbackIndex}`)) fallbackIndex++
+    const fallback = `${safeSeed}_${fallbackIndex}`
+    usedIds.add(fallback)
+    return fallback
+  }
+
+  function decodeImportString(code: string): { success: boolean, message: string, payload?: any, version?: 1 | 2 } {
+    const isV2 = code.startsWith('EAPv2:')
+    const isV1 = code.startsWith('EAPv1:')
+    if (!isV1 && !isV2) {
       return { success: false, message: '无效的生产线代码格式' }
     }
 
     try {
-      const jsonStr = decodeURIComponent(atob(code.substring(6)))
-      const data = JSON.parse(jsonStr)
-      
-      const missingKeys: string[] = []
-      const steps: IProductionLineStep[] = []
-
-      for (const s of data.s) {
-        let type: 'action' | 'formula' | 'line' = 'action';
-        if (s.t === 1) type = 'formula';
-        else if (s.t === 2) type = 'line';
-
-        const key = s.k
-        
-        let name = ''
-        let isUnlocked = false
-
-        if (type === 'action') {
-          const action = Actions.find(a => a.key === key)
-          if (action) {
-            name = action.name
-            // 检查已解锁状态: 拥有对应技术且已尝试执行过(或产物已全解锁)
-            const techsOk = !action.required_techs || action.required_techs.every(t => packStore.hasTech(t))
-            const performedOk = packStore.performedActions.has(key)
-            isUnlocked = techsOk && performedOk
-          }
-        } else if (type === 'formula') {
-          const formula = Formulas.find(f => f.key === key)
-          if (formula) {
-            name = formula.name
-            isUnlocked = packStore.provenFormulas.includes(key)
-          }
-        } else if (type === 'line') {
-          // 嵌套生产线：只检查本地是否存在
-          const line = productionLines.find(l => l.id === key);
-          name = line ? line.name : '未知生产线';
-          isUnlocked = !!line;
-        }
-
-        if (!isUnlocked) {
-          missingKeys.push(name || key)
-        }
-
-        steps.push({
-          type,
-          key,
-          name: name || key,
-          count: s.c,
-          payload: s.p,
-          condition: s.cd // 恢复执行条件
-        })
-      }
-
-      if (missingKeys.length > 0) {
-        return { 
-          success: false, 
-          message: `导入失败：以下内容未解锁或不存在 - ${missingKeys.join(', ')}` 
-        }
-      }
-
-      // 导入到草稿
-      draftSteps.splice(0, draftSteps.length, ...steps)
-      // 如果有名字，尝试填入 (由 UI 处理比较好，或者这里直接返回名字)
-      return { success: true, message: data.n }
-
+      const encoded = code.substring(isV2 ? 6 : 6)
+      const jsonStr = decodeURIComponent(atob(encoded))
+      const payload = JSON.parse(jsonStr)
+      return { success: true, message: 'ok', payload, version: isV2 ? 2 : 1 }
     } catch (e) {
       return { success: false, message: '代码解析失败，请检查输入' }
     }
+  }
+
+  function decodeLinesFromPayload(payload: any, version: 1 | 2): { success: boolean, message: string, rootId?: string, lines?: IProductionLine[] } {
+    if (version === 2) {
+      const bundle = payload as IExportBundleV2
+      if (!bundle || bundle.v !== 2 || !bundle.rootId || !Array.isArray(bundle.lines)) {
+        return { success: false, message: '生产线代码结构无效' }
+      }
+
+      const encodedMap = new Map<string, IEncodedProductionLine>()
+      for (const rawLine of bundle.lines) {
+        if (!rawLine?.id || !Array.isArray(rawLine.s)) {
+          return { success: false, message: '生产线数据缺失字段' }
+        }
+        if (encodedMap.has(rawLine.id)) {
+          return { success: false, message: `导入失败：发现重复产线 ID (${rawLine.id})` }
+        }
+        encodedMap.set(rawLine.id, rawLine)
+      }
+
+      if (!encodedMap.has(bundle.rootId)) {
+        return { success: false, message: '导入失败：缺少顶级生产线数据' }
+      }
+
+      const importedNameMap = new Map<string, string>()
+      for (const [id, line] of encodedMap.entries()) importedNameMap.set(id, line.n || id)
+
+      const decodedMap = new Map<string, IProductionLine>()
+      for (const [id, rawLine] of encodedMap.entries()) {
+        const steps: IProductionLineStep[] = (rawLine.s || []).map((s: IEncodedProductionStep) => {
+          const type = getStepTypeByCode(s.t)
+          const key = s.k
+          const name = getStepDisplayName(type, key, s.n, importedNameMap)
+          return {
+            type,
+            key,
+            name,
+            count: s.c || 1,
+            payload: s.p,
+            condition: s.cd
+          }
+        })
+
+        decodedMap.set(id, {
+          id,
+          name: rawLine.n || id,
+          steps
+        })
+      }
+
+      const missingRefs = new Set<string>()
+      const unknownSteps: string[] = []
+
+      for (const line of decodedMap.values()) {
+        for (const step of line.steps) {
+          if (step.type === 'action' && !Actions.find(a => a.key === step.key)) {
+            unknownSteps.push(`未知行动: ${step.key}`)
+          }
+          if (step.type === 'formula' && !Formulas.find(f => f.key === step.key)) {
+            unknownSteps.push(`未知配方: ${step.key}`)
+          }
+          if (step.type === 'line') {
+            const importedTarget = decodedMap.get(step.key)
+            const localTarget = productionLines.find(l => l.id === step.key)
+            const targetName = importedTarget?.name || localTarget?.name
+            if (!targetName) {
+              missingRefs.add(step.key)
+            }
+            step.name = targetName || step.name || step.key
+          }
+        }
+      }
+
+      if (unknownSteps.length > 0) {
+        return { success: false, message: `导入失败：${unknownSteps.join('，')}` }
+      }
+      if (missingRefs.size > 0) {
+        return { success: false, message: `导入失败：缺少嵌套生产线 ${Array.from(missingRefs).join('，')}` }
+      }
+
+      const ordered: IProductionLine[] = []
+      const visited = new Set<string>()
+      const collect = (lineId: string) => {
+        if (visited.has(lineId)) return
+        const line = decodedMap.get(lineId)
+        if (!line) return
+        visited.add(lineId)
+        ordered.push(JSON.parse(JSON.stringify(line)))
+        for (const step of line.steps) {
+          if (step.type === 'line' && decodedMap.has(step.key)) {
+            collect(step.key)
+          }
+        }
+      }
+
+      collect(bundle.rootId)
+      for (const id of decodedMap.keys()) collect(id)
+
+      return { success: true, message: 'ok', rootId: bundle.rootId, lines: ordered }
+    }
+
+    // Legacy V1: 仅单条生产线，且通常不包含可递归导出的子孙数据
+    if (!payload || !Array.isArray(payload.s)) {
+      return { success: false, message: '旧版生产线代码结构无效' }
+    }
+
+    const usedIds = new Set(productionLines.map(l => l.id))
+    const generatedId = generateUniqueLineId((payload.n || 'imported').toString(), usedIds)
+    const steps: IProductionLineStep[] = payload.s.map((s: any) => {
+      const type = getStepTypeByCode(s.t)
+      const key = s.k
+      const name = getStepDisplayName(type, key, undefined)
+      return {
+        type,
+        key,
+        name,
+        count: s.c || 1,
+        payload: s.p,
+        condition: s.cd
+      }
+    })
+
+    return {
+      success: true,
+      message: 'ok',
+      rootId: generatedId,
+      lines: [{ id: generatedId, name: payload.n || '导入生产线', steps }]
+    }
+  }
+
+  function buildImportPreview(rootId: string, lines: IProductionLine[]): IProductionImportPreview {
+    const lineMap = new Map(lines.map(l => [l.id, l]))
+    const items: IProductionImportPreviewItem[] = []
+    const conflicts: IProductionImportConflict[] = []
+    const visited = new Set<string>()
+
+    const walk = (lineId: string, depth: number, parentId: string | null) => {
+      if (visited.has(lineId)) return
+      const line = lineMap.get(lineId)
+      if (!line) return
+      visited.add(lineId)
+
+      const local = productionLines.find(l => l.id === line.id)
+      let conflict: IProductionImportConflict | undefined
+      if (local) {
+        const { sameName, sameContent } = isLineEquivalent(local, line)
+        conflict = {
+          id: line.id,
+          existingName: local.name,
+          importedName: line.name,
+          sameName,
+          sameContent,
+          warning: !(sameName && sameContent)
+        }
+        conflicts.push(conflict)
+      }
+
+      items.push({
+        id: line.id,
+        name: line.name,
+        depth,
+        parentId,
+        stepCount: line.steps.length,
+        conflict
+      })
+
+      for (const step of line.steps) {
+        if (step.type === 'line' && lineMap.has(step.key)) {
+          walk(step.key, depth + 1, line.id)
+        }
+      }
+    }
+
+    walk(rootId, 0, null)
+    for (const line of lines) walk(line.id, 0, null)
+
+    const rootLine = lineMap.get(rootId) || lines[0]
+    return {
+      rootId,
+      rootName: rootLine?.name || rootId,
+      lines,
+      items,
+      conflicts,
+      hasNested: lines.length > 1
+    }
+  }
+
+  function previewImportLine(code: string): IProductionImportPreviewResult {
+    const decoded = decodeImportString(code)
+    if (!decoded.success || !decoded.version) {
+      return { success: false, message: decoded.message }
+    }
+
+    const parsed = decodeLinesFromPayload(decoded.payload, decoded.version)
+    if (!parsed.success || !parsed.rootId || !parsed.lines) {
+      return { success: false, message: parsed.message }
+    }
+
+    const preview = buildImportPreview(parsed.rootId, parsed.lines)
+    return { success: true, message: 'ok', preview }
+  }
+
+  function applyImportLines(preview: IProductionImportPreview, options?: { conflictActions?: Record<string, IImportConflictAction> }): IProductionImportApplyResult {
+    const lines = preview.lines.map(l => JSON.parse(JSON.stringify(l)) as IProductionLine)
+    const localIds = new Set(productionLines.map(l => l.id))
+    const finalUsedIds = new Set<string>(localIds)
+    const conflictActions = options?.conflictActions || {}
+    const remap: Record<string, string> = {}
+
+    for (const line of lines) {
+      const hasLocal = localIds.has(line.id)
+      const action = conflictActions[line.id] || 'keep'
+      if (hasLocal && action === 'reset') {
+        remap[line.id] = generateUniqueLineId(line.id, finalUsedIds)
+      } else {
+        finalUsedIds.add(line.id)
+      }
+    }
+
+    const importedNameByOldId = new Map(lines.map(l => [l.id, l.name]))
+    const importedNameByFinalId = new Map<string, string>()
+
+    const finalLines: IProductionLine[] = lines.map(line => {
+      const nextId = remap[line.id] || line.id
+      const nextSteps = line.steps.map(step => {
+        if (step.type !== 'line') return { ...step }
+        const remappedKey = remap[step.key] || step.key
+        const importedName = importedNameByOldId.get(step.key)
+        const localName = productionLines.find(l => l.id === remappedKey)?.name
+        return {
+          ...step,
+          key: remappedKey,
+          name: importedName || localName || step.name || remappedKey
+        }
+      })
+
+      importedNameByFinalId.set(nextId, line.name)
+      return {
+        id: nextId,
+        name: line.name,
+        steps: nextSteps
+      }
+    })
+
+    for (const line of finalLines) {
+      const idx = productionLines.findIndex(l => l.id === line.id)
+      if (idx >= 0) {
+        productionLines[idx] = line
+      } else {
+        productionLines.push(line)
+      }
+    }
+
+    saveToStorage()
+
+    const importedIds = finalLines.map(l => l.id)
+    const rootId = remap[preview.rootId] || preview.rootId
+
+    return {
+      success: true,
+      message: `已导入 ${finalLines.length} 条生产线`,
+      importedIds,
+      rootId
+    }
+  }
+
+  /**
+   * 导出生产线为压缩字符串
+   * 新格式: EAPv2:Base64(JSON)
+   */
+  function exportLine(id: string): string {
+    const line = productionLines.find(l => l.id === id)
+    if (!line) return ''
+
+    const visited = new Set<string>()
+    const exportedLines: IEncodedProductionLine[] = []
+
+    const collect = (lineId: string) => {
+      if (visited.has(lineId)) return
+      const target = productionLines.find(l => l.id === lineId)
+      if (!target) return
+
+      visited.add(lineId)
+
+      exportedLines.push({
+        id: target.id,
+        n: target.name,
+        s: target.steps.map(step => ({
+          t: getStepTypeCode(step.type),
+          k: step.key,
+          c: step.count,
+          p: step.payload,
+          cd: step.condition,
+          n: step.name
+        }))
+      })
+
+      for (const step of target.steps) {
+        if (step.type === 'line') {
+          collect(step.key)
+        }
+      }
+    }
+
+    collect(id)
+    if (exportedLines.length === 0) return ''
+
+    const bundle: IExportBundleV2 = {
+      v: 2,
+      rootId: id,
+      lines: exportedLines
+    }
+
+    return 'EAPv2:' + btoa(encodeURIComponent(JSON.stringify(bundle)))
+  }
+
+  /**
+   * 兼容旧调用: 直接预览 + 按默认策略导入
+   * 返回 { success: boolean, message: string }
+   */
+  function importLine(code: string): { success: boolean, message: string } {
+    const preview = previewImportLine(code)
+    if (!preview.success || !preview.preview) {
+      return { success: false, message: preview.message }
+    }
+
+    const applied = applyImportLines(preview.preview)
+    return { success: applied.success, message: applied.message }
   }
 
   function saveToStorage() {
@@ -539,6 +894,8 @@ export const useProductionStore = defineStore('production', () => {
     collapseSteps,
     getTotalTime,
     exportLine,
+    previewImportLine,
+    applyImportLines,
     importLine,
     currentEditingId,
     addStepsToQueue,

@@ -69,7 +69,7 @@ function mapTaskSummary(mapKey: string): string {
           :disabled="map.key === stateStore.state.map"
           @click="selectMap(map.key)"
         >
-          <section class="flex items-center gap-3 p-3">
+          <section class="flex items-center gap-3 p-3 w-full">
             <Icon :icon="map.icon || 'tabler:map-filled'" class="text-2xl shrink-0" />
             <div class="flex-1 min-w-0">
               <div class="font-medium flex items-center gap-2">

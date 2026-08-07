@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useProductionStore, type IProductionLineStep } from '@/stores/modules/production'
-import { useStateStore } from '@/stores/modules/state'
+import { ref, computed, nextTick } from 'vue'
+import { useProductionStore, type IProductionLineStep, type IImportConflictAction, type IProductionImportPreview } from '@/stores/modules/production'
 import { usePackStore } from '@/stores/modules/pack'
 import { useTaskStore } from '@/stores/modules/task'
-import { Maps } from '@/data/maps'
 import { Items } from '@/data/items'
 import Icon from '@/components/Icon.vue'
 import { formatQty } from '@/utils/function'
@@ -13,9 +11,9 @@ import ProductionActionModal from '@/components/ProductionActionModal.vue'
 import ProductionFormulaModal from '@/components/ProductionFormulaModal.vue'
 import ProductionConditionEditor from '@/components/ProductionConditionEditor.vue'
 import SearchableSelect from '@/components/SearchableSelect.vue'
+import ProductionLineList from '@/components/ProductionLineList.vue'
 
 const productionStore = useProductionStore()
-const stateStore = useStateStore()
 const packStore = usePackStore()
 const taskStore = useTaskStore()
 const toastStore = useToastStore()
@@ -23,6 +21,12 @@ const toastStore = useToastStore()
 const newName = ref('')
 const selectedCycles = ref(1)
 const importCode = ref('')
+const showImportPreviewModal = ref(false)
+const importPreview = ref<IProductionImportPreview | null>(null)
+const conflictActions = ref<Record<string, IImportConflictAction>>({})
+const importedHighlightIds = ref<string[]>([])
+const importFlashToken = ref(0)
+const importScrollToId = ref<string | null>(null)
 
 const showActionModal = ref(false)
 const showFormulaModal = ref(false)
@@ -33,18 +37,7 @@ const showConditionModal = ref(false)
 const editingStep = ref<any>(null)
 const editingIndex = ref<number | undefined>(undefined)
 
-// Search for saved production lines
-const lineSearch = ref('')
-
-const filteredProductionLines = computed(() => {
-  const q = lineSearch.value.trim().toLowerCase()
-  return productionStore.productionLines
-    .map((l, i) => ({ line: l, index: i }))
-    .filter(({ line }) => {
-      if (!q) return true
-      return (line.name || '').toLowerCase().includes(q) || line.id.toLowerCase().includes(q)
-    })
-})
+// Search for saved production lines handled by child component
 
 function openActionModal(index?: number) {
   if (index !== undefined) {
@@ -105,33 +98,7 @@ function onDrop(index: number) {
   draggedIndex.value = null
 }
 
-// Production lines drag-and-drop
-const draggedLineIndex = ref<number | null>(null)
-
-function onLineDragStart(index: number, event: DragEvent) {
-  draggedLineIndex.value = index
-  if (event.dataTransfer) {
-    event.dataTransfer.effectAllowed = 'move'
-  }
-}
-
-function onLineDragEnd() {
-  draggedLineIndex.value = null
-}
-
-function onLineDragOver(event: DragEvent) {
-  event.preventDefault()
-  if (event.dataTransfer) {
-    event.dataTransfer.dropEffect = 'move'
-  }
-}
-
-function onLineDrop(index: number) {
-  if (draggedLineIndex.value !== null && draggedLineIndex.value !== index) {
-    productionStore.moveProductionLine(draggedLineIndex.value, index)
-  }
-  draggedLineIndex.value = null
-}
+// Production lines drag-and-drop moved to child component
 
 const editingConditionIndex = ref<number | null>(null)
 const conditionInput = ref<NonNullable<IProductionLineStep['condition']>>({
@@ -189,25 +156,55 @@ const draftNetRequirements = computed(() => {
   return productionStore.getNetRequirements(productionStore.draftSteps, 1)
 })
 
-function handleCopy(id: string) {
-  const code = productionStore.exportLine(id)
-  navigator.clipboard.writeText(code).then(() => {
-    toastStore.addToast('生产线代码已复制到剪贴板', 'success')
-  })
+const importWarningCount = computed(() => {
+  if (!importPreview.value) return 0
+  return importPreview.value.conflicts.filter(c => c.warning).length
+})
+
+function closeImportPreviewModal() {
+  showImportPreviewModal.value = false
+  importPreview.value = null
 }
 
 function handleImport() {
   if (!importCode.value) return
-  const res = productionStore.importLine(importCode.value.trim())
-  if (res.success) {
-    newName.value = res.message
-    importCode.value = ''
-    toastStore.addToast('已将代码导入到草稿', 'success')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  } else {
-    // 强制显示错误消息
+  const res = productionStore.previewImportLine(importCode.value.trim())
+  if (!res.success || !res.preview) {
     toastStore.addToast(res.message, 'error')
+    return
   }
+
+  const actions: Record<string, IImportConflictAction> = {}
+  for (const c of res.preview.conflicts) {
+    actions[c.id] = 'keep'
+  }
+
+  conflictActions.value = actions
+  importPreview.value = res.preview
+  showImportPreviewModal.value = true
+}
+
+function confirmImport() {
+  if (!importPreview.value) return
+
+  const res = productionStore.applyImportLines(importPreview.value, {
+    conflictActions: conflictActions.value
+  })
+
+  if (!res.success) {
+    toastStore.addToast(res.message, 'error')
+    return
+  }
+
+  showImportPreviewModal.value = false
+  importCode.value = ''
+  importPreview.value = null
+
+  importedHighlightIds.value = [...res.importedIds]
+  importFlashToken.value = Date.now()
+  importScrollToId.value = res.rootId || null
+
+  toastStore.addToast(res.message, 'success')
 }
 
 function isInsufficient(key: string, req: { quantity: number, totalUse: number, isDurable: boolean }) {
@@ -231,23 +228,34 @@ function getActualTime(t: number) {
 const editRef = ref<HTMLElement | null>(null)
 function handleEdit(line: any) {
   productionStore.editProductionLine(line)
-  newName.value = line.name;
+  newName.value = line.name
   // Scroll to draft areas
   editRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-function handleSaveDraft() {
+async function handleSaveDraft() {
   if (!newName.value || productionStore.draftSteps.length === 0) return
+
+  const editingId = productionStore.currentEditingId || null
+  const beforeIds = new Set(productionStore.productionLines.map(l => l.id))
+
   productionStore.saveProductionLine(newName.value)
+
+  let targetId = editingId
+  if (!targetId) {
+    const added = productionStore.productionLines.find(l => !beforeIds.has(l.id))
+    targetId = added?.id || productionStore.productionLines[productionStore.productionLines.length - 1]?.id || null
+  }
+
+  if (targetId) {
+    importedHighlightIds.value = [targetId]
+    importFlashToken.value = Date.now()
+    importScrollToId.value = null
+    await nextTick()
+    importScrollToId.value = targetId
+  }
+
   newName.value = ''
-}
-
-function handleExecute(id: string) {
-  productionStore.executeProductionLine(id, selectedCycles.value)
-}
-
-function getMapName(key: string) {
-  return Maps.find(m => m.key === key)?.name || key
 }
 </script>
 
@@ -401,120 +409,22 @@ function getMapName(key: string) {
           导入生产线
         </h3>
         <div class="flex gap-2">
-          <input v-model="importCode" type="text" placeholder="在此粘贴分享代码 (EAPv1:...)" class="input input-sm grow" />
+          <input v-model="importCode" type="text" placeholder="在此粘贴分享代码 (EAPv2:... / EAPv1:...)" class="input input-sm grow" />
           <button @click="handleImport" class="btn btn-sm btn-primary px-4" :disabled="!importCode">
-            导入到草稿
+            预览并导入
           </button>
         </div>
       </div>
     </div>
 
     <!-- 已保存的生产线 -->
-    <div class="space-y-4">
-      <h2 class="text-xl font-bold flex items-center gap-2 px-2">
-        <Icon icon="fluent:bookmark-multiple-16-filled" class="text-primary" />
-        已配置生产线
-      </h2>
-      <div class="px-2">
-        <div class="flex items-center gap-2 mt-2">
-          <input v-model="lineSearch" type="text" placeholder="搜索生产线 (名称或ID)" class="input input-sm grow" />
-          <button v-if="lineSearch" @click="lineSearch = ''" class="btn btn-sm btn-ghost">清除</button>
-        </div>
-      </div>
-      
-      <div v-if="productionStore.productionLines.length === 0" class="card bg-base-100 border border-dashed border-base-300 p-12 text-center text-base-content/40 text-sm">
-        暂无保存的生产线
-      </div>
-
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div v-for="({ line, index } , idx) in filteredProductionLines" :key="line.id" 
-             draggable="true"
-             @dragstart="onLineDragStart(index, $event)"
-             @dragend="onLineDragEnd"
-             @dragover="onLineDragOver($event)"
-             @drop="onLineDrop(index)"
-             :class="['card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all', (draggedLineIndex === index) ? 'opacity-50' : '']">
-          <div class="card-body p-5">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="card-title text-lg font-bold flex items-center gap-2 truncate">
-                <Icon icon="lsicon:drag-outline" class="text-primary" />
-                {{ line.name }}
-              </h3>
-              <div class="flex gap-1">
-                <button @click="handleCopy(line.id)" class="btn btn-ghost btn-xs btn-square text-base-content/40 hover:text-primary tooltip" data-tip="复制分享代码">
-                   <Icon icon="fluent:copy-16-regular" />
-                </button>
-                <button @click="handleEdit(line)" class="btn btn-ghost btn-xs btn-square text-primary/60 hover:text-primary tooltip" data-tip="编辑">
-                   <Icon icon="fluent:edit-12-regular" />
-                </button>
-                <button @click="productionStore.removeProductionLine(line.id)" class="btn btn-ghost btn-xs btn-square text-error/60 hover:text-error">
-                   <Icon icon="fluent:delete-12-regular" />
-                </button>
-              </div>
-            </div>
-
-            <!-- 需求展示 (已创建产线) -->
-            <div class="mb-4">
-              <div class="collapse collapse-arrow bg-base-200/50 rounded-xl border border-base-300">
-                <input type="checkbox" />
-                <div class="collapse-title py-2 px-4 min-h-0 text-[11px] font-bold opacity-60 flex justify-between items-center pr-10">
-                  <span>预估总量物料清单 (循环 {{ selectedCycles }} 次)</span>
-                  <span class="text-primary font-mono font-bold">总耗时: {{ getActualTime(productionStore.getTotalTime(line.steps, selectedCycles)) }}s</span>
-                </div>
-                <div class="collapse-content px-4 pb-3">
-                  <div class="flex flex-wrap gap-1.5 pt-2">
-                    <template v-for="(req, key) in productionStore.getNetRequirements(line.steps, selectedCycles)" :key="key">
-                      <div class="flex items-center gap-1 bg-base-100 px-2 py-0.5 rounded border border-base-300 text-[10px] transition-colors tooltip"
-                           :class="isInsufficient(key as string, req) ? 'text-error border-error/50 bg-error/5' : ''"
-                           :data-tip="`持有: ${packStore.getItemQuantity(key as string)} (耐久: ${packStore.getTotalDurability(key as string).toFixed(1)})`">
-                        <span>{{ req.name }}</span>
-                        <span class="font-mono font-bold" :class="isInsufficient(key as string, req) ? '' : 'text-primary'">
-                          {{ req.quantity > 0 ? '×' + req.quantity : '' }}
-                          {{ req.totalUse > 0 ? '(耐' + req.totalUse.toFixed(2) + ')' : '' }}
-                        </span>
-                        <Icon v-if="isInsufficient(key as string, req)" icon="fluent:warning-12-filled" />
-                      </div>
-                    </template>
-                    <div v-if="Object.keys(productionStore.getNetRequirements(line.steps, selectedCycles)).length === 0" class="text-[10px] opacity-40 italic">
-                      无净物料需求
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 步骤展示 (缩减版) -->
-            <div class="text-[10px] space-y-1 mb-3 opacity-60">
-              <div v-for="(step, idx) in productionStore.collapseSteps(line.steps).slice(0, 3)" :key="idx" class="flex items-center gap-1.5">
-                <Icon :icon="step.type === 'action' ? 'fluent:puzzle-cube-16-filled' : 'fluent:beaker-16-filled'" 
-                      class="text-[10px]" :class="step.type === 'action' ? 'text-primary' : 'text-secondary'" />
-                <span class="truncate">{{ step.name }}</span>
-                <span v-if="step.count > 1" class="text-primary font-bold">x{{ step.count }}</span>
-              </div>
-              <div v-if="productionStore.collapseSteps(line.steps).length > 3" class="pl-4 italic">等 {{ productionStore.collapseSteps(line.steps).length }} 个步骤...</div>
-            </div>
-
-            <!-- 地图适配警示 -->
-            <div v-if="!productionStore.validateMapCompatibility(line).ok" class="alert alert-soft alert-warning p-2 mb-4 rounded-xl text-[10px] leading-tight">
-              <Icon icon="fluent:warning-16-filled" class="shrink-0" />
-              <span>当前地图 {{ getMapName(stateStore.state.map) }} 条件不符</span>
-            </div>
-
-            <div class="card-actions flex-nowrap items-center gap-2 border-t border-base-200 pt-4">
-              <div class="join grow">
-                <span class="join-item btn btn-sm no-animation bg-base-200 border-base-300 font-normal">循环</span>
-                <input v-model.number="selectedCycles" type="number" min="1" max="100" class="join-item input input-sm w-full text-center border-base-300" />
-              </div>
-              <button @click="handleExecute(line.id)" class="btn btn-sm btn-primary px-6"
-                      :disabled="!productionStore.validateMapCompatibility(line).ok || taskStore.currentMapTasks.length >= 100">
-                <Icon icon="fluent:play-16-filled" />
-                启动
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ProductionLineList
+      v-model:selectedCycles="selectedCycles"
+      :highlight-ids="importedHighlightIds"
+      :flash-token="importFlashToken"
+      :scroll-to-id="importScrollToId"
+      @edit-line="handleEdit"
+    />
 
     <!-- 提示区 -->
     <div class="alert alert-soft p-4 rounded-2xl flex items-start gap-4">
@@ -562,7 +472,7 @@ function getMapName(key: string) {
                 .map(l => ({ label: l.name, value: l.id }))"
               placeholder="选择生产线..."
               append-to-body
-            />reduce_holmium_fluoride
+            />
           </div>
 
           <div v-if="lineModalSelectedKey" class="bg-base-200 p-3 rounded-xl border border-base-300 text-xs text-base-content/60">
@@ -617,6 +527,73 @@ function getMapName(key: string) {
           </div>
         </div>
       </div>
+    </Teleport>
+
+    <!-- 导入预览对话框 -->
+    <Teleport to="body">
+      <dialog v-if="showImportPreviewModal && importPreview" class="modal modal-open">
+        <div class="modal-box max-w-3xl">
+          <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+            <Icon icon="fluent:document-checkmark-20-filled" class="text-primary" />
+            导入生产线预览
+          </h3>
+          <p class="text-xs text-base-content/60 mb-3">
+            顶级生产线：<span class="font-bold">{{ importPreview.rootName }}</span>
+            <span class="ml-2">共 {{ importPreview.lines.length }} 条{{ importPreview.hasNested ? '（含嵌套）' : '' }}</span>
+          </p>
+
+          <div class="alert" :class="importWarningCount > 0 ? 'alert-warning alert-soft' : 'alert-success alert-soft'" role="alert">
+            <Icon :icon="importWarningCount > 0 ? 'fluent:warning-16-filled' : 'fluent:checkmark-circle-16-filled'" />
+            <span class="text-xs">
+              {{ importWarningCount > 0 ? `发现 ${importWarningCount} 条 ID 冲突且内容/名称不一致，请确认处理方式。` : '未发现需要警告的冲突，可直接导入。' }}
+            </span>
+          </div>
+
+          <div class="max-h-[58vh] overflow-y-auto mt-3 border border-base-300 rounded-xl">
+            <ul class="list divide-y divide-base-300 bg-base-100">
+              <li v-for="item in importPreview.items" :key="item.id" class="list-row p-2.5">
+                <div class="list-col-grow space-y-1" :style="{ paddingLeft: `${item.depth * 14}px` }">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="badge badge-xs" :class="item.depth === 0 ? 'badge-primary' : 'badge-neutral'">
+                      {{ item.depth === 0 ? '顶级' : `子级 ${item.depth}` }}
+                    </span>
+                    <span class="font-bold text-sm">{{ item.name }}</span>
+                    <span class="text-[10px] opacity-60 font-mono">{{ item.id }}</span>
+                    <span class="text-[10px] opacity-50">{{ item.stepCount }} 步</span>
+                  </div>
+
+                  <div v-if="item.conflict" class="text-[11px]">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="badge badge-xs" :class="item.conflict.warning ? 'badge-warning' : 'badge-success'">
+                        {{ item.conflict.warning ? '冲突' : '一致' }}
+                      </span>
+                      <span>本地：{{ item.conflict.existingName }}</span>
+                      <span :class="item.conflict.sameName ? 'text-success' : 'text-warning'">名称{{ item.conflict.sameName ? '一致' : '不一致' }}</span>
+                      <span :class="item.conflict.sameContent ? 'text-success' : 'text-warning'">内容{{ item.conflict.sameContent ? '一致' : '不一致' }}</span>
+                    </div>
+
+                    <div v-if="item.conflict.warning" class="mt-1 flex items-center gap-2">
+                      <span class="text-[10px] opacity-70">冲突处理：</span>
+                      <select v-model="conflictActions[item.id]" class="select select-xs">
+                        <option value="keep">不处理（覆盖同 ID）</option>
+                        <option value="reset">重置 ID（创建新产线）</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-action mt-4">
+            <button @click="confirmImport" class="btn btn-primary btn-sm">确认导入</button>
+            <button @click="closeImportPreviewModal" class="btn btn-ghost btn-sm">取消</button>
+          </div>
+        </div>
+        <form method="dialog" class="modal-backdrop" @click="closeImportPreviewModal">
+          <button>close</button>
+        </form>
+      </dialog>
     </Teleport>
   </div>
 </template>
