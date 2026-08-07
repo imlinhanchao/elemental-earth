@@ -146,6 +146,10 @@ function onEraTransitionDone() {
   showEraTransition.value = false
   transitionEra.value = null
   stateStore.clearEraTransition()
+  // If the tutorial is active and we're on step 9, advance to step 10 when the era animation is closed
+  if (tutorialStore.isTutorialActive && tutorialStore.currentStep === 9) {
+    tutorialStore.currentStep = 10
+  }
 }
 
 // ─── 物品发现命名弹窗 ────────────────────────────────────────────

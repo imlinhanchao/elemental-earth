@@ -282,7 +282,8 @@ export const useTutorialStore = defineStore('tutorial', () => {
   })
 
   // Logic to advance steps
-  watch([() => packStore.items, () => packStore.techs, () => stateStore.state.map, () => stateStore.state.currentEra, () => packStore.provenFormulas], () => {
+  // Include eraDetailsSeen so opening the Era details modal immediately triggers step completion
+  watch([() => packStore.items, () => packStore.techs, () => stateStore.state.map, () => stateStore.state.currentEra, () => packStore.provenFormulas, () => stateStore.state.eraDetailsSeen], () => {
     if (!isTutorialActive.value) return
 
     const getQty = (key: string) => packStore.getItemQuantity(key)

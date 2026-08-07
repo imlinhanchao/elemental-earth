@@ -5,9 +5,11 @@ import { useAppStore } from "@/stores/modules/app";
 import { usePackStore } from "@/stores/modules/pack";
 import { getItem } from "@/data/items";
 import { Techs } from "@/data/techs";
+import { useTutorialStore } from "@/stores/modules/tutorial";
 
 const appStore = useAppStore();
 const packStore = usePackStore();
+const tutorialStore = useTutorialStore()
 const items = packStore.getItems;
 const techs = packStore.getTechs;
 
@@ -57,7 +59,8 @@ const groupedItems = computed(() => {
   <aside
     class="bg-base-100 border-r border-base-300 flex-none overflow-y-auto transition-all duration-300"
     :class="[
-      appStore.leftSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-60') : 'w-0 overflow-hidden'
+      appStore.leftSidebarOpen ? (appStore.isMobile ? 'w-[80vw]' : 'w-60') : 'w-0 overflow-hidden',
+      tutorialStore.isTutorialActive ? 'z-[100]' : ''
     ]"
   >
     <section class="p-4">
