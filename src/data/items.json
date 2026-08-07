@@ -4756,5 +4756,15 @@
     "attrs": {
       "level": 7
     }
+  },
+  {
+    "name": "氧化铁",
+    "key": "iron_oxide",
+    "category": "材料",
+    "description": "细腻的红棕色粉末，手感微涩，轻轻抖动会扬起淡红色的烟尘，像凝固的锈迹。",
+    "type": [
+      "material"
+    ],
+    "elemental": 26
   }
 ]

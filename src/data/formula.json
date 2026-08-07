@@ -599,7 +599,9 @@
     "key": "roast_arsenopyrite",
     "name": "焙烧毒砂",
     "description": "在窑炉中高温焙烧毒砂，生成三氧化二砷和二氧化硫，铁以炉渣形式排出。",
-    "time_required": 30,
+    "fragment_description": "对#arsenopyrite#进行高温$roasting$，使其分解为#arsenic_trioxide#和#hematite#并释放#sulfur_dioxide#。",
+    "time_required": 20,
+    "required_era": "alchemy",
     "required_container": "kiln",
     "required_actions": {
       "key": "roasting",
@@ -624,15 +626,13 @@
         "required_chain_operation": "gas_collecting_air"
       },
       {
-        "key": "hematite",
+        "key": "iron_oxide",
         "multiple": 1
       }
     ],
     "required_techs": [
       "high_temp_furnace"
-    ],
-    "fragment_description": "对#arsenopyrite#进行高温$roasting$，使其分解为#arsenic_trioxide#和#hematite#并释放#sulfur_dioxide#。",
-    "required_era": "alchemy"
+    ]
   },
   {
     "key": "roast_realgar",
@@ -1141,47 +1141,6 @@
       {
         "key": "dilute_sulfuric_acid",
         "multiple": 1
-      }
-    ]
-  },
-  {
-    "key": "roast_green_vitriol",
-    "name": "焙烧绿矾",
-    "description": "将绿矾加热分解，得到赤铁矿和二氧化硫气体。",
-    "fragment_description": "对#green_vitriol#进行高温$roasting$热分解，生成#hematite#并释放#sulfur_dioxide#及#sulfur_trioxide#。",
-    "time_required": 20,
-    "required_era": "alchemy",
-    "required_container": "crucible",
-    "required_actions": {
-      "key": "roasting",
-      "min": 1
-    },
-    "required_items": [
-      {
-        "key": "green_vitriol",
-        "quantity": 2,
-        "isMain": true
-      }
-    ],
-    "products": [
-      {
-        "key": "hematite",
-        "multiple": 1
-      },
-      {
-        "key": "sulfur_dioxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting_air"
-      },
-      {
-        "key": "dilute_sulfuric_acid",
-        "multiple": 1,
-        "required_chain_operation": "dissolving"
-      },
-      {
-        "key": "sulfur_trioxide",
-        "multiple": 1,
-        "required_chain_operation": "gas_collecting_air"
       }
     ]
   },
@@ -10011,6 +9970,14 @@
     "key": "iron_carbonate_calcination",
     "name": "碳酸铁焙烧",
     "description": "碳酸铁受热分解生成氧化铁和二氧化碳。",
+    "fragment_description": "对#iron_carbonate#进行$roasting$热分解，获得#hematite#并释放#carbon_dioxide#。",
+    "time_required": 20,
+    "required_era": "modern_chem",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 1
+    },
     "required_items": [
       {
         "key": "iron_carbonate",
@@ -10018,14 +9985,9 @@
         "isMain": true
       }
     ],
-    "required_actions": {
-      "key": "roasting"
-    },
-    "required_container": "kiln",
-    "time_required": 20,
     "products": [
       {
-        "key": "hematite",
+        "key": "iron_oxide",
         "multiple": 1
       },
       {
@@ -10033,9 +9995,7 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting_air"
       }
-    ],
-    "required_era": "modern_chem",
-    "fragment_description": "对#iron_carbonate#进行$roasting$热分解，获得#hematite#并释放#carbon_dioxide#。"
+    ]
   },
   {
     "key": "manganese_carbonate_calcination",
@@ -10082,15 +10042,16 @@
     "required_items": [
       {
         "key": [
+          "green_vitriol",
           "ferrous_sulfate"
         ],
-        "quantity": 1,
+        "quantity": 2,
         "isMain": true
       }
     ],
     "products": [
       {
-        "key": "hematite",
+        "key": "iron_oxide",
         "multiple": 1
       },
       {
@@ -10496,6 +10457,68 @@
       {
         "key": "copper_sulfate_solution",
         "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "研磨赤铁矿制氧化铁",
+    "key": "grind_hematite_to_iron_oxide",
+    "description": "将赤铁矿细细碾磨，去除砂石杂质，得到更纯净的氧化铁粉末。",
+    "fragment_description": "将 #hematite# 放入研钵中反复$grinding$，赤褐色的矿石逐渐碎裂成细粉，在阳光下泛出暗红色的光泽。",
+    "required_items": [
+      {
+        "key": "hematite",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "required_actions": {
+      "key": "grinding",
+      "min": 1,
+      "max": 2
+    },
+    "required_era": "alchemy",
+    "time_required": 20,
+    "products": [
+      {
+        "key": "iron_oxide",
+        "multiple": 1
+      }
+    ]
+  },
+  {
+    "name": "还原氧化铁",
+    "key": "reduce_iron_oxide",
+    "description": "用焦炭在高温下还原氧化铁，得到生铁。",
+    "fragment_description": "将 #iron_oxide# 与 #coke# 一同投入 $blast_furnace$，在鼓风的高温中$roasting$，暗红色的粉末渐渐熔融，淌出炽红的铁水。",
+    "required_items": [
+      {
+        "key": "iron_oxide",
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": "coke",
+        "quantity": 1
+      }
+    ],
+    "required_actions": {
+      "key": "roasting",
+      "min": 2,
+      "max": 3
+    },
+    "required_container": "blast_furnace",
+    "required_era": "alchemy",
+    "time_required": 60,
+    "products": [
+      {
+        "key": "pig_iron",
+        "multiple": 1
+      },
+      {
+        "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
       }
     ]
   }
