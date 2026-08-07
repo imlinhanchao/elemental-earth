@@ -1257,6 +1257,51 @@
     "required_era": "modern_chem"
   },
   {
+    "key": "produce_uranium_oxide",
+    "name": "制备氧化铀",
+    "description": "将铀矿石（如沥青铀矿或磷灰铀矿）通过焙烧或化学处理制备成氧化铀粉末（UO2 或 U3O8 的表示为统一资源）。",
+    "fragment_description": "对#uraninite#或#pitchblende#进行高温$roasting$或氧化处理，去除杂质并得到#uranium_oxide#作为中间氧化物。",
+    "time_required": 40,
+    "required_era": "rare_earth",
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2
+    },
+    "required_items": [
+      {
+        "key": [
+          "grinded_pitchblende",
+          "pitchblende"
+        ],
+        "quantity": 1,
+        "isMain": true
+      },
+      {
+        "key": [
+          "charcoal",
+          "coal",
+          "coke"
+        ],
+        "quantity": 1
+      }
+    ],
+    "products": [
+      {
+        "key": "uranium_oxide",
+        "multiple": 1
+      },
+      {
+        "key": "sulfur_dioxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting_air"
+      }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
+    ]
+  },
+  {
     "name": "硝石制氮气",
     "key": "nitrogen_from_niter",
     "description": "将硝石与木炭混合后焙烧，产生氮气和草木灰。",
