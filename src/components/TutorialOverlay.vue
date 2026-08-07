@@ -40,7 +40,7 @@
            :style="{ top: `${spotlightRect.y + spotlightRect.height + 4}px`, left: 0, right: 0, bottom: 0 }"></div>
 
       <!-- 高亮边框 -->
-      <div class="absolute border-2 border-primary rounded-lg transition-all duration-300 pointer-events-none shadow-[0_0_15px_oklch(var(--p)/.4)]"
+      <div class="absolute border-2 border-primary rounded-lg transition-all duration-300 pointer-events-none shadow-[0_0_15px_rgba(var(--color-primary-rgb),.4)]"
            :style="{ 
              top: `${spotlightRect.y - 4}px`, 
              left: `${spotlightRect.x - 4}px`, 

@@ -140,7 +140,7 @@ function cellStyle(el: PeriodicElement): Record<string, string> {
   if (isPlaceholder) {
     return {
       ...base,
-      backgroundColor: 'oklch(var(--b3))',
+      backgroundColor: 'var(--color-base-300)',
       opacity: '0.4',
       display: 'flex',
       alignItems: 'center',
@@ -161,8 +161,8 @@ function cellStyle(el: PeriodicElement): Record<string, string> {
   const isImplemented = el.number > 0 && implementedSet.value.has(el.number)
   return {
     ...base,
-    backgroundColor: 'oklch(var(--b3))',
-    color: 'oklch(var(--bc))',
+    backgroundColor: 'var(--color-base-300)',
+    color: 'var(--color-base-content)',
     opacity: isImplemented ? '0.45' : '0.2',
     cursor: 'pointer',
   }
@@ -227,8 +227,8 @@ function cellStyle(el: PeriodicElement): Record<string, string> {
 }
 
 .legend-item--unlit {
-  background-color: oklch(var(--b3));
-  color: oklch(var(--bc));
+  background-color: var(--color-base-300);
+  color: var(--color-base-content);
   opacity: 0.7;
 }
 </style>

@@ -106,8 +106,8 @@ function confirm() {
 .overlay-fade-enter-from,.overlay-fade-leave-to { opacity: 0; }
 
 .discovery-card {
-  background: oklch(var(--b1));
-  border: 1px solid oklch(var(--b3));
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-300);
   border-radius: 16px;
   padding: 32px;
   width: 100%; max-width: 420px;
@@ -120,11 +120,11 @@ function confirm() {
 
 .discovery-desc {
   font-size: 15px; line-height: 1.7;
-  color: oklch(var(--bc));
+  color: var(--color-base-content);
   opacity: 0.85;
   margin-bottom: 24px;
   padding: 12px 16px;
-  background: oklch(var(--b2));
+  background: var(--color-base-200);
   border-radius: 8px;
   text-align: left;
   font-style: italic;

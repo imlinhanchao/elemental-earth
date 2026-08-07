@@ -1,80 +1,96 @@
 <template>
   <div class="p-4 mx-auto space-y-4 inline-flex flex-col">
-    <header class="mb-4 flex items-center gap-3 flex-wrap">
-      <h1 class="text-xl font-bold flex items-center gap-2">
-        <Icon icon="tabler:atom" class="text-2xl" />
-        元素周期表
-      </h1>
-      <span class="badge badge-outline text-xs">
-        已点亮 {{ litElements.length }} / 118 个元素
-      </span>
-    </header>
+    <section ref="periodicRef">
+      <header class="mb-4 flex items-center gap-3 flex-wrap">
+        <h1 class="text-xl font-bold flex items-center gap-2">
+          <Icon icon="tabler:atom" class="text-2xl" />
+          元素周期表
+        </h1>
+        <span class="badge badge-outline text-xs">
+          已点亮 {{ litElements.length }} / 118 个元素
+        </span>
+        <div class="mr-0 ml-auto inline-flex items-center gap-2 share-btn">
+          <button class="btn btn-sm btn-soft" @click="shareAll">
+            <Icon v-if="!isShareing" icon="mdi:share-variant" class="text-base" />
+            <Icon v-else icon="mdi:loading" class="animate-spin text-base" />
+            <span class="ml-2">分享所有图鉴</span>
+          </button>
+        </div>
+      </header>
 
-    <!-- ─── Periodic Table ──────────────────────────────────────────────────── -->
-    <div class="relative" ref="tableWrapper">
-      <PeriodicTable
-        :litElements="litElements"
-        :implementedElements="implementedElements"
-        :categoryColors="categoryColors"
-        @click-element="handleElementClick"
-      />
+      <!-- ─── Periodic Table ──────────────────────────────────────────────────── -->
+      <div class="relative" ref="tableWrapper">
+        <PeriodicTable
+          :litElements="litElements"
+          :implementedElements="implementedElements"
+          :categoryColors="categoryColors"
+          @click-element="handleElementClick"
+        />
 
+      </div>
+    </section>
+    <div class="m-2 text-right">
+      <button class="btn btn-xs btn-ghost share-btn" @click="shareSection(periodicRef, 'periodic-table')">
+        <Icon v-if="!isShareing" icon="mdi:share" /> 
+        <Icon v-else icon="mdi:loading" class="animate-spin" />
+        分享已点亮元素
+      </button>
+    </div>
     <!-- ─── Selected element detail popover ─────────────────────────────────── -->
     <Transition name="popover">
       <div v-if="activeElement && showPopover" class="element-popover-root">
-        <!-- Mobile Backdrop -->
-        <div v-if="isMobile" class="popover-backdrop" @click="closePopover"></div>
-        
+      <!-- Mobile Backdrop -->
+      <div v-if="isMobile" class="popover-backdrop" @click="closePopover"></div>
+      
+      <div
+        class="element-popover card bg-base-200 shadow-xl border border-base-300"
+        :class="[isMobile ? 'popover-mobile' : 'popover-desktop']"
+        :style="popoverStyle"
+        v-click-outside="closePopover"
+      >
         <div
-          class="element-popover card bg-base-200 shadow-xl border border-base-300"
-          :class="[isMobile ? 'popover-mobile' : 'popover-desktop']"
-          :style="popoverStyle"
-          v-click-outside="closePopover"
+          class="card-body p-4 overflow-y-auto max-h-[70vh] md:max-h-none"
+          :style="{ borderTop: isMobile ? `4px solid ${elementColor(activeElement)}` : 'none', borderLeft: !isMobile ? `4px solid ${elementColor(activeElement)}` : 'none' }"
         >
-          <div
-            class="card-body p-4 overflow-y-auto max-h-[70vh] md:max-h-none"
-            :style="{ borderTop: isMobile ? `4px solid ${elementColor(activeElement)}` : 'none', borderLeft: !isMobile ? `4px solid ${elementColor(activeElement)}` : 'none' }"
-          >
-              <div class="flex items-center justify-between mb-2 md:hidden">
-                <h3 class="font-bold">元素详情</h3>
-                <button class="btn btn-ghost btn-xs btn-circle" @click="closePopover">✕</button>
-              </div>
+            <div class="flex items-center justify-between mb-2 md:hidden">
+              <h3 class="font-bold">元素详情</h3>
+              <button class="btn btn-ghost btn-xs btn-circle" @click="closePopover">✕</button>
+            </div>
 
-              <div class="flex items-center gap-4">
-                <div
-                  class="w-16 h-20 rounded flex flex-col items-center justify-center text-white shrink-0"
-                  :style="{ backgroundColor: elementColor(activeElement) }"
-                >
-                  <span class="text-xs opacity-75">{{ activeElement.number }}</span>
-                  <span class="text-2xl font-bold leading-tight">{{ activeElement.symbol }}</span>
-                  <span class="text-sm">{{ activeElement.name }}</span>
-                </div>
-                <div class="overflow-hidden">
-                  <p class="font-bold text-lg truncate">{{ activeElement.nameEn }}</p>
-                  <p class="text-xs opacity-60">原子量：{{ activeElement.mass }}</p>
-                  <p class="text-xs opacity-60">分类：{{ CATEGORY_LABELS[activeElement.category] }}</p>
-                </div>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-16 h-20 rounded flex flex-col items-center justify-center text-white shrink-0"
+                :style="{ backgroundColor: elementColor(activeElement) }"
+              >
+                <span class="text-xs opacity-75">{{ activeElement.number }}</span>
+                <span class="text-2xl font-bold leading-tight">{{ activeElement.symbol }}</span>
+                <span class="text-sm">{{ activeElement.name }}</span>
               </div>
+              <div class="overflow-hidden">
+                <p class="font-bold text-lg truncate">{{ activeElement.nameEn }}</p>
+                <p class="text-xs opacity-60">原子量：{{ activeElement.mass }}</p>
+                <p class="text-xs opacity-60">分类：{{ CATEGORY_LABELS[activeElement.category] }}</p>
+              </div>
+            </div>
 
-              <!-- 元素故事 -->
-              <div v-if="activeElement.story" class="mt-4 pt-4 border-t border-base-content/10">
-                <p class="text-[10px] font-bold opacity-40 uppercase tracking-widest mb-2 flex items-center gap-1">
-                  <Icon icon="mdi:script-text-outline" class="text-xs" />
-                  探索笔记
-                </p>
-                <div 
-                  class="markdown-content text-sm leading-relaxed opacity-90 font-serif italic"
-                  v-html="renderMarkdown(activeElement.story)"
-                ></div>
-              </div>
+            <!-- 元素故事 -->
+            <div v-if="activeElement.story" class="mt-4 pt-4 border-t border-base-content/10">
+              <p class="text-[10px] font-bold opacity-40 uppercase tracking-widest mb-2 flex items-center gap-1">
+                <Icon icon="mdi:script-text-outline" class="text-xs" />
+                探索笔记
+              </p>
+              <div 
+                class="markdown-content text-sm leading-relaxed opacity-90 font-serif italic"
+                v-html="renderMarkdown(activeElement.story)"
+              ></div>
             </div>
           </div>
         </div>
-      </Transition>
-    </div>
+      </div>
+    </Transition>
 
     <!-- ─── Drifting Bottles ────────────────────────────────────────────────── -->
-    <div class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
+    <div ref="bottleSection" class="mt-8 border-t border-base-content/10 pt-6" v-if="bottleStore.collectedBottles.length">
       <section class="rounded-2xl border border-base-300/60 bg-base-200/30 p-4 sm:p-5">
         <div class="mb-4 flex items-end justify-between gap-3">
           <div>
@@ -122,8 +138,13 @@
         </div>
       </section>
     </div>
+    <div class="mt-2 flex justify-end">
+      <button class="btn btn-xs btn-ghost share-btn" @click="shareSection(bottleSection, 'bottles')">
+        <Icon icon="mdi:share" /> 分享漂流瓶
+      </button>
+    </div>
     <!-- ─── Wonders Collection ──────────────────────────────────────────────── -->
-    <div class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
+    <div ref="wonderSection" class="mt-8 border-t border-base-content/10 pt-6" v-if="unlockedWonders.length">
       <h2 class="text-xl font-bold flex items-baseline gap-2 mb-1">
         <span class="flex items-center gap-2">
           <Icon icon="mdi:pillar" class="text-2xl text-amber-500" />
@@ -161,6 +182,13 @@
         </div>
       </div>
     </div>
+    <div class="mt-4 flex justify-end">
+      <button class="btn btn-xs btn-ghost share-btn" @click="shareSection(wonderSection, 'wonders')">
+        <Icon icon="mdi:share" v-if="!isShareing" /> 
+        <Icon icon="mdi:loading" class="animate-spin" v-else />
+        分享奇观
+      </button>
+    </div>
     <!-- ─── Bottle Content Modal ───────────────────────────────────────────── -->
     <dialog ref="bottleModal" class="modal modal-bottom sm:modal-middle bg-base-100/60 backdrop-blur-sm" @click.self="closeBottle">
       <div v-if="activeBottle" class="modal-box p-0 bg-transparent shadow-none overflow-visible max-w-lg w-full">
@@ -193,6 +221,9 @@
         
         <form method="dialog" class="absolute -top-12 right-4 sm:-right-4">
           <button class="btn btn-sm btn-circle btn-ghost text-white hover:bg-white/20" @click="closeBottle">✕</button>
+          <button class="btn btn-sm btn-circle btn-ghost text-white hover:bg-white/20 ml-2" type="button" @click.prevent="shareActiveBottle">
+            <Icon icon="mdi:share" />
+          </button>
         </form>
       </div>
     </dialog>
@@ -218,6 +249,12 @@ import { Items } from '@/data/items';
 import { computed } from 'vue';
 import { renderMarkdown } from '@/utils/function';
 import { vOnClickOutside as vClickOutside } from '@vueuse/components'
+import html2canvas from 'html2canvas-pro'
+
+// Share config
+const GAME_NAME = '元素纪元'
+const GAME_SITE = location.host
+const LOGO_URL = new URL('@/assets/images/logo.png', import.meta.url).href
 
 // ─── Bottle Logic ─────────────────────────────────────────────────────────────
 const activeBottle = ref<(IBottle & { index: number }) | null>(null)
@@ -319,7 +356,9 @@ const categoryColors = ref<Partial<Record<ElementCategory, string>>>({
 
 const activeElement = ref<PeriodicElement | null>(null)
 const showPopover = ref(false)
-const tableWrapper = ref<HTMLElement | null>(null)
+const periodicRef = ref<HTMLElement | null>(null)
+const bottleSection = ref<HTMLElement | null>(null)
+const wonderSection = ref<HTMLElement | null>(null)
 const popoverCoord = ref({ top: 0, left: 0, placement: 'bottom' })
 const isMobile = ref(false)
 
@@ -351,7 +390,7 @@ function handleElementClick(el: PeriodicElement, event: MouseEvent) {
 
   const target = event.currentTarget as HTMLElement
   const rect = target.getBoundingClientRect()
-  const wrapper = tableWrapper.value
+  const wrapper = periodicRef.value
   if (!wrapper) return
 
   const wrapperRect = wrapper.getBoundingClientRect()
@@ -392,6 +431,264 @@ const popoverStyle = computed(() => {
     ...(placement === 'top' ? { transform: 'translateY(-100%)' } : {})
   }
 })
+
+// ---------------- Share helpers ----------------
+const baseBgColor = getComputedStyle(document.documentElement).getPropertyValue('--color-base-100') || '#f0f0f0';
+const baseContentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-base-content') || '#333';
+const isShareing = ref(false);
+async function addWatermarkToCanvas(canvas: HTMLCanvasElement) {
+  const ctx = canvas.getContext('2d')!
+  const padding = 15 // user-requested margin will be applied outside earlier; keep local padding if needed
+  const logoHeight = 12 // requested logo/text height
+  const text = `${GAME_NAME} · ${GAME_SITE}`
+
+  // draw logo + text at right-bottom with 12px height, no background
+  const img = await loadImage(LOGO_URL)
+  // compute scaled logo dimensions keeping aspect ratio, target height = logoHeight
+  const aspect = img.width / img.height || 1
+  const logoW = Math.round((logoHeight + 6) * aspect)
+  const logoH = Math.round((logoHeight + 6))
+
+  ctx.save()
+  ctx.fillStyle = baseContentColor || '#000'
+  ctx.font = `${logoHeight}px sans-serif`
+  ctx.textBaseline = 'alphabetic'
+
+  const gap = 8
+  const rightPadding = 12
+  const bottomPadding = 12
+
+  // measure text width
+  const textWidth = ctx.measureText(text).width
+  const totalWidth = logoW + gap + textWidth
+
+  const xText = canvas.width - rightPadding - textWidth
+  const xLogo = xText - gap - logoW
+  const y = canvas.height - bottomPadding
+
+  // draw text
+  ctx.fillText(text, xText, y)
+  // draw logo scaled to logoH, aligning baseline to text: draw with bottom at y
+  ctx.drawImage(img, xLogo, y - logoH + 3, logoW, logoH)
+  ctx.restore()
+}
+
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = src
+  })
+}
+
+async function shareCanvas(canvas: HTMLCanvasElement, fileName = 'share.png') {
+  // add 15px margin by creating a new padded canvas
+  const padded = createPaddedCanvas(canvas, 25, baseBgColor || null)
+  await addWatermarkToCanvas(padded)
+  // create blob
+  return new Promise<void>((resolve) => {
+    padded.toBlob(async (blob) => {
+      if (!blob) return resolve()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = fileName
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+      resolve()
+    }, 'image/png')
+  })
+}
+
+function createPaddedCanvas(src: HTMLCanvasElement, padding = 15, bgColor: string | null = null) {
+  const w = src.width + padding * 2
+  const h = src.height + padding * 2
+  const canvas = document.createElement('canvas')
+  canvas.width = w
+  canvas.height = h
+  const ctx = canvas.getContext('2d')!
+  if (bgColor) {
+    ctx.fillStyle = bgColor
+    ctx.fillRect(0, 0, w, h)
+  }
+  ctx.drawImage(src, padding, padding)
+  return canvas
+}
+
+async function shareSection(rootRef: any, id = 'section') {
+  isShareing.value = true
+  try {
+    const el = rootRef?.value ?? rootRef
+    if (!el) {
+      // fallback: capture whole body
+      const bodyCanvas = await html2canvas(document.body as HTMLElement, { 
+        useCORS: true, 
+        onclone: sanitizeClone, 
+        backgroundColor: baseBgColor,
+        ignoreElements: (node: Element) => node instanceof HTMLElement && node.classList.contains('share-btn')
+      })
+      await shareCanvas(bodyCanvas, `${id}.png`)
+      return
+    }
+    const canvas = await html2canvas(el as HTMLElement, { 
+      useCORS: true, 
+      onclone: sanitizeClone, 
+      backgroundColor: baseBgColor,
+      ignoreElements: (node: Element) => node instanceof HTMLElement && node.classList.contains('share-btn')
+    })
+    await shareCanvas(canvas, `${id}.png`)
+  } catch (e) {
+    console.error('shareSection error', e)
+  } finally {
+    isShareing.value = false
+  }
+}
+
+async function shareAll() {
+  isShareing.value = true
+  try {
+    // capture the main container
+    const container = document.querySelector('.p-4.mx-auto') as HTMLElement
+    if (!container) return
+    const canvas = await html2canvas(container, { useCORS: true, backgroundColor: baseBgColor, scale: 2, onclone: sanitizeClone, ignoreElements: (node: Element) => node instanceof HTMLElement && node.classList.contains('share-btn') })
+    await shareCanvas(canvas, `catalogs-all.png`)
+  } catch (e) {
+    console.error('shareSection error', e)
+  } finally {
+    isShareing.value = false
+  }
+}
+
+async function shareActiveBottle() {
+  if (!activeBottle.value) return
+  const modalEl = bottleModal.value as HTMLDialogElement | null
+  if (!modalEl) return
+  const canvas = await html2canvas(modalEl as HTMLElement, { useCORS: true, backgroundColor: null, onclone: sanitizeClone, ignoreElements: (node: Element) => node instanceof HTMLElement && node.classList.contains('share-btn') })
+  await shareCanvas(canvas, `bottle-${activeBottle.value.index + 1}.png`)
+}
+
+// Replace unsupported oklch() occurrences in cloned document by converting to hex
+function sanitizeClone(clonedDoc: Document) {
+  try {
+    const originalRoot = document.querySelector('.p-4.mx-auto') || document.body
+    const cloneRoot = clonedDoc.querySelector('.p-4.mx-auto') || clonedDoc.body
+    // Inject overrides for CSS variables defined on :root that contain oklch()
+    try {
+      const computedRoot = getComputedStyle(document.documentElement)
+      let overrides = ''
+      for (let i = 0; i < computedRoot.length; i++) {
+        const name = computedRoot.item(i)
+        if (!name || !name.startsWith('--')) continue
+        const val = computedRoot.getPropertyValue(name).trim()
+        if (val && val.includes('oklch(')) {
+          // replace all oklch(...) occurrences inside the variable value
+          const replaced = val.replace(/oklch\([^\)]+\)/g, (m) => oklchToHex(m) || m)
+          overrides += `${name}: ${replaced};\n`
+        }
+      }
+      if (overrides) {
+        const style = clonedDoc.createElement('style')
+        style.textContent = `:root {\n${overrides}}`
+        clonedDoc.head.appendChild(style)
+      }
+    } catch (e) {
+      // ignore variable extraction errors (CSP/CORS)
+    }
+    if (!originalRoot || !cloneRoot) return
+
+    const originals = Array.from(originalRoot.querySelectorAll('*'))
+    const clones = Array.from(cloneRoot.querySelectorAll('*'))
+
+    const len = Math.min(originals.length, clones.length)
+    for (let i = 0; i < len; i++) {
+      const orig = originals[i] as HTMLElement
+      const cl = clones[i] as HTMLElement
+      if (!orig || !cl) continue
+      const cs = getComputedStyle(orig)
+      // properties to check
+      const props = ['color', 'background-color', 'border-color', 'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', 'box-shadow']
+      for (const p of props) {
+        const val = cs.getPropertyValue(p)
+        if (!val) continue
+        if (val.includes('oklch(')) {
+          // if it's box-shadow, replace each oklch() substring
+          if (p === 'box-shadow') {
+            const newVal = val.replace(/oklch\([^\)]+\)/g, (m) => {
+              const hex = oklchToHex(m)
+              return hex || m
+            })
+            cl.style.setProperty('box-shadow', newVal, 'important')
+          } else {
+            const hex = oklchToHex(val)
+            if (hex) cl.style.setProperty(p, hex, 'important')
+          }
+        }
+      }
+    }
+  } catch (e) {
+    // ignore
+    console.warn('sanitizeClone error', e)
+  }
+}
+
+function oklchToHex(str: string): string | null {
+  const m = /oklch\(([^)]+)\)/.exec(str)
+  if (!m) return null
+  const parts = m[1].trim().split(/\s+/)
+  if (parts.length < 3) return null
+  // parse L
+  let L = parts[0]
+  let C = parts[1]
+  let H = parts[2]
+  const parseNum = (s: string) => {
+    if (s.endsWith('%')) return parseFloat(s) / 100
+    return parseFloat(s)
+  }
+  const l = parseNum(L)
+  const c = parseNum(C)
+  const h = parseFloat(H)
+
+  // convert to OKLab
+  const hr = (h * Math.PI) / 180
+  const a = c * Math.cos(hr)
+  const b = c * Math.sin(hr)
+  const Lval = l
+
+  // OKLab to linear sRGB conversion
+  const l_ = Lval + 0.3963377774 * a + 0.2158037573 * b
+  const m_ = Lval - 0.1055613458 * a - 0.0638541728 * b
+  const s_ = Lval - 0.0894841775 * a - 1.2914855480 * b
+
+  const lLin = Math.pow(l_, 3)
+  const mLin = Math.pow(m_, 3)
+  const sLin = Math.pow(s_, 3)
+
+  let r = +4.0767416621 * lLin - 3.3077115913 * mLin + 0.2309699292 * sLin
+  let g = -1.2684380046 * lLin + 2.6097574011 * mLin - 0.3413193965 * sLin
+  let b_ = -0.0041960863 * lLin - 0.7034186147 * mLin + 1.7076147010 * sLin
+
+  const linearToSrgb = (v: number) => {
+    // clamp
+    v = Math.max(0, Math.min(1, v))
+    if (v <= 0.0031308) return v * 12.92
+    return 1.055 * Math.pow(v, 1 / 2.4) - 0.055
+  }
+
+  r = linearToSrgb(r)
+  g = linearToSrgb(g)
+  b_ = linearToSrgb(b_)
+
+  const toHex = (v: number) => {
+    const n = Math.round(v * 255)
+    return ('0' + n.toString(16)).slice(-2)
+  }
+
+  return `#${toHex(r)}${toHex(g)}${toHex(b_)}`
+}
 </script>
 
 <style scoped>

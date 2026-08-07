@@ -60,7 +60,7 @@
             height: 420px;
             background-image: radial-gradient(
               circle,
-              oklch(var(--bc) / 0.08) 1px,
+              rgba(var(--color-base-content) / 0.08) 1px,
               transparent 1px
             );
             background-size: 20px 20px;

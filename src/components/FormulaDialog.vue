@@ -808,7 +808,7 @@ function cancel() {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: oklch(var(--bc));
+  color: var(--color-base-content);
   opacity: 0.5;
   line-height: 1;
   padding: 0 4px;
@@ -817,7 +817,7 @@ function cancel() {
 
 .dialog-desc {
   font-size: 13px;
-  color: oklch(var(--bc));
+  color: var(--color-base-content);
   opacity: 0.65;
   margin-bottom: 16px;
 }
@@ -830,7 +830,7 @@ function cancel() {
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 4px;
-  color: oklch(var(--bc));
+  color: var(--color-base-content);
   opacity: 0.8;
 }
 .label-insufficient {
@@ -881,7 +881,7 @@ function cancel() {
   align-items: center;
   gap: 8px;
   padding: 6px 8px;
-  background: oklch(var(--b2));
+  background: var(--color-base-200);
   border-radius: 6px;
   margin-bottom: 4px;
 }
@@ -895,13 +895,13 @@ function cancel() {
   align-items: center;
   gap: 8px;
   margin: 16px 0;
-  color: oklch(var(--bc));
+  color: var(--color-base-content);
 }
 .divider::before, .divider::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: oklch(var(--b3));
+  background: var(--color-base-300);
 }
 
 .product-preview {
@@ -910,15 +910,15 @@ function cancel() {
   align-items: center;
   gap: 6px;
   padding: 10px 12px;
-  background: oklch(var(--b2));
+  background: var(--color-base-200);
   border-radius: 8px;
   margin-bottom: 8px;
   font-size: 13px;
 }
 .product-label { font-weight: 600; opacity: 0.7; }
 .product-tag {
-  background: oklch(var(--s));
-  color: oklch(var(--sc));
+  background: var(--color-secondary);
+  color: var(--color-secondary-content);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -936,6 +936,6 @@ function cancel() {
   justify-content: flex-end;
   gap: 8px;
   padding-top: 8px;
-  border-top: 1px solid oklch(var(--b3));
+  border-top: 1px solid var(--color-base-300);
 }
 </style>
