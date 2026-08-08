@@ -10487,10 +10487,18 @@
     ]
   },
   {
-    "name": "还原氧化铁",
     "key": "reduce_iron_oxide",
+    "name": "还原氧化铁",
     "description": "用焦炭在高温下还原氧化铁，得到生铁。",
     "fragment_description": "将 #iron_oxide# 与 #coke# 一同投入 $blast_furnace$，在鼓风的高温中$roasting$，暗红色的粉末渐渐熔融，淌出炽红的铁水。",
+    "time_required": 40,
+    "required_era": "alchemy",
+    "required_container": "blast_furnace",
+    "required_actions": {
+      "key": "roasting",
+      "min": 2,
+      "max": 3
+    },
     "required_items": [
       {
         "key": "iron_oxide",
@@ -10498,18 +10506,14 @@
         "isMain": true
       },
       {
-        "key": "coke",
+        "key": [
+          "coal",
+          "charcoal",
+          "coke"
+        ],
         "quantity": 1
       }
     ],
-    "required_actions": {
-      "key": "roasting",
-      "min": 2,
-      "max": 3
-    },
-    "required_container": "blast_furnace",
-    "required_era": "alchemy",
-    "time_required": 60,
     "products": [
       {
         "key": "pig_iron",
@@ -10517,6 +10521,45 @@
       },
       {
         "key": "carbon_monoxide",
+        "multiple": 1,
+        "required_chain_operation": "gas_collecting"
+      }
+    ]
+  },
+  {
+    "name": "煤干馏制焦炭",
+    "key": "coke_production",
+    "description": "将煤在隔绝空气的条件下高温干馏，得到焦炭、煤焦油和焦炉气。",
+    "required_items": [
+      {
+        "key": "coal",
+        "quantity": 2,
+        "isMain": true
+      }
+    ],
+    "required_container": "kiln",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1,
+      "max": 1
+    },
+    "required_techs": [
+      "high_temp_furnace"
+    ],
+    "required_era": "alchemy",
+    "time_required": 30,
+    "fragment_description": "将 #coal# 堆入窑中，点火后封闭窑门进行 $dry_distillation$，从出气口逸出的黄烟冷凝成黑褐色的油状物，窑内余下的银灰色硬块便是焦炭。",
+    "products": [
+      {
+        "key": "coke",
+        "multiple": 1
+      },
+      {
+        "key": "coal_tar",
+        "multiple": 1
+      },
+      {
+        "key": "coal_gas",
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }

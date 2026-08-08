@@ -4766,5 +4766,32 @@
       "material"
     ],
     "elemental": 26
+  },
+  {
+    "name": "煤焦油",
+    "key": "coal_tar",
+    "category": "液体",
+    "description": "黑褐色、黏稠如膏的液体，带有刺鼻的焦臭味，指尖沾上便难以洗去。",
+    "type": [
+      "material",
+      "liquid"
+    ],
+    "attrs": {
+      "burn_time": 80
+    }
+  },
+  {
+    "name": "焦炉气",
+    "key": "coal_gas",
+    "category": "气体",
+    "description": "无色气体，带着一股刺鼻的怪味，靠近时感到头晕目眩，似乎随时会被点燃。",
+    "type": [
+      "material",
+      "gas",
+      "fuel"
+    ],
+    "attrs": {
+      "burn_time": 30
+    }
   }
 ]
