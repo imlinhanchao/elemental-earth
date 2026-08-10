@@ -38,7 +38,7 @@
 <template>
   <div class="item-row group">
     <div class="flex items-center justify-between px-4">
-      <InlineTooltip :text="description">
+      <InlineTooltip :text="description" class="truncate">
         <template #text>
           <div>
             <span>{{ description }}</span>
