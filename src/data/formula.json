@@ -10057,12 +10057,12 @@
       {
         "key": "sulfur_dioxide",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "gas_collecting_air"
       },
       {
-        "key": "sulfur_trioxide",
+        "key": "dilute_sulfuric_acid",
         "multiple": 1,
-        "required_chain_operation": "gas_collecting"
+        "required_chain_operation": "dissolving"
       }
     ]
   },
