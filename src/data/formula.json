@@ -7173,40 +7173,6 @@
     "required_era": "rare_earth"
   },
   {
-    "key": "chlorinate_lanthanum_oxide",
-    "name": "氧化镧氯化",
-    "description": "在有碳还原剂存在下，通入氯气使氧化物转化为氯化物。",
-    "fragment_description": "使#lanthanum_oxide#与#activated_charcoal#混合后，通入#chlorine#并进行$blowing$吹扫反应，得到氯化物。",
-    "time_required": 30,
-    "required_era": "rare_earth",
-    "required_container": "sealed_tube",
-    "required_actions": {
-      "key": "blowing",
-      "min": 1
-    },
-    "required_items": [
-      {
-        "key": "lanthanum_oxide",
-        "quantity": 1,
-        "isMain": true
-      },
-      {
-        "key": "activated_charcoal",
-        "quantity": 1
-      },
-      {
-        "key": "chlorine",
-        "quantity": 1
-      }
-    ],
-    "products": [
-      {
-        "key": "lanthanum_chloride",
-        "multiple": 1.2
-      }
-    ]
-  },
-  {
     "key": "electrolyze_lanthanum_chloride",
     "name": "熔盐电解制镧",
     "description": "在石墨电解槽中，通过熔盐电解获得纯金属镧。",
@@ -10527,9 +10493,18 @@
     ]
   },
   {
-    "name": "煤干馏制焦炭",
     "key": "coke_production",
+    "name": "煤干馏制焦炭",
     "description": "将煤在隔绝空气的条件下高温干馏，得到焦炭、煤焦油和焦炉气。",
+    "fragment_description": "将 #coal# 堆入窑中，点火后封闭窑门进行 $dry_distillation$，从出气口逸出的黄烟冷凝成黑褐色的油状物，窑内余下的银灰色硬块便是焦炭。",
+    "time_required": 30,
+    "required_era": "alchemy",
+    "required_container": "clay_pot",
+    "required_actions": {
+      "key": "dry_distillation",
+      "min": 1,
+      "max": 1
+    },
     "required_items": [
       {
         "key": "coal",
@@ -10537,18 +10512,6 @@
         "isMain": true
       }
     ],
-    "required_container": "kiln",
-    "required_actions": {
-      "key": "dry_distillation",
-      "min": 1,
-      "max": 1
-    },
-    "required_techs": [
-      "high_temp_furnace"
-    ],
-    "required_era": "alchemy",
-    "time_required": 30,
-    "fragment_description": "将 #coal# 堆入窑中，点火后封闭窑门进行 $dry_distillation$，从出气口逸出的黄烟冷凝成黑褐色的油状物，窑内余下的银灰色硬块便是焦炭。",
     "products": [
       {
         "key": "coke",
@@ -10563,6 +10526,9 @@
         "multiple": 1,
         "required_chain_operation": "gas_collecting"
       }
+    ],
+    "required_techs": [
+      "high_temp_furnace"
     ]
   }
 ]
