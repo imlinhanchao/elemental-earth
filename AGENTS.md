@@ -183,4 +183,5 @@ server/                          # Express backend (TypeScript, tsx runner)
 
 ## Notes
 
+- **2D 独立客户端版本**：项目位于同级目录 `../elemental-earth-2d`，基于 Godot 4.2.1 开发。其架构规范、现阶段成果与未来计划详见 [`../elemental-earth-2d/AGENTS.md`](file:///Users/hancel/Documents/project/elemental-earth-2d/AGENTS.md)。任何针对 2D 版本的修改均须同步更新其文档。
 <!-- Quick-add space for future agent findings -->
