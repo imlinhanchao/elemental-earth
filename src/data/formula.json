@@ -2,7 +2,7 @@
   {
     "key": "charcoal_production",
     "name": "制作木炭",
-    "description": "将木材放入干馏装置中进行干馏，得到木炭和可燃气体。",
+    "description": "将木材放入干馏装置中进行干馏，得到木炭、草木灰和可燃气体。",
     "time_required": 30,
     "required_container": "clay_pot",
     "required_actions": {
